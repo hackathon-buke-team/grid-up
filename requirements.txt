@@ -1,0 +1,36 @@
+# PANO GOZ - pinned to exactly what the demo machine has installed and what the
+# code actually imports.  Nothing aspirational: every line below is reachable
+# from `python -m panogoz.run_local`, and there is no line for anything that is
+# not.  The demo machine has NO NETWORK, so this file documents the environment
+# rather than creating it.
+#
+#   python -m pip install -r requirements.txt      # only where a network exists
+
+# --- API and web -----------------------------------------------------------
+fastapi==0.139.2            # REST + WebSocket surface (panogoz/api/app.py)
+starlette==0.52.1           # pulled by fastapi; StaticFiles, CORS, WebSocket
+pydantic==2.11.7            # pulled by fastapi; request/response validation
+uvicorn==0.40.0             # ASGI server (panogoz/run_local.py)
+websockets==15.0.1          # uvicorn's WebSocket implementation for /ws
+h11==0.16.0                 # pulled by uvicorn; HTTP/1.1
+anyio==4.9.0                # pulled by starlette; async primitives
+click==8.2.1                # pulled by uvicorn
+
+# --- field protocols -------------------------------------------------------
+pymodbus==3.15.0            # ABB TVOC-2 / Entes MPR-53CS master + SCADA slave
+paho-mqtt==2.1.0            # MqttBus, the production transport (bus/bus.py)
+
+# --- numerics --------------------------------------------------------------
+numpy==2.2.6                # PRPD histograms, theta statistics
+scipy==1.15.3               # KS / chi-square in the supplied-data analysis
+pandas==2.3.2               # supplied-workbook parsing in analysis scripts
+scikit-learn==1.7.2         # changepoint / clustering experiments
+
+# --- documents and figures -------------------------------------------------
+openpyxl==3.1.5             # reading the supplied "Akim Sensoru" workbook
+pypdf==6.14.2               # TEDAS sartname text extraction
+PyMuPDF==1.26.7             # EK-II/14 drawing geometry extraction
+matplotlib==3.10.9          # offline figures for the report (not the live UI)
+
+# --- test-only -------------------------------------------------------------
+httpx==0.28.1               # fastapi.testclient, used by the API self-test

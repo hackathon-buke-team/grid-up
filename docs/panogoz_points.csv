@@ -1,0 +1,64 @@
+block,pdu_dec,pdu_hex,modicon_4x,offset,name,type,words,scale,unit,eng_min,eng_max,label_tr,note
+GLOBAL,0,0x0000,40001,0,ICD_VERSION,u32,2,1,-,0,4294967295,ICD sürümü,majör*10000 + minör*100 + yama
+GLOBAL,2,0x0002,40003,2,PANEL_COUNT,u16,1,1,adet,0,65535,Tanımlı pano sayısı,
+GLOBAL,3,0x0003,40004,3,PANELS_ONLINE,u16,1,1,adet,0,65535,Çevrimiçi pano sayısı,
+GLOBAL,4,0x0004,40005,4,FLEET_WORST_SEVERITY,u16,1,1,-,0,65535,Filodaki en yüksek seviye,0 BILGI · 1 IZLE · 2 UYARI · 3 KRITIK · 4 ACIL
+GLOBAL,5,0x0005,40006,5,FLEET_ALARMS_ACTIVE,u16,1,1,adet,0,65535,Aktif alarm,
+GLOBAL,6,0x0006,40007,6,FLEET_ALARMS_CRITICAL,u16,1,1,adet,0,65535,Kritik ve üzeri alarm,
+GLOBAL,7,0x0007,40008,7,WATCHDOG_HEARTBEAT,u16,1,1,-,0,65535,Canlılık sayacı,"Her saniye artar, 65535'te sarar. Durursa PANO GÖZ ölmüştür."
+GLOBAL,8,0x0008,40009,8,SERVER_TIME,u32,2,1,s,0,4294967295,Sunucu zamanı,"Unix epoch, UTC"
+GLOBAL,10,0x000A,40011,10,ENGINE_STATE,bits,1,1,-,0,65535,Motor durumu,ENGINE_BITS
+GLOBAL,11,0x000B,40012,11,DETECTOR_LAG_S,u16,1,1,s,0,65535,Dedektör gecikmesi,Son tamamlanan çevrimden beri geçen süre
+GLOBAL,12,0x000C,40013,12,REGS_PER_PANEL,u16,1,1,-,0,65535,Pano blok boyu,Sabit
+GLOBAL,13,0x000D,40014,13,PANEL_BLOCK_BASE,u32,2,1,-,0,4294967295,İlk pano blok adresi,
+GLOBAL,15,0x000F,40016,15,FLEET_HEALTH_MIN,u16,1,1,-,0,65535,En düşük sağlık endeksi,
+GLOBAL,16,0x0010,40017,16,FLEET_HEALTH_MEAN,u16,1,1,-,0,65535,Ortalama sağlık endeksi,
+GLOBAL,17,0x0011,40018,17,DISPATCH_QUEUE,u16,1,1,adet,0,65535,Ekip yönlendirme kuyruğu,
+GLOBAL,18,0x0012,40019,18,SUPPRESSED_24H,u16,1,1,adet,0,65535,Son 24 saatte bastırılan alarm,Gerekçeleriyle birlikte kayıtlı
+GLOBAL,19,0x0013,40020,19,PANELS_SENSITIVITY_LOW,u16,1,1,adet,0,65535,Görünürlüğü düşük pano,Bu panolarda θ geçici olarak güvenilir değil
+PANEL[n],1000,0x03E8,41001,0,PANEL_ID,u32,2,1,-,0,4294967295,Pano kimliği,Sayısal varlık numarası
+PANEL[n],1002,0x03EA,41003,2,HEALTH_INDEX,u16,1,1,-,0,65535,Sağlık endeksi,"100 sağlıklı, 0 en kötü"
+PANEL[n],1003,0x03EB,41004,3,SEVERITY,u16,1,1,-,0,65535,Seviye,0 BILGI · 1 IZLE · 2 UYARI · 3 KRITIK · 4 ACIL
+PANEL[n],1004,0x03EC,41005,4,STATUS_WORD,bits,1,1,-,0,65535,Durum bitleri,STATUS_BITS
+PANEL[n],1005,0x03ED,41006,5,ACTIVE_ALARMS,u16,1,1,adet,0,65535,Aktif alarm sayısı,
+PANEL[n],1006,0x03EE,41007,6,THETA_MAX,i16,1,0.1,K,-3276.8,3276.7,En kötü θ,Anma akımında sıcaklık fazlası
+PANEL[n],1007,0x03EF,41008,7,THETA_MAX_JOINT,u16,1,1,-,0,65535,En kötü bağlantı indeksi,JOINTS dizisindeki sıra
+PANEL[n],1008,0x03F0,41009,8,THETA_SLOPE,i16,1,0.001,K/hafta,-32.768,32.767,θ eğimi,Pozitif ise bozulma sürüyor
+PANEL[n],1009,0x03F1,41010,9,SENSITIVITY_PCT,u16,1,1,%,0,65535,Görünürlük,Yüke bağlı tespit yeteneği
+PANEL[n],1010,0x03F2,41011,10,RISK_LOOSE,u16,1,0.1,%,0.0,6553.5,Gevşek bağlantı riski,
+PANEL[n],1011,0x03F3,41012,11,RISK_OVERLOAD,u16,1,0.1,%,0.0,6553.5,Aşırı yük riski,
+PANEL[n],1012,0x03F4,41013,12,RISK_ARC_INTEGRITY,u16,1,0.1,%,0.0,6553.5,Ark koruma bütünlüğü riski,
+PANEL[n],1013,0x03F5,41014,13,RISK_THERMAL,u16,1,0.1,%,0.0,6553.5,Isıl kaçış riski,
+PANEL[n],1014,0x03F6,41015,14,RISK_HARMONIC,u16,1,0.1,%,0.0,6553.5,Harmonik nötr riski,
+PANEL[n],1015,0x03F7,41016,15,RISK_MOISTURE,u16,1,0.1,%,0.0,6553.5,Nem / yoğuşma riski,
+PANEL[n],1016,0x03F8,41017,16,RISK_INSULATION,u16,1,0.1,%,0.0,6553.5,Yalıtım riski,
+PANEL[n],1017,0x03F9,41018,17,T_JOINT_MAX,i16,1,0.1,°C,-3276.8,3276.7,En yüksek bağlantı sıcaklığı,
+PANEL[n],1018,0x03FA,41019,18,T_AIR,i16,1,0.1,°C,-3276.8,3276.7,Kabin içi hava,
+PANEL[n],1019,0x03FB,41020,19,RH,u16,1,0.1,%,0.0,6553.5,Bağıl nem,
+PANEL[n],1020,0x03FC,41021,20,DEWPOINT_MARGIN,i16,1,0.1,K,-3276.8,3276.7,Yoğuşma payı,Negatif ise yüzeyde yoğuşma var
+PANEL[n],1021,0x03FD,41022,21,I_L1,u16,1,0.1,A,0.0,6553.5,L1 akımı,
+PANEL[n],1022,0x03FE,41023,22,I_L2,u16,1,0.1,A,0.0,6553.5,L2 akımı,
+PANEL[n],1023,0x03FF,41024,23,I_L3,u16,1,0.1,A,0.0,6553.5,L3 akımı,
+PANEL[n],1024,0x0400,41025,24,I_N,u16,1,0.1,A,0.0,6553.5,Nötr akımı,
+PANEL[n],1025,0x0401,41026,25,V_L1,u16,1,0.1,V,0.0,6553.5,L1 gerilimi,
+PANEL[n],1026,0x0402,41027,26,V_L2,u16,1,0.1,V,0.0,6553.5,L2 gerilimi,
+PANEL[n],1027,0x0403,41028,27,V_L3,u16,1,0.1,V,0.0,6553.5,L3 gerilimi,
+PANEL[n],1028,0x0404,41029,28,FREQ,u16,1,0.01,Hz,0.0,655.35,Frekans,
+PANEL[n],1029,0x0405,41030,29,THD_V_MAX,u16,1,0.1,%,0.0,6553.5,En yüksek gerilim THD,
+PANEL[n],1030,0x0406,41031,30,THD_I_MAX,u16,1,0.1,%,0.0,6553.5,En yüksek akım THD,I > CT anmasının %10'u değilse 0
+PANEL[n],1031,0x0407,41032,31,LOAD_FACTOR,u16,1,0.1,%,0.0,6553.5,Yük faktörü,Anma akımına göre
+PANEL[n],1032,0x0408,41033,32,PD_RATE,u16,1,1,1/s,0,65535,RF darbe hızı,
+PANEL[n],1033,0x0409,41034,33,PD_QMAX,u16,1,0.1,dB,0.0,6553.5,RF tepe genlik,"pC eşdeğeri, IEC 60270 izlenebilir DEĞİL"
+PANEL[n],1034,0x040A,41035,34,PD_CLASS,u16,1,1,-,0,65535,PRPD sınıfı,0 GURULTU · 1 BOSLUK · 2 YUZEY · 3 KORONA · 4 YUZEN
+PANEL[n],1035,0x040B,41036,35,TEV_LEVEL,u16,1,0.1,dB,0.0,6553.5,TEV seviyesi,
+PANEL[n],1036,0x040C,41037,36,ARC_STATE,bits,1,1,-,0,65535,Ark koruma durumu,ARC_BITS
+PANEL[n],1037,0x040D,41038,37,ARC_DETECTORS_OK,u16,1,1,adet,0,65535,Sağlam dedektör,
+PANEL[n],1038,0x040E,41039,38,ARC_DETECTORS_TOTAL,u16,1,1,adet,0,65535,Kurulu dedektör,
+PANEL[n],1039,0x040F,41040,39,ARC_AMBIENT_WARN,u16,1,1,adet,0,65535,Işık uyarısı veren dedektör,
+PANEL[n],1040,0x0410,41041,40,ARC_DETECTOR_MAP_LO,bits,1,1,-,0,65535,Dedektör haritası düşük,"TVOC-2 reg 210 aynası · X1:1-10, X2:1-5"
+PANEL[n],1041,0x0411,41042,41,ARC_DETECTOR_MAP_HI,bits,1,1,-,0,65535,Dedektör haritası yüksek,"TVOC-2 reg 211 aynası · X2:6-10, X3:1-10"
+PANEL[n],1042,0x0412,41043,42,ARC_LAST_SELFTEST_D,u16,1,1,gün,0,65535,Son otokontrolden beri,
+PANEL[n],1043,0x0413,41044,43,DEVICES_ONLINE,u16,1,1,adet,0,65535,Çevrimiçi cihaz,9 üzerinden
+PANEL[n],1044,0x0414,41045,44,DEVICE_FAULT_MAP,bits,1,1,-,0,65535,Cihaz arıza haritası,DEVICE_FAULT_BITS
+PANEL[n],1045,0x0415,41046,45,DATA_AGE_S,u16,1,1,s,0,65535,Veri yaşı,Son başarılı güncellemeden beri geçen saniye
+PANEL[n],1046,0x0416,41047,46,UPDATED_AT,u32,2,1,s,0,4294967295,Son güncelleme,"Unix epoch, UTC"

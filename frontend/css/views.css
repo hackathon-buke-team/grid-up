@@ -1,0 +1,256 @@
+/* PANO GÖZ · ekrana özgü yerleşimler.
+   S1 filo · S2 dijital ikiz · S3 kanıt · S4 PRPD · S5 alarmlar · S6 SCADA   */
+
+.view { display: flex; flex-direction: column; gap: 14px; min-height: 100%; }
+
+.view-head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.view-head h1 { font-size: 20px; }
+.view-head .sp { flex: 1 1 auto; }
+
+/* ------------------------------------------------------------------ S1 filo */
+
+.fleet-grid {
+  display: grid;
+  grid-template-columns: minmax(420px, 560px) minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+}
+@media (max-width: 1250px) { .fleet-grid { grid-template-columns: minmax(0, 1fr); } }
+
+.map-wrap { position: relative; }
+.map-wrap svg { display: block; width: 100%; height: auto; max-height: 62vh; background: var(--bg); }
+.map-wrap .map-legend {
+  position: absolute; left: 10px; bottom: 10px;
+  display: flex; flex-direction: column; gap: 3px;
+  background: rgba(8,11,16,0.82);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 7px 9px; font-size: 12px; color: var(--fg-dim);
+}
+.map-legend .li { display: flex; align-items: center; gap: 6px; }
+
+.map-dot { cursor: pointer; }
+.map-dot:hover .halo { opacity: 0.9; }
+.map-dot.sel .halo { opacity: 1; }
+
+.fleet-table-wrap { max-height: calc(100vh - 250px); overflow: auto; }
+
+.hi-bar {
+  display: inline-block; vertical-align: middle;
+  width: 66px; height: 8px; border-radius: 4px;
+  background: var(--bg-3); overflow: hidden; margin-right: 8px;
+}
+.hi-bar i { display: block; height: 100%; background: var(--accent); }
+.hi-bar i.warn { background: var(--sev-uyari); }
+.hi-bar i.bad  { background: var(--sev-kritik); }
+.hi-bar i.acil { background: var(--sev-acil); }
+
+.delta-up   { color: var(--sev-kritik); font-weight: 650; }
+.delta-flat { color: var(--fg-mute); }
+.delta-down { color: var(--sev-izle); }
+
+/* ------------------------------------------------------------------- S2 ikiz */
+
+.twin-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 400px;
+  gap: 14px;
+  align-items: start;
+}
+@media (max-width: 1350px) { .twin-grid { grid-template-columns: minmax(0, 1fr); } }
+
+.twin-stage { background: #05080c; padding: 8px; display: flex; justify-content: center; }
+/* Panonun tamamı tek ekranda görünsün: SVG en-boy oranını koruyarak yüksekliğe
+   sığar (preserveAspectRatio varsayılanı 'meet'). Jüri panoyu kaydırmadan görür. */
+.twin-stage svg { display: block; width: 100%; height: auto; max-height: calc(100vh - 250px); }
+
+/* dijital ikiz SVG sınıfları */
+.tw-enclosure { fill: #0d141c; stroke: #4a5f78; stroke-width: 6; }
+.tw-inner     { fill: none; stroke: #33475e; stroke-width: 2; }
+.tw-zone      { fill: #101823; stroke: #2b3d52; stroke-width: 2; }
+.tw-zone-alt  { fill: #0c131b; stroke: #2b3d52; stroke-width: 2; }
+.tw-bar-l1    { fill: #8e9aa6; }
+.tw-bar-l2    { fill: #2a3340; stroke: #6d7b8b; stroke-width: 1.5; }
+.tw-bar-l3    { fill: #7a5a3c; }
+.tw-bar-n     { fill: #6ba8d8; }
+.tw-dsya      { fill: #16202c; stroke: #3d5570; stroke-width: 2; }
+.tw-dsya-400  { fill: #182534; stroke: #46617f; stroke-width: 2; }
+.tw-spare     { fill: url(#hatch); stroke: #47607c; stroke-width: 2; stroke-dasharray: 8 6; }
+.tw-txt       { fill: #9fb0c4; font-size: 22px; font-family: var(--font); }
+.tw-txt-sm    { fill: #7f92a8; font-size: 17px; font-family: var(--font); }
+.tw-txt-lg    { fill: #cddcec; font-size: 27px; font-weight: 600; font-family: var(--font); }
+.tw-dim       { stroke: #56b9ff; stroke-width: 1.6; }
+.tw-dim-txt   { fill: #56b9ff; font-size: 20px; font-family: var(--font); }
+.tw-unmon     { fill: none; stroke: #64788e; stroke-width: 2.5; stroke-dasharray: 5 4; }
+.tw-joint     { stroke: #05080c; stroke-width: 2; cursor: pointer; }
+.tw-joint:hover { stroke: #ffffff; stroke-width: 3; }
+.tw-joint.sel { stroke: #ffffff; stroke-width: 4; }
+.tw-dev       { cursor: pointer; }
+.tw-dev-body  { fill: #10202c; stroke: #56b9ff; stroke-width: 3; }
+.tw-dev-off   { stroke: #ff6b3d; stroke-dasharray: 6 4; }
+.tw-dev-txt   { fill: #56b9ff; font-size: 18px; font-family: var(--font); }
+.tw-lead      { stroke: #56b9ff; stroke-width: 1.5; stroke-dasharray: 4 3; }
+
+.twin-legend {
+  display: flex; flex-wrap: wrap; gap: 8px 18px;
+  padding: 10px 14px; border-top: 1px solid var(--line); background: var(--bg-1);
+  font-size: 12.5px; color: var(--fg-dim);
+}
+.twin-legend .li { display: flex; align-items: center; gap: 6px; }
+.twin-legend svg { width: 20px; height: 20px; flex: none; }
+
+.ramp {
+  display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--fg-mute);
+}
+.ramp .bar {
+  width: 150px; height: 10px; border-radius: 5px; border: 1px solid var(--line);
+}
+
+.joint-list { max-height: 340px; overflow: auto; }
+
+/* ------------------------------------------------------------------ S3 kanıt */
+
+.evidence-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  gap: 14px;
+  align-items: start;
+}
+@media (max-width: 1350px) { .evidence-grid { grid-template-columns: minmax(0, 1fr); } }
+
+.chart-stack { display: flex; flex-direction: column; gap: 0; position: relative; }
+.chart-box { position: relative; border-bottom: 1px solid var(--line-soft); }
+.chart-box:last-child { border-bottom: none; }
+.chart-box canvas { display: block; width: 100%; height: 100%; }
+.chart-box .chart-title {
+  position: absolute; left: 12px; top: 6px; z-index: 2;
+  font-size: 13px; color: var(--fg-dim); pointer-events: none;
+}
+.chart-box .chart-legend {
+  position: absolute; right: 12px; top: 6px; z-index: 2;
+  display: flex; gap: 12px; font-size: 12px; color: var(--fg-mute); pointer-events: none;
+}
+.chart-box .chart-legend .li { display: flex; align-items: center; gap: 5px; }
+.chart-box .chart-legend i { width: 14px; height: 3px; border-radius: 2px; display: block; }
+
+.chart-tip {
+  position: fixed; z-index: 70; pointer-events: none;
+  background: rgba(20,29,40,0.97);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 7px 10px; font-size: 12.5px; color: var(--fg);
+  box-shadow: var(--shadow); white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.chart-tip .t { color: var(--fg-mute); margin-bottom: 3px; }
+.chart-tip .li { display: flex; align-items: center; gap: 6px; }
+.chart-tip i { width: 10px; height: 3px; border-radius: 2px; display: block; }
+
+.formula {
+  background: var(--bg);
+  border: 1px solid var(--accent-dim);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  text-align: center;
+  font-size: 21px;
+  color: var(--fg);
+  letter-spacing: 0.3px;
+}
+.formula sub, .formula sup { font-size: 0.62em; }
+.formula .why { display: block; margin-top: 7px; font-size: 12.5px; color: var(--fg-mute);
+                letter-spacing: 0; }
+
+.reason-list { list-style: none; margin: 0; padding: 0; display: flex;
+               flex-direction: column; gap: 7px; }
+.reason-list li {
+  display: flex; gap: 8px; align-items: flex-start;
+  font-size: 13.5px; color: var(--fg-dim); line-height: 1.4;
+}
+.reason-list li .b { color: var(--accent); flex: none; }
+.reason-list.ruled li .b { color: var(--fg-mute); }
+.reason-list.ruled li { color: var(--fg-mute); }
+
+.interval {
+  display: flex; align-items: baseline; gap: 8px; font-size: 20px; font-weight: 650;
+}
+.interval .u { font-size: 13px; color: var(--fg-dim); font-weight: 500; }
+
+/* ------------------------------------------------------------------- S4 PRPD */
+
+.prpd-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 400px;
+  gap: 14px;
+  align-items: start;
+}
+@media (max-width: 1350px) { .prpd-grid { grid-template-columns: minmax(0, 1fr); } }
+
+.prpd-canvas-wrap { position: relative; }
+.prpd-canvas-wrap canvas { display: block; width: 100%; }
+
+/* ----------------------------------------------------------------- S5 alarm */
+
+.alarm-item {
+  display: grid;
+  grid-template-columns: 128px minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: start;
+  padding: 13px 14px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.alarm-item:hover { background: var(--bg-2); }
+.alarm-item .ttl { font-size: 15.5px; font-weight: 600; }
+.alarm-item .meta { font-size: 12.5px; color: var(--fg-mute); margin-top: 3px; }
+.alarm-item .act { font-size: 13.5px; color: var(--fg-dim); margin-top: 6px; }
+.alarm-item .ev { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 7px; }
+.alarm-item .side { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; }
+.alarm-item > .col, .supp-item > .col { align-items: flex-start; }
+.alarm-item > .col > *, .supp-item > .col > * { flex: none; }
+
+.supp-item {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: 14px;
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.supp-item:hover { background: var(--bg-2); }
+.supp-item .rsn { font-size: 14.5px; color: var(--fg); }
+.supp-item .det { font-size: 12.5px; color: var(--fg-mute); margin-top: 3px;
+                  font-family: var(--mono); }
+
+/* ----------------------------------------------------------------- S6 SCADA */
+
+.scada-grid {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+}
+@media (max-width: 1250px) { .scada-grid { grid-template-columns: minmax(0, 1fr); } }
+
+.reg-tbl td.addr { font-family: var(--mono); color: var(--fg-mute); }
+.reg-tbl td.nm   { font-family: var(--mono); color: var(--fg); }
+.reg-tbl td.raw  { font-family: var(--mono); text-align: right; color: var(--fg-dim); }
+.reg-tbl td.eng  { text-align: right; font-weight: 600; }
+.reg-tbl tr.changed td.raw { color: var(--accent); }
+
+.bitgrid { display: flex; flex-wrap: wrap; gap: 5px; }
+.bit {
+  border: 1px solid var(--line); border-radius: 5px; padding: 2px 8px;
+  font-size: 12px; color: var(--fg-mute); background: var(--bg-2);
+}
+.bit.on { color: var(--fg); border-color: var(--accent); background: var(--accent-soft); }
+.bit.on.warn { color: var(--sev-uyari); border-color: var(--sev-uyari);
+               background: rgba(244,177,58,0.12); }
+.bit .ix { color: var(--fg-mute); font-family: var(--mono); font-size: 11px; margin-right: 5px; }
+
+/* --------------------------------------------------------------- JSON ağacı */
+
+.jtree { font-family: var(--mono); font-size: 12.5px; line-height: 1.55; }
+.jtree .k { color: var(--accent); }
+.jtree .s { color: #9ad4a0; }
+.jtree .n { color: var(--sev-uyari); }
+.jtree .b { color: var(--sev-izle); }
+.jtree ul { list-style: none; margin: 0; padding-left: 16px;
+            border-left: 1px solid var(--line-soft); }

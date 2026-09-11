@@ -1,0 +1,287 @@
+/* PANO GÖZ · temel katman: renk belirteçleri, tipografi, iskelet yerleşim.
+   Kontrol odası koyu teması. Aydınlık bir salonda projeksiyonla gösterilecek:
+   kontrast yüksek, yazı iri, rakamlar tablo hizalı (font-variant-numeric).
+   Türkçe metinde ASLA text-transform:uppercase kullanılmaz - "i" harfini "I"
+   yapar, "İ" yapmaz. Bu dosyada tek bir uppercase kuralı yoktur.            */
+
+:root {
+  color-scheme: dark;
+
+  /* zemin */
+  --bg:        #080b10;
+  --bg-1:      #0e141c;
+  --bg-2:      #141d28;
+  --bg-3:      #1b2634;
+  --bg-hi:     #22303f;
+  --line:      #2a3a4e;
+  --line-soft: #1d2836;
+
+  /* yazı */
+  --fg:      #eef4fb;
+  --fg-dim:  #b3c2d4;
+  --fg-mute: #7f92a8;
+
+  /* arayüz vurgusu (ölçüm rengi değil) */
+  --accent:      #56b9ff;
+  --accent-dim:  #2b6f9e;
+  --accent-soft: rgba(86, 185, 255, 0.14);
+
+  /* seviye renkleri · renk körlüğüne dayanıklı, her zaman şekil + metin ile birlikte */
+  --sev-bilgi:  #9dabbd;
+  --sev-izle:   #4aa3ff;
+  --sev-uyari:  #f4b13a;
+  --sev-kritik: #ff6b3d;
+  --sev-acil:   #ff2f79;
+
+  /* saf kırmızı/yeşil YALNIZCA topoloji içindir (enerjili/enerjisiz, faz rengi) */
+  --topo-green: #35c07a;
+  --topo-red:   #e5484d;
+
+  /* ölçüm ısı haritası: cividis (algısal olarak düzgün) - gökkuşağı yok */
+  --heat-0: #00224e;
+  --heat-1: #ffea46;
+
+  --ok:   #35c07a;
+  --warn: #f4b13a;
+  --bad:  #ff6b3d;
+
+  --radius: 10px;
+  --radius-sm: 6px;
+  --rail-w: 140px;
+  --head-h: 62px;
+
+  --font: ui-sans-serif, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+          "Noto Sans", "Liberation Sans", sans-serif;
+  --mono: ui-monospace, "Cascadia Mono", "Segoe UI Mono", "SF Mono", Consolas,
+          "Liberation Mono", monospace;
+
+  --shadow: 0 8px 28px rgba(0, 0, 0, 0.55);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+/* Rakamlar her yerde tablo hizalı ve eşit genişlikte olsun ki sütunlar oynamasın */
+.num, table, .mono, input, .kv-v, .stat-v {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.mono { font-family: var(--mono); }
+
+h1, h2, h3, h4 { margin: 0; font-weight: 650; letter-spacing: 0.1px; }
+h1 { font-size: 19px; }
+h2 { font-size: 17px; }
+h3 { font-size: 15px; }
+
+a { color: var(--accent); }
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+::selection { background: var(--accent-dim); color: #fff; }
+
+/* ------------------------------------------------------------------ iskelet */
+
+#app {
+  display: grid;
+  grid-template-columns: var(--rail-w) 1fr;
+  grid-template-rows: var(--head-h) 1fr;
+  grid-template-areas: "brand head" "rail main";
+  height: 100vh;
+}
+
+#brand {
+  grid-area: brand;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 12px;
+  background: var(--bg-1);
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+#brand .mark {
+  width: 30px; height: 30px;
+  flex: none;
+}
+
+#brand .name {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  line-height: 1.12;
+  white-space: nowrap;
+}
+
+#brand .name small {
+  display: block;
+  font-size: 9.5px;
+  font-weight: 500;
+  color: var(--fg-mute);
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+#head {
+  grid-area: head;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 16px;
+  background: var(--bg-1);
+  border-bottom: 1px solid var(--line);
+  overflow: hidden;
+}
+
+#rail {
+  grid-area: rail;
+  background: var(--bg-1);
+  border-right: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  padding: 8px 0;
+  gap: 2px;
+  overflow-y: auto;
+}
+
+#main {
+  grid-area: main;
+  overflow: auto;
+  padding: 16px;
+  scrollbar-color: var(--line) transparent;
+}
+
+/* --------------------------------------------------------------- sol raylık */
+
+.rail-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 4px;
+  color: var(--fg-mute);
+  border-left: 3px solid transparent;
+  transition: background 0.12s, color 0.12s;
+  text-align: center;
+}
+
+.rail-btn:hover { background: var(--bg-2); color: var(--fg-dim); }
+
+.rail-btn[aria-current="true"] {
+  color: var(--fg);
+  background: var(--bg-2);
+  border-left-color: var(--accent);
+}
+
+.rail-btn svg { width: 24px; height: 24px; }
+
+.rail-btn .lbl { font-size: 12px; line-height: 1.15; }
+.rail-btn .sub { font-size: 10px; color: var(--fg-mute); }
+
+.rail-spacer { flex: 1 1 auto; }
+
+/* -------------------------------------------------------------- üst şerit */
+
+.head-title {
+  font-size: 17px;
+  font-weight: 650;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.head-sub {
+  font-size: 12px;
+  color: var(--fg-mute);
+  white-space: nowrap;
+}
+
+.head-spacer { flex: 1 1 auto; }
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg-2);
+  font-size: 13px;
+  color: var(--fg-dim);
+  white-space: nowrap;
+}
+
+.chip b { color: var(--fg); font-weight: 600; }
+
+.chip.link:hover { border-color: var(--accent-dim); color: var(--fg); }
+
+.conn-dot {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--fg-mute);
+  flex: none;
+}
+.conn-ws   .conn-dot { background: var(--ok); box-shadow: 0 0 0 3px rgba(53,192,122,0.18); }
+.conn-poll .conn-dot { background: var(--warn); box-shadow: 0 0 0 3px rgba(244,177,58,0.18); }
+.conn-down .conn-dot { background: var(--bad); box-shadow: 0 0 0 3px rgba(255,107,61,0.18); }
+
+select.panel-select {
+  background: var(--bg-2);
+  color: var(--fg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+  font-size: 14px;
+  max-width: 260px;
+}
+
+/* -------------------------------------------------------------- yardımcılar */
+
+.muted { color: var(--fg-mute); }
+.dim   { color: var(--fg-dim); }
+.small { font-size: 12.5px; }
+.tiny  { font-size: 11.5px; }
+.nowrap { white-space: nowrap; }
+.right { text-align: right; }
+.center { text-align: center; }
+.hidden { display: none !important; }
+
+.row { display: flex; gap: 12px; align-items: center; }
+.col { display: flex; flex-direction: column; gap: 12px; }
+.wrap { flex-wrap: wrap; }
+.grow { flex: 1 1 auto; }
+
+.grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+
+@media (max-width: 1400px) {
+  .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 1100px) {
+  .grid-3, .grid-2 { grid-template-columns: minmax(0, 1fr); }
+}

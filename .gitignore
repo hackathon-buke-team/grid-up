@@ -1,0 +1,31 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+*.egg-info/
+
+# --- Çalışma zamanı veri tabanı (her geliştiricide ayrı üretilir) ---
+*.db
+*.db-wal
+*.db-shm
+panogoz.db
+
+# --- Firmware derleme çıktıları (kaynaktan üretilir) ---
+firmware/node/*.o
+firmware/node/*.elf
+firmware/node/*.bin
+firmware/node/*.map
+firmware/node/panogoz_node
+firmware/node/panogoz_node.exe
+
+# --- Yarışma girdilerinin zip kopyası ---
+# Açılmış klasör depoda duruyor; 8 MB'lık zip sürümü gereksiz ikizdir.
+Hackathon Verileri-*.zip
+
+# --- Araç ve işletim sistemi artıkları ---
+.playwright-mcp/
+.DS_Store
+Thumbs.db
+*.swp
