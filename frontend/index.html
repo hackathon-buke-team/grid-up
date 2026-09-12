@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PANO GÖZ — İzleme Konsolu</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>PANO GÖZ</h1>
+    <p>Pano/Hücre İçi Anomali Erken Uyarı Sistemi — İzleme Konsolu</p>
+  </header>
+
+  <main>
+    <section id="connections" class="cards"></section>
+
+    <section class="detail">
+      <div class="detail-header">
+        <h2 id="detail-title">—</h2>
+        <span id="detail-severity" class="badge">—</span>
+      </div>
+
+      <div class="readouts">
+        <div><span class="label">θ (anomali metriği)</span><span id="readout-theta" class="value">—</span></div>
+        <div><span class="label">Akım</span><span id="readout-current" class="value">—</span></div>
+        <div><span class="label">Yüzey Sıcaklığı</span><span id="readout-temp" class="value">—</span></div>
+        <div><span class="label">Zaman</span><span id="readout-time" class="value">—</span></div>
+      </div>
+
+      <canvas id="chart" width="900" height="260"></canvas>
+
+      <div class="controls">
+        <button id="play-btn">▶ Oynat</button>
+        <input id="time-slider" type="range" min="0" max="0" value="0" />
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
