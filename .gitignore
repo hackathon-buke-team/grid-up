@@ -7,3 +7,4 @@ venv/
 *.egg-info/
 reports/*.csv
 reports/*.png
+data/alarm_state.json
