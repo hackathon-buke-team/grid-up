@@ -1,5 +1,15 @@
+from panogoz.notify.broadcast_channel import BroadcastChannel
 from panogoz.notify.console_channel import ConsoleChannel
 from panogoz.notify.escalation import AlarmState, EscalationLadder, generate_approval_token
+
+
+def test_broadcast_channel_sends_to_all_targets():
+    personal = ConsoleChannel()
+    group = ConsoleChannel()
+    broadcast = BroadcastChannel(channels=[personal, group])
+    broadcast.send("test mesaji")
+    assert personal.sent == ["test mesaji"]
+    assert group.sent == ["test mesaji"]
 
 
 def test_approval_token_is_four_digits():

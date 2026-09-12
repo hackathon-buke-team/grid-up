@@ -9,12 +9,23 @@ uydurma bir mesaj değildir.
 """
 from __future__ import annotations
 
+import os
 import sys
 
+from panogoz.notify.broadcast_channel import BroadcastChannel
 from panogoz.notify.escalation import EscalationLadder
 from panogoz.notify.telegram_channel import TelegramChannel
 from panogoz.rules.engine import evaluate_connection
 from panogoz.sim.scenarios import SCENARIOS_BY_ID
+
+
+def build_channel() -> object:
+    personal = TelegramChannel.from_env()
+    group_chat_id = os.environ.get("TELEGRAM_GROUP_CHAT_ID")
+    if not group_chat_id:
+        return personal
+    group = TelegramChannel(bot_token=personal.bot_token, chat_id=group_chat_id)
+    return BroadcastChannel(channels=[personal, group])
 
 
 def main() -> None:
@@ -27,7 +38,7 @@ def main() -> None:
         print(f"{scenario_id} bir alarm üretmedi, gönderilecek gerçek kanıt yok.")
         return
 
-    channel = TelegramChannel.from_env()
+    channel = build_channel()
     ladder = EscalationLadder(channel=channel)
     alarm = ladder.open_alarm(
         connection_id=f"{scenario.feeder_id}-L2 ({scenario.title})",
