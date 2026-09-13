@@ -1,0 +1,112 @@
+{
+    "$schema": "https://schemas.kicad.org/erc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-09-13T23:46:22",
+    "ignored_checks": [
+        {
+            "description": "Global label only appears once in the schematic",
+            "key": "single_global_label"
+        },
+        {
+            "description": "Four connection points are joined together",
+            "key": "four_way_junction"
+        },
+        {
+            "description": "SPICE model issue",
+            "key": "simulation_model_issue"
+        },
+        {
+            "description": "Assigned footprint doesn't match footprint filters",
+            "key": "footprint_filter"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning"
+    ],
+    "kicad_version": "10.0.6",
+    "sheets": [
+        {
+            "path": "/",
+            "uuid_path": "/dd79c26f-9d9d-477f-ae8b-9a87331f06ea",
+            "violations": [
+                {
+                    "description": "'AP2112K-3.3' sembolü 'Regulator_Linear' kütüphanesindeki kopyayla eşleşmiyor",
+                    "items": [
+                        {
+                            "description": "SembollerU2 [AP2112K-3.3]",
+                            "pos": {
+                                "x": 1.2446,
+                                "y": 3.4417
+                            },
+                            "uuid": "d106a074-3e8e-4f10-9cb8-262d4bd3bfae"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_mismatch"
+                },
+                {
+                    "description": "Label connected to only one pin",
+                    "items": [
+                        {
+                            "description": "'SPI1_MOSI' etiketi",
+                            "pos": {
+                                "x": 2.794,
+                                "y": 2.3876
+                            },
+                            "uuid": "691eea90-3387-4f60-bd0a-983d46687b70"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "isolated_pin_label"
+                },
+                {
+                    "description": "Mevcut yapılandırma 'Generic' sembol kütüphanesini içermiyor",
+                    "items": [
+                        {
+                            "description": "SembollerA1 [CT_Interface]",
+                            "pos": {
+                                "x": 3.1369,
+                                "y": 1.5367
+                            },
+                            "uuid": "377c9ba2-dcc7-44d9-b18b-90f21e1486f0"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "Mevcut yapılandırma 'Generic' sembol kütüphanesini içermiyor",
+                    "items": [
+                        {
+                            "description": "SembollerA2 [CT_Interface]",
+                            "pos": {
+                                "x": 3.5433,
+                                "y": 1.5367
+                            },
+                            "uuid": "d5c5596c-fb2e-4cdc-ad19-e88b14fe861b"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "Mevcut yapılandırma 'Generic' sembol kütüphanesini içermiyor",
+                    "items": [
+                        {
+                            "description": "SembollerA3 [CT_Interface]",
+                            "pos": {
+                                "x": 3.937,
+                                "y": 1.5367
+                            },
+                            "uuid": "d39bffe5-624d-437c-acd3-0e72b0513350"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                }
+            ]
+        }
+    ],
+    "source": "tc-node.kicad_sch"
+}

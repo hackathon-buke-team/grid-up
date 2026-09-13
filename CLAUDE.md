@@ -114,9 +114,11 @@ kanalından tek mesaj · demo provası + video.
 **Teslimat:** modülün TASARIM DOSYASI (şematik, PCB yerleşimi, mekanik montaj) + gerçek
 hedefte derlenen firmware. **Fiziksel prototip beklenmiyor.**
 
-- [ ] **1.1** KiCad şematiği: TC düğümü, IR/PD düğümü, ağ geçidi kartı (besleme, sensör
+- [x] **1.1** KiCad şematiği: TC düğümü, IR/PD düğümü, ağ geçidi kartı (besleme, sensör
       arayüzleri, RF ön ucu, koruma elemanları). *Bitti sayılır:* 3 şematik PDF, ERC
-      temiz, docs/03 ile bileşen eşleşiyor.
+      temiz, docs/03 ile bileşen eşleşiyor. → `hardware/kicad/{tc-node,ir-pd-node,gateway}/`
+      + `docs/03-ELEKTRONIK-DOKUMANTASYON.md`, gerçek `kicad-cli sch erc` ile 0 hata
+      (2026-09-13).
 - [ ] **1.2** PCB yerleşimi + 3B görünüm (kart ölçüleri, katman yığını, konnektör
       tablosu, anten açıklığı). *Bitti sayılır:* her kart için üstten görünüm + 3D
       render PNG.

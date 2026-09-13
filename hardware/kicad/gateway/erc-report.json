@@ -1,0 +1,82 @@
+{
+    "$schema": "https://schemas.kicad.org/erc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-09-13T23:46:26",
+    "ignored_checks": [
+        {
+            "description": "Global label only appears once in the schematic",
+            "key": "single_global_label"
+        },
+        {
+            "description": "Four connection points are joined together",
+            "key": "four_way_junction"
+        },
+        {
+            "description": "SPICE model issue",
+            "key": "simulation_model_issue"
+        },
+        {
+            "description": "Assigned footprint doesn't match footprint filters",
+            "key": "footprint_filter"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning"
+    ],
+    "kicad_version": "10.0.6",
+    "sheets": [
+        {
+            "path": "/",
+            "uuid_path": "/c20c76eb-ce7a-43ca-97c8-07304469c53d",
+            "violations": [
+                {
+                    "description": "Label connected to only one pin",
+                    "items": [
+                        {
+                            "description": "'AC_L_PANEL' etiketi",
+                            "pos": {
+                                "x": 0.8382,
+                                "y": 3.3782
+                            },
+                            "uuid": "e35e3ddf-ec8e-4ccf-8cc0-cc454d1aa76d"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "isolated_pin_label"
+                },
+                {
+                    "description": "'AP2112K-3.3' sembolü 'Regulator_Linear' kütüphanesindeki kopyayla eşleşmiyor",
+                    "items": [
+                        {
+                            "description": "SembollerU3 [AP2112K-3.3]",
+                            "pos": {
+                                "x": 1.4351,
+                                "y": 3.4417
+                            },
+                            "uuid": "4b261d68-e85b-4364-a9ea-ed450fba51ee"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_mismatch"
+                },
+                {
+                    "description": "'RJ45' sembolü 'Connector' kütüphanesindeki kopyayla eşleşmiyor",
+                    "items": [
+                        {
+                            "description": "SembollerJ3 [RJ45]",
+                            "pos": {
+                                "x": 3.8354,
+                                "y": 1.143
+                            },
+                            "uuid": "75b4d3d2-e60e-415d-998f-752bbb2a23d9"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_mismatch"
+                }
+            ]
+        }
+    ],
+    "source": "gateway.kicad_sch"
+}

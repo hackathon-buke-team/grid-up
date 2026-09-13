@@ -90,5 +90,5 @@ Kaynak: `TEDAŞ-MLZ/2003-06.B` EK-II/14 (ölçüler) ve EK-I/8 (donanım listesi
 - [ ] Ön erişim mesafesi (§5) TEDAŞ AG PANO MALZEME ŞARTNAMESİ'nden sayısal
       olarak doğrulanmadı.
 - [ ] B (Yükseklik) toleransı kaynak çizimde belirsiz okunuyor — teyit gerekli.
-- [ ] KiCad şematiği (1.1) ve PCB yerleşimi (1.2) henüz bu belgeye referans
-      vermiyor — sıradaki K1 maddeleri.
+- [x] KiCad şematiği (1.1) tamamlandı → [`docs/03-ELEKTRONIK-DOKUMANTASYON.md`](03-ELEKTRONIK-DOKUMANTASYON.md).
+- [ ] PCB yerleşimi (1.2) henüz yapılmadı — sıradaki K1 maddesi.
