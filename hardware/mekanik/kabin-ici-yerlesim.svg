@@ -1,0 +1,206 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-300 -160 2900 1900" font-family="Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#333"/>
+    </marker>
+    <pattern id="hatch" width="24" height="24" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+      <rect width="24" height="24" fill="#fff5f5"/>
+      <line x1="0" y1="0" x2="0" y2="24" stroke="#e08787" stroke-width="4"/>
+    </pattern>
+  </defs>
+
+  <rect x="-300" y="-160" width="2900" height="1900" fill="#ffffff"/>
+
+  <text x="0" y="-110" font-size="42" font-weight="bold" fill="#111">PANO GÖZ — Kabin İçi Mekanik Yerleşim (K1 · 1.3)</text>
+  <text x="0" y="-70" font-size="24" fill="#444">MLZ.DSYA / 1250-1600 kVA Dahili Tip AG Panosu — ön görünüm (solda) ve derinlik kesiti (sağda). Birim: mm, 1:1 oranlı.</text>
+
+  <!-- ============ FRONT VIEW ============ -->
+  <g id="front-view">
+    <rect x="0" y="0" width="1600" height="1500" fill="#f7f7f7" stroke="#111" stroke-width="6"/>
+    <rect x="16" y="16" width="1568" height="1468" fill="none" stroke="#999" stroke-width="2" stroke-dasharray="4 6"/>
+
+    <!-- overall width dimension -->
+    <line x1="0" y1="-40" x2="1600" y2="-40" stroke="#333" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+    <text x="800" y="-50" font-size="26" text-anchor="middle" fill="#111">1600 mm (Genişlik, +100 / -0)</text>
+
+    <!-- overall height dimension -->
+    <line x1="-40" y1="0" x2="-40" y2="1500" stroke="#333" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+    <text x="-55" y="750" font-size="26" text-anchor="middle" fill="#111" transform="rotate(-90 -55 750)">1500 mm (Yükseklik, bkz. not 6)</text>
+
+    <!-- Ana giriş bara zone -->
+    <rect x="120" y="60" width="650" height="180" fill="#e4e4e4" stroke="#111" stroke-width="3"/>
+    <text x="445" y="130" font-size="24" text-anchor="middle" fill="#111">ANA GİRİŞ BARASI</text>
+    <text x="445" y="160" font-size="20" text-anchor="middle" fill="#333">2×(100×10) mm² kalay kaplı Cu</text>
+    <text x="445" y="185" font-size="20" text-anchor="middle" fill="#333">Akım Trafosu 2500/5</text>
+    <text x="445" y="210" font-size="18" text-anchor="middle" fill="#555">(TEDAŞ EK-I/8)</text>
+
+    <!-- TC-0 node at ana giris -->
+    <g>
+      <circle cx="700" cy="60" r="26" fill="#f39c12" stroke="#111" stroke-width="2"/>
+      <text x="700" y="67" font-size="20" text-anchor="middle" fill="#111" font-weight="bold">TC0</text>
+      <line x1="700" y1="34" x2="660" y2="-8" stroke="#f39c12" stroke-width="3"/>
+      <text x="655" y="-16" font-size="20" fill="#7a4d00">TC-0 · Ana giriş 3 faz</text>
+    </g>
+
+    <!-- PD-1 node at ana giris -->
+    <g>
+      <circle cx="840" cy="150" r="28" fill="#8e44ad" stroke="#111" stroke-width="2"/>
+      <text x="840" y="157" font-size="18" text-anchor="middle" fill="#fff" font-weight="bold">PD1</text>
+      <circle cx="840" cy="150" r="42" fill="none" stroke="#8e44ad" stroke-width="3" stroke-dasharray="6 5"/>
+      <text x="900" y="120" font-size="20" fill="#5b2c6f">PD-1 · HFCT klips</text>
+      <text x="900" y="145" font-size="20" fill="#5b2c6f">(ana giriş kablo riseri)</text>
+    </g>
+
+    <!-- DSYA output row: 5 active + 2 spare -->
+    <!-- centers per real 185mm terminal pitch -->
+    <g id="outputs">
+      <!-- Cikis 1..5 -->
+      <g>
+        <rect x="180" y="380" width="140" height="220" fill="#d6e8fb" stroke="#111" stroke-width="2"/>
+        <text x="250" y="620" font-size="20" text-anchor="middle" fill="#111">Çıkış 1</text>
+        <text x="250" y="645" font-size="16" text-anchor="middle" fill="#555">250/400A DSYA</text>
+        <circle cx="250" cy="380" r="22" fill="#f39c12" stroke="#111" stroke-width="2"/>
+        <text x="250" y="386" font-size="17" text-anchor="middle" fill="#111" font-weight="bold">TC1</text>
+      </g>
+      <g>
+        <rect x="365" y="380" width="140" height="220" fill="#d6e8fb" stroke="#111" stroke-width="2"/>
+        <text x="435" y="620" font-size="20" text-anchor="middle" fill="#111">Çıkış 2</text>
+        <text x="435" y="645" font-size="16" text-anchor="middle" fill="#555">250/400A DSYA</text>
+        <circle cx="435" cy="380" r="22" fill="#f39c12" stroke="#111" stroke-width="2"/>
+        <text x="435" y="386" font-size="17" text-anchor="middle" fill="#111" font-weight="bold">TC2</text>
+      </g>
+      <g>
+        <rect x="550" y="380" width="140" height="220" fill="#d6e8fb" stroke="#111" stroke-width="2"/>
+        <text x="620" y="620" font-size="20" text-anchor="middle" fill="#111">Çıkış 3</text>
+        <text x="620" y="645" font-size="16" text-anchor="middle" fill="#555">250/400A DSYA</text>
+        <circle cx="620" cy="380" r="22" fill="#f39c12" stroke="#111" stroke-width="2"/>
+        <text x="620" y="386" font-size="17" text-anchor="middle" fill="#111" font-weight="bold">TC3</text>
+      </g>
+      <g>
+        <rect x="735" y="380" width="140" height="220" fill="#d6e8fb" stroke="#111" stroke-width="2"/>
+        <text x="805" y="620" font-size="20" text-anchor="middle" fill="#111">Çıkış 4</text>
+        <text x="805" y="645" font-size="16" text-anchor="middle" fill="#555">250/400A DSYA</text>
+        <circle cx="805" cy="380" r="22" fill="#f39c12" stroke="#111" stroke-width="2"/>
+        <text x="805" y="386" font-size="17" text-anchor="middle" fill="#111" font-weight="bold">TC4</text>
+      </g>
+      <g>
+        <rect x="920" y="380" width="140" height="220" fill="#d6e8fb" stroke="#111" stroke-width="2"/>
+        <text x="990" y="620" font-size="20" text-anchor="middle" fill="#111">Çıkış 5</text>
+        <text x="990" y="645" font-size="16" text-anchor="middle" fill="#555">250/400A DSYA</text>
+        <circle cx="990" cy="380" r="22" fill="#f39c12" stroke="#111" stroke-width="2"/>
+        <text x="990" y="386" font-size="17" text-anchor="middle" fill="#111" font-weight="bold">TC5</text>
+      </g>
+      <!-- Yedek 1..2, no sensor -->
+      <g opacity="0.65">
+        <rect x="1105" y="380" width="140" height="220" fill="#fff" stroke="#999" stroke-width="2" stroke-dasharray="8 6"/>
+        <text x="1175" y="620" font-size="20" text-anchor="middle" fill="#777">Yedek 1</text>
+      </g>
+      <g opacity="0.65">
+        <rect x="1290" y="380" width="140" height="220" fill="#fff" stroke="#999" stroke-width="2" stroke-dasharray="8 6"/>
+        <text x="1360" y="620" font-size="20" text-anchor="middle" fill="#777">Yedek 2</text>
+      </g>
+    </g>
+
+    <!-- 185mm pitch dimension between Cikis1 and Cikis2 -->
+    <line x1="250" y1="680" x2="435" y2="680" stroke="#333" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+    <text x="342" y="708" font-size="20" text-anchor="middle" fill="#111">185 mm (bara terminal aralığı, EK-I/8)</text>
+
+    <!-- Gateway node -->
+    <g>
+      <rect x="1370" y="70" width="140" height="90" rx="10" fill="#16a085" stroke="#111" stroke-width="2"/>
+      <text x="1440" y="110" font-size="22" text-anchor="middle" fill="#fff" font-weight="bold">GW-1</text>
+      <text x="1440" y="135" font-size="16" text-anchor="middle" fill="#e8fff8">Gateway</text>
+      <line x1="1440" y1="70" x2="1440" y2="0" stroke="#16a085" stroke-width="4"/>
+      <line x1="1440" y1="0" x2="1440" y2="-60" stroke="#16a085" stroke-width="4" stroke-dasharray="6 5"/>
+      <text x="1450" y="-70" font-size="20" fill="#0e6655">Harici anten (SMA geçiş / rakor)</text>
+      <text x="1300" y="35" font-size="18" fill="#0e6655" text-anchor="end">(mevcut "Modem" bölgesi,</text>
+      <text x="1300" y="58" font-size="18" fill="#0e6655" text-anchor="end">EK-II/14 yerleşimi)</text>
+    </g>
+
+    <!-- Keepout zone: cable/bus clearance >=400mm -->
+    <rect x="16" y="1100" width="1568" height="384" fill="url(#hatch)" stroke="#c0392b" stroke-width="3"/>
+    <text x="800" y="1270" font-size="26" text-anchor="middle" fill="#922b21" font-weight="bold">KABLO / BARA BOŞLUĞU — EN AZ 400 mm</text>
+    <text x="800" y="1300" font-size="20" text-anchor="middle" fill="#922b21">(TEDAŞ-MLZ/2003-06.B, EK-II/14) — PANO GÖZ modülü ve kablo demeti bu bölgeye girmez</text>
+
+    <line x1="1650" y1="1100" x2="1650" y2="1484" stroke="#333" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+    <text x="1665" y="1300" font-size="22" fill="#111">400 mm</text>
+
+    <!-- signal cable routing corridor, right inner wireway -->
+    <path d="M 1540 40 L 1540 1080" fill="none" stroke="#2874a6" stroke-width="4" stroke-dasharray="10 8"/>
+    <text x="1200" y="900" font-size="18" fill="#1a5276" text-anchor="middle">Sinyal / anten kablo yolu — sağ düşey kanal,</text>
+    <text x="1200" y="924" font-size="18" fill="#1a5276" text-anchor="middle">baradan ≥ 50 mm ayrık, tüm TC/PD düğümlerini GW-1'e bağlar</text>
+  </g>
+
+  <!-- ============ SIDE VIEW (depth cross-section) ============ -->
+  <g id="side-view">
+    <rect x="1780" y="0" width="450" height="1500" fill="#f7f7f7" stroke="#111" stroke-width="6"/>
+
+    <line x1="1780" y1="-40" x2="2230" y2="-40" stroke="#333" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+    <text x="2005" y="-50" font-size="24" text-anchor="middle" fill="#111">450 mm (Derinlik, +50 / -0)</text>
+
+    <!-- rear busbar zone -->
+    <rect x="2110" y="0" width="120" height="1500" fill="#e4e4e4" stroke="#111" stroke-width="2"/>
+    <text x="2170" y="750" font-size="20" text-anchor="middle" fill="#333" transform="rotate(-90 2170 750)">Bara / ana bağlantı bölgesi (arka)</text>
+
+    <!-- front 2/3 mounting band -->
+    <rect x="1800" y="0" width="290" height="1500" fill="#eaf6f1" stroke="#16a085" stroke-width="2" stroke-dasharray="10 6"/>
+    <text x="1945" y="750" font-size="20" text-anchor="middle" fill="#0e6655" transform="rotate(-90 1945 750)">PANO GÖZ montaj bölgesi — ön 2/3, kapı erişimli</text>
+
+    <!-- node markers at matching heights -->
+    <circle cx="1900" cy="120" r="18" fill="#16a085" stroke="#111" stroke-width="2"/>
+    <text x="1930" y="128" font-size="18" fill="#0e6655">GW-1</text>
+
+    <circle cx="1900" cy="150" r="16" fill="#8e44ad" stroke="#111" stroke-width="2"/>
+    <text x="1930" y="235" font-size="18" fill="#5b2c6f">PD-1</text>
+
+    <circle cx="1900" cy="480" r="16" fill="#f39c12" stroke="#111" stroke-width="2"/>
+    <text x="1930" y="488" font-size="18" fill="#7a4d00">TC1-5 (temsili)</text>
+
+    <text x="1945" y="1350" font-size="18" text-anchor="middle" fill="#333">Kapı kapanışı için</text>
+    <text x="1945" y="1374" font-size="18" text-anchor="middle" fill="#333">modül önden taşkınlığı ≤ 60 mm</text>
+  </g>
+
+  <!-- ============ LEGEND ============ -->
+  <g id="legend" font-size="20">
+    <text x="2280" y="10" font-size="26" font-weight="bold" fill="#111">Lejant</text>
+
+    <circle cx="2296" cy="50" r="18" fill="#f39c12" stroke="#111" stroke-width="2"/>
+    <text x="2326" y="57" fill="#111">TC — Termal-Akım düğümü (3 probe + 3 klip-on CT)</text>
+
+    <circle cx="2296" cy="95" r="18" fill="#8e44ad" stroke="#111" stroke-width="2"/>
+    <text x="2326" y="102" fill="#111">PD — HFCT kısmi deşarj / ark düğümü</text>
+
+    <rect x="2280" y="128" width="32" height="24" rx="5" fill="#16a085" stroke="#111" stroke-width="2"/>
+    <text x="2326" y="147" fill="#111">GW — Gateway (STM32WLE5CC, sub-GHz)</text>
+
+    <line x1="2280" y1="185" x2="2312" y2="185" stroke="#2874a6" stroke-width="4" stroke-dasharray="10 8"/>
+    <text x="2326" y="192" fill="#111">Sinyal / anten kablo yolu</text>
+
+    <rect x="2280" y="210" width="32" height="24" fill="url(#hatch)" stroke="#c0392b" stroke-width="2"/>
+    <text x="2326" y="229" fill="#111">Kaçınılacak bölge (kablo/bara boşluğu)</text>
+
+    <rect x="2280" y="252" width="32" height="24" fill="#fff" stroke="#999" stroke-width="2" stroke-dasharray="8 6"/>
+    <text x="2326" y="271" fill="#111">Yedek çıkış (sensörsüz)</text>
+
+    <text x="2280" y="320" font-size="22" font-weight="bold" fill="#111">Montaj yöntemi</text>
+    <text x="2280" y="350" fill="#333">Her düğüm gövdesi, ferromanyetik</text>
+    <text x="2280" y="374" fill="#333">şase/DIN raya mıknatıs kaide ile</text>
+    <text x="2280" y="398" fill="#333">tutturulur (delik açılmaz). Bakır</text>
+    <text x="2280" y="422" fill="#333">bara manyetik değildir — ısı probu</text>
+    <text x="2280" y="446" fill="#333">ve klip-on CT ayrıca pabuca/hatta</text>
+    <text x="2280" y="470" fill="#333">mekanik olarak bağlanır.</text>
+  </g>
+
+  <!-- ============ NOTES / TITLE BLOCK ============ -->
+  <g id="notes" font-size="19" fill="#333">
+    <line x1="-300" y1="1560" x2="2600" y2="1560" stroke="#ccc" stroke-width="2"/>
+    <text x="0" y="1595" font-weight="bold" font-size="22" fill="#111">Notlar</text>
+    <text x="0" y="1625">1. Modül sayısı bu pano için 8'dir: TC0 (ana giriş) + TC1-5 (5 besleme çıkışı) + PD-1 (ana giriş ark/PD) + GW-1 (gateway).</text>
+    <text x="0" y="1650">2. Sistem ölçek hedefi (≥100 modül) çok-panolu sahaya dağıtımla karşılanır; bu tek panonun yerel yoğunluğu değildir — bkz. §11 açık sorular.</text>
+    <text x="0" y="1675">3. Ön bakım erişim mesafesi ≥ 800 mm genel LV pano pratiğidir; TEDAŞ AG PANO MALZEME ŞARTNAMESİ'nden sayısal doğrulama henüz yapılmadı (açık madde).</text>
+    <text x="0" y="1700">4. Çelik gövde sub-GHz sinyalini zayıflatır — GW-1 anteni kabin üstünden harici rakorla çıkarılır (bkz. K1 · 1.5 saha koşulları).</text>
+    <text x="0" y="1725">5. B (Yükseklik) toleransı kaynak PDF'te yalnız "-0" olarak okunabiliyor; orijinal çizimde teyit edilmeli.</text>
+    <text x="1750" y="1625" font-size="17" fill="#666">Kaynak: TEDAŞ-MLZ/2003-06.B EK-II/14 (ölçüler), EK-I/8 (donanım listesi)</text>
+    <text x="1750" y="1648" font-size="17" fill="#666">PANO GÖZ · K1.3 Mekanik Yerleşim · 2026-09-13</text>
+  </g>
+</svg>

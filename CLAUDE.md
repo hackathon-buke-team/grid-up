@@ -120,9 +120,10 @@ hedefte derlenen firmware. **Fiziksel prototip beklenmiyor.**
 - [ ] **1.2** PCB yerleşimi + 3B görünüm (kart ölçüleri, katman yığını, konnektör
       tablosu, anten açıklığı). *Bitti sayılır:* her kart için üstten görünüm + 3D
       render PNG.
-- [ ] **1.3** Mekanik: modülün 1600 kVA pano çizimi üzerinde montaj yerleşimi (mıknatıs
+- [x] **1.3** Mekanik: modülün 1600 kVA pano çizimi üzerinde montaj yerleşimi (mıknatıs
       kaide, kablo yolu, erişim mesafesi — bkz. §4 ölçüler). *Bitti sayılır:*
-      ölçülendirilmiş yerleşim görseli.
+      ölçülendirilmiş yerleşim görseli. → `hardware/mekanik/kabin-ici-yerlesim.svg` +
+      `docs/02-DONANIM-TASARIMI.md` (2026-09-13).
 - [ ] **1.4** STM32WLE5CC hedef derlemesi (`arm-none-eabi`, `make target`), flash/RAM
       raporu.
 - [ ] **1.5** Saha koşulları (yüksek/düşük sıcaklık, manyetik alan, titreşim) → şemadaki
