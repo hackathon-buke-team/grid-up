@@ -119,9 +119,12 @@ hedefte derlenen firmware. **Fiziksel prototip beklenmiyor.**
       temiz, docs/03 ile bileşen eşleşiyor. → `hardware/kicad/{tc-node,ir-pd-node,gateway}/`
       + `docs/03-ELEKTRONIK-DOKUMANTASYON.md`, gerçek `kicad-cli sch erc` ile 0 hata
       (2026-09-13).
-- [ ] **1.2** PCB yerleşimi + 3B görünüm (kart ölçüleri, katman yığını, konnektör
+- [x] **1.2** PCB yerleşimi + 3B görünüm (kart ölçüleri, katman yığını, konnektör
       tablosu, anten açıklığı). *Bitti sayılır:* her kart için üstten görünüm + 3D
-      render PNG.
+      render PNG. → gerçek footprint'lerle (kurulu KiCad kütüphanelerinden verbatim)
+      3 kart, gerçek `kicad-cli pcb drc` ile 0 kısa devre/clearance/courtyard-üst-üste
+      (kalan uyarılar kozmetik — bkz. `docs/03-ELEKTRONIK-DOKUMANTASYON.md` §6),
+      gerçek SVG üstten görünüm + gerçek 3D render PNG (2026-09-16).
 - [x] **1.3** Mekanik: modülün 1600 kVA pano çizimi üzerinde montaj yerleşimi (mıknatıs
       kaide, kablo yolu, erişim mesafesi — bkz. §4 ölçüler). *Bitti sayılır:*
       ölçülendirilmiş yerleşim görseli. → `hardware/mekanik/kabin-ici-yerlesim.svg` +

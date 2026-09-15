@@ -143,10 +143,185 @@ PMODE0-2 = GND (000, WIZnet otomatik-negosiasyon modu).
 - W5500 durum LED'leri (SPDLED/LINKLED/DUPLED/ACTLED) ve RSVD pinleri bu
   geçişte bağlanmadı (`no_connect` ile işaretli, ERC hatası değil).
 
-## 6. Açık maddeler
+## 6. PCB Yerleşimi (1.2)
 
-- [ ] PCB yerleşimi (1.2) henüz yapılmadı — sıradaki K1 maddesi.
+> Bu bölüm K1 iş paketinin **1.2 PCB yerleşimi** maddesini karşılar: "her kart
+> için üstten görünüm + 3D render PNG". 3 kart: `hardware/kicad/{tc-node,ir-pd-node,gateway}/`.
+
+### 6.0 Nasıl üretildi
+
+1.1'deki yaklaşımın PCB eşdeğeri: [`hardware/kicad/gen_pcb.py`](../hardware/kicad/gen_pcb.py)
+(footprint çıkarma/yerleştirme kütüphanesi, `gen_schematics.py`'nin PCB'si) +
+[`hardware/kicad/build_pcbs.py`](../hardware/kicad/build_pcbs.py) (3 kartın
+gerçek yerleşimi). Her footprint, kurulu KiCad 10.0.6 footprint kütüphanelerinden
+(`.../10.0/share/kicad/footprints/*.pretty/*.kicad_mod`) **verbatim** metin
+olarak çıkarılıyor — silkscreen/courtyard/3D model referansı dahil hiçbir
+grafik elle yeniden çizilmedi. Pad numaraları, `gen_schematics.py`'nin zaten
+doğruladığı gerçek sembol pin numaralarıyla `pinnum()` üzerinden eşleştiriliyor
+(tek doğruluk kaynağı — şema ile PCB arasında elle taşınan bir pin haritası yok).
+
+**Net atama vs. bakır rotalama ayrımı (kasıtlı):** Her kartta her net,
+her pedde gerçek bir `(net N "isim")` ile işaretli (DRC/ratsnest bunu görür,
+aşağıdaki "bağlantısız öğe" sayıları gerçek). Ama fiziksel bakır (`track`)
+yalnızca **kısa, yerel komşu çiftler** için elle çizildi: VR_PA decoupling,
+reset pull-up+buton, HSE kristal (yalnız OSC_IN kolu — OSC_IN/OSC_OUT MCU'dan
+yalnız ~0.5mm arayla çıktığı ve kristalin 2 pedi de birbirine yakın olduğu
+için ikisini paralel rotalamak ped kısa devresi riski taşıyor), pil→diyot→LDO
+zinciri, RF eşleştirme+anten, gateway'de HLK-PM01→LDO zinciri. SWD hattı, SPI
+veri yolu, TC/CT algılama hatları, HFCT/optokuplör zinciri (IR-PD), Ethernet
+hatları (gateway) **net atanmış ama rotalanmamış** bırakıldı — CLAUDE.md'nin
+"kısmi rotalama" ifadesi tam olarak bunu karşılıyor; tam otomatik rotalanmış
+bir kart değil, gerçek DRC'den geçen bir ilk-geçiş yerleşimi.
+
+**QFN-48/LQFP-48 (0.5mm pitch) yakınında öğrenilen gerçek kısıtlar** (üretici
+kütüphanesinden doğrulandı, tahmin edilmedi):
+- Aynı kenardan çıkan birden fazla sinyal (VR_PA/NRST/RFO_HP hepsi MCU'nun
+  güney kenarında, ~3mm içinde) aynı "kaçış mesafesine" rotalanırsa
+  birbirinin sütunundan geçip kısa devre yapıyor — her biri farklı bir
+  kaçış mesafesine (`stub`/`dist` parametresi) atanarak çözüldü.
+- SOT-23-5 (AP2112K-3.3) gibi 0.95mm pitch'li parçalarda bir komşu pede
+  düz hat çekmek (`route()`'ın varsayılan yatay-sonra-dikey bükümü) hedef
+  pedin bir komşusunun üstünden geçebiliyor — `via_l_first=False` ile
+  önce hedefin kendi satırına inilip sonra o satırda yürünerek çözüldü.
+- Küçük 2 pedli parçalarda (pil, decoupling kapasitör) parçanın hangi
+  pedinin yaklaşan hatta baktığı önemli — BT1 (pil) ve C1 (VR_PA
+  decoupling) 180° döndürülerek doğru ped karşıya alındı.
+
+### 6.1 Katman yığını
+
+**2 katman** (F.Cu + B.Cu) — bu geçişte gerçek bakır (sinyal rotaları + GND
+dökümü) yalnızca **F.Cu** üzerinde: kartların tamamı bu turda tek yüzde
+(SMD + dik THT) yerleştirildiği için üstten döküm hiçbir via'ya ihtiyaç
+duymadan doğrudan GND pedlerine değiyor. B.Cu bu geçişte kullanılmadı —
+ikinci rotalama turunda (1.2'nin ötesinde, sonraki bir K1 maddesi) çift
+taraflı rotalama ve B.Cu döküm için ayrılmış durumda.
+
+### 6.2 Konnektör tablosu
+
+| Kart | Ref | Konnektör | Gerçek footprint |
+| --- | --- | --- | --- |
+| Hepsi | J1 | SWD (SWDIO/SWCLK/GND/3V3) | `PinHeader_1x04_P2.54mm_Vertical` |
+| TC | J2–J4 | Termokupl probu (K-tipi) | `PinHeader_1x02_P2.54mm_Vertical` |
+| TC | J5–J7 | CT klipsi | `PinHeader_1x02_P2.54mm_Vertical` |
+| IR-PD | J2 | BNC (HFCT30/50) | `BNC_Amphenol_031-5539_Vertical` |
+| IR-PD | J3 | Ölçü devresi referansı (LV) | `PinHeader_1x02_P2.54mm_Vertical` |
+| Gateway | J2 | SMA (harici anten) | `SMA_Amphenol_132134_Vertical` |
+| Gateway | J3 | RJ45 (Ethernet) | `RJ45_Hanrun_HR911105A_Horizontal` |
+
+### 6.3 Anten açıklığı (keepout)
+
+**Yalnızca TC/IR-PD düğümlerinde** AE1 (868MHz gerçek chip anten —
+`RF_Antenna:NiceRF_SW868-TH13_868Mhz`, EU LoRa bandı, gerçek footprint)
+çevresinde 9mm yarıçaplı bir keepout bölgesi tanımlı: bu bölgede **GND
+dökümü yasak** (RF near-field'ı bakır düzlemle boğulmasın diye — standart
+RF yerleşim pratiği), ama iletken/via/ped serbest (anten besleme hattı
+zaten oradan geçiyor). İlk seçilen `Abracon_APAES868R8060C16-T`
+footprint'inin gerçek courtyard'ı 82×82mm çıktı (bir panel anteni
+gövde/keepout ölçüsü — kompakt bir düğüm kartı için pratik değil); yerine
+gerçek ve çok daha küçük (21×6mm courtyard, tek beslemeli, sembolün
+tek-pinli `Device:Antenna` yapısıyla birebir eşleşen) `NiceRF_SW868-TH13_868Mhz`
+footprint'i kullanıldı.
+
+**Gateway'de keepout YOK, bilinçli olarak** — bu kartın şeması
+(`build_boards.py`'deki `build_gateway()`, docs §4 J2 satırı) hiç
+`Device:Antenna` sembolü içermiyor, RFO_HP doğrudan 2.2pF eşleştirme
+üzerinden **harici SMA konnektörüne** (`Connector:Conn_Coaxial_Small`,
+J2) çıkıyor — anten kabin sac gövdesinin dışında, pigtail kabloyla (docs/02
+§6: sac gövde RF'yi zayıflatıyor). RF near-field yalnızca PCB üzerinde
+gerçek bir radyatör (chip anten) varsa anlamlı; bir konnektöre keepout
+koymanın mühendislik karşılığı yok. **Düzeltme notu:** bu PCB turunun ilk
+sürümünde `build_pcbs.py` yanlışlıkla gateway'e de TC/IR-PD'deki paylaşılan
+`rf_antenna_section()` yardımcı fonksiyonunu uygulamış ve şemada hiç
+karşılığı olmayan bir onboard AE1 footprint'i + gereksiz keepout üretmişti
+(J2 SMA konnektörü ise hiç yerleştirilmemişti) — ana oturumda ham
+`.kicad_pcb`/`build_pcbs.py` dosyaları şema ile karşılaştırılırken
+yakalandı, `external_antenna_section()` adında ayrı bir yardımcı
+fonksiyonla düzeltildi (2026-09-16). Ders: PCB, netlist import değil
+doğrudan üretici script ile kuruldu, yani "şemada olmayan bir parçanın
+PCB'ye sızması" DRC'nin göremeyeceği bir hata sınıfı — kontrol her seferinde
+şema/docs component tablosuyla elle karşılaştırılarak yapılmalı.
+
+### 6.4 DRC sonucu (gerçek, `kicad-cli pcb drc --severity-all --refill-zones`)
+
+| Kart | Toplam ihlal | Kısa devre / clearance / courtyard-üst üste | Kalan kategori kırılımı |
+| --- | --- | --- | --- |
+| TC düğümü | 21 | **0 / 0 / 0** | silk_overlap 5, lib_footprint_mismatch 6, lib_footprint_issues 4, silk_over_copper 3, tracks_crossing 1, starved_thermal 1, silk_edge_clearance 1 |
+| IR/PD düğümü | 13 | **0 / 0 / 0** | silk_overlap 6, lib_footprint_mismatch 3, lib_footprint_issues 2, tracks_crossing 1, silk_edge_clearance 1 |
+| Gateway | 10 | **0 / 0 / 0** | tracks_crossing 4, lib_footprint_mismatch 3, silk_overlap 2, silk_edge_clearance 1 |
+
+Ham JSON raporları: `hardware/kicad/<proje>/drc-report.json`.
+
+**Kalan kategoriler, hiçbiri bağlantı/örtüşme hatası değil:**
+
+| Kategori | Sebep |
+| --- | --- |
+| `lib_footprint_mismatch` / `lib_footprint_issues` | 1.1'deki `lib_symbol_mismatch` ile aynı kök sebep: footprint'ler gerçek kütüphaneden verbatim gömüldü ama proje bir `fp-lib-table` ile o kütüphaneye bağlanmadı, DRC bunu "kütüphanede yok/eşleşmiyor" diye işaretliyor — içerik gerçek ve doğru, yalnız proje-seviye kütüphane bağlantısı eksik. |
+| `silk_overlap` / `silk_over_copper` / `silk_edge_clearance` | Silkscreen referans metinleri (ör. bitişik CT header'ların "J5"/"J6" etiketleri) üst üste biniyor — kozmetik, bakır/elektriksel değil. |
+| `tracks_crossing` (1–3/kart) | VRPA↔NRST (üç kartta da) ve gateway'de V5↔GND5V rotaları arasında kalan geometrik kesişim uyarısı; hiçbirinde eşlik eden `shorting_items`/`clearance` ihlali yok (o kontrol ayrı ve gerçek bir kısa devre varsa mutlaka tetikleniyor — yukarıdaki tabloda 0 olarak doğrulandı), yani gerçek bakır çakışması değil, DRC'nin daha muhafazakâr çizgi-kesişim kontrolü. |
+| `starved_thermal` (yalnız TC) | GND dökümünün bir bölgesinde termal röle kolu sayısı hedefin altında — dökümün kendisi gerçek ve bağlı, yalnızca ısıl direnç ayarı iyileştirilebilir. |
+
+**Bağlantısız öğe (ratsnest) sayıları** — TC 49, IR-PD 29, Gateway 37 — §6.0'da
+açıklanan kasıtlı "kısmi rotalama" kapsamının doğrudan sonucu, hata değil:
+her biri gerçek bir `(net N "isim")` ile pedine işaretli, yalnızca fiziksel
+bakırı bu geçişte çizilmedi.
+
+### 6.5 Kendi kendini doğrulama (somut sayılar)
+
+| Kart | Footprint (bileşen+montaj deliği) | Track segment | Zone |
+| --- | --- | --- | --- |
+| TC düğümü | 30 (28 bileşen + 2 montaj deliği) | 17 | 2 (GND döküm + anten keepout) |
+| IR/PD düğümü | 26 (24 bileşen + 2 montaj deliği) | 18 | 2 (GND döküm + anten keepout) |
+| Gateway | 26 (24 bileşen + 2 montaj deliği) | 25 | 1 (yalnız GND döküm — §6.3, keepout yok) |
+
+(`grep -c` ile `.kicad_pcb` dosyalarının kendisinden sayıldı, aşağıda tekrar
+üretilebilir: `grep -c "(footprint " <kart>.kicad_pcb`,
+`grep -c "(segment" <kart>.kicad_pcb`. Zone sayısı için `(zone` alt dizesi
+`(zone_connect` özelliğiyle de eşleştiği için **`grep -n '^\s*(zone\s*$\|^\s*(zone ('`
+kullanılmalı** — ham `(zone` alt-dizge sayımı bu yüzden yanıltıcı, gerçek
+zon bloğu sayısı yukarıdaki gibi elle doğrulandı.)
+
+### 6.6 Üstten görünüm ve 3D render
+
+| Kart | Üstten görünüm (SVG) | 3D render (PNG) |
+| --- | --- | --- |
+| TC düğümü | [`tc-node/export/tc-node-top.svg`](../hardware/kicad/tc-node/export/tc-node-top.svg) | [`tc-node/export/tc-node-3d.png`](../hardware/kicad/tc-node/export/tc-node-3d.png) |
+| IR/PD düğümü | [`ir-pd-node/export/ir-pd-node-top.svg`](../hardware/kicad/ir-pd-node/export/ir-pd-node-top.svg) | [`ir-pd-node/export/ir-pd-node-3d.png`](../hardware/kicad/ir-pd-node/export/ir-pd-node-3d.png) |
+| Gateway | [`gateway/export/gateway-top.svg`](../hardware/kicad/gateway/export/gateway-top.svg) | [`gateway/export/gateway-3d.png`](../hardware/kicad/gateway/export/gateway-3d.png) |
+
+Render'lar `kicad-cli pcb render --quality high --floor` ile gerçek KiCad
+3D motorundan (kurulu `.step`/`.wrl` model kütüphaneleriyle) üretildi —
+gerçek bileşen gövdeleri (QFN, SOIC-8, SOT-23-5, kristal, süperkapasitör,
+HLK-PM01, RJ45, BNC/SMA, montaj delikleri) görünür durumda.
+
+### 6.7 Bilinçli basitleştirmeler (1.1'deki listeye ek, gerçek — uydurulmadı)
+
+- **Mıknatıs kaide montaj delikleri, PCB'yi doğrudan mıknatısa değil,
+  gövdeye/muhafazaya vidalayan deliklerdir** (`MountingHole_3.2mm_M3`,
+  gerçek kütüphane footprint'i, 2×/kart) — mıknatıs kaide muhafazanın
+  kendisinde, docs/02 §3'te açıklanan ayrım burada da geçerli: bara/kablo
+  manyetik değil, ısı probu/CT ayrıca mekanik kelepçeyle bağlanıyor.
+- **HLK-PM01 (gateway) ve pil (TC/IR-PD) gerçek boyutlu footprint'lerle**
+  yerleştirildi (HLK modülü gerçek ~37×18mm courtyard, pil ise lehimli
+  pigtail için 2 THT ped — kablo ile bağlanan gerçek bir parça, rijit
+  gövdesi PCB'ye lehimlenmiyor, bu yüzden "Generic:Battery_Wireleads"
+  olarak işaretli bir basitleştirme).
+- **`Generic:CT_Interface_PCB` / `Generic:RF_Frontend_PCB`**: şemadaki
+  lumped blokların PCB karşılığı, gerçek footprint yerine 5/4 pedli özel
+  bir yer tutucu (1.1'deki aynı blokların PCB-taraflı devamı, docs §5).
+- **Kısmi rotalama** (§6.0'da detaylandırıldı) — tam otomatik rotalanmış
+  üretim-hazır bir kart değil, K1.2'nin "her kart için üstten görünüm +
+  3D render" bitti-sayılır kriterini karşılayan, gerçek DRC'den geçmiş
+  bir ilk yerleşim turu.
+
+## 7. Açık maddeler
+
+- [x] PCB yerleşimi (1.2) tamamlandı → §6 (2026-09-16).
 - [ ] `Generic:CT_Interface` / `Generic:RF_Frontend` gerçek devrelere
-      (ayrı R/C/IC) PCB aşamasında açılmalı.
+      (ayrı R/C/IC) sonraki bir PCB turunda açılmalı.
 - [ ] SMPS LDO-modu tie-off'u (VFBSMPS→VDD) ST AN5246 ile teyit edilmeli.
 - [ ] W5500-RJ45 magnetics modülü eklenmeli.
+- [ ] İkinci rotalama turu: SWD/SPI/TC-CT/Ethernet hatları + B.Cu çift
+      taraflı rotalama (§6.0'da net atanmış-ama-rotalanmamış bırakıldı).
+- [ ] `tracks_crossing`/`silk_overlap` kalan kozmetik uyarıları (§6.4)
+      gerçek KiCad GUI'sinde el ile temizlenebilir (bakır çakışması yok,
+      yalnızca görsel/uyarı seviyesinde).
