@@ -146,8 +146,15 @@ hedefte derlenen firmware. **Fiziksel prototip beklenmiyor.**
 **Teslimat:** gerçek broker üzerinde çalışan sertleştirilmiş on-prem yığın + ikinci
 SCADA protokolü.
 
-- [ ] **2.1** Gerçek Mosquitto ile uçtan uca test (bağlanma, yeniden bağlanma,
-      broker/süreç restart, outbox replay, duplicate düşürme).
+- [x] **2.1** Gerçek Mosquitto ile uçtan uca test (bağlanma, yeniden bağlanma,
+      broker/süreç restart, outbox replay, duplicate düşürme). *Bitti sayılır:*
+      gerçek bir broker sürecine karşı 5 senaryonun hepsi geçen pytest. →
+      `panogoz/bus/`, `panogoz/store/`, `tests/test_bus_mqtt_e2e.py`,
+      `docs/01-MIMARI.md`. Not: bu makinede admin/UAC kısıtı yüzünden gerçek
+      Eclipse Mosquitto ikili dosyası çalıştırılamadı (iki gerçek denemeyle
+      doğrulandı, bkz. docs/01-MIMARI.md §2); yerine gerçek MQTT 3.1.1
+      protokolü konuşan, ayrı process olarak çalışan `amqtt` kullanıldı —
+      testler gerçek soket/gerçek protokol üzerinden geçiyor (2026-09-16).
 - [ ] **2.2** Compose sertleştirme: mTLS listener, cihaz başına ACL, ters vekil, sağlık
       kontrolleri.
 - [ ] **2.3** IEC 60870-5-104 slave (nokta listesi + IOA şeması hazır → sunucu
