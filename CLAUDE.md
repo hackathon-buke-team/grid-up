@@ -206,8 +206,12 @@ SCADA protokolü.
 - [ ] **4.4** Doğruluk sunumu: 17 senaryo × tespit matrisi, haber verme süresi
       dağılımı, yanlış alarm bütçesi, duyarlılık eğrisi. *(Data science tarafına en
       yakın görev.)*
-- [ ] **4.5** Sunum paketi: 15 dk anlatı, slaytlar, demo videosu, jüri Q&A kartları,
-      yedek plan.
+- [x] **4.5** Sunum paketi: 15 dk anlatı, slaytlar, demo videosu, jüri Q&A kartları,
+      yedek plan. *Bitti sayılır:* zamanlanmış anlatı + gerçek çalışan konsoldan
+      kaydedilmiş demo + Q&A kartları + yedek plan. → `sunum/anlati-script.md`,
+      `sunum/juri-qa-kartlari.md`, `sunum/yedek-plan.md`, gerçek Chrome kaydından
+      üretilen `docs/ekran-goruntuleri/panogoz-demo-walkthrough.gif`, görsel slayt
+      artifact'i (linki `sunum/anlati-script.md`'de) (2026-09-16).
 
 **Dosyalar:** `panogoz/notify/`, `panogoz/rules/`,
 `panogoz/detector/engine.py` (yalnız bayrak bölümü), `tests/`,
