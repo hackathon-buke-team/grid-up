@@ -135,8 +135,11 @@ hedefte derlenen firmware. **Fiziksel prototip beklenmiyor.**
       link, flash/RAM raporu, 0 float instruction, pin haritası
       `hardware/kicad/build_boards.py` ile 15/15 eşleşiyor). →
       `firmware/node/`, `docs/07-FIRMWARE.md` (2026-09-16).
-- [ ] **1.5** Saha koşulları (yüksek/düşük sıcaklık, manyetik alan, titreşim) → şemadaki
-      karşılığını dokümante et.
+- [x] **1.5** Saha koşulları (yüksek/düşük sıcaklık, manyetik alan, titreşim) → şemadaki
+      karşılığını dokümante et. *Bitti sayılır:* her bileşenin gerçek datasheet
+      sıcaklık aralığı + manyetik alan/titreşim değerlendirmesi. → `docs/02-
+      DONANIM-TASARIMI.md` §8 (gerçek zayıf halka: HLK-PM01, −20…+60°C —
+      diğer tüm bileşenler ≥85°C'ye toleranslı) (2026-09-16).
 - [ ] **1.6** BOM tazeleme (güncel fiyat/tedarikçi/alternatif).
 - [ ] **1.7** *(opsiyonel — elde hazır kart varsa)* Ucuz kartla (Nucleo/ESP32) tek
       kardeş çiftinde gerçek θ demosu.
