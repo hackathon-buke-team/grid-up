@@ -322,7 +322,7 @@ gibi yazılmaz · `contracts/` değişikliği önce gruba duyurulur.
 ```bash
 python -m panogoz.run_local --panels 112 --port 8080
 python -m panogoz.run_local --panels 8 --backfill-days 20   # hızlı başlangıç
-python -m pytest -q                                          # tüm regresyon (26 test)
+python -m pytest -q                                          # tüm regresyon (31 test)
 python -m pytest tests/test_theta.py                         # tek dosya (pytest ile, `python -m tests.X` DEĞİL)
 python -m pytest tests/test_rules.py
 python -m pytest tests/test_bus_mqtt_e2e.py -v                # gerçek broker E2E (K2 2.1)
