@@ -10,7 +10,10 @@
 
 import { num, dateTimeShort, date, time } from './fmt.js';
 
-const PAD = { l: 66, r: 16, t: 22, b: 8 };
+// Başlık ve lejant artık canvas ÜSTÜNE değil, kendi satırına çiziliyor
+// (bkz. views.css .chart-box). Bu yüzden üst pay küçüldü: eskiden lejant
+// eğrinin üstüne biniyordu ve 1500 A civarındaki bir tepe okunmuyordu.
+const PAD = { l: 66, r: 16, t: 10, b: 8 };
 const X_AXIS_H = 22;
 
 function niceStep(span, target) {
@@ -52,8 +55,25 @@ export class ChartGroup {
     this.tip.className = 'chart-tip';
     this.tip.style.display = 'none';
     document.body.appendChild(this.tip);
-    this._onResize = () => this.drawAll();
+    this._raf = 0;
+    this._onResize = () => this.requestDraw();
+    // Tema değişince renkler belirteçlerden yeniden okunmalı.
+    this._onTheme = () => this.requestDraw();
     window.addEventListener('resize', this._onResize);
+    document.addEventListener('panogoz:tema', this._onTheme);
+  }
+
+  /**
+   * Çizimi bir sonraki kareye erteler ve aynı kare içindeki birden çok isteği
+   * TEK çizime indirir. Fare dört grafiğin üstünde gezerken her hareket dört
+   * ayrı çizim tetikliyordu; ekranda bu, saliselik bir titreme olarak görünür.
+   */
+  requestDraw() {
+    if (this._raf) return;
+    this._raf = requestAnimationFrame(() => {
+      this._raf = 0;
+      this.drawAll();
+    });
   }
 
   add(chart) {
@@ -87,14 +107,14 @@ export class ChartGroup {
 
   hover(ts, clientX, clientY) {
     this.hoverTs = ts;
-    this.drawAll();
+    this.requestDraw();
     this._showTip(ts, clientX, clientY);
   }
 
   clearHover() {
     this.hoverTs = null;
     this.tip.style.display = 'none';
-    this.drawAll();
+    this.requestDraw();
   }
 
   _showTip(ts, cx, cy) {
@@ -135,7 +155,10 @@ export class ChartGroup {
   }
 
   destroy() {
+    if (this._raf) cancelAnimationFrame(this._raf);
+    this._raf = 0;
     window.removeEventListener('resize', this._onResize);
+    document.removeEventListener('panogoz:tema', this._onTheme);
     if (this.tip.parentNode) this.tip.parentNode.removeChild(this.tip);
     for (const c of this.charts) c.destroy();
     this.charts = [];
@@ -259,12 +282,17 @@ export class TimeChart {
     const Y = (v) => R.y + R.h - ((v - ylo) / Math.max(1e-9, yhi - ylo)) * R.h;
     this._X = X; this._Y = Y; this._R = R;
 
+    // Renkler her çizimde belirteçlerden okunur; tema değişince grafik de döner.
     const css = getComputedStyle(document.documentElement);
-    const cLine = css.getPropertyValue('--line-soft').trim() || '#1d2836';
-    const cText = css.getPropertyValue('--fg-mute').trim() || '#7f92a8';
+    const tok = (n, f) => css.getPropertyValue(n).trim() || f;
+    const cLine = tok('--line-soft', '#1d2836');
+    const cText = tok('--fg-mute', '#7f92a8');
+    const cAccent = tok('--sev-uyari', '#f4b13a');
+    const cPlate = tok('--bg-1', '#0e141c');
+    const cFg = tok('--fg', '#eef4fb');
 
     // zemin
-    ctx.fillStyle = css.getPropertyValue('--bg-1').trim() || '#0e141c';
+    ctx.fillStyle = cPlate;
     ctx.fillRect(0, 0, cssW, cssH);
 
     // yatay ızgara + y etiketleri
@@ -377,24 +405,48 @@ export class TimeChart {
     }
     ctx.restore();
 
-    // yatay eşik çizgileri
-    ctx.textAlign = 'left';
+    // Yatay eşik çizgileri.  Önce çizgiler, sonra etiketler: iki eşik birbirine
+    // yakınsa (akım grafiğinde 250 A ile 810 A gibi) etiketleri üst üste
+    // yazmak yerine bir aşağı iter ve okunur bir zemin plakası koyarız. Teknik
+    // çizimde de not, çizginin üstüne değil yanına düşer.
+    const hLabels = [];
+    ctx.lineWidth = 1.4;
     for (const l of this.hlines) {
       const y = Math.round(Y(l.value)) + 0.5;
       if (y < R.y - 1 || y > R.y + R.h + 1) continue;
-      ctx.strokeStyle = l.color || '#f4b13a';
+      ctx.strokeStyle = l.color || cAccent;
       ctx.setLineDash(l.dash || [7, 5]);
-      ctx.lineWidth = 1.4;
       ctx.beginPath();
       ctx.moveTo(R.x, y);
       ctx.lineTo(R.x + R.w, y);
       ctx.stroke();
       ctx.setLineDash([]);
-      if (l.label) {
-        ctx.fillStyle = l.color || '#f4b13a';
-        ctx.font = '11.5px ui-sans-serif, system-ui, sans-serif';
-        ctx.fillText(l.label, R.x + 6, y - 7);
+      if (l.label) hLabels.push({ l, y });
+    }
+
+    ctx.font = '11.5px ui-sans-serif, system-ui, sans-serif';
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'alphabetic';
+    const taken = [];
+    const LH = 14;
+    for (const { l, y } of hLabels) {
+      const w = ctx.measureText(l.label).width;
+      let ly = y - 6;
+      // Boş satır bulana kadar önce yukarı, sonra aşağı dene.
+      const free = (v) => !taken.some((t) => Math.abs(t - v) < LH - 1);
+      if (!free(ly)) {
+        let found = false;
+        for (const cand of [y + LH - 2, y - LH - 4, y + 2 * LH - 2, y - 2 * LH - 4]) {
+          if (cand > R.y + 10 && cand < R.y + R.h - 2 && free(cand)) { ly = cand; found = true; break; }
+        }
+        if (!found) continue;   // yer yok: etiketi yazmaktansa yazmamak yeğdir
       }
+      ly = Math.max(R.y + 11, Math.min(R.y + R.h - 3, ly));
+      taken.push(ly);
+      ctx.fillStyle = cPlate;
+      ctx.fillRect(R.x + 3, ly - 10, w + 8, 13);
+      ctx.fillStyle = l.color || cAccent;
+      ctx.fillText(l.label, R.x + 7, ly);
     }
 
     // tarihli dikey çizgiler (değişim noktası)
@@ -422,12 +474,14 @@ export class TimeChart {
     const ht = this.group && this.group.hoverTs;
     if (ht !== null && ht !== undefined && ht >= d[0] && ht <= d[1]) {
       const x = Math.round(X(ht)) + 0.5;
-      ctx.strokeStyle = 'rgba(238,244,251,0.45)';
+      ctx.strokeStyle = cFg;
+      ctx.globalAlpha = 0.45;
       ctx.lineWidth = 1;
       ctx.beginPath();
       ctx.moveTo(x, R.y);
       ctx.lineTo(x, R.y + R.h);
       ctx.stroke();
+      ctx.globalAlpha = 1;
       for (const sr of this.series) {
         if (sr.noTip) continue;
         const p = nearest(sr.points, ht);
@@ -436,7 +490,7 @@ export class TimeChart {
         ctx.beginPath();
         ctx.arc(X(p[0]), Y(p[1]), 3.4, 0, Math.PI * 2);
         ctx.fill();
-        ctx.strokeStyle = '#05080c';
+        ctx.strokeStyle = cPlate;
         ctx.lineWidth = 1.4;
         ctx.stroke();
       }

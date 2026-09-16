@@ -1,110 +1,327 @@
 /* PANO GÖZ · temel katman: renk belirteçleri, tipografi, iskelet yerleşim.
-   Kontrol odası koyu teması. Aydınlık bir salonda projeksiyonla gösterilecek:
-   kontrast yüksek, yazı iri, rakamlar tablo hizalı (font-variant-numeric).
+   ------------------------------------------------------------------------
+   Görsel dil: ÖLÇÜ ALETİ YÜZEYİ.
+
+   Bu bir pazarlama sayfası değil, bir ölçü aletinin ön yüzü. Bundan üç kural
+   çıkar ve dosyanın tamamı bu üç kurala uyar:
+
+   1. ÖLÇÜLEN SAYI EN BÜYÜK ŞEYDİR. Etiket küçük ve sönük, birim daha da küçük.
+      Bir operatör ekrana iki metreden baktığında önce θ'yı okumalı.
+   2. KUTU YERİNE SAÇ TELİ. Her şeyi aynı yuvarlak kartın içine koymak hiyerarşi
+      kurmaz, sadece gürültü üretir. Bölgeler tek piksellik çizgilerle ayrılır;
+      yalnızca ekranın asıl işi olan yüzey yükseltilir.
+   3. ÖLÇÜM RENGİ SÜS DEĞİLDİR. Cividis sarısı (--olcum) YALNIZCA ölçülen bir
+      büyüklüğü gösterir. Düğme, kenarlık, başlık veya vurgu olarak kullanılmaz.
+      Ekranda sarı gören biri oraya bir sayı yazıldığını bilir.
+
    Türkçe metinde ASLA text-transform:uppercase kullanılmaz - "i" harfini "I"
-   yapar, "İ" yapmaz. Bu dosyada tek bir uppercase kuralı yoktur.            */
+   yapar, "İ" yapmaz. Bu dosyada tek bir uppercase kuralı yoktur.
+
+   Yazı tipi sistem yazı tipidir: web fontu bir ağ isteğidir ve bu kurulum hava
+   boşluklu. Kısıtı tasarıma çeviriyoruz - rakamlar her yerde tablo hizalı.  */
+
+/* ==========================================================================
+   KOYU TEMA · varsayılan
+   Zemin lacivert değil kömür grisi, çok hafif yeşile çalar: bir koruma
+   rölesinin gövdesi böyledir, bir gösterge panosu şablonu değil.
+   ========================================================================== */
 
 :root {
   color-scheme: dark;
 
-  /* zemin */
-  --bg:        #080b10;
-  --bg-1:      #0e141c;
-  --bg-2:      #141d28;
-  --bg-3:      #1b2634;
-  --bg-hi:     #22303f;
-  --line:      #2a3a4e;
-  --line-soft: #1d2836;
+  /* zemin · en dipten en yükseğe */
+  --bg:        #0c0f10;   /* gövde boşluğu, her şeyin arkası */
+  --bg-1:      #13181a;   /* ana yüzey */
+  --bg-2:      #1a2124;   /* başlık şeridi, giriş alanı */
+  --bg-3:      #232c30;   /* üzerine gelince */
+  --bg-hi:     #2c373c;   /* basılı */
+  --line:      #2f3a3f;   /* görünür saç teli */
+  --line-soft: #212a2e;   /* sessiz saç teli */
 
   /* yazı */
-  --fg:      #eef4fb;
-  --fg-dim:  #b3c2d4;
-  --fg-mute: #7f92a8;
+  --fg:      #e8eef0;
+  --fg-dim:  #a9b8bd;
+  --fg-mute: #74868d;
 
-  /* arayüz vurgusu (ölçüm rengi değil) */
-  --accent:      #56b9ff;
-  --accent-dim:  #2b6f9e;
-  --accent-soft: rgba(86, 185, 255, 0.14);
+  /* arayüz vurgusu · teknik çizim üzerindeki açıklama mavisi.
+     Ölçüm rengi DEĞİLDİR; seçim, odak, bağlantı ve çizim notları içindir. */
+  --accent:      #4fa8d8;
+  --accent-dim:  #2b6285;
+  --accent-soft: rgba(79, 168, 216, 0.15);
+  --accent-fg:   #04121a;
 
-  /* seviye renkleri · renk körlüğüne dayanıklı, her zaman şekil + metin ile birlikte */
+  /* ÖLÇÜM RENGİ · cividis rampasının tepesi. Yalnız ölçülen büyüklük. */
+  --olcum:      #ffea46;
+  --olcum-soft: rgba(255, 234, 70, 0.16);
+
+  /* ---- zaman serisi kalemleri ------------------------------------------
+     Canvas'a çizilen bir çizgi var() kullanamaz; renk çizim anında buradan
+     OKUNUR. Temaya göre değişmelerinin sebebi şu: cividis sarısı koyu zeminde
+     θ'nın rengidir ama açık zeminde beyaz kağıda sarı kalemle yazmak olur.
+     Renk KİMLİĞİ korunur (θ hep sarı ailesinden), parlaklığı zemine uyar. */
+  --ser-self:      #4fa8d8;
+  --ser-sib1:      #8a8678;
+  --ser-sib2:      #b9ab6a;
+  --ser-current:   #4aa3ff;
+  --ser-load:      #a59c74;
+  --ser-theta:     #ffea46;
+  --ser-theta-med: #ffc93c;
+  --ser-base:      #7f92a8;
+  --ser-cusum:     #ff6b3d;
+  --ser-esik:      #f4b13a;
+  --ser-degisim:   #ff2f79;
+  --ser-korbolge:      rgba(79, 168, 216, 0.14);
+  --ser-korbolge-line: rgba(79, 168, 216, 0.62);
+
+  /* seviye renkleri · renk körlüğüne dayanıklı, her zaman şekil + metin ile */
   --sev-bilgi:  #9dabbd;
   --sev-izle:   #4aa3ff;
   --sev-uyari:  #f4b13a;
   --sev-kritik: #ff6b3d;
   --sev-acil:   #ff2f79;
 
-  /* saf kırmızı/yeşil YALNIZCA topoloji içindir (enerjili/enerjisiz, faz rengi) */
+  --sev-bilgi-bg:  rgba(157, 171, 189, 0.10);
+  --sev-izle-bg:   rgba(74, 163, 255, 0.13);
+  --sev-uyari-bg:  rgba(244, 177, 58, 0.13);
+  --sev-kritik-bg: rgba(255, 107, 61, 0.15);
+  --sev-acil-bg:   rgba(255, 47, 121, 0.17);
+
+  /* saf kırmızı/yeşil YALNIZCA topoloji içindir (enerjili/enerjisiz, faz) */
   --topo-green: #35c07a;
   --topo-red:   #e5484d;
-
-  /* ölçüm ısı haritası: cividis (algısal olarak düzgün) - gökkuşağı yok */
-  --heat-0: #00224e;
-  --heat-1: #ffea46;
 
   --ok:   #35c07a;
   --warn: #f4b13a;
   --bad:  #ff6b3d;
 
-  --radius: 10px;
-  --radius-sm: 6px;
-  --rail-w: 140px;
-  --head-h: 62px;
+  /* ---- dijital ikiz · pano çizimi -------------------------------------- */
+  --tw-sheet:     #090c0e;   /* çizim zemini */
+  --tw-body:      #10171a;   /* pano gövdesi */
+  --tw-body-line: #55707f;
+  --tw-zone:      #151e22;
+  --tw-zone-alt:  #101719;
+  --tw-zone-line: #2f4149;
+  --tw-inner:     #36474f;
+  --tw-cell:      #1a2429;
+  --tw-cell-line: #415a68;
+  --tw-cell-2:    #1d2a30;
+  --tw-cell-2-line: #4a6675;
+  --tw-hatch:     #131c20;
+  --tw-hatch-line:#3a5260;
+  --tw-slot:      #0b1114;
+  --tw-txt:       #9fb0b8;
+  --tw-txt-lg:    #cddde4;
+  --tw-unmon:     #647880;
+  --tw-dot-edge:  #05080a;
+  --tw-pe:        #2f6a45;
+  --tw-pe-line:   #4fae74;
+  --tw-bar-l1:    #8e9aa6;
+  --tw-bar-l2:    #2a3340;
+  --tw-bar-l2-line:#6d7b8b;
+  --tw-bar-l3:    #7a5a3c;
+  --tw-bar-n:     #6ba8d8;
+  --tw-stub:      #5d6c7c;
+  --tw-stub-n:    #2d6389;
+  --tw-stub-line: #8ea0b4;
+
+  /* ---- harita ----------------------------------------------------------- */
+  --map-sea:     #071012;
+  --map-land:    #1a2624;
+  --map-land-hi: #223330;   /* filonun bulunduğu iller */
+  --map-border:  #33443f;
+  --map-coast:   #4d706a;
+  --map-grid:    rgba(120, 150, 150, 0.10);
+  --map-label:   #6d8480;
+  /* Etiket halesi: kara ile deniz arasında bir ton. Bir pano kıyıda da olabilir
+     iç bölgede de; tek bir hale rengi ikisinde de okunur kalmalı. */
+  --map-halo:    #0d1516;
+
+  /* ---- ölçü · biçim ----------------------------------------------------- */
+  --radius:    4px;    /* yüzey */
+  --radius-sm: 3px;    /* denetim */
+  --rail-w:  138px;
+  --head-h:   58px;
 
   --font: ui-sans-serif, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial,
           "Noto Sans", "Liberation Sans", sans-serif;
   --mono: ui-monospace, "Cascadia Mono", "Segoe UI Mono", "SF Mono", Consolas,
           "Liberation Mono", monospace;
 
-  --shadow: 0 8px 28px rgba(0, 0, 0, 0.55);
+  /* Gölge YALNIZCA sayfanın üstünde yüzen şeyler içindir: çekmece, kip
+     penceresi, ipucu, bildirim. Kartların altında gölge yoktur. */
+  --lift: 0 10px 34px rgba(0, 0, 0, 0.62), 0 1px 0 rgba(255, 255, 255, 0.04) inset;
+
+  /* tipografi ölçeği · 15 px tabanlı, projeksiyonda okunacak kadar iri */
+  --t-xs:   11.5px;
+  --t-sm:   12.5px;
+  --t-md:   13.5px;
+  --t-base: 15px;
+  --t-lg:   17px;
+  --t-xl:   20px;
+  --t-read: 28px;   /* ölçüm okuması */
+  --t-hero: 40px;   /* ekranın tek büyük sayısı */
 }
+
+/* ==========================================================================
+   AÇIK TEMA · ölçü aleti etiketi
+   Beyaz kağıt değil, krem de değil: bir enstrümanın basılı ön etiketindeki
+   serin açık gri. Yüzeyler zeminden AÇIK, böylece kabartma yönü korunur.
+   ========================================================================== */
+
+:root[data-tema="acik"] {
+  color-scheme: light;
+
+  --bg:        #dee3e4;
+  --bg-1:      #f5f7f7;
+  --bg-2:      #e9eded;
+  --bg-3:      #dce2e3;
+  --bg-hi:     #ccd5d6;
+  --line:      #b6c1c2;
+  --line-soft: #d5dcdd;
+
+  --fg:      #10181a;
+  --fg-dim:  #3c4a4d;
+  --fg-mute: #67767a;
+
+  --accent:      #17658f;
+  --accent-dim:  #a4c8dd;
+  --accent-soft: rgba(23, 101, 143, 0.11);
+  --accent-fg:   #ffffff;
+
+  /* Cividis sarısı açık zeminde okunmaz. Ölçüm rengi RAMPADA aynı kalır -
+     bir renk haritasını temaya göre değiştirmek veriyi yalan söyletir - ama
+     METİN olarak kullanıldığı yerde koyu ucunu kullanırız. */
+  --olcum:      #6b5a00;
+  --olcum-soft: rgba(160, 134, 0, 0.16);
+
+  --ser-self:      #0f6fa4;
+  --ser-sib1:      #6f6a58;
+  --ser-sib2:      #8e7c2c;
+  --ser-current:   #1263bd;
+  --ser-load:      #7a6f42;
+  --ser-theta:     #8a7400;
+  --ser-theta-med: #b08a00;
+  --ser-base:      #5c6d7a;
+  --ser-cusum:     #c1441a;
+  --ser-esik:      #96650b;
+  --ser-degisim:   #b3114b;
+  --ser-korbolge:      rgba(23, 101, 143, 0.13);
+  --ser-korbolge-line: rgba(23, 101, 143, 0.55);
+
+  --sev-bilgi:  #566570;
+  --sev-izle:   #1263bd;
+  --sev-uyari:  #8a5600;
+  --sev-kritik: #b23a13;
+  --sev-acil:   #b3114b;
+
+  --sev-bilgi-bg:  rgba(86, 101, 112, 0.10);
+  --sev-izle-bg:   rgba(18, 99, 189, 0.10);
+  --sev-uyari-bg:  rgba(138, 86, 0, 0.11);
+  --sev-kritik-bg: rgba(178, 58, 19, 0.11);
+  --sev-acil-bg:   rgba(179, 17, 75, 0.11);
+
+  --topo-green: #1c7a48;
+  --topo-red:   #c1272d;
+
+  --ok:   #1c7a48;
+  --warn: #8a5600;
+  --bad:  #b23a13;
+
+  /* Pano çizimi açık temada gerçek bir pafta gibi okunur: açık zemin, koyu
+     çizgi. Dolgular gri tonlarda kalır, renk yalnız ölçümde ve seviyede. */
+  --tw-sheet:     #eef1f1;
+  --tw-body:      #fbfcfc;
+  --tw-body-line: #47616e;
+  --tw-zone:      #e7ecec;
+  --tw-zone-alt:  #f1f4f4;
+  --tw-zone-line: #9fb0b6;
+  --tw-inner:     #8ea2aa;
+  --tw-cell:      #dfe6e7;
+  --tw-cell-line: #6d8794;
+  --tw-cell-2:    #d7e0e2;
+  --tw-cell-2-line: #5b7684;
+  --tw-hatch:     #e3e9ea;
+  --tw-hatch-line:#93a9b3;
+  --tw-slot:      #ffffff;
+  --tw-txt:       #4a5b61;
+  --tw-txt-lg:    #1b262a;
+  --tw-unmon:     #7b8d94;
+  --tw-dot-edge:  #ffffff;
+  --tw-pe:        #b4d8c2;
+  --tw-pe-line:   #2f7a4e;
+  --tw-bar-l1:    #9aa5ad;
+  --tw-bar-l2:    #4b565f;
+  --tw-bar-l2-line:#2f3840;
+  --tw-bar-l3:    #a97b50;
+  --tw-bar-n:     #5c9ccb;
+  --tw-stub:      #8e9aa4;
+  --tw-stub-n:    #4a7fa3;
+  --tw-stub-line: #55666f;
+
+  --map-sea:     #ccdadd;
+  --map-land:    #fafbfa;
+  --map-land-hi: #eaf2ed;
+  --map-border:  #aebcb9;
+  --map-coast:   #67807c;
+  --map-grid:    rgba(50, 80, 80, 0.10);
+  --map-label:   #7c908c;
+  --map-halo:    #e9eeec;
+
+  --lift: 0 10px 30px rgba(24, 40, 44, 0.20), 0 0 0 1px rgba(24, 40, 44, 0.06);
+}
+
+/* ==========================================================================
+   Sıfırlama ve tipografi
+   ========================================================================== */
 
 * { box-sizing: border-box; }
 
-html, body {
-  height: 100%;
-  margin: 0;
-}
+html, body { height: 100%; margin: 0; }
 
 body {
   background: var(--bg);
   color: var(--fg);
   font-family: var(--font);
-  font-size: 16px;
+  font-size: var(--t-base);
   line-height: 1.45;
   -webkit-font-smoothing: antialiased;
   overflow: hidden;
 }
 
-/* Rakamlar her yerde tablo hizalı ve eşit genişlikte olsun ki sütunlar oynamasın */
-.num, table, .mono, input, .kv-v, .stat-v {
+/* Rakamlar her yerde tablo hizalı olsun ki sütunlar canlı akışta oynamasın. */
+.num, table, .mono, input, .kv-v, .read-v, .stat-v, .n {
   font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
 }
 
 .mono { font-family: var(--mono); }
 
-h1, h2, h3, h4 { margin: 0; font-weight: 650; letter-spacing: 0.1px; }
-h1 { font-size: 19px; }
-h2 { font-size: 17px; }
-h3 { font-size: 15px; }
+h1, h2, h3, h4 { margin: 0; font-weight: 600; }
+h1 { font-size: var(--t-xl); letter-spacing: -0.15px; }
+h2 { font-size: var(--t-lg); letter-spacing: -0.1px; }
+h3 { font-size: var(--t-base); }
 
 a { color: var(--accent); }
 
-button {
-  font: inherit;
-  color: inherit;
-  background: none;
-  border: none;
-  cursor: pointer;
+button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+::selection { background: var(--accent-soft); color: var(--fg); }
+
+/* Kaydırma çubukları yüzeyin parçası, ayrı bir bileşen değil. */
+* { scrollbar-color: var(--line) transparent; scrollbar-width: thin; }
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb {
+  background: var(--line); border-radius: 6px;
+  border: 3px solid transparent; background-clip: content-box;
 }
+*::-webkit-scrollbar-thumb:hover { background-color: var(--bg-hi); background-clip: content-box; }
 
-:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
-::selection { background: var(--accent-dim); color: #fff; }
-
-/* ------------------------------------------------------------------ iskelet */
+/* ==========================================================================
+   İskelet
+   ========================================================================== */
 
 #app {
   display: grid;
@@ -118,23 +335,20 @@ button {
   grid-area: brand;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 9px;
   padding: 0 12px;
   background: var(--bg-1);
   border-right: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
 }
 
-#brand .mark {
-  width: 30px; height: 30px;
-  flex: none;
-}
+#brand .mark { width: 28px; height: 28px; flex: none; }
 
 #brand .name {
-  font-size: 14px;
+  font-size: var(--t-md);
   font-weight: 700;
-  letter-spacing: 0.2px;
-  line-height: 1.12;
+  letter-spacing: 0.3px;
+  line-height: 1.1;
   white-space: nowrap;
 }
 
@@ -144,15 +358,14 @@ button {
   font-weight: 500;
   color: var(--fg-mute);
   letter-spacing: 0;
-  white-space: nowrap;
 }
 
 #head {
   grid-area: head;
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 0 16px;
+  gap: 10px;
+  padding: 0 14px;
   background: var(--bg-1);
   border-bottom: 1px solid var(--line);
   overflow: hidden;
@@ -164,29 +377,30 @@ button {
   border-right: 1px solid var(--line);
   display: flex;
   flex-direction: column;
-  padding: 8px 0;
-  gap: 2px;
+  padding: 6px 0;
   overflow-y: auto;
 }
 
 #main {
   grid-area: main;
   overflow: auto;
-  padding: 16px;
-  scrollbar-color: var(--line) transparent;
+  padding: 14px 16px 18px;
+  background: var(--bg);
 }
 
-/* --------------------------------------------------------------- sol raylık */
+/* --------------------------------------------------------------- sol raylık
+   Seçili ekran solunda dolu bir çubukla işaretlenir: bir cihazın basılı
+   düğmesi gibi, üzerine gelme durumundan açıkça ayrı.                      */
 
 .rail-btn {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
-  padding: 10px 4px;
+  gap: 3px;
+  padding: 11px 4px;
   color: var(--fg-mute);
   border-left: 3px solid transparent;
-  transition: background 0.12s, color 0.12s;
+  transition: background 0.1s, color 0.1s;
   text-align: center;
 }
 
@@ -198,90 +412,110 @@ button {
   border-left-color: var(--accent);
 }
 
-.rail-btn svg { width: 24px; height: 24px; }
-
-.rail-btn .lbl { font-size: 12px; line-height: 1.15; }
-.rail-btn .sub { font-size: 10px; color: var(--fg-mute); }
+.rail-btn svg { width: 22px; height: 22px; }
+.rail-btn .lbl { font-size: var(--t-sm); line-height: 1.15; }
+.rail-btn .sub { font-size: 10px; color: var(--fg-mute); letter-spacing: 0.2px; }
 
 .rail-spacer { flex: 1 1 auto; }
 
 /* -------------------------------------------------------------- üst şerit */
 
 .head-title {
-  font-size: 17px;
-  font-weight: 650;
+  font-size: var(--t-lg);
+  font-weight: 600;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  letter-spacing: -0.1px;
 }
 
-.head-sub {
-  font-size: 12px;
-  color: var(--fg-mute);
-  white-space: nowrap;
-}
-
+.head-sub { font-size: var(--t-sm); color: var(--fg-mute); white-space: nowrap; }
 .head-spacer { flex: 1 1 auto; }
 
+/* Rozet: yuvarlak hap değil, köşeleri hafif kırılmış bir etiket. Hap biçimi
+   bu arayüzde YALNIZCA seviye rozetine ayrılmıştır (bkz. .sev). */
 .chip {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  padding: 5px 10px;
+  gap: 6px;
+  padding: 4px 9px;
   border: 1px solid var(--line);
-  border-radius: 999px;
+  border-radius: var(--radius-sm);
   background: var(--bg-2);
-  font-size: 13px;
+  font-size: var(--t-md);
   color: var(--fg-dim);
   white-space: nowrap;
 }
 
 .chip b { color: var(--fg); font-weight: 600; }
+.chip.link { cursor: pointer; }
+.chip.link:hover { border-color: var(--accent-dim); color: var(--fg); background: var(--bg-3); }
 
-.chip.link:hover { border-color: var(--accent-dim); color: var(--fg); }
-
-.conn-dot {
-  width: 9px; height: 9px; border-radius: 50%;
-  background: var(--fg-mute);
-  flex: none;
-}
-.conn-ws   .conn-dot { background: var(--ok); box-shadow: 0 0 0 3px rgba(53,192,122,0.18); }
+.conn-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--fg-mute); flex: none; }
+.conn-ws   .conn-dot { background: var(--ok);   box-shadow: 0 0 0 3px rgba(53,192,122,0.18); }
 .conn-poll .conn-dot { background: var(--warn); box-shadow: 0 0 0 3px rgba(244,177,58,0.18); }
-.conn-down .conn-dot { background: var(--bad); box-shadow: 0 0 0 3px rgba(255,107,61,0.18); }
+.conn-down .conn-dot { background: var(--bad);  box-shadow: 0 0 0 3px rgba(255,107,61,0.18); }
 
 select.panel-select {
   background: var(--bg-2);
   color: var(--fg);
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
-  padding: 6px 10px;
-  font-size: 14px;
-  max-width: 260px;
+  padding: 5px 9px;
+  font-size: var(--t-md);
+  max-width: 300px;
 }
+select.panel-select:hover { border-color: var(--accent-dim); }
 
-/* -------------------------------------------------------------- yardımcılar */
+/* Tema düğmesi · iki durumlu, ikisi de aynı anda görünür ki ne olacağı belli
+   olsun. Seçili olan yükseltilmiş yüzeyde durur.                           */
+.tema-sw {
+  display: inline-flex;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--bg-2);
+  flex: none;
+}
+.tema-sw button {
+  display: flex; align-items: center; justify-content: center;
+  width: 30px; height: 26px;
+  color: var(--fg-mute);
+}
+.tema-sw button svg { width: 15px; height: 15px; }
+.tema-sw button:hover { color: var(--fg-dim); }
+.tema-sw button[aria-pressed="true"] { background: var(--bg-hi); color: var(--fg); }
+
+/* ==========================================================================
+   Yardımcılar
+   ========================================================================== */
 
 .muted { color: var(--fg-mute); }
 .dim   { color: var(--fg-dim); }
-.small { font-size: 12.5px; }
-.tiny  { font-size: 11.5px; }
+.small { font-size: var(--t-md); }
+.tiny  { font-size: var(--t-sm); }
 .nowrap { white-space: nowrap; }
 .right { text-align: right; }
 .center { text-align: center; }
 .hidden { display: none !important; }
 
-.row { display: flex; gap: 12px; align-items: center; }
+.row { display: flex; gap: 10px; align-items: center; }
 .col { display: flex; flex-direction: column; gap: 12px; }
 .wrap { flex-wrap: wrap; }
 .grow { flex: 1 1 auto; }
+/* Ayraç: soluyla sağını birbirinden iter. Çoğu başlık şeridi bunu kullanır,
+   bu yüzden varsayılan davranışı büyümektir. */
+.sp   { flex: 1 1 auto; }
 
-.grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
-.grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
-.grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px;
+          background: var(--line-soft); }
+.grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
 
-@media (max-width: 1400px) {
-  .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
 @media (max-width: 1100px) {
-  .grid-3, .grid-2 { grid-template-columns: minmax(0, 1fr); }
+  .grid-3 { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important; }
 }

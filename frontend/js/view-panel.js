@@ -12,15 +12,42 @@ import { h, mount, empty, clear } from './dom.js';
 import * as fmt from './fmt.js';
 import { api } from './api.js';
 import { renderTwin, twinLegend } from './twin.js';
+import { zoomPan, fullscreen, exitFullscreen, isFullscreen } from './zoompan.js';
 
 const twinCache = new Map();
+
+// Küçük simgeler; harici bir simge seti yok, dört yol yeter.
+// Küçük simgeler; harici bir simge seti yok. "Sığdır" bir çerçeve içindeki
+// çizim, "tam ekran" dışa açılan dört köşedir - ikisi bir bakışta ayrılmalı.
+// Tam ekrandayken ok yönü tersine döner: düğme artık çıkışı gösterir.
+const IC = {
+  fit: 'M3 5h18v14H3zM8.5 9.5h7v5h-7z',
+  full: 'M9 4H4v5M15 4h5v5M15 20h5v-5M9 20H4v-5',
+  fullOut: 'M4 9h5V4M20 9h-5V4M20 15h-5v5M4 15h5v5',
+};
 
 export function create(ctx) {
   const el = h('div.view');
   const head = h('div.view-head');
-  const stage = h('div.card');
+  const stage = h('div.surface.twin-card');
   const side = h('div.col');
   const grid = h('div.twin-grid', h('div.col', stage), side);
+
+  // Çizim canlı veriyle yeniden kurulur, ama kullanıcının yakınlaştırması
+  // kurulumu aşar: bir pabucun üstüne yaklaşmış operatör, bir sonraki ölçüm
+  // geldiğinde kendini yine tüm panoya bakarken bulmamalı.
+  let zp = null;
+  let twinView = null;
+  let pctLbl = null;
+  // Çizim yeniden kurulunca eski düğmenin dinleyicisi çöpe gider; ekran
+  // kapanırken hepsini sökebilmek için listede tutuyoruz.
+  const fsListeners = [];
+
+  function dropFsListeners() {
+    while (fsListeners.length) {
+      document.removeEventListener('fullscreenchange', fsListeners.pop());
+    }
+  }
 
   function layout() {
     if (!el.contains(head)) mount(el, head, grid);
@@ -84,16 +111,53 @@ export function create(ctx) {
       onJoint: (key) => ctx.navigate('kanit', p.panel_key, key),
       onDevice: (key) => ctx.toast('Cihaz', key + ' · ' + ((devices.find((d) => d.key === key) || {}).label || '')),
     });
+    // ---- araç şeridi ----------------------------------------------------
+    dropFsListeners();
+    pctLbl = h('span.tool.pct', { text: '%100' });
+    const icon = (d) => {
+      const e = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      e.setAttribute('viewBox', '0 0 24 24');
+      e.setAttribute('fill', 'none');
+      e.setAttribute('stroke', 'currentColor');
+      e.setAttribute('stroke-width', '1.8');
+      e.setAttribute('stroke-linecap', 'round');
+      const pa = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      pa.setAttribute('d', d);
+      e.appendChild(pa);
+      return e;
+    };
+    const fsBtn = h('button.tool.ic', {
+      title: 'Tam ekran (Esc ile çık)',
+      onclick: () => { if (isFullscreen(stage)) exitFullscreen(); else fullscreen(stage); },
+    }, icon(IC.full));
+    // Düğme hangi işe yaradığını göstermeli: tam ekrandayken "çık" demeli.
+    // Kullanıcı Esc ile de çıkabilir, o yüzden olayı dinliyoruz.
+    const fsSync = () => {
+      const acik = isFullscreen(stage);
+      mount(fsBtn, icon(acik ? IC.fullOut : IC.full));
+      fsBtn.title = acik ? 'Tam ekrandan çık (Esc)' : 'Tam ekran';
+    };
+    document.addEventListener('fullscreenchange', fsSync);
+    fsListeners.push(fsSync);
+    const bar = h('div.tool-row',
+      h('button.tool.ic', { text: '−', title: 'Uzaklaş', onclick: () => zp && zp.zoomBy(1 / 1.4) }),
+      pctLbl,
+      h('button.tool.ic', { text: '+', title: 'Yaklaş', onclick: () => zp && zp.zoomBy(1.4) }),
+      h('button.tool.ic', { title: 'Panonun tamamını sığdır', onclick: () => zp && zp.fit() }, icon(IC.fit)),
+      fsBtn);
+
     mount(stage,
       h('header',
         h('h2', { text: 'Dijital ikiz · EK-II/14 ön görünüş' }),
         h('span.sp'),
         h('span.tag', { text: `${joints.filter((j) => j.zone === 'bottom').length} izlenen bağlantı` }),
         h('span.tag', { text: `${joints.length} civatalı bağlantı` }),
-        h('span.tag', { text: `${devices.length} cihaz` })),
-      h('div.body.flush', h('div.twin-stage', svg)),
+        h('span.tag', { text: `${devices.length} cihaz` }),
+        h('span.sp.grow'),
+        bar),
+      h('div.twin-stage', svg),
       twinLegend(devices),
-      h('div.body',
+      h('div.pad',
         h('div.note.honest', {
           text: `Bara bölmesindeki ${joints.filter((j) => j.zone === 'busbar').length} ve `
               + `çatıdaki ${joints.filter((j) => j.zone === 'roof').length} bağlantı içi boş `
@@ -101,6 +165,27 @@ export function create(ctx) {
               + 'demektir ve PANO GÖZ bunu yapmaz. Gün 1 kiti alt kablo bölmesi, ölçü kolonu '
               + 'DIN rayı ve mevcut 10 A prizden ibarettir.',
         })));
+
+    // ---- yakınlaştırma ---------------------------------------------------
+    if (zp) zp.destroy();
+    zp = zoomPan(svg, {
+      view: twinView,
+      minKat: 1,
+      maxKat: 22,
+      onChange: (kat) => {
+        twinView = zp.view();
+        if (pctLbl) pctLbl.textContent = '%' + Math.round(kat * 100);
+      },
+    });
+    // Bir bağlantıya çift tıklamak o pabucun üstüne yaklaşır; tek tık zaten
+    // kanıt ekranına gider.
+    for (const g of svg.querySelectorAll('.tw-joint-g')) {
+      g.addEventListener('dblclick', (ev) => {
+        ev.stopPropagation();
+        const b = g.getBBox();
+        zp.goto({ x: b.x - 90, y: b.y - 90, w: b.width + 180, h: b.height + 180 }, 0.1);
+      });
+    }
   }
 
   function renderJointTable(p, selected) {
@@ -343,9 +428,14 @@ export function create(ctx) {
     ensureTwin(key);
     renderHead(p);
 
+    // Çizim yalnızca GÖRÜNEN bir şey değişince yeniden kurulur. θ 0,1 K
+    // çözünürlükle imzaya girer: ekranda bir nokta rengi ancak o kadar
+    // değişince fark eder, daha incesi boşuna yeniden çizimdir. Panonun zaman
+    // damgası imzadan ÇIKARILDI - her saniye değişiyor ve tek başına hiçbir
+    // görsel farka karşılık gelmiyordu.
     const sig = JSON.stringify([
-      p.ts, state.jointKey,
-      (p.joints || []).map((j) => [j.key, Math.round((j.theta_k || 0) * 20), j.severity]),
+      state.jointKey,
+      (p.joints || []).map((j) => [j.key, Math.round((j.theta_k || 0) * 10), j.severity]),
       (p.devices || []).map((d) => [d.key, d.online]),
       twinCache.get(key) ? 1 : 0,
     ]);
@@ -362,5 +452,14 @@ export function create(ctx) {
       renderPd(p));
   }
 
-  return { el, update, destroy() { clear(el); } };
+  return {
+    el,
+    update,
+    destroy() {
+      if (zp) { zp.destroy(); zp = null; }
+      dropFsListeners();
+      if (isFullscreen(stage)) exitFullscreen();
+      clear(el);
+    },
+  };
 }

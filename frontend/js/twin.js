@@ -78,12 +78,12 @@ export function renderTwin(o = {}) {
     id: 'hatch', width: 22, height: 22, patternUnits: 'userSpaceOnUse',
     patternTransform: 'rotate(45)',
   });
-  pat.appendChild(s('rect', { width: 22, height: 22, fill: '#101820' }));
-  pat.appendChild(s('line', { x1: 0, y1: 0, x2: 0, y2: 22, stroke: '#3a5470', 'stroke-width': 7 }));
+  pat.appendChild(s('rect', { width: 22, height: 22, fill: 'var(--tw-hatch)' }));
+  pat.appendChild(s('line', { x1: 0, y1: 0, x2: 0, y2: 22, stroke: 'var(--tw-hatch-line)', 'stroke-width': 7 }));
   defs.appendChild(pat);
   const fov = s('linearGradient', { id: 'fov', x1: '0', y1: '1', x2: '0', y2: '0' });
-  fov.appendChild(s('stop', { offset: '0%', 'stop-color': '#56b9ff', 'stop-opacity': '0.22' }));
-  fov.appendChild(s('stop', { offset: '100%', 'stop-color': '#56b9ff', 'stop-opacity': '0.02' }));
+  fov.appendChild(s('stop', { offset: '0%', 'stop-color': 'var(--accent)', 'stop-opacity': '0.24' }));
+  fov.appendChild(s('stop', { offset: '100%', 'stop-color': 'var(--accent)', 'stop-opacity': '0.02' }));
   defs.appendChild(fov);
   svg.appendChild(defs);
 
@@ -92,12 +92,17 @@ export function renderTwin(o = {}) {
 
   // ---------------------------------------------------------------- çatı ---
   svg.appendChild(s('rect.tw-zone-alt', { x: 8, y: Y(1500) + 4, width: PANEL_W - 16, height: 96 }));
-  svg.appendChild(txt(150, Y(1452), 'Çatı boğazı', 'tw-txt-sm', { 'text-anchor': 'start', x: 26 }));
+  // Çatı etiketi iki satır ve SOL sütunda: eskiden "izlenmiyor" sözcüğü
+  // boğazların tam üstüne, çatı şeridinin dışına düşüyordu ve L1 boğazıyla
+  // çakışıyordu. Bölgenin durumu bölgenin adının altında yazar.
+  svg.appendChild(txt(26, Y(1462), 'Çatı boğazı', 'tw-txt-sm', { 'text-anchor': 'start', x: 26 }));
+  svg.appendChild(txt(26, Y(1432), '4 bara boğazı · izlenmiyor', 'tw-txt-xs',
+    { 'text-anchor': 'start', x: 26, fill: 'var(--tw-unmon)' }));
   const stubX = [485, 610, 735, 860];
   ['L1', 'L2', 'L3', 'N'].forEach((c, i) => {
     svg.appendChild(s('rect', {
       x: stubX[i] - 26, y: Y(1500) + 4, width: 52, height: 96, rx: 4,
-      fill: i === 3 ? '#2d6389' : '#5d6c7c', stroke: '#8ea0b4', 'stroke-width': 2,
+      fill: i === 3 ? 'var(--tw-stub-n)' : 'var(--tw-stub)', stroke: 'var(--tw-stub-line)', 'stroke-width': 2,
     }));
     svg.appendChild(txt(stubX[i], Y(1425), c, 'tw-txt-sm'));
   });
@@ -139,28 +144,35 @@ export function renderTwin(o = {}) {
       for (let k = 0; k < 3; k++) {
         svg.appendChild(s('rect', {
           x: f.x - 30 + k * 21, y: Y(top - 30), width: 15, height: (top - bot) - 90, rx: 2,
-          fill: '#0b1219', stroke: '#4f6a86', 'stroke-width': 1.5,
+          fill: 'var(--tw-slot)', stroke: 'var(--tw-cell-line)', 'stroke-width': 1.5,
         }));
       }
-      svg.appendChild(txt(f.x, Y(bot - 34), 'Ç' + f.index, 'tw-txt-sm'));
-      svg.appendChild(txt(f.x, Y(bot - 70), f.rated + ' A', 'tw-txt-sm'));
-      svg.appendChild(txt(f.x, Y(bot - 104), f.boy, 'tw-txt-sm', { opacity: 0.7 }));
+      // TEK satır. Üç satır yazınca alttaki ikisi pabuç sırası bölmesinin
+      // altında kalıyordu (bölme dikdörtgeni sonra çizilir ve üstünü örter)
+      // ve y = 500 mm'deki pabuç noktalarıyla çakışıyordu. "1 Boy / 2 Boy"
+      // bilgisi aşağıdaki kolon başlığına taşındı.
+      svg.appendChild(txt(f.x, Y(bot - 20), `Ç${f.index} · ${f.rated} A`, 'tw-txt-xs'));
     } else {
       svg.appendChild(txt(f.x, Y((top + bot) / 2), 'Yedek', 'tw-txt-sm'));
-      svg.appendChild(txt(f.x, Y(bot - 34), 'boş', 'tw-txt-sm', { opacity: 0.7 }));
+      svg.appendChild(txt(f.x, Y(bot - 20), 'boş', 'tw-txt-xs', { opacity: 0.75 }));
     }
   }
-  svg.appendChild(txt(42, Y(1010), '12 DSYA çıkış · 5×250 A + 5×400 A + 2 yedek',
-    'tw-txt-sm', { 'text-anchor': 'start', x: 42 }));
+  // Sağa hizalı: solda "N" bara etiketi duruyor ve sola hizalı bir başlık onun
+  // üstüne biniyordu. Üstteki bara künyesiyle aynı sağ kenara hizalanınca ikisi
+  // tek bir açıklama sütunu oluşturuyor.
+  svg.appendChild(txt(1230, Y(1012), '12 DSYA çıkış · 5×250 A (1 Boy) + 5×400 A (2 Boy) + 2 yedek',
+    'tw-txt-xs', { 'text-anchor': 'end', x: 1230 }));
 
   // ------------------------------------------------------------ pabuç sırası
   svg.appendChild(s('rect.tw-zone', { x: 26, y: Y(545), width: PANEL_W - 52, height: 90 }));
   const bottomCount = joints.filter((j) => j.zone === 'bottom').length;
-  // Etiket ölçü kolonunun boş kaldığı şeride yazılır; fider etiketleriyle çakışmaz.
-  svg.appendChild(txt(1580, Y(520), '48 pabuçluk çıkış sırası',
-    'tw-txt-sm', { 'text-anchor': 'end', x: 1580 }));
-  svg.appendChild(txt(1580, Y(486), `${bottomCount} tanesi izleniyor · 2 yedek çıkış boş`,
-    'tw-txt-sm', { 'text-anchor': 'end', x: 1580, opacity: 0.75 }));
+  // Pabuç noktaları x = 58..1018 arasında duruyor; bölmenin sağ ucu (x > 1030)
+  // boştur. Etiket oraya yazılır ve gövde kenarını (x = 1600) aşmaz - eskiden
+  // x = 1580'den başlayıp çerçeveden taşıyordu.
+  svg.appendChild(txt(1548, Y(526), '48 pabuçluk çıkış sırası',
+    'tw-txt-xs', { 'text-anchor': 'end', x: 1548 }));
+  svg.appendChild(txt(1548, Y(496), `${bottomCount} izleniyor · 2 yedek boş`,
+    'tw-txt-xs', { 'text-anchor': 'end', x: 1548, opacity: 0.75 }));
 
   // --------------------------------------------------- alt kablo bölmesi ---
   svg.appendChild(s('rect.tw-zone-alt', {
@@ -170,21 +182,25 @@ export function renderTwin(o = {}) {
   // taban tamamen açık - kesik çizgi (Madde 2.2.8.6 Not:2)
   svg.appendChild(s('line', {
     x1: 26, y1: Y(20), x2: PANEL_W - 26, y2: Y(20),
-    stroke: '#56b9ff', 'stroke-width': 3, 'stroke-dasharray': '18 12',
+    stroke: 'var(--accent)', 'stroke-width': 3, 'stroke-dasharray': '18 12',
   }));
-  svg.appendChild(txt(PANEL_W / 2, Y(4), 'taban tamamen açık · kablo kanalına bakar',
-    'tw-txt-sm', { fill: '#56b9ff' }));
+  // Gövdenin alt kenarı y = 0 mm'dedir; yazı oraya konunca çerçeve çizgisinin
+  // tam üstüne biniyordu. Kesik çizginin hemen üstüne alındı.
+  svg.appendChild(txt(PANEL_W / 2, Y(42), 'taban tamamen açık · kablo kanalına bakar',
+    'tw-txt-xs', { fill: 'var(--accent)' }));
 
   // "En az 400 mm" ölçü oku
   const dimX = 1450;
   svg.appendChild(s('line.tw-dim', { x1: dimX, y1: Y(400), x2: dimX, y2: Y(20) }));
   svg.appendChild(s('line.tw-dim', { x1: dimX - 16, y1: Y(400), x2: dimX + 16, y2: Y(400) }));
   svg.appendChild(s('line.tw-dim', { x1: dimX - 16, y1: Y(20), x2: dimX + 16, y2: Y(20) }));
-  svg.appendChild(txt(dimX + 100, Y(210), 'En az 400 mm', 'tw-dim-txt'));
+  // Ok x = 1450'de; yazı +100 ile 1550'ye kayınca gövde kenarını (1600) aşıyor
+  // ve panonun dışına taşıyordu. Ok ile gövde kenarı arasındaki boşluğa sığar.
+  svg.appendChild(txt(dimX + 66, Y(210), 'En az 400 mm', 'tw-dim-txt'));
 
   // PE / topraklama barası
   svg.appendChild(s('rect', {
-    x: 60, y: Y(250), width: 1340, height: 16, rx: 3, fill: '#2f6a45', stroke: '#4fae74',
+    x: 60, y: Y(250), width: 1340, height: 16, rx: 3, fill: 'var(--tw-pe)', stroke: 'var(--tw-pe-line)',
     'stroke-width': 2,
   }));
   svg.appendChild(txt(70, Y(285), 'PE barası · M12 paslanmaz saplama (Madde 2.2.6.2.iii)',
@@ -202,13 +218,16 @@ export function renderTwin(o = {}) {
   bay(880, 1000, 'Modem bölmesi', 'Madde 2.2.8.1.iv');
   bay(700, 860, 'İç ihtiyaç', '10 A priz · 6 A gG');
   // anten çıkışı
-  svg.appendChild(s('line', { x1: 1568, y1: Y(985), x2: 1620, y2: Y(985), stroke: '#56b9ff', 'stroke-width': 3 }));
+  svg.appendChild(s('line', { x1: 1568, y1: Y(985), x2: 1620, y2: Y(985), stroke: 'var(--accent)', 'stroke-width': 3 }));
   svg.appendChild(s('path', {
     d: `M1620 ${Y(985)} l0 -60 m-18 22 a26 26 0 0 1 36 0 m-52 -20 a44 44 0 0 1 68 0`,
-    fill: 'none', stroke: '#56b9ff', 'stroke-width': 3,
+    fill: 'none', stroke: 'var(--accent)', 'stroke-width': 3,
   }));
-  svg.appendChild(txt(1640, Y(1085), 'sızdırmaz anten çıkışı', 'tw-txt-sm',
-    { 'text-anchor': 'start', x: 1600, fill: '#56b9ff' }));
+  // Anten sembolü x = 1586..1654, y = 455..515 arasını kaplıyor. Etiket sola
+  // hizalıyken hem sembolün hem gövde kenarının üstüne biniyordu; sağa hizalı
+  // ve sembolün üstünde duruyor.
+  svg.appendChild(txt(1800, Y(1070), 'sızdırmaz anten çıkışı', 'tw-txt-xs',
+    { 'text-anchor': 'end', x: 1800, fill: 'var(--accent)' }));
 
   // dış ölçüler
   svg.appendChild(txt(PANEL_W / 2, Y(PANEL_H) - 34, `1600 × 1500 × 450 mm · dahili tip · IP2X`, 'tw-txt-lg'));
@@ -224,10 +243,10 @@ export function renderTwin(o = {}) {
   }
   svg.appendChild(gUn);
   if (unmonitored.length) {
+    // Tek etiket yeter: çatı boğazlarının durumu zaten çatı başlığında yazıyor.
+    // İkinci kopya L1 boğazının üstüne düşüyordu.
     svg.appendChild(txt(PANEL_W / 2, Y(1330), 'izlenmiyor — kesinti gerektirir',
-      'tw-txt-sm', { fill: '#8fa3ba' }));
-    svg.appendChild(txt(PANEL_W / 2 - 200, Y(1490), 'izlenmiyor', 'tw-txt-sm',
-      { fill: '#8fa3ba', 'text-anchor': 'end', x: 445 }));
+      'tw-txt-sm', { fill: 'var(--tw-unmon)' }));
   }
 
   // ------------------------------------------------------ izlenen bağlantılar
@@ -293,13 +312,13 @@ export function renderTwin(o = {}) {
       g.appendChild(s('circle.tw-dev-body' + offCls, { cx: x, cy: y, r: 22 }));
       g.appendChild(s('path', {
         d: `M${x} ${y - 22} v-26 m-12 12 a17 17 0 0 1 24 0`,
-        fill: 'none', stroke: '#56b9ff', 'stroke-width': 3,
+        fill: 'none', stroke: 'var(--accent)', 'stroke-width': 3,
       }));
     } else {
       g.appendChild(s('rect.tw-dev-body' + offCls, { x: x - 30, y: y - 24, width: 60, height: 48, rx: 5 }));
       g.appendChild(s('path', {
         d: `M${x - 14} ${y + 4} h28 M${x - 14} ${y - 8} h28`,
-        stroke: '#56b9ff', 'stroke-width': 3,
+        stroke: 'var(--accent)', 'stroke-width': 3,
       }));
     }
     g.appendChild(s('title', {}, [
@@ -317,7 +336,7 @@ export function renderTwin(o = {}) {
 
   // cihaz sayısı - jüri noktaları sayarsa 9 bulmalı
   svg.appendChild(txt(120, Y(120), `${devices.length} cihaz`, 'tw-txt-lg',
-    { 'text-anchor': 'start', x: 60, fill: '#56b9ff' }));
+    { 'text-anchor': 'start', x: 60, fill: 'var(--accent)' }));
   svg.appendChild(txt(60, Y(72), 'gün 1 kiti · yalnızca alt bölme + ölçü kolonu',
     'tw-txt-sm', { 'text-anchor': 'start', x: 60 }));
 
@@ -336,15 +355,15 @@ export function twinLegend(devices) {
   for (const d of devices || []) counts[d.kind] = (counts[d.kind] || 0) + 1;
 
   return h('div.twin-legend',
-    li(glyph((e) => e.appendChild(s('rect', { x: 4, y: 7, width: 16, height: 10, rx: 2, fill: '#10202c', stroke: '#56b9ff', 'stroke-width': 2 }))),
+    li(glyph((e) => e.appendChild(s('rect', { x: 4, y: 7, width: 16, height: 10, rx: 2, fill: 'var(--tw-cell)', stroke: 'var(--accent)', 'stroke-width': 2 }))),
       `Isıl kelepçe + ayrılabilir CT (${counts.TC || 0})`),
-    li(glyph((e) => e.appendChild(s('path', { d: 'M4 18h16l-5-6h-6z', fill: '#10202c', stroke: '#56b9ff', 'stroke-width': 2 }))),
+    li(glyph((e) => e.appendChild(s('path', { d: 'M4 18h16l-5-6h-6z', fill: 'var(--tw-cell)', stroke: 'var(--accent)', 'stroke-width': 2 }))),
       `Termal dizi MLX90640 (${counts['TN-IR'] || 0})`),
-    li(glyph((e) => e.appendChild(s('circle', { cx: 12, cy: 13, r: 7, fill: '#10202c', stroke: '#56b9ff', 'stroke-width': 2 }))),
+    li(glyph((e) => e.appendChild(s('circle', { cx: 12, cy: 13, r: 7, fill: 'var(--tw-cell)', stroke: 'var(--accent)', 'stroke-width': 2 }))),
       `RF + ortam düğümü (${counts.PD || 0})`),
-    li(glyph((e) => e.appendChild(s('rect', { x: 4, y: 6, width: 16, height: 12, rx: 2, fill: '#10202c', stroke: '#56b9ff', 'stroke-width': 2 }))),
+    li(glyph((e) => e.appendChild(s('rect', { x: 4, y: 6, width: 16, height: 12, rx: 2, fill: 'var(--tw-cell)', stroke: 'var(--accent)', 'stroke-width': 2 }))),
       `Ağ geçidi (${counts.GW || 0})`),
-    li(glyph((e) => e.appendChild(s('circle', { cx: 12, cy: 12, r: 6, fill: 'none', stroke: '#64788e', 'stroke-width': 2, 'stroke-dasharray': '3 2' }))),
+    li(glyph((e) => e.appendChild(s('circle', { cx: 12, cy: 12, r: 6, fill: 'none', stroke: 'var(--tw-unmon)', 'stroke-width': 2, 'stroke-dasharray': '3 2' }))),
       'İzlenmiyor · kesinti gerektirir'),
     h('span.li',
       h('span.ramp',

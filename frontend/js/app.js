@@ -8,6 +8,8 @@ import { h, mount, clear, qs, empty } from './dom.js';
 import * as fmt from './fmt.js';
 import * as store from './store.js';
 import { api, Live, LIVE_STATE } from './api.js';
+import * as theme from './theme.js';
+import { combo } from './combo.js';
 
 import * as viewFleet from './view-fleet.js';
 import * as viewPanel from './view-panel.js';
@@ -42,6 +44,36 @@ const ICONS = {
   bell: 'M6 9a6 6 0 1112 0c0 5 2 6 2 6H4s2-1 2-6zM10 21h4',
   grid: 'M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z',
 };
+
+const TEMA_ICONS = {
+  // güneş: daire + ışınlar · ay: hilal. İkisi de tek yollu, harici set yok.
+  acik: 'M12 5.6a6.4 6.4 0 100 12.8 6.4 6.4 0 000-12.8M12 1.6v2M12 21v2M3.9 3.9l1.4 1.4'
+      + 'M18.7 18.7l1.4 1.4M1.6 12h2M20.4 12h2M3.9 20.1l1.4-1.4M18.7 5.3l1.4-1.4',
+  koyu: 'M20.5 14.6A8.6 8.6 0 019.4 3.5a8.6 8.6 0 1011.1 11.1z',
+};
+
+function temaSwitch() {
+  const cur = theme.current();
+  const btn = (t, label) => h('button', {
+    'aria-pressed': String(cur === t),
+    'aria-label': label,
+    title: label,
+    onclick: () => { if (theme.current() !== t) theme.apply(t); },
+  }, (() => {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('fill', 'none');
+    svg.setAttribute('stroke', 'currentColor');
+    svg.setAttribute('stroke-width', '1.7');
+    svg.setAttribute('stroke-linecap', 'round');
+    const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    p.setAttribute('d', TEMA_ICONS[t]);
+    svg.appendChild(p);
+    return svg;
+  })());
+  return h('div.tema-sw', { role: 'group', 'aria-label': 'Tema' },
+    btn('koyu', 'Koyu tema'), btn('acik', 'Açık tema'));
+}
 
 function icon(name) {
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -122,7 +154,11 @@ const ctx = {
 // Raylık ve üst şerit
 // --------------------------------------------------------------------------
 
+let railSig = '';
+
 function renderRail(state) {
+  if (state.view === railSig) return;
+  railSig = state.view;
   mount(rail, ...RAIL.map((r) => {
     const btn = h('button.rail-btn', {
       'aria-current': String(state.view === r.key),
@@ -152,20 +188,58 @@ function connPill(state) {
     h('span.conn-dot'), h('span', { text: label }));
 }
 
+// Üst şerit canlı akışın her çerçevesinde yeniden kurulmaz: içindeki 112
+// seçenekli açılır liste her seferinde yeniden yaratılırsa kullanıcı onu açık
+// tutamaz, liste elinin altında kapanır. Görünen bir şey değişmedikçe
+// dokunmuyoruz.
+let headSig = '';
+let uptimeEl = null;
+
+// Pano seçici tek bir örnektir ve üst şerit yeniden kurulsa da yaşar: içinde
+// açık bir arama kutusu olabilir, onu her çerçevede yok etmek olmaz.
+let panoSecici = null;
+
+function panoSeciciEl(state, panels) {
+  if (!panoSecici) {
+    panoSecici = combo({
+      placeholder: 'Pano seç…',
+      ara: 'Pano, ilçe veya dağıtım şirketi ara…',
+      bos: 'pano yok',
+      genislik: '270px',
+      onPick: (key) => {
+        const st = store.get();
+        // Filo ekranındayken seçim ekran değiştirmez, sağdaki künyeyi açar.
+        if (st.view === 'filo') { store.set({ panelKey: key }); return; }
+        const v = st.view === 'alarm' ? 'pano' : st.view;
+        store.navigate(v, key, v === 'kanit' ? '' : undefined);
+      },
+    });
+  }
+  panoSecici.setItems(panels.map((p) => ({
+    value: p.panel_key,
+    label: p.panel_key,
+    sub: `${p.dso || ''} · ${p.site || ''} · Δ7g ${fmt.signed(p.theta_delta_7d, 1)} K`,
+    badge: fmt.sevBadge(p.severity),
+  })));
+  panoSecici.setValue(state.panelKey);
+  return panoSecici.el;
+}
+
 function renderHead(state) {
   const panels = store.panelList();
-  const sel = h('select.panel-select', {
-    onchange: (ev) => {
-      const key = ev.target.value;
-      const v = state.view === 'filo' || state.view === 'alarm' ? 'pano' : state.view;
-      store.navigate(v, key, v === 'kanit' ? '' : undefined);
-    },
-  }, h('option', { value: '', text: panels.length ? 'Pano seç…' : 'pano yok' }),
-    ...panels.map((p) => h('option', {
-      value: p.panel_key,
-      selected: p.panel_key === state.panelKey,
-      text: `${p.panel_key} · ${fmt.sevMeta(p.severity).label} · Δ7g ${fmt.signed(p.theta_delta_7d, 1)} K`,
-    })));
+  const hlth0 = state.health || {};
+  // Calisma suresi her saniye degisir ve TEK BASINA seridi yeniden kurmaya
+  // degmez; yerinde tazelenir. Imzada olsaydi acilir liste saniyede bir
+  // kapanirdi.
+  const sig = [state.view, state.panelKey, state.conn, panels.length,
+    hlth0.version, hlth0.sim_running, theme.current(),
+    panels.map((p) => p.panel_key + p.severity + fmt.signed(p.theta_delta_7d, 1)).join()].join('|');
+  if (sig === headSig) {
+    if (uptimeEl) uptimeEl.textContent = fmt.dur(hlth0.uptime_s);
+    return;
+  }
+  headSig = sig;
+  const sel = panoSeciciEl(state, panels);
 
   const hlth = state.health || {};
   mount(head,
@@ -184,7 +258,8 @@ function renderHead(state) {
     connPill(state),
     h('span.chip', { title: 'Sunucu sürümü ve çalışma süresi' },
       h('span', { text: 'v' + (hlth.version || '—') }),
-      h('b', { text: fmt.dur(hlth.uptime_s) })));
+      (uptimeEl = h('b', { text: fmt.dur(hlth.uptime_s) }))),
+    temaSwitch());
 }
 
 // --------------------------------------------------------------------------
@@ -405,6 +480,10 @@ store.subscribe((state) => {
   }
   render(state);
 });
+
+// Tema değişince canvas çizen ekranlar (PRPD ısı haritası, SCADA) renklerini
+// belirteçlerden yeniden okumalı; CSS tek başına bir canvas'ı boyamaz.
+theme.onChange(() => { headSig = ''; ctx.refresh(); });
 
 store.startRouter();
 render(store.get());

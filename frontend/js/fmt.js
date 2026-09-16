@@ -168,7 +168,7 @@ export function cividisCss(stops = 9) {
 /** θ -> renk. 0 K soğuk uç, THETA_HI sıcak uç. */
 export const THETA_HI = 10;
 export function thetaColor(theta) {
-  if (theta === null || theta === undefined || Number.isNaN(Number(theta))) return '#3a4757';
+  if (theta === null || theta === undefined || Number.isNaN(Number(theta))) return 'var(--tw-unmon)';
   return cividis(Number(theta) / THETA_HI);
 }
 

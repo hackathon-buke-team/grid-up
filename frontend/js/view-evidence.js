@@ -16,6 +16,7 @@ import { h, mount, empty, clear } from './dom.js';
 import * as fmt from './fmt.js';
 import { api } from './api.js';
 import { ChartGroup, TimeChart } from './charts.js';
+import { combo } from './combo.js';
 
 const CH = {
   tempTc: 'tc.temp_c',
@@ -26,16 +27,35 @@ const CH = {
   cusum: 'det.cusum',
 };
 
-const COLORS = {
-  self: '#56b9ff',
-  sib1: '#8a8678',
-  sib2: '#c3b369',
-  current: '#4aa3ff',
-  load: '#a59c74',
-  theta: '#ffea46',
-  base: '#7f92a8',
-  cusum: '#ff6b3d',
+// Kalem renkleri çizim anında belirteçlerden okunur. Canvas var() anlamaz, bu
+// yüzden değeri biz çözeriz; karşılığında açık temada da okunur bir çizgi
+// elde ederiz (koyu zeminin sarısı beyaz kağıtta kaybolur).
+const SER = {
+  self: '--ser-self', sib1: '--ser-sib1', sib2: '--ser-sib2',
+  current: '--ser-current', load: '--ser-load',
+  theta: '--ser-theta', thetaMed: '--ser-theta-med',
+  base: '--ser-base', cusum: '--ser-cusum',
+  esik: '--ser-esik', degisim: '--ser-degisim',
+  kor: '--ser-korbolge', korLine: '--ser-korbolge-line',
 };
+
+const VARSAYILAN = {
+  self: '#4fa8d8', sib1: '#8a8678', sib2: '#b9ab6a',
+  current: '#4aa3ff', load: '#a59c74',
+  theta: '#ffea46', thetaMed: '#ffc93c',
+  base: '#7f92a8', cusum: '#ff6b3d',
+  esik: '#f4b13a', degisim: '#ff2f79',
+  kor: 'rgba(79,168,216,0.14)', korLine: 'rgba(79,168,216,0.62)',
+};
+
+function renkler() {
+  const css = getComputedStyle(document.documentElement);
+  const out = {};
+  for (const [k, v] of Object.entries(SER)) {
+    out[k] = css.getPropertyValue(v).trim() || VARSAYILAN[k];
+  }
+  return out;
+}
 
 const RANGES = [
   { label: '24 saat', hours: 24 },
@@ -66,6 +86,19 @@ export function create(ctx) {
   let loadedFor = '';
   let data = null;
   let loading = false;
+
+  // Canli akis saniyede bir cerceve gonderir ve update() her cercevede cagrilir.
+  // Eskiden bu, dort canvas'in tamamini yikip yeniden kuruyordu: DOM degisiyor,
+  // eksen araligi veri sinirlarindan yeniden hesaplaniyor, grafik bir kare
+  // bosaliyordu. Ekranda bu, serinin "saliselik gidip gelmesi" olarak gorunur.
+  // Asagidaki imzalar, gercekten degisen bir sey yoksa hicbir seyi yeniden
+  // kurmaz. Yeni olcum geldiginde yan kartlardaki sayilar yine tazelenir.
+  let dataStamp = 0;
+  let jointCombo = null;
+  let renderedSig = '';
+  let sideSig = '';
+  let headSig = '';
+  let domain = null;
 
   function destroyCharts() {
     if (group) { group.destroy(); group = null; }
@@ -116,6 +149,21 @@ export function create(ctx) {
       api.daily(key, joint.key, 120).catch(() => []),
     ]);
     data = { self, s1, s2, cur, pcur, th, thMin, cus, daily, sibs };
+
+    // Eksen araligi SECILEN PENCEREYE sabitlenir, verinin kendi sinirlarina
+    // degil. Eskiden autoDomain() en eski ornekten en yenisine bakiyordu:
+    // gunluk medyan 75 gun geriye gidiyor, ham sicaklik ise yalnizca son
+    // dakikalari kapsiyordu, bu yuzden "7 gun" dugmesi 75 gunluk bir eksen
+    // ciziyor ve ham seri sag kenara sikisiyordu. Ustelik her canli cercevede
+    // ust sinir ilerledigi icin tum cizim bir piksel kayiyordu; ekranda
+    // gorunen titremenin yarisi buydu.
+    const simdi = Date.now() / 1000;
+    let lo = simdi - hours * 3600;
+    let hi = simdi;
+    if (joint.changepoint_ts && joint.changepoint_ts < lo) lo = joint.changepoint_ts - 6 * 3600;
+    domain = [lo, hi];
+
+    dataStamp += 1;
     loading = false;
   }
 
@@ -145,53 +193,60 @@ export function create(ctx) {
     return points.slice(idx - 1);
   }
 
+  // Baslik ve lejant eskiden canvas'in UZERINE mutlak konumla biniyordu ve
+  // egrinin tepesini orutuyordu. Artik kendi satirlarinda duruyorlar; grafik
+  // alani hicbir zaman yaziyla ortulmez.
   function chartBox(title, legend, height) {
     const canvas = h('canvas');
-    const box = h('div.chart-box', { style: { height: height + 'px' } },
-      h('div.chart-title', { text: title }),
-      h('div.chart-legend', ...legend.map((l) => h('span.li',
-        h('i', { style: { background: l.color } }), h('span', { text: l.label })))),
-      canvas);
+    const box = h('div.chart-box',
+      h('div.chart-bar',
+        h('span.chart-title', { text: title }),
+        h('span.sp.grow'),
+        h('span.chart-legend', ...legend.map((l) => h('span.li',
+          h('i', { style: { background: l.color } }), h('span', { text: l.label }))))),
+      h('div.chart-canvas', { style: { height: height + 'px' } }, canvas));
     return { box, canvas };
   }
 
-  function renderCharts(panel, joint) {
+  function renderCharts(panel, joint, sig) {
     destroyCharts();
     const d = data;
     if (!d) return;
+    renderedSig = sig || '';
+    const C = renkler();
     const anyData = d.self.points.length || d.th.points.length;
     if (!anyData) {
       mount(chartCard,
-        h('header', h('h2', { text: 'Zaman serisi' }), rangeSeg()),
-        h('div.body', empty('Bu bağlantı için seri yok',
+        h('header', h('h2', { text: 'Zaman serisi' }), h('span.sp.grow'), rangeSeg()),
+        h('div.pad', empty('Bu bağlantı için seri yok',
           'Gateway henüz veri yayınlamamış olabilir; ekran hata vermez, boş kalır')));
       return;
     }
 
     const c1 = chartBox('1 · Ham sıcaklık ve kardeş fazlar', [
-      { color: COLORS.self, label: fmt.shortJoint(joint.key) },
-      ...(d.sibs[0] ? [{ color: COLORS.sib1, label: fmt.shortJoint(d.sibs[0].key) }] : []),
-      ...(d.sibs[1] ? [{ color: COLORS.sib2, label: fmt.shortJoint(d.sibs[1].key) }] : []),
+      { color: C.self, label: fmt.shortJoint(joint.key) },
+      ...(d.sibs[0] ? [{ color: C.sib1, label: fmt.shortJoint(d.sibs[0].key) }] : []),
+      ...(d.sibs[1] ? [{ color: C.sib2, label: fmt.shortJoint(d.sibs[1].key) }] : []),
     ], 170);
     const c2 = chartBox('2 · Akım ve yük faktörü (f = pano akımı / 2312 A)', [
-      ...(d.cur.points.length ? [{ color: COLORS.current, label: 'damar akımı · kendi CT’si' }] : []),
-      { color: COLORS.load, label: 'pano faz akımı' },
+      ...(d.cur.points.length ? [{ color: C.current, label: 'damar akımı · kendi CT’si' }] : []),
+      { color: C.load, label: 'pano faz akımı' },
     ], 150);
     const c3 = chartBox('3 · θ · taban, değişim noktası, duyarlılık tabanı', [
-      { color: COLORS.theta, label: 'θ anlık' },
-      { color: '#ffd166', label: 'θ günlük medyan · alarm buna bakar' },
-      { color: COLORS.base, label: 'taban' },
-      { color: 'rgba(86,185,255,0.5)', label: 'θ_min altı = kör bölge' },
+      { color: C.theta, label: 'θ anlık' },
+      { color: C.thetaMed, label: 'θ günlük medyan · alarm buna bakar' },
+      { color: C.base, label: 'taban' },
+      { color: C.korLine, label: 'θ_min altı = kör bölge' },
     ], 200);
     const c4 = chartBox('4 · CUSUM (k = 0,5 · h = 8)', [
-      { color: COLORS.cusum, label: 'CUSUM+' },
-      { color: '#f4b13a', label: 'eşik h = 8' },
+      { color: C.cusum, label: 'CUSUM+' },
+      { color: C.esik, label: 'eşik h = 8' },
     ], 160);
 
     mount(chartCard,
-      h('header', h('h2', { text: 'Zaman serisi · ortak eksen' }), h('span.sp'), rangeSeg()),
-      h('div.body.flush', h('div.chart-stack', c1.box, c2.box, c3.box, c4.box)),
-      h('div.body.col',
+      h('header', h('h2', { text: 'Zaman serisi · ortak eksen' }), h('span.sp.grow'), rangeSeg()),
+      h('div.chart-stack', c1.box, c2.box, c3.box, c4.box),
+      h('div.pad.col',
         h('div.tiny.muted', {
           text: 'Dört grafik aynı x eksenini paylaşır ve nişangâh senkrondur: yükün ne '
               + 'yaptığını görmeden bir sıcaklık artışı yorumlanamaz.',
@@ -215,31 +270,31 @@ export function create(ctx) {
       group.add(new TimeChart(c1.canvas, {
         unit: '°C', decimals: 2, yZero: false,
         series: [
-          { label: fmt.shortJoint(joint.key), color: COLORS.self, points: d.self.points, width: 2.1, unit: '°C' },
-          ...(d.s1.points.length ? [{ label: fmt.shortJoint(d.sibs[0].key), color: COLORS.sib1, points: d.s1.points, width: 1.4, unit: '°C' }] : []),
-          ...(d.s2.points.length ? [{ label: fmt.shortJoint(d.sibs[1].key), color: COLORS.sib2, points: d.s2.points, width: 1.4, unit: '°C' }] : []),
+          { label: fmt.shortJoint(joint.key), color: C.self, points: d.self.points, width: 2.1, unit: '°C' },
+          ...(d.s1.points.length ? [{ label: fmt.shortJoint(d.sibs[0].key), color: C.sib1, points: d.s1.points, width: 1.4, unit: '°C' }] : []),
+          ...(d.s2.points.length ? [{ label: fmt.shortJoint(d.sibs[1].key), color: C.sib2, points: d.s2.points, width: 1.4, unit: '°C' }] : []),
         ],
       })),
       group.add(new TimeChart(c2.canvas, {
         unit: 'A', decimals: 0,
         series: [
           ...(d.cur.points.length
-            ? [{ label: 'damar akımı', color: COLORS.current, points: d.cur.points, width: 1.8, unit: 'A', decimals: 0 }]
+            ? [{ label: 'damar akımı', color: C.current, points: d.cur.points, width: 1.8, unit: 'A', decimals: 0 }]
             : []),
           ...(d.pcur && d.pcur.points.length
-            ? [{ label: 'pano faz akımı', color: COLORS.load, points: d.pcur.points, width: 1.5, unit: 'A', decimals: 0 }]
+            ? [{ label: 'pano faz akımı', color: C.load, points: d.pcur.points, width: 1.5, unit: 'A', decimals: 0 }]
             : []),
         ],
         hlines: [
-          { value: rated, color: '#f4b13a', label: `bağlantı anması ${fmt.num(rated, 0)} A` },
-          { value: rated * 0.35, color: '#4aa3ff', label: 'f = 0,35 · bunun altında duyarlılık düşük' },
+          { value: rated, color: C.esik, label: `bağlantı anması ${fmt.num(rated, 0)} A` },
+          { value: rated * 0.35, color: C.current, label: 'f = 0,35 · bunun altında duyarlılık düşük' },
         ],
       })),
       group.add(new TimeChart(c3.canvas, {
         unit: 'K', decimals: 2,
         series: [
-          { label: 'θ', color: COLORS.theta, points: d.th.points, width: 2.2, unit: 'K' },
-          { label: 'θ günlük medyan', color: '#ffd166',
+          { label: 'θ', color: C.theta, points: d.th.points, width: 2.2, unit: 'K' },
+          { label: 'θ günlük medyan', color: C.thetaMed,
             points: withinWindow(dailyPoints('theta_med')), width: 2.6, unit: 'K' },
         ],
         yMax: (() => {
@@ -250,17 +305,17 @@ export function create(ctx) {
           return top * 1.25 + 1;
         })(),
         bands: d.thMin.points.length
-          ? [{ points: d.thMin.points, side: 'below', color: 'rgba(86,185,255,0.13)',
-               stroke: 'rgba(86,185,255,0.6)', scale: false }]
+          ? [{ points: d.thMin.points, side: 'below', color: C.kor,
+               stroke: C.korLine, scale: false }]
           : [],
         hlines: [
           ...(joint.baseline_k !== null && joint.baseline_k !== undefined
-            ? [{ value: joint.baseline_k, color: COLORS.base, label: 'taban ' + fmt.num(joint.baseline_k, 2) + ' K' }]
+            ? [{ value: joint.baseline_k, color: C.base, label: 'taban ' + fmt.num(joint.baseline_k, 2) + ' K' }]
             : []),
-          { value: 5.0, color: '#ff6b3d', label: 'alarm eşiği 5 K' },
+          { value: 5.0, color: C.cusum, label: 'alarm eşiği 5 K' },
         ],
         vlines: joint.changepoint_ts
-          ? [{ ts: joint.changepoint_ts, color: '#ff2f79',
+          ? [{ ts: joint.changepoint_ts, color: C.degisim,
                label: 'değişim noktası · ' + fmt.date(joint.changepoint_ts) }]
           : [],
       })),
@@ -269,7 +324,7 @@ export function create(ctx) {
         emptyText: 'CUSUM günlük medyandan hesaplanır · bu bağlantıda henüz yeterli gün yok',
         series: [{
           label: 'CUSUM',
-          color: COLORS.cusum,
+          color: C.cusum,
           // The CUSUM lives on the daily table by construction: it is a
           // statistic over daily medians, so there is no per-sample value to
           // plot and pretending otherwise would draw a line nobody computed.
@@ -277,16 +332,13 @@ export function create(ctx) {
           width: 2.2,
           unit: '',
         }],
-        hlines: [{ value: 8, color: '#f4b13a', label: 'h = 8' }],
+        hlines: [{ value: 8, color: C.esik, label: 'h = 8' }],
       })),
     ];
-    group.autoDomain();
-    // Değişim noktası aralığın dışında kalıyorsa ekseni genişlet: tarihli çizgi
-    // görünmüyorsa hiçbir işe yaramaz.
-    if (joint.changepoint_ts && group.domain && joint.changepoint_ts < group.domain[0]) {
-      group.setDomain([joint.changepoint_ts - 3600, group.domain[1]]);
-    }
-    requestAnimationFrame(() => group && group.drawAll());
+    // Aralık load() sırasında bir kez saptandı ve seçilen pencereye eşittir.
+    // Veri hiç gelmemişse geri düşüş yine veri sınırlarıdır.
+    if (domain) group.setDomain(domain.slice()); else group.autoDomain();
+    group.requestDraw();
   }
 
   function rangeSeg() {
@@ -480,64 +532,123 @@ export function create(ctx) {
     layout();
     if (!panel || panel.panel_key !== key) {
       mount(head, h('h1', { text: 'Kanıt' }), h('span.head-sub', { text: key + ' · yükleniyor…' }));
-      mount(chartCard, h('div.body', h('div.skeleton', { style: { height: '520px' } })));
-      mount(side, h('div.card', h('div.body', h('div.skeleton', { style: { height: '200px' } }))));
+      mount(chartCard, h('div.pad', h('div.skeleton', { style: { height: '520px' } })));
+      mount(side, h('div.surface', h('div.pad', h('div.skeleton', { style: { height: '200px' } }))));
+      headSig = sideSig = renderedSig = '';
       return;
     }
     const joints = (panel.joints || []).filter((j) => j.zone === 'bottom');
     const jointKey = state.jointKey || panel.theta_max_joint || (joints[0] && joints[0].key);
     const joint = joints.find((j) => j.key === jointKey) || joints[0];
     if (!joint) {
-      mount(chartCard, h('div.body', empty('İzlenen bağlantı yok',
+      mount(chartCard, h('div.pad', empty('İzlenen bağlantı yok',
         'Bu panoda alt kablo bölmesi bağlantısı raporlanmıyor')));
       mount(side, '');
+      headSig = sideSig = renderedSig = '';
       return;
     }
 
-    mount(head,
-      h('div',
-        h('h1', { text: `Kanıt · ${fmt.shortJoint(joint.key)}` }),
-        h('div.head-sub', { text: `${panel.panel_key} · ${joint.label || joint.key}` })),
-      h('span.sp'),
-      fmt.sevBadge(joint.severity),
-      h('span.chip', h('span', { text: 'θ' }),
-        h('b', { text: fmt.num(joint.theta_k, 2) + ' K' })),
-      h('span.chip', h('span', { text: 'Δ eğim' }),
-        h('b', { text: fmt.signed(joint.slope_k_per_week, 2) + ' K/hf' })),
-      jointSelect(panel, joint),
-      h('button.btn', { text: '← Dijital ikiz', onclick: () => ctx.navigate('pano', panel.panel_key) }));
+    // Üst şeritteki açılır liste her çerçevede yeniden kurulursa kullanıcı onu
+    // açık tutamaz: liste elin altında kapanır. Görünen değerler değişmedikçe
+    // dokunmuyoruz.
+    const hSig = [panel.panel_key, joint.key, joint.severity,
+      fmt.num(joint.theta_k, 2), fmt.signed(joint.slope_k_per_week, 2),
+      (panel.joints || []).length].join('|');
+    if (hSig !== headSig) {
+      headSig = hSig;
+      mount(head,
+        h('div',
+          h('h1', { text: `Kanıt · ${fmt.shortJoint(joint.key)}` }),
+          h('div.head-sub', { text: `${panel.panel_key} · ${joint.label || joint.key}` })),
+        h('span.sp.grow'),
+        fmt.sevBadge(joint.severity),
+        h('span.chip', h('span', { text: 'θ' }),
+          h('b', { text: fmt.num(joint.theta_k, 2) + ' K' })),
+        h('span.chip', h('span', { text: 'Δ eğim' }),
+          h('b', { text: fmt.signed(joint.slope_k_per_week, 2) + ' K/hf' })),
+        jointSelect(panel, joint),
+        h('button.btn', { text: '← Dijital ikiz', onclick: () => ctx.navigate('pano', panel.panel_key) }));
+    }
 
     const want = `${panel.panel_key}|${joint.key}|${hours}`;
     if (want !== loadedFor && !loading) {
       loadedFor = want;
-      mount(chartCard, h('div.body', h('div.skeleton', { style: { height: '640px' } })));
-      load(panel, joint).then(() => { renderCharts(panel, joint); }).catch((e) => {
-        mount(chartCard, h('div.body', empty('Seri alınamadı', String(e && e.message || e))));
-      });
+      renderedSig = '';
+      mount(chartCard, h('div.pad', h('div.skeleton', { style: { height: '640px' } })));
+      load(panel, joint)
+        .then(() => renderCharts(panel, joint, chartSig(panel, joint)))
+        .catch((e) => {
+          mount(chartCard, h('div.pad', empty('Seri alınamadı', String(e && e.message || e))));
+        });
     } else if (data && !loading) {
-      renderCharts(panel, joint);
+      // Grafikler YALNIZCA gerçekten değişen bir şey varsa yeniden kurulur.
+      // Canlı akışın tek başına yeni bir çerçeve göndermesi yeterli değildir.
+      const cSig = chartSig(panel, joint);
+      if (cSig !== renderedSig) renderCharts(panel, joint, cSig);
     }
 
-    mount(side,
-      formulaCard(joint),
-      reasonCard(panel, joint),
-      resistanceCard(joint),
-      factsCard(panel, joint),
-      dailyCard());
+    // Yan kartlar canlı sayı gösterir, o yüzden tazelenirler; ama ekranda
+    // görünen bir rakam değişmediyse DOM'a dokunmayız.
+    const sSig = [panel.panel_key, joint.key, dataStamp, joint.severity,
+      fmt.num(joint.theta_k, 2), fmt.num(joint.theta_min_k, 2),
+      fmt.num(joint.temp_c, 2), fmt.num(joint.sibling_median_c, 2),
+      fmt.num(joint.current_a, 0), fmt.num(joint.cusum, 2),
+      fmt.signed(joint.slope_k_per_week, 2), fmt.num(joint.excess_r_uohm, 1),
+      (panel.alarms || []).length].join('|');
+    if (sSig !== sideSig) {
+      sideSig = sSig;
+      mount(side,
+        formulaCard(joint),
+        reasonCard(panel, joint),
+        resistanceCard(joint),
+        factsCard(panel, joint),
+        dailyCard());
+    }
   }
 
+  /** renderCharts() neye bağlıysa imza da ona bağlı: veri damgası ve çizilen
+   *  sabitler. Canlı θ değeri burada YOKTUR - o yan kartta gösterilir, eğriyi
+   *  yeniden kurmaz. */
+  function chartSig(panel, joint) {
+    return [panel.panel_key, joint.key, hours, dataStamp,
+      joint.baseline_k, joint.changepoint_ts, joint.rated_a,
+      joint.theta_min_k === null || joint.theta_min_k === undefined ? '' : 1,
+      // Kalem renkleri temadan okunuyor; tema değişince eğriler yeniden kurulmalı.
+      document.documentElement.getAttribute('data-tema')].join('|');
+  }
+
+  // 40 izlenen bağlantı arasından seçim: yerleşik <select> burada da aramaz ve
+  // seviye rozetini gösteremez. Aynı bileşen üst şeritteki pano seçicisinde de
+  // kullanılıyor (js/combo.js).
   function jointSelect(panel, joint) {
     const joints = (panel.joints || []).filter((j) => j.zone === 'bottom')
       .slice().sort((a, b) => (b.theta_k || -99) - (a.theta_k || -99));
-    const sel = h('select.panel-select', {
-      onchange: (ev) => ctx.navigate('kanit', panel.panel_key, ev.target.value),
-    }, ...joints.map((j) => h('option', {
+    if (!jointCombo) {
+      jointCombo = combo({
+        placeholder: 'Bağlantı seç…',
+        ara: 'Bağlantı ara… (çıkış, faz, pabuç)',
+        bos: 'izlenen bağlantı yok',
+        genislik: '230px',
+        onPick: (key) => ctx.navigate('kanit', panel.panel_key, key),
+      });
+    }
+    jointCombo.setItems(joints.map((j) => ({
       value: j.key,
-      selected: j.key === joint.key,
-      text: `${fmt.shortJoint(j.key)} · θ ${fmt.num(j.theta_k, 2)} K`,
+      label: fmt.shortJoint(j.key),
+      sub: `θ ${fmt.num(j.theta_k, 2)} K`,
+      badge: fmt.sevBadge(j.severity),
     })));
-    return sel;
+    jointCombo.setValue(joint.key);
+    return jointCombo.el;
   }
 
-  return { el, update, destroy() { destroyCharts(); clear(el); } };
+  return {
+    el,
+    update,
+    destroy() {
+      destroyCharts();
+      if (jointCombo) { jointCombo.destroy(); jointCombo = null; }
+      clear(el);
+    },
+  };
 }

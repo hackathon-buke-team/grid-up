@@ -26,10 +26,19 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="color-scheme" content="dark">
+  <meta name="color-scheme" content="dark light">
   <meta name="description" content="PANO GÖZ · AG dağıtım panosu içi anomali erken uyarı sistemi">
   <title>PANO GÖZ · Pano içi anomali erken uyarı</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230e141c'/%3E%3Ccircle cx='16' cy='16' r='7' fill='none' stroke='%2356b9ff' stroke-width='2.5'/%3E%3Ccircle cx='16' cy='16' r='2.5' fill='%23ffea46'/%3E%3C/svg%3E">
+  <!-- Tema, ilk boyamadan ÖNCE kurulur: modül betiği beklenirse açık temayı
+       seçmiş bir kullanıcı bir kare boyunca koyu ekran görür ve bu göz alır.
+       Aynı mantığın kalıcı kopyası js/theme.js içindedir. -->
+  <script>
+    try {
+      var t = localStorage.getItem('panogoz.tema');
+      document.documentElement.setAttribute('data-tema', t === 'acik' ? 'acik' : 'koyu');
+    } catch (e) { document.documentElement.setAttribute('data-tema', 'koyu'); }
+  </script>
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/views.css">

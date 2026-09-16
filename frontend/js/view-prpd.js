@@ -132,7 +132,9 @@ export function create(ctx) {
       group = new ChartGroup();
       group.add(new TimeChart(trendCanvas, {
         unit: 'dB', decimals: 1, xAxis: true,
-        series: [{ label: 'tepe genlik', color: '#ffea46',
+        series: [{ label: 'tepe genlik',
+                   color: getComputedStyle(document.documentElement)
+                     .getPropertyValue('--ser-theta').trim() || '#ffea46',
                    points: ((trend && trend.series) || []).filter((p) => p && p[1] !== null),
                    width: 1.8, unit: 'dB' }],
       }));

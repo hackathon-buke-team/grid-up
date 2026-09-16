@@ -1,43 +1,266 @@
 /* PANO GÖZ · ekrana özgü yerleşimler.
    S1 filo · S2 dijital ikiz · S3 kanıt · S4 PRPD · S5 alarmlar · S6 SCADA   */
 
-.view { display: flex; flex-direction: column; gap: 14px; min-height: 100%; }
+.view { display: flex; flex-direction: column; gap: 13px; min-height: 100%; }
 
 .view-head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-.view-head h1 { font-size: 20px; }
-.view-head .sp { flex: 1 1 auto; }
+.view-head h1 { font-size: var(--t-xl); flex: 0 0 auto; }
+.view-head .sp, .view-head .grow { flex: 1 1 auto; }
 
-/* ------------------------------------------------------------------ S1 filo */
+/* =================================================================== S1 filo
+   Harita bu ekranın kahramanıdır ve öyle davranılır: sol sütunu doldurur,
+   yüksekliğini pencereden alır, üstüne hiçbir şey binmez.                  */
+
+/* ---- süzgeç çubuğu ------------------------------------------------------
+   Tek satır, saç teli ayraçlarla bölünmüş. Kutuların içine gömülü bir "filtre
+   paneli" değil: operatör bunu her gün kullanacak, bir tık uzakta durmalı. */
+
+.filter-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px 9px;
+  padding: 7px 11px;
+  background: var(--bg-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.filter-bar .grow { flex: 1 1 auto; }
+.f-lbl { font-size: var(--t-sm); color: var(--fg-mute); white-space: nowrap; }
+.f-sep { width: 1px; align-self: stretch; background: var(--line-soft); margin: 0 3px; }
+.f-sev { display: flex; flex-wrap: wrap; gap: 4px; }
+
+.f-sev-b, .f-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 9px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg-2);
+  color: var(--fg-mute);
+  font-size: var(--t-sm);
+  white-space: nowrap;
+}
+.f-sev-b .sw { display: inline-flex; flex: none; }
+.f-sev-b:hover, .f-chip:hover { color: var(--fg-dim); border-color: var(--accent-dim); }
+.f-sev-b.on, .f-chip.on {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--fg);
+}
+.f-n {
+  font-variant-numeric: tabular-nums;
+  font-size: var(--t-xs);
+  color: var(--fg-mute);
+  background: var(--bg-3);
+  border-radius: 999px;
+  padding: 0 5px;
+  min-width: 18px;
+  text-align: center;
+}
+.f-sev-b.on .f-n { background: var(--bg-1); color: var(--fg-dim); }
+
+.f-num {
+  width: 58px;
+  padding: 3px 6px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--bg-2);
+  color: var(--fg);
+  font: inherit;
+  font-size: var(--t-sm);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+.f-num:focus { outline: none; border-color: var(--accent); }
+.f-dash, .f-unit { color: var(--fg-mute); font-size: var(--t-sm); }
+.f-count { font-size: var(--t-sm); color: var(--fg-mute); white-space: nowrap; }
+.f-count b { color: var(--fg); font-variant-numeric: tabular-nums; }
+
+/* ---- harita tam ekran ---------------------------------------------------
+   Tam ekran "haritaya bak ama hiçbir şey yapma" kipi değildir: süzgeç çubuğu
+   üstte, seçili pano künyesi ve liste sağda yüzer. Operatör tam ekranda da
+   süzebilir, pano seçebilir ve oradan başka bir ekrana geçebilir. DOM hiç
+   taşınmaz, yalnız yerleşim değişir; canlı akış da olduğu gibi sürer.        */
+
+.fs-only { display: none !important; }
+
+.view.tam-ekran {
+  height: 100vh;
+  padding: 8px;
+  gap: 8px;
+  background: var(--bg);
+  overflow: hidden;
+}
+.view.tam-ekran > .view-head { display: none; }
+.view.tam-ekran > .filter-bar { flex: none; box-shadow: var(--lift); }
+.view.tam-ekran > .fleet-grid {
+  flex: 1 1 auto;
+  display: block;
+  position: relative;
+  min-height: 0;
+}
+.view.tam-ekran .fs-only { display: inline-flex !important; }
+
+.view.tam-ekran .map-panel { position: absolute; inset: 0; }
+.view.tam-ekran .map-wrap { position: relative; }
+.view.tam-ekran .map-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+/* Üstte harita başlığı ve araç şeridi, altta lejant ŞERİDİ açıkta kalır:
+   tam ekrandan çıkış düğmesini örten bir panel, tuzağa dönüşür. */
+.view.tam-ekran .fleet-right {
+  position: absolute;
+  top: 52px;
+  right: 8px;
+  bottom: 50px;
+  width: 456px;
+  max-width: 48vw;
+  z-index: 6;
+  gap: 8px;
+  overflow: hidden;      /* kaydırma iç kartta; panel kenarı temiz kalsın */
+}
+.view.tam-ekran .fleet-right > * { box-shadow: var(--lift); }
+.view.tam-ekran .fleet-table-wrap { max-height: none; }
+.view.tam-ekran.liste-kapali .fleet-right { display: none; }
+
+/* Dar panelde tabloyu yatay kaydırtmak yerine sütun DÜŞÜRÜYORUZ: yan kaydırma
+   çubuğu bir listede her zaman kaybedilmiş bir sütun demektir. Kalanlar
+   operatörün sıraladığı sütunlar: hangi pano, ne kadar kötü, ne hızla
+   kötüleşiyor, veri ne kadar taze. Gerisi künyede ve tam tabloda duruyor. */
+.view.tam-ekran .fleet-right .c-health_index,
+.view.tam-ekran .fleet-right .c-sensitivity_pct,
+.view.tam-ekran .fleet-right .c-load_factor,
+.view.tam-ekran .fleet-right .c-alarm_count,
+.view.tam-ekran .fleet-right .c-devices_online { display: none; }
+
+.view.tam-ekran .fleet-right table.tbl { font-size: var(--t-md); }
+.view.tam-ekran .fleet-right table.tbl th,
+.view.tam-ekran .fleet-right table.tbl td { padding: 6px 9px; }
+
+/* ---- sağ sütun · üç kip ------------------------------------------------
+   Liste, künye ve çoklu seçim aynı anda GÖRÜNMEZ. Hangisi açıksa sütunun
+   tamamını kaplar; "← Liste" ile listeye dönülür. Böylece dar bir sütunda iki
+   kart üst üste sıkışmaz ve seçili panonun künyesi tam boy okunur.          */
+
+.fleet-right { min-width: 0; }
+
+/* Normal yerleşimde kartlar içeriği kadar yüksektir; yüksekliği pencereden
+   alan tek şey tablonun kendi kaydırma kutusudur (.fleet-table-wrap).
+   YALNIZCA tam ekranda kart, sütunun tamamını doldurur ve kaydırma içeri
+   taşınır. Bu kuralları tam ekranla sınırlamazsak normal yerleşimde kartın
+   belirli bir yüksekliği olmadığı için tablo sıfıra çöker. */
+.view.tam-ekran .fleet-right > .surface {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+.view.tam-ekran .fleet-right > .surface.hidden { display: none !important; }
+.view.tam-ekran .fleet-right .fleet-table-wrap { flex: 1 1 auto; min-height: 0; }
+
+.fr-detay > header .geri { margin-right: 2px; }
+.fr-detay > header h2 { font-size: var(--t-lg); }
+.c-cikar { width: 1%; text-align: right; padding-left: 0 !important; }
+.c-cikar .tool { border: none; background: none; width: 22px; height: 22px; }
+.c-cikar .tool:hover { background: var(--bg-3); color: var(--sev-kritik); }
+
+.fr-detay { border-color: var(--accent-dim); }
+.fr-detay > header { gap: 10px; }
+.pano-kart-sub {
+  padding: 7px 13px;
+  font-size: var(--t-sm);
+  color: var(--fg-mute);
+  border-bottom: 1px solid var(--line-soft);
+}
+.pk-grid { gap: 1px; background: var(--line-soft); border-bottom: 1px solid var(--line-soft); }
+.pk-grid .stat { padding: 9px 13px; }
+.pk-grid .stat-v { font-size: 22px; }
+
+/* Seçili panolar haritada: hepsi halolu, KÜNYESİ AÇIK olan ayrıca beyaz
+   konturlu. "İşaretledim" ile "şu an bakıyorum" iki ayrı durumdur. */
+.map-dot.sel .halo { opacity: 0.5; }
+.map-dot.sel.bir .halo { opacity: 0.8; }
+.map-dot.sel.bir .pin { stroke: var(--fg); stroke-width: 1.6; }
 
 .fleet-grid {
   display: grid;
-  grid-template-columns: minmax(420px, 560px) minmax(0, 1fr);
-  gap: 14px;
+  grid-template-columns: minmax(430px, 1fr) minmax(520px, 1.05fr);
+  gap: 13px;
   align-items: start;
 }
-@media (max-width: 1250px) { .fleet-grid { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 1320px) { .fleet-grid { grid-template-columns: minmax(0, 1fr); } }
 
-.map-wrap { position: relative; }
-.map-wrap svg { display: block; width: 100%; height: auto; max-height: 62vh; background: var(--bg); }
-.map-wrap .map-legend {
-  position: absolute; left: 10px; bottom: 10px;
-  display: flex; flex-direction: column; gap: 3px;
-  background: rgba(8,11,16,0.82);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-sm);
-  padding: 7px 9px; font-size: 12px; color: var(--fg-dim);
+.map-panel { display: flex; flex-direction: column; }
+.map-wrap { position: relative; flex: 1 1 auto; background: var(--map-sea); }
+
+.map-svg {
+  display: block;
+  width: 100%;
+  height: calc(100vh - 318px);
+  min-height: 360px;
+  cursor: grab;
+  outline: none;
 }
-.map-legend .li { display: flex; align-items: center; gap: 6px; }
+.map-svg.zp-drag { cursor: grabbing; }
+.map-svg:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+
+.map-sea  { fill: var(--map-sea); }
+.map-prov { fill: var(--map-land); stroke: none; }
+.map-prov-hi { fill: var(--map-land-hi); stroke: none; }
+
+/* Kalem kalınlığı EKRAN pikselinde sabit: 30 kat yaklaşınca il sınırı
+   30 px'lik bir şerit hâline gelmesin. */
+.map-inner, .map-coast, .map-scale-bar, .map-grid-g line {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+}
+.map-inner { stroke: var(--map-border); stroke-width: 0.8; }
+.map-coast { stroke: var(--map-coast); stroke-width: 1.4; stroke-linejoin: round; }
+.map-grid-g line { stroke: var(--map-grid); stroke-width: 1; }
+
+.map-prov-t {
+  fill: var(--map-label);
+  pointer-events: none;
+  letter-spacing: 0.4px;
+  paint-order: stroke;
+  stroke: var(--map-halo);
+  stroke-width: 2.5px;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+.map-prov-t.on { fill: var(--fg-mute); }
+
+.map-lbl-t {
+  fill: var(--fg-dim);
+  pointer-events: none;
+  paint-order: stroke;
+  stroke: var(--map-halo);
+  stroke-width: 3.5px;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+.map-lbl-t.sel { fill: var(--fg); font-weight: 600; }
+
+.map-scale-bar { stroke: var(--fg-mute); stroke-width: 1.6; }
+.map-scale-t   { fill: var(--fg-mute); }
 
 .map-dot { cursor: pointer; }
-.map-dot:hover .halo { opacity: 0.9; }
-.map-dot.sel .halo { opacity: 1; }
+.map-dot .halo { opacity: 0.13; }
+.map-dot .pin  { vector-effect: non-scaling-stroke; }
+.map-dot:hover .halo { opacity: 0.6; }
 
-.fleet-table-wrap { max-height: calc(100vh - 250px); overflow: auto; }
+.fleet-table-wrap { max-height: calc(100vh - 258px); overflow: auto; }
 
 .hi-bar {
   display: inline-block; vertical-align: middle;
-  width: 66px; height: 8px; border-radius: 4px;
+  width: 56px; height: 6px; border-radius: 0;
   background: var(--bg-3); overflow: hidden; margin-right: 8px;
 }
 .hi-bar i { display: block; height: 100%; background: var(--accent); }
@@ -49,138 +272,181 @@
 .delta-flat { color: var(--fg-mute); }
 .delta-down { color: var(--sev-izle); }
 
-/* ------------------------------------------------------------------- S2 ikiz */
+/* =================================================================== S2 ikiz */
 
 .twin-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 400px;
-  gap: 14px;
+  grid-template-columns: minmax(0, 1fr) 396px;
+  gap: 13px;
   align-items: start;
 }
 @media (max-width: 1350px) { .twin-grid { grid-template-columns: minmax(0, 1fr); } }
 
-.twin-stage { background: #05080c; padding: 8px; display: flex; justify-content: center; }
-/* Panonun tamamı tek ekranda görünsün: SVG en-boy oranını koruyarak yüksekliğe
-   sığar (preserveAspectRatio varsayılanı 'meet'). Jüri panoyu kaydırmadan görür. */
-.twin-stage svg { display: block; width: 100%; height: auto; max-height: calc(100vh - 250px); }
+.twin-card { display: flex; flex-direction: column; }
 
-/* dijital ikiz SVG sınıfları */
-.tw-enclosure { fill: #0d141c; stroke: #4a5f78; stroke-width: 6; }
-.tw-inner     { fill: none; stroke: #33475e; stroke-width: 2; }
-.tw-zone      { fill: #101823; stroke: #2b3d52; stroke-width: 2; }
-.tw-zone-alt  { fill: #0c131b; stroke: #2b3d52; stroke-width: 2; }
-.tw-bar-l1    { fill: #8e9aa6; }
-.tw-bar-l2    { fill: #2a3340; stroke: #6d7b8b; stroke-width: 1.5; }
-.tw-bar-l3    { fill: #7a5a3c; }
-.tw-bar-n     { fill: #6ba8d8; }
-.tw-dsya      { fill: #16202c; stroke: #3d5570; stroke-width: 2; }
-.tw-dsya-400  { fill: #182534; stroke: #46617f; stroke-width: 2; }
-.tw-spare     { fill: url(#hatch); stroke: #47607c; stroke-width: 2; stroke-dasharray: 8 6; }
-.tw-txt       { fill: #9fb0c4; font-size: 22px; font-family: var(--font); }
-.tw-txt-sm    { fill: #7f92a8; font-size: 17px; font-family: var(--font); }
-.tw-txt-lg    { fill: #cddcec; font-size: 27px; font-weight: 600; font-family: var(--font); }
-.tw-dim       { stroke: #56b9ff; stroke-width: 1.6; }
-.tw-dim-txt   { fill: #56b9ff; font-size: 20px; font-family: var(--font); }
-.tw-unmon     { fill: none; stroke: #64788e; stroke-width: 2.5; stroke-dasharray: 5 4; }
-.tw-joint     { stroke: #05080c; stroke-width: 2; cursor: pointer; }
-.tw-joint:hover { stroke: #ffffff; stroke-width: 3; }
-.tw-joint.sel { stroke: #ffffff; stroke-width: 4; }
+.twin-stage {
+  background: var(--tw-sheet);
+  padding: 6px;
+  display: flex;
+  justify-content: center;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+.twin-stage svg {
+  display: block;
+  width: 100%;
+  height: calc(100vh - 330px);
+  min-height: 340px;
+  cursor: grab;
+  outline: none;
+}
+.twin-stage svg.zp-drag { cursor: grabbing; }
+.twin-stage svg:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+
+/* Tam ekran: kart ekranı kaplar, çizim de boşluğun tamamını alır. Başlık ve
+   lejant kalır - jüri neye baktığını tam ekranda da okuyabilmeli. */
+.twin-card:fullscreen {
+  border: none;
+  border-radius: 0;
+  background: var(--bg-1);
+  width: 100vw;
+  height: 100vh;
+}
+.twin-card:fullscreen .twin-stage svg { height: auto; min-height: 0; flex: 1 1 auto; }
+.twin-card:fullscreen .twin-stage { padding: 10px; }
+.twin-card:fullscreen > .pad { display: none; }
+
+/* --- dijital ikiz SVG sınıfları · hepsi tema belirtecinden beslenir ------ */
+.tw-enclosure { fill: var(--tw-body); stroke: var(--tw-body-line); stroke-width: 6; }
+.tw-inner     { fill: none; stroke: var(--tw-inner); stroke-width: 2; }
+.tw-zone      { fill: var(--tw-zone); stroke: var(--tw-zone-line); stroke-width: 2; }
+.tw-zone-alt  { fill: var(--tw-zone-alt); stroke: var(--tw-zone-line); stroke-width: 2; }
+.tw-bar-l1    { fill: var(--tw-bar-l1); }
+.tw-bar-l2    { fill: var(--tw-bar-l2); stroke: var(--tw-bar-l2-line); stroke-width: 1.5; }
+.tw-bar-l3    { fill: var(--tw-bar-l3); }
+.tw-bar-n     { fill: var(--tw-bar-n); }
+.tw-dsya      { fill: var(--tw-cell); stroke: var(--tw-cell-line); stroke-width: 2; }
+.tw-dsya-400  { fill: var(--tw-cell-2); stroke: var(--tw-cell-2-line); stroke-width: 2; }
+.tw-spare     { fill: url(#hatch); stroke: var(--tw-cell-line); stroke-width: 2; stroke-dasharray: 8 6; }
+.tw-txt       { fill: var(--tw-txt); font-size: 22px; font-family: var(--font); }
+.tw-txt-sm    { fill: var(--tw-txt); font-size: 17px; font-family: var(--font); }
+/* Kolon künyesi ve kenar notları: aynı yükseklikte iki satır sığsın diye bir
+   kademe küçük. Daha küçüğü projeksiyonda okunmuyor, sınır burası. */
+.tw-txt-xs    { fill: var(--tw-txt); font-size: 15px; font-family: var(--font); }
+.tw-txt-lg    { fill: var(--tw-txt-lg); font-size: 27px; font-weight: 600; font-family: var(--font); }
+.tw-dim       { stroke: var(--accent); stroke-width: 1.6; }
+.tw-dim-txt   { fill: var(--accent); font-size: 20px; font-family: var(--font); }
+.tw-unmon     { fill: none; stroke: var(--tw-unmon); stroke-width: 2.5; stroke-dasharray: 5 4; }
+.tw-joint     { stroke: var(--tw-dot-edge); stroke-width: 2; cursor: pointer; }
+.tw-joint:hover { stroke: var(--fg); stroke-width: 3; }
+.tw-joint.sel { stroke: var(--fg); stroke-width: 4; }
 .tw-dev       { cursor: pointer; }
-.tw-dev-body  { fill: #10202c; stroke: #56b9ff; stroke-width: 3; }
-.tw-dev-off   { stroke: #ff6b3d; stroke-dasharray: 6 4; }
-.tw-dev-txt   { fill: #56b9ff; font-size: 18px; font-family: var(--font); }
-.tw-lead      { stroke: #56b9ff; stroke-width: 1.5; stroke-dasharray: 4 3; }
+.tw-dev-body  { fill: var(--tw-cell); stroke: var(--accent); stroke-width: 3; }
+.tw-dev-off   { stroke: var(--sev-kritik); stroke-dasharray: 6 4; }
+.tw-dev-txt   { fill: var(--accent); font-size: 18px; font-family: var(--font); }
+.tw-lead      { stroke: var(--accent); stroke-width: 1.5; stroke-dasharray: 4 3; }
 
 .twin-legend {
-  display: flex; flex-wrap: wrap; gap: 8px 18px;
-  padding: 10px 14px; border-top: 1px solid var(--line); background: var(--bg-1);
-  font-size: 12.5px; color: var(--fg-dim);
+  display: flex; flex-wrap: wrap; gap: 7px 17px;
+  padding: 9px 13px; border-top: 1px solid var(--line);
+  font-size: var(--t-sm); color: var(--fg-dim);
 }
 .twin-legend .li { display: flex; align-items: center; gap: 6px; }
-.twin-legend svg { width: 20px; height: 20px; flex: none; }
+.twin-legend svg { width: 19px; height: 19px; flex: none; }
 
-.ramp {
-  display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--fg-mute);
-}
-.ramp .bar {
-  width: 150px; height: 10px; border-radius: 5px; border: 1px solid var(--line);
-}
+.ramp { display: flex; align-items: center; gap: 7px; font-size: var(--t-xs); color: var(--fg-mute); }
+.ramp .bar { width: 140px; height: 9px; border: 1px solid var(--line); }
 
 .joint-list { max-height: 340px; overflow: auto; }
 
-/* ------------------------------------------------------------------ S3 kanıt */
+/* ================================================================== S3 kanıt */
 
 .evidence-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 380px;
-  gap: 14px;
+  grid-template-columns: minmax(0, 1fr) 378px;
+  gap: 13px;
   align-items: start;
 }
 @media (max-width: 1350px) { .evidence-grid { grid-template-columns: minmax(0, 1fr); } }
 
-.chart-stack { display: flex; flex-direction: column; gap: 0; position: relative; }
-.chart-box { position: relative; border-bottom: 1px solid var(--line-soft); }
+.chart-stack { display: flex; flex-direction: column; }
+.chart-box { border-bottom: 1px solid var(--line); }
 .chart-box:last-child { border-bottom: none; }
-.chart-box canvas { display: block; width: 100%; height: 100%; }
-.chart-box .chart-title {
-  position: absolute; left: 12px; top: 6px; z-index: 2;
-  font-size: 13px; color: var(--fg-dim); pointer-events: none;
+
+/* Başlık ve lejant KENDİ satırında. Eskiden canvas'ın üstüne mutlak konumla
+   biniyorlardı: 1500 A'e vuran bir akım eğrisinin tepesi lejantın altında
+   kalıyordu ve okunmuyordu. */
+.chart-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 5px 12px 4px;
+  background: var(--bg-2);
+  border-bottom: 1px solid var(--line-soft);
+  min-height: 24px;
 }
-.chart-box .chart-legend {
-  position: absolute; right: 12px; top: 6px; z-index: 2;
-  display: flex; gap: 12px; font-size: 12px; color: var(--fg-mute); pointer-events: none;
+.chart-bar .grow { flex: 1 1 auto; }
+.chart-title { font-size: var(--t-sm); color: var(--fg-dim); white-space: nowrap; }
+.chart-legend {
+  display: flex; flex-wrap: wrap; gap: 3px 12px; justify-content: flex-end;
+  font-size: var(--t-xs); color: var(--fg-mute);
 }
-.chart-box .chart-legend .li { display: flex; align-items: center; gap: 5px; }
-.chart-box .chart-legend i { width: 14px; height: 3px; border-radius: 2px; display: block; }
+.chart-legend .li { display: flex; align-items: center; gap: 5px; white-space: nowrap; }
+.chart-legend i { width: 13px; height: 3px; display: block; flex: none; }
+
+.chart-canvas { position: relative; }
+.chart-canvas canvas { display: block; width: 100%; height: 100%; }
 
 .chart-tip {
   position: fixed; z-index: 70; pointer-events: none;
-  background: rgba(20,29,40,0.97);
+  background: var(--bg-2);
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
-  padding: 7px 10px; font-size: 12.5px; color: var(--fg);
-  box-shadow: var(--shadow); white-space: nowrap;
+  padding: 7px 10px; font-size: var(--t-sm); color: var(--fg);
+  box-shadow: var(--lift); white-space: nowrap;
   font-variant-numeric: tabular-nums;
 }
 .chart-tip .t { color: var(--fg-mute); margin-bottom: 3px; }
 .chart-tip .li { display: flex; align-items: center; gap: 6px; }
-.chart-tip i { width: 10px; height: 3px; border-radius: 2px; display: block; }
+.chart-tip i { width: 10px; height: 3px; display: block; }
 
 .formula {
   background: var(--bg);
-  border: 1px solid var(--accent-dim);
-  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  border-left: 2px solid var(--accent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
   padding: 12px 14px;
   text-align: center;
-  font-size: 21px;
+  font-size: var(--t-xl);
   color: var(--fg);
-  letter-spacing: 0.3px;
+  letter-spacing: 0.2px;
 }
 .formula sub, .formula sup { font-size: 0.62em; }
-.formula .why { display: block; margin-top: 7px; font-size: 12.5px; color: var(--fg-mute);
+.formula .why { display: block; margin-top: 7px; font-size: var(--t-sm); color: var(--fg-mute);
                 letter-spacing: 0; }
 
 .reason-list { list-style: none; margin: 0; padding: 0; display: flex;
-               flex-direction: column; gap: 7px; }
+               flex-direction: column; gap: 6px; }
 .reason-list li {
   display: flex; gap: 8px; align-items: flex-start;
-  font-size: 13.5px; color: var(--fg-dim); line-height: 1.4;
+  font-size: var(--t-md); color: var(--fg-dim); line-height: 1.4;
 }
 .reason-list li .b { color: var(--accent); flex: none; }
 .reason-list.ruled li .b { color: var(--fg-mute); }
 .reason-list.ruled li { color: var(--fg-mute); }
 
 .interval {
-  display: flex; align-items: baseline; gap: 8px; font-size: 20px; font-weight: 650;
+  display: flex; align-items: baseline; gap: 7px;
+  font-size: var(--t-read); font-weight: 600; letter-spacing: -0.5px;
 }
-.interval .u { font-size: 13px; color: var(--fg-dim); font-weight: 500; }
+.interval .u { font-size: var(--t-md); color: var(--fg-mute); font-weight: 500; letter-spacing: 0; }
 
-/* ------------------------------------------------------------------- S4 PRPD */
+/* =================================================================== S4 PRPD */
 
 .prpd-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 400px;
-  gap: 14px;
+  grid-template-columns: minmax(0, 1fr) 396px;
+  gap: 13px;
   align-items: start;
 }
 @media (max-width: 1350px) { .prpd-grid { grid-template-columns: minmax(0, 1fr); } }
@@ -188,20 +454,20 @@
 .prpd-canvas-wrap { position: relative; }
 .prpd-canvas-wrap canvas { display: block; width: 100%; }
 
-/* ----------------------------------------------------------------- S5 alarm */
+/* ================================================================== S5 alarm */
 
 .alarm-item {
   display: grid;
   grid-template-columns: 128px minmax(0, 1fr) auto;
   gap: 14px;
   align-items: start;
-  padding: 13px 14px;
+  padding: 12px 13px;
   border-bottom: 1px solid var(--line-soft);
 }
 .alarm-item:hover { background: var(--bg-2); }
-.alarm-item .ttl { font-size: 15.5px; font-weight: 600; }
-.alarm-item .meta { font-size: 12.5px; color: var(--fg-mute); margin-top: 3px; }
-.alarm-item .act { font-size: 13.5px; color: var(--fg-dim); margin-top: 6px; }
+.alarm-item .ttl { font-size: var(--t-base); font-weight: 600; }
+.alarm-item .meta { font-size: var(--t-sm); color: var(--fg-mute); margin-top: 3px; }
+.alarm-item .act { font-size: var(--t-md); color: var(--fg-dim); margin-top: 6px; }
 .alarm-item .ev { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 7px; }
 .alarm-item .side { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; }
 .alarm-item > .col, .supp-item > .col { align-items: flex-start; }
@@ -211,20 +477,20 @@
   display: grid;
   grid-template-columns: 150px minmax(0, 1fr);
   gap: 14px;
-  padding: 11px 14px;
+  padding: 10px 13px;
   border-bottom: 1px solid var(--line-soft);
 }
 .supp-item:hover { background: var(--bg-2); }
-.supp-item .rsn { font-size: 14.5px; color: var(--fg); }
-.supp-item .det { font-size: 12.5px; color: var(--fg-mute); margin-top: 3px;
+.supp-item .rsn { font-size: var(--t-md); color: var(--fg); }
+.supp-item .det { font-size: var(--t-sm); color: var(--fg-mute); margin-top: 3px;
                   font-family: var(--mono); }
 
-/* ----------------------------------------------------------------- S6 SCADA */
+/* ================================================================== S6 SCADA */
 
 .scada-grid {
   display: grid;
-  grid-template-columns: 300px minmax(0, 1fr);
-  gap: 14px;
+  grid-template-columns: 296px minmax(0, 1fr);
+  gap: 13px;
   align-items: start;
 }
 @media (max-width: 1250px) { .scada-grid { grid-template-columns: minmax(0, 1fr); } }
@@ -235,21 +501,21 @@
 .reg-tbl td.eng  { text-align: right; font-weight: 600; }
 .reg-tbl tr.changed td.raw { color: var(--accent); }
 
-.bitgrid { display: flex; flex-wrap: wrap; gap: 5px; }
+.bitgrid { display: flex; flex-wrap: wrap; gap: 4px; }
 .bit {
-  border: 1px solid var(--line); border-radius: 5px; padding: 2px 8px;
-  font-size: 12px; color: var(--fg-mute); background: var(--bg-2);
+  border: 1px solid var(--line-soft); border-radius: 2px; padding: 1px 7px;
+  font-size: var(--t-sm); color: var(--fg-mute); background: var(--bg-2);
 }
 .bit.on { color: var(--fg); border-color: var(--accent); background: var(--accent-soft); }
 .bit.on.warn { color: var(--sev-uyari); border-color: var(--sev-uyari);
-               background: rgba(244,177,58,0.12); }
-.bit .ix { color: var(--fg-mute); font-family: var(--mono); font-size: 11px; margin-right: 5px; }
+               background: var(--sev-uyari-bg); }
+.bit .ix { color: var(--fg-mute); font-family: var(--mono); font-size: var(--t-xs); margin-right: 5px; }
 
-/* --------------------------------------------------------------- JSON ağacı */
+/* ============================================================== JSON ağacı == */
 
-.jtree { font-family: var(--mono); font-size: 12.5px; line-height: 1.55; }
+.jtree { font-family: var(--mono); font-size: var(--t-sm); line-height: 1.55; }
 .jtree .k { color: var(--accent); }
-.jtree .s { color: #9ad4a0; }
+.jtree .s { color: var(--topo-green); }
 .jtree .n { color: var(--sev-uyari); }
 .jtree .b { color: var(--sev-izle); }
 .jtree ul { list-style: none; margin: 0; padding-left: 16px;
