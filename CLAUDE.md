@@ -166,8 +166,11 @@ SCADA protokolü.
       kontrolleri.
 - [ ] **2.3** IEC 60870-5-104 slave (nokta listesi + IOA şeması hazır → sunucu
       yazılacak: genel tarama, kendiliğinden bildirim, saat senkronu).
-- [ ] **2.4** 1000 pano yük testi + kaynak ölçümü (CPU/RAM/disk/yazma hızı/tur süresi)
-      — kademeli 250→500→1000.
+- [x] **2.4** 1000 pano yük testi + kaynak ölçümü (CPU/RAM/disk/yazma hızı/tur süresi)
+      — kademeli 250→500→1000. *Bitti sayılır:* gerçek `psutil` ölçümü, 250/500/1000
+      kademesinde doğrusal ölçekleniyor, kırılma noktası yok. →
+      `panogoz/run_local.py`, `tools/run_load_test.py`,
+      `docs/06-OLCEKLENEBILIRLIK.md` (2026-09-16).
 - [ ] **2.5** ICD ↔ Modbus otomatik tutarlılık testi + üçüncü taraf için CSV nokta
       listesi.
 
@@ -319,16 +322,25 @@ gibi yazılmaz · `contracts/` değişikliği önce gruba duyurulur.
 ```bash
 python -m panogoz.run_local --panels 112 --port 8080
 python -m panogoz.run_local --panels 8 --backfill-days 20   # hızlı başlangıç
-python -m pytest -q                                          # tüm regresyon
-python -m tests.test_rules
-python -m tests.test_detector
-python -m tests.test_integration
-python -m tests.test_scada
-python -m tests.test_modbus
-cd firmware/node && make host && ./panogoz_node --selftest
+python -m pytest -q                                          # tüm regresyon (26 test)
+python -m pytest tests/test_theta.py                         # tek dosya (pytest ile, `python -m tests.X` DEĞİL)
+python -m pytest tests/test_rules.py
+python -m pytest tests/test_bus_mqtt_e2e.py -v                # gerçek broker E2E (K2 2.1)
+python tools/run_load_test.py --panels 250 500 1000           # K2 2.4 yük testi
 ```
 
-*(Windows'ta Türkçe çıktı için komut başına `PYTHONIOENCODING=utf-8` eklenmeli.)*
+```bash
+# firmware/node (K1 1.4) — toolchain PATH'e ekli değilse önce ekle
+# (kurulum: docs/07-FIRMWARE.md §2, xPack + tcc, %LOCALAPPDATA%\panogoz-toolchain\)
+cd firmware/node && make host && ./panogoz_node --selftest
+make target   # gerçek arm-none-eabi-gcc ile 3 kart, flash/RAM raporu
+```
+
+*(Windows'ta Türkçe çıktı için komut başına `PYTHONIOENCODING=utf-8` eklenmeli. Yukarıdaki
+`tests.test_rules`/`tests.test_detector`/`tests.test_integration`/`tests.test_scada`
+biçimindeki eski komutlar 2026-09-12 sıfırdan-yeniden-yapılanmadan ÖNCEKİ plana
+aitti, gerçek değildi — 2026-09-16'da gerçek dosya adları/`pytest` çağrısıyla
+düzeltildi, bkz. `docs/06-OLCEKLENEBILIRLIK.md`.)*
 
 ---
 

@@ -52,8 +52,13 @@ def _connection_series(timeline: ConnectionTimeline) -> dict:
     }
 
 
-def create_app() -> Flask:
-    fleet = build_demo_fleet()
+def create_app(fleet: list[ConnectionTimeline] | None = None) -> Flask:
+    """`fleet` verilmezse (varsayılan, mevcut davranış) sabit 2-panolu demo
+    filosunu kullanır -- `panogoz.run_local` gibi çağıranlar kendi
+    `build_fleet(n)` çıktısını geçirerek N-panolu bir sunucu ayağa
+    kaldırabilir (bkz. K2 2.4, docs/06-OLCEKLENEBILIRLIK.md)."""
+    if fleet is None:
+        fleet = build_demo_fleet()
     app = Flask(__name__, static_folder=None)
 
     @app.get("/api/connections")
