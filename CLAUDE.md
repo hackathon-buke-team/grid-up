@@ -189,8 +189,21 @@ SCADA protokolü.
 
 - [ ] **3.1** Alarm konsolu: onay akışı, iş emri kartı, filtre/sıralama, fırtına
       görünümü, kapatma gerekçesi.
-- [ ] **3.2** Kanıt ekranı: θ zaman serisi, CUSUM, değişim noktası işareti, kardeş
-      karşılaştırma, bastırma gerekçeleri.
+- [x] **3.2** Kanıt ekranı: θ zaman serisi, CUSUM, değişim noktası işareti, kardeş
+      karşılaştırma, bastırma gerekçeleri. *Bitti sayılır (kısmi — bkz. not):*
+      θ serisi (zaten vardı) + kardeş faz karşılaştırması (3 fazın gerçek yüzey
+      sıcaklığı, izlenen faz vurgulu — F02'de L2'nin ayrışması gözle net) +
+      CUSUM/değişim noktası (gerçek demo filosunda dürüstçe "yetersiz veri",
+      ayrı bir "uzatılmış demo örneği" düğmesiyle gerçekten tetiklenen bir
+      CUSUM/değişim-noktası gösterimi — gün 30, gerçek ölçümün döşenmiş
+      tekrarı). **"Bastırma gerekçeleri" bilinçli olarak KAPSAM DIŞI** —
+      CLAUDE.md §2'deki bastırma→füzyon→alarm katmanı (dead-band, fırtına
+      sınırı, 7 gün kapanma) repo'da henüz kurulmadı, ekranda da bunu açıkça
+      belirten bir not var. → `panogoz/api/app.py` (`_evidence_payload`,
+      `/api/connections/<i>/evidence`, `/api/cusum-demo/evidence`),
+      `panogoz/sim/demo_fleet.py` (`build_cusum_demo_connection`),
+      `frontend/{index.html,app.js,styles.css}`, `tests/test_api.py`
+      (2026-09-16).
 - [ ] **3.3** Mobil/tablet görünüm: tek pano/bağlantı, konum, iş emri; QR ile doğrudan
       açılış (400px'te yatay kaydırma yok).
 - [ ] **3.4** Bastırma ekranı + SCADA register canlı görünümü cilası (register ↔ ekran

@@ -10,11 +10,17 @@ from pathlib import Path
 
 from flask import Flask, jsonify, request, send_from_directory
 
+from panogoz.contracts.channels import Phase
 from panogoz.detector.cusum import cusum_changepoint, daily_median_series
 from panogoz.detector.flags import Flag, flags_for_connection
 from panogoz.rules.engine import Severity
 from panogoz.sim.ct_data import SAMPLE_PERIOD_S
-from panogoz.sim.demo_fleet import RATED_CURRENT_A, ConnectionTimeline, build_demo_fleet
+from panogoz.sim.demo_fleet import (
+    RATED_CURRENT_A,
+    ConnectionTimeline,
+    build_cusum_demo_connection,
+    build_demo_fleet,
+)
 
 FRONTEND_DIR = Path(__file__).resolve().parents[2] / "frontend"
 
@@ -95,6 +101,81 @@ def _connection_flags(timeline: ConnectionTimeline, now_t_s: float | None) -> di
     }
 
 
+def _cusum_payload(timeline: ConnectionTimeline) -> dict:
+    """K3 3.2 -- CUSUM/değişim noktası. Gerçek sonucu döner; `baseline_days`
+    (varsayılan 30) karşılanmıyorsa (mevcut demo filosunun ~1.6 günlük
+    serisinde her zaman böyle) `available: false` + insan-okur bir not döner
+    -- frontend bunu sahte bir eğriyle DEĞİL, dürüst bir mesajla göstermeli."""
+    try:
+        daily = daily_median_series(timeline.theta)
+        result = cusum_changepoint(daily)
+        return {
+            "available": True,
+            "note": None,
+            "day_index": result.day_index,
+            "s_pos": result.s_pos,
+            "s_neg": result.s_neg,
+            "h": result.h,
+            "mu0": result.mu0,
+            "sigma0": result.sigma0,
+            "changepoint_day_index": result.changepoint_day_index,
+        }
+    except ValueError:
+        last_theta = timeline.theta[-1]
+        return {
+            "available": False,
+            "note": "yetersiz gunluk veri (CUSUM icin en az 31 gun gerekir, bu seri ~%.1f gun)"
+            % (last_theta.t_s / 86400.0),
+            "day_index": [],
+            "s_pos": [],
+            "s_neg": [],
+            "h": None,
+            "mu0": None,
+            "sigma0": None,
+            "changepoint_day_index": None,
+        }
+
+
+def _evidence_payload(timeline: ConnectionTimeline) -> dict:
+    """K3 3.2 (Kanıt ekranı): θ serisi (zaten `/series`'te var, burada da
+    tekrar edilir ki tek bir istekle tüm kanıt ekranı çizilebilsin) + kardeş
+    faz karşılaştırması (üç fazın ham yüzey sıcaklığı/akımı -- θ zaten bu
+    kardeş medyanına göre normalize ediyor, bkz. panogoz.detector.theta) +
+    CUSUM. "Bastırma gerekçeleri" (CLAUDE.md Sec.2 dead-band/fırtına/7-gün
+    kapanma) kasıtlı olarak burada YOK -- o katman repo'da henüz kurulmadı
+    (yalnız basit eşik+debounce var, panogoz/rules/engine.py), ayrı bir
+    gelecek görev."""
+    siblings = {
+        phase.value: {
+            "t_s": [s.t_s for s in timeline.three_phase[phase]],
+            "surface_temp_c": [s.surface_temp_c for s in timeline.three_phase[phase]],
+            "current_a": [s.current_a for s in timeline.three_phase[phase]],
+        }
+        for phase in Phase
+    }
+    return {
+        "connection_id": timeline.connection_id,
+        "watched_phase": timeline.watched_phase.value,
+        "t_s": [s.t_s for s in timeline.theta],
+        "theta": [s.theta for s in timeline.theta],
+        "siblings": siblings,
+        "cusum": _cusum_payload(timeline),
+    }
+
+
+_cusum_demo_cache: ConnectionTimeline | None = None
+
+
+def _get_cusum_demo_connection() -> ConnectionTimeline:
+    """Bir kez inşa edilip önbelleğe alınır (40 günlük döşenmiş seri +
+    θ/CUSUM hesaplaması ucuz değil, her istekte yeniden üretmeye gerek yok
+    -- girdisi sabit, salt-okunur bir demo örneği)."""
+    global _cusum_demo_cache
+    if _cusum_demo_cache is None:
+        _cusum_demo_cache = build_cusum_demo_connection()
+    return _cusum_demo_cache
+
+
 def create_app(fleet: list[ConnectionTimeline] | None = None) -> Flask:
     """`fleet` verilmezse (varsayılan, mevcut davranış) sabit 2-panolu demo
     filosunu kullanır -- `panogoz.run_local` gibi çağıranlar kendi
@@ -120,6 +201,19 @@ def create_app(fleet: list[ConnectionTimeline] | None = None) -> Flask:
             return jsonify({"error": "bağlantı bulunamadı"}), 404
         now_t_s = request.args.get("now_t_s", type=float)
         return jsonify(_connection_flags(fleet[index], now_t_s))
+
+    @app.get("/api/connections/<int:index>/evidence")
+    def connection_evidence(index: int):
+        if index < 0 or index >= len(fleet):
+            return jsonify({"error": "bağlantı bulunamadı"}), 404
+        return jsonify(_evidence_payload(fleet[index]))
+
+    @app.get("/api/cusum-demo/evidence")
+    def cusum_demo_evidence():
+        """K3 3.2: CUSUM'un gerçekten tetiklendiği, açıkça etiketli, AYRI bir
+        uzatılmış demo örneği (bkz. build_cusum_demo_connection) -- gerçek
+        filodaki hiçbir bağlantının verisi/indexi değil."""
+        return jsonify(_evidence_payload(_get_cusum_demo_connection()))
 
     @app.get("/")
     def index():

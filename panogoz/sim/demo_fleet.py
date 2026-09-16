@@ -101,6 +101,30 @@ def build_demo_fleet() -> list[ConnectionTimeline]:
     ]
 
 
+def build_cusum_demo_connection(
+    *, backfill_days: float = 40.0, fault_start_day: float = 30.0
+) -> ConnectionTimeline:
+    """K3 3.2 (Kanıt ekranı) için AYRI, açıkça etiketli bir örnek bağlantı --
+    `build_demo_fleet()`'in sabit 2 panosuna DAHİL DEĞİL, o listeyi/davranışını
+    değiştirmez. `panogoz.detector.cusum.cusum_changepoint()` varsayılan
+    `baseline_days=30` istiyor; gerçek organizatör verisi yalnızca ~1.6 gün
+    olduğu için CUSUM gerçek filoda her zaman "yetersiz veri" döner (dürüst
+    durum, UI'da öyle gösterilir). Bu fonksiyon, CUSUM'un GERÇEKTEN tetiklendiği
+    çalışan bir örnek görebilmek için `_tile_l1_series` ile gerçek ölçülen
+    deseni (uydurma yeni veri değil, aynı gerçek noktaların tekrarı) 40 güne
+    uzatır, gün 30'dan sonra L3'e arıza enjekte eder (~29 günlük durağan
+    taban çizgisi + ~10 gün kalıcı kayma)."""
+    l1 = load_real_l1_series()
+    l1 = _tile_l1_series(l1, backfill_days)
+    return _build_timeline_from_series(
+        "DEMO-L3 (uzatılmış CUSUM örneği — gerçek ölçümün tekrarı)",
+        Phase.L3,
+        l1,
+        fault_phase=Phase.L3,
+        fault_start_s=fault_start_day * 86400.0,
+    )
+
+
 def build_fleet(
     n_panels: int,
     *,

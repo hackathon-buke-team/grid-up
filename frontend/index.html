@@ -35,6 +35,28 @@
         <input id="time-slider" type="range" min="0" max="0" value="0" />
       </div>
     </section>
+
+    <section class="evidence">
+      <h2>Kanıt Ekranı</h2>
+
+      <div class="evidence-block">
+        <h3>Kardeş Faz Karşılaştırması <span class="sub">(yüzey sıcaklığı, θ'nın normalize ettiği kardeş medyanın kaynağı)</span></h3>
+        <canvas id="siblings-chart" width="900" height="200"></canvas>
+        <div class="legend" id="siblings-legend"></div>
+      </div>
+
+      <div class="evidence-block">
+        <div class="evidence-block-header">
+          <h3>CUSUM / Değişim Noktası <span class="sub">(günlük θ medyanı, sürüklenme tespiti)</span></h3>
+          <button id="cusum-demo-btn" class="link-btn">Uzatılmış demo örneği göster</button>
+        </div>
+        <p id="cusum-status" class="note">—</p>
+        <canvas id="cusum-chart" width="900" height="160" hidden></canvas>
+      </div>
+
+      <p class="scope-note">Kapsam dışı: bastırma gerekçeleri (dead-band, fırtına sınırı, 7 gün
+        kendiliğinden kapanma — bkz. CLAUDE.md §2) bu ekranda yok, o katman henüz kurulmadı.</p>
+    </section>
   </main>
 
   <script src="app.js"></script>
