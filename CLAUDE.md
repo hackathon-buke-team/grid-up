@@ -211,8 +211,15 @@ SCADA protokolü.
       alternatif (GSM modem/SMS). Seçim gerekçesi + veri mahremiyeti notu yazılı olsun.
 - [ ] **4.2** Eskalasyon: rota, onay token'ı, tekrar aralığı, fırtına sınırı, sessize
       alma, nöbet devri.
-- [ ] **4.3** `expect_flags` sözleşme açıkları: STALE, SENSOR_DRIFT, DE_ENERGISED
-      bayrakları cihaz düzeyinde doğru mu kuruluyor?
+- [x] **4.3** `expect_flags` sözleşme açıkları: STALE, SENSOR_DRIFT, DE_ENERGISED
+      bayrakları cihaz düzeyinde doğru mu kuruluyor? *Bitti sayılır:* üç bayrak
+      da gerçek testle doğrulandı, θ'nın düşük-yük `None` durumuyla
+      karışmadığı ayrıca test edildi, gerçek API endpoint'i (`/api/
+      connections/<i>/flags`) canlı çalıştırılıp doğrulandı. Ayrıca CLAUDE.md
+      §2'deki CUSUM/değişim-noktası katmanı (`panogoz/detector/cusum.py`,
+      K3 3.2'nin arka uç temeli — UI kısmı henüz yapılmadı) sıfırdan kuruldu.
+      → `panogoz/detector/{cusum,flags}.py`, `tests/test_cusum.py`,
+      `tests/test_expect_flags.py`, `docs/04-ANOMALI-TESPIT.md` (2026-09-16).
 - [ ] **4.4** Doğruluk sunumu: 17 senaryo × tespit matrisi, haber verme süresi
       dağılımı, yanlış alarm bütçesi, duyarlılık eğrisi. *(Data science tarafına en
       yakın görev.)*

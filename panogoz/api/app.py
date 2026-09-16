@@ -8,10 +8,13 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from flask import Flask, jsonify, send_from_directory
+from flask import Flask, jsonify, request, send_from_directory
 
+from panogoz.detector.cusum import cusum_changepoint, daily_median_series
+from panogoz.detector.flags import Flag, flags_for_connection
 from panogoz.rules.engine import Severity
-from panogoz.sim.demo_fleet import ConnectionTimeline, build_demo_fleet
+from panogoz.sim.ct_data import SAMPLE_PERIOD_S
+from panogoz.sim.demo_fleet import RATED_CURRENT_A, ConnectionTimeline, build_demo_fleet
 
 FRONTEND_DIR = Path(__file__).resolve().parents[2] / "frontend"
 
@@ -52,6 +55,46 @@ def _connection_series(timeline: ConnectionTimeline) -> dict:
     }
 
 
+def _connection_flags(timeline: ConnectionTimeline, now_t_s: float | None) -> dict:
+    """K4 4.3 -- expect_flags (STALE/SENSOR_DRIFT/DE_ENERGISED), bkz.
+    panogoz.detector.flags. Bu demo verisi tek seferde onceden hesaplanmis
+    tarihsel bir seri oldugu icin gercek bir 'simdi' kavrami yok -- `now_t_s`
+    verilmezse son ornegin kendi zaman damgasi kullanilir (gap=0, asla stale
+    degil); canli akan bir sistemde bu her zaman gercek duvar-saati olurdu."""
+    watched = timeline.watched_phase
+    last_theta = timeline.theta[-1]
+    last_thermal = timeline.three_phase[watched][-1]
+    effective_now = last_theta.t_s if now_t_s is None else now_t_s
+
+    sensor_drift = False
+    drift_note = None
+    try:
+        daily = daily_median_series(timeline.theta)
+        result = cusum_changepoint(daily)
+        sensor_drift = result.changepoint_day_index is not None
+    except ValueError:
+        drift_note = "yetersiz gunluk veri (CUSUM icin en az 31 gun gerekir, bu seri ~%.1f gun)" % (
+            last_theta.t_s / 86400.0
+        )
+
+    flags = flags_for_connection(
+        last_sample_t_s=last_theta.t_s,
+        now_t_s=effective_now,
+        period_s=SAMPLE_PERIOD_S,
+        current_a=last_thermal.current_a,
+        rated_current_a=RATED_CURRENT_A,
+        sensor_drift_detected=sensor_drift,
+    )
+    return {
+        "connection_id": timeline.connection_id,
+        "flags": sorted(f.value for f in flags),
+        "stale": Flag.STALE in flags,
+        "de_energised": Flag.DE_ENERGISED in flags,
+        "sensor_drift": Flag.SENSOR_DRIFT in flags,
+        "sensor_drift_note": drift_note,
+    }
+
+
 def create_app(fleet: list[ConnectionTimeline] | None = None) -> Flask:
     """`fleet` verilmezse (varsayılan, mevcut davranış) sabit 2-panolu demo
     filosunu kullanır -- `panogoz.run_local` gibi çağıranlar kendi
@@ -70,6 +113,13 @@ def create_app(fleet: list[ConnectionTimeline] | None = None) -> Flask:
         if index < 0 or index >= len(fleet):
             return jsonify({"error": "bağlantı bulunamadı"}), 404
         return jsonify(_connection_series(fleet[index]))
+
+    @app.get("/api/connections/<int:index>/flags")
+    def connection_flags(index: int):
+        if index < 0 or index >= len(fleet):
+            return jsonify({"error": "bağlantı bulunamadı"}), 404
+        now_t_s = request.args.get("now_t_s", type=float)
+        return jsonify(_connection_flags(fleet[index], now_t_s))
 
     @app.get("/")
     def index():
