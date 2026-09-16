@@ -129,8 +129,12 @@ hedefte derlenen firmware. **Fiziksel prototip beklenmiyor.**
       kaide, kablo yolu, erişim mesafesi — bkz. §4 ölçüler). *Bitti sayılır:*
       ölçülendirilmiş yerleşim görseli. → `hardware/mekanik/kabin-ici-yerlesim.svg` +
       `docs/02-DONANIM-TASARIMI.md` (2026-09-13).
-- [ ] **1.4** STM32WLE5CC hedef derlemesi (`arm-none-eabi`, `make target`), flash/RAM
-      raporu.
+- [x] **1.4** STM32WLE5CC hedef derlemesi (`arm-none-eabi`, `make target`), flash/RAM
+      raporu. *Bitti sayılır:* `make host && ./panogoz_node --selftest` (0
+      failure) + gerçek `arm-none-eabi-gcc` ile 3 kart için `make target` (3/3
+      link, flash/RAM raporu, 0 float instruction, pin haritası
+      `hardware/kicad/build_boards.py` ile 15/15 eşleşiyor). →
+      `firmware/node/`, `docs/07-FIRMWARE.md` (2026-09-16).
 - [ ] **1.5** Saha koşulları (yüksek/düşük sıcaklık, manyetik alan, titreşim) → şemadaki
       karşılığını dokümante et.
 - [ ] **1.6** BOM tazeleme (güncel fiyat/tedarikçi/alternatif).

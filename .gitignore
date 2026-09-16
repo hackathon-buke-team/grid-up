@@ -8,3 +8,7 @@ venv/
 reports/*.csv
 reports/*.png
 data/alarm_state.json
+firmware/node/*.elf
+firmware/node/*.map
+firmware/node/panogoz_node
+firmware/node/panogoz_node.exe
