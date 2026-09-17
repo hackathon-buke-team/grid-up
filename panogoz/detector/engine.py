@@ -260,10 +260,20 @@ def lift_panel_eta(joints: Sequence[JointView]) -> EtaView:
     yukseltilir ve ikisi ayni sey degildir.
     """
     ranked = [j.eta for j in joints if j.eta.days is not None and j.eta.target]
-    if not ranked:
+    if ranked:
+        return max(ranked, key=lambda e: (channels.SEVERITY_RANK.get(e.target, 0),
+                                          -(e.days or 0.0)))
+    # Hicbir baglanti sayi vermiyor.  Bos donmek gerekceyi kaybettirir ve filo
+    # tablosunda operator sebebi sorulamayan bir "—" gorur; gerekce sayinin
+    # YERINE yazilan seydir, o yuzden pano duzeyine tasinmak zorunda.
+    #
+    # Kapilardan EN ILERI gidebilmis baglantinin gerekcesi secilir: bir panoda
+    # bir baglanti yalnizca "egim yok" diye susuyorsa panonun dogru cumlesi
+    # "burada tirmanan bir baglanti yok"tur, "yetersiz gecmis" degil.
+    silent = [j.eta for j in joints if j.eta.reason]
+    if not silent:
         return EtaView()
-    return max(ranked, key=lambda e: (channels.SEVERITY_RANK.get(e.target, 0),
-                                      -(e.days or 0.0)))
+    return max(silent, key=lambda e: hz.GATE_ORDER.get(e.reason, 0))
 
 
 @dataclass
@@ -961,6 +971,9 @@ class DetectorEngine:
             )
             if not monitored:
                 jv.note = "izlenmiyor · canlı bara bölmesi, gün 1 kapsamı dışında"
+                # Susmanin her zaman bir kodu vardir.  Bos bir EtaView "reason
+                # bossa sayi gecerlidir" sozlesmesini bozardi.
+                jv.eta = EtaView(reason=hz.REASON_UNMONITORED)
                 views.append(jv)
                 continue
 

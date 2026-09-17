@@ -449,3 +449,79 @@ def test_compose_ceiling_counts_characters_not_parts_known_limit():
     assert len(sms.split_ucs2(body)) == 3, (
         "artik ucuncu parca acilmiyor - tavan parca sayisina cevrilmis olabilir, "
         "oyleyse bu testi ve escalation.compose docstring'ini guncelle")
+
+
+def test_panel_eta_carries_a_reason_when_nothing_projects():
+    """Hicbir baglanti sayi vermiyorsa pano NEDENINI tasir, bos donmez.
+
+    Filo tablosundaki hucre gerekceyi sayinin YERINE yaziyor; pano duzeyinde
+    gerekce kaybolursa operator "—" gorur ve nedenini soramaz.
+
+    Secim kurali: kapilardan EN ILERI gidebilmis baglantinin gerekcesi.  Bir
+    panoda bir baglanti yalnizca "egim yok" diye susuyorsa panonun dogru
+    cumlesi "burada tirmanan bir baglanti yok"tur; "yetersiz gecmis" degil.
+    """
+    from panogoz.detector.engine import lift_panel_eta
+
+    def jv(key, reason, valid_days=0, target=None):
+        v = JointView(key=key, label="", zone="", conductor="L",
+                      feeder_index=1, rated_a=400.0, monitored=True)
+        v.eta = EtaView(reason=reason, valid_days=valid_days, target=target)
+        return v
+
+    got = lift_panel_eta([
+        jv("A", "NOTR_KAPSAM_DISI"),
+        jv("B", "YETERSIZ_GECMIS", valid_days=9, target="UYARI"),
+        jv("C", "EGIM_YOK", valid_days=21, target="UYARI"),
+    ])
+    assert got.reason == "EGIM_YOK", "en ileri giden gerekce secilmedi"
+    assert got.valid_days == 21
+    assert got.days is None
+
+    # Hepsi yetersiz gecmisse pano da onu soyler.
+    only_history = lift_panel_eta([jv("A", "YETERSIZ_GECMIS", valid_days=4,
+                                      target="IZLE")])
+    assert only_history.reason == "YETERSIZ_GECMIS"
+    assert only_history.valid_days == 4
+
+    # Hic baglanti yoksa bos EtaView; uydurma gerekce yok.
+    assert lift_panel_eta([]).reason == ""
+
+
+def test_unmonitored_joint_says_why_it_is_silent():
+    """Izlenmeyen baglanti (canli bara bolmesi) gerekce tasimak zorunda.
+
+    Bos bir EtaView "reason bossa sayi gecerlidir" sozlesmesini bozar: reason
+    bos, days None.  Filo kolonu yalniz eta'ya bakiyor, joint.monitored'a
+    bakmiyor; gerekce eta'nin kendisinde durmali.
+    """
+    from panogoz.detector import horizon as hzm
+    assert hzm.REASON_UNMONITORED == "IZLENMIYOR"
+    # En engelleyici kapi: pano yukseltmesinde her gerekce onun onune gecer.
+    assert hzm.GATE_ORDER[hzm.REASON_UNMONITORED] == 0
+    assert all(v > 0 for k, v in hzm.GATE_ORDER.items()
+               if k != hzm.REASON_UNMONITORED)
+
+
+def test_no_joint_has_an_empty_reason_without_a_number():
+    """SOZLESME: reason bos <=> days dolu.  Butun bir pano uzerinde dogrulanir."""
+    import tempfile
+
+    from panogoz.api.runtime import Runtime
+
+    rt = Runtime(n_panels=3, seed=42, db_path=tempfile.mktemp(suffix=".db"),
+                 backfill_days=30, scada_port=15922, quiet=True)
+    rt.bootstrap()
+    checked = 0
+    for p in rt.fleet().panels:
+        live = rt.panel(p.panel_key)
+        for j in live.joints:
+            checked += 1
+            if j.eta.reason:
+                assert j.eta.days is None, f"{j.key}: gerekce VE sayi birlikte"
+            else:
+                assert j.eta.days is not None, (
+                    f"{j.key}: gerekce yok ama sayi da yok - sessiz bosluk")
+        if live.eta.reason:
+            assert live.eta.days is None
+    assert checked > 100, f"yalnizca {checked} baglanti denetlendi"

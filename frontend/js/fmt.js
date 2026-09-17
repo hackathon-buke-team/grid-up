@@ -267,3 +267,60 @@ export function hiClass(hi) {
   if (hi >= 40) return 'bad';
   return 'acil';
 }
+
+// ------------------------------------------------------------------ ufuk --
+//
+// "Eşiğe kalan gün". Üç ekran (filo, kanıt, alarm) aynı biçimleyiciyi kullanır;
+// biçim tek yerde durmazsa aynı sayı üç ekranda üç farklı yazılır.
+
+/** Ufuk hedefi ağırlıkları: sıralamada ağır hedef öne geçer. */
+export const ETA_TARGET_W = { ACIL: 4, KRITIK: 3, UYARI: 2, IZLE: 1 };
+
+/** Seviye adının yönelme hâli. Türkçe'de ek ünlü uyumuna göre değişir ve tek
+ *  bir "'e" ile geçiştirilemez.
+ *
+ *  Sunucudaki channels.SEVERITY_DATIVE_TR ile aynı EKLERİ kullanır; tek fark
+ *  kesme işaretidir. Burada tipografik (U+2019), SMS'te düz ASCII: bir SMS
+ *  UCS2 ile gider ve eski bir terminalde tipografik işaret okunmayabilir. */
+export const SEVERITY_DATIVE = {
+  BILGI: 'BILGI’ye', IZLE: 'IZLE’ye', UYARI: 'UYARI’ya',
+  KRITIK: 'KRITIK’e', ACIL: 'ACIL’e',
+};
+
+const ETA_REASON_TR = {
+  IZLENMIYOR: 'izlenmiyor · kapsam dışı',
+  NOTR_KAPSAM_DISI: 'nötr · kapsam dışı',
+  ZIRVEDE: 'en üst basamakta',
+  YETERSIZ_GECMIS: 'yetersiz geçmiş',
+  GORUNURLUK_DUSUK: 'görünürlük düşük',
+  EGIM_YOK: 'eğim yok',
+};
+
+/** Gerekçenin operatör dilindeki kısa hâli; sayının YERİNE geçer. */
+export function etaReason(e) {
+  if (!e || !e.reason) return '';
+  const base = ETA_REASON_TR[e.reason] || e.reason;
+  if (e.reason === 'YETERSIZ_GECMIS') return `${base} (${int(e.valid_days)} gün)`;
+  return base;
+}
+
+/** Bir ufuk nesnesi sayı taşıyor mu? reason doluysa taşımaz. */
+export function etaHasDays(e) {
+  return !!e && !e.reason && e.days !== null && e.days !== undefined;
+}
+
+/**
+ * "KRITIK'e 21 g (13-32)" · ">90 g" · "—"
+ *
+ * days_hi === null İKİ ayrı şey olabilir: reason boşsa sonsuz (güven aralığı
+ * sıfırı içeriyor), reason doluysa sayı hiç yok. Bu yüzden önce reason'a
+ * bakarız — sözleşme bunu açıkça şart koşuyor.
+ */
+export function eta(e) {
+  if (!etaHasDays(e)) return '—';
+  const where = SEVERITY_DATIVE[e.target] || `${e.target}’e`;
+  if (e.capped) return `${where} >90 g`;
+  const lo = e.days_lo === null || e.days_lo === undefined ? 0 : Math.round(e.days_lo);
+  const hi = e.days_hi === null || e.days_hi === undefined ? '∞' : Math.round(e.days_hi);
+  return `${where} ${Math.round(e.days)} g (${lo}-${hi})`;
+}

@@ -32,9 +32,14 @@ de" cumlesinin matematikten cikan halidir; elle yazilan bir uyari degildir.
 
 Susma
 -----
-Bes kapi, sirayla, ilk tutan kazanir.  Kapilarin varligi bu modulun urun olan
-kismidir: her zaman bir tarih veren bir kestirici, saglikli bir baglanti icin de
-tarih verir ve bir ekip bosa gittiginde sistem kapatilir.
+Kapilar sirayla degerlendirilir, ilk tutan kazanir.  Kapilarin varligi bu
+modulun urun olan kismidir: her zaman bir tarih veren bir kestirici, saglikli
+bir baglanti icin de tarih verir ve bir ekip bosa gittiginde sistem kapatilir.
+
+Sozlesme tek cumleyle: ``reason`` bos ISE VE YALNIZ ISE ``days`` dolu.  Bu
+modul bes kapi uygular (notr, zirve, gecmis, gorunurluk, egim); altincisi
+- ``IZLENMIYOR`` - hic olculmeyen baglantilar icin ``engine`` tarafindan
+kurulur, cunku olcum olmadigini bu modul degil o bilir.
 
 Dogrusallik
 -----------
@@ -88,11 +93,30 @@ MAX_HORIZON_DAYS = 90.0
 #: yuzunden fiili kapsama %88-93 olculdu.
 CONF = 0.90
 
+#: Baglanti hic olculmuyor: canli bara bolmesi, gun 1 kiti kapsaminda
+#: degil.  Bu bir ariza degil, kapsamin kendisidir - ve gerekce olarak
+#: yazilmak zorunda, cunku filo kolonu yalniz EtaView'e bakar.
+REASON_UNMONITORED = "IZLENMIYOR"
 REASON_NEUTRAL = "NOTR_KAPSAM_DISI"
 REASON_TOP = "ZIRVEDE"
 REASON_HISTORY = "YETERSIZ_GECMIS"
 REASON_BLIND = "GORUNURLUK_DUSUK"
 REASON_FLAT = "EGIM_YOK"
+
+#: Kapilarin sirasi, yani bir baglantinin NE KADAR ILERI gidebildigi.
+#:
+#: Pano duzeyine yukseltirken gerekir: bir panoda hicbir baglanti sayi
+#: vermiyorsa, panonun tasidigi gerekce en ileri gidebilmis baglantinin
+#: gerekcesidir.  Bir baglanti yalnizca "egim yok" diye susuyorsa panonun dogru
+#: cumlesi "burada tirmanan bir baglanti yok"tur, "yetersiz gecmis" degil.
+GATE_ORDER: dict[str, int] = {
+    REASON_UNMONITORED: 0,
+    REASON_NEUTRAL: 1,
+    REASON_TOP: 2,
+    REASON_HISTORY: 3,
+    REASON_BLIND: 4,
+    REASON_FLAT: 5,
+}
 
 
 def next_step(theta: float,

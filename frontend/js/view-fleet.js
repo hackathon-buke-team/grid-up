@@ -39,6 +39,15 @@ const COLS = [
        + 'bozulanı" ister. Ürün olan sütun budur - bugün iyi görünen ama haftada 1 K tırmanan '
        + 'bir bağlantı, sabit duran kötü bir bağlantıdan daha acildir.',
   },
+  {
+    key: 'eta', label: 'Eşiğe', type: 'eta',
+    tip: 'Bu gidişle bir sonraki seviye basamağına kalan gün, %90 nominal güven '
+       + 'aralığıyla. Aralık θ eğiminin parametrik olmayan güven aralığından '
+       + 'gelir; alt sınır sıfırı içeriyorsa üst gün sınırı ∞ olur. Sıralama '
+       + 'ÖNCE hedefin ağırlığına, sonra güne bakar: IZLE’ye 3 gün, KRITIK’e '
+       + '18 günün önüne geçmez. Sayı yerine gerekçe yazıyorsa sistem susmayı '
+       + 'seçmiştir - yetersiz geçmiş, görünürlük düşük ya da eğim yok.',
+  },
   { key: 'sensitivity_pct', label: 'Görünürlük', type: 'sens',
     tip: 'θ ancak yük varsa görülür: θ_min = 3σ / f². Yük faktörü 0,35’in altına düşerse '
        + 'sistem "görünürlük düşük" der ve bunu saklamaz.' },
@@ -589,6 +598,18 @@ export function create(ctx) {
       case 'num': return h('td.n', { text: fmt.num(p[col.key], col.dec) + ' ' + (col.unit || '') });
       case 'int': return h('td.n', { text: fmt.int(p[col.key]) });
       case 'pct100': return h('td.n', { text: fmt.pct(100 * Number(p.load_factor || 0), 0) });
+      case 'eta': {
+        const e = p.eta || {};
+        if (!fmt.etaHasDays(e)) {
+          const why = fmt.etaReason(e);
+          return h('td.n', h('span.muted', { text: '—', title: why || 'veri yok' }),
+            why ? h('span.tiny.muted', { text: ' ' + why }) : null);
+        }
+        // Agir hedefler goze carpar; hafif olanlar sakin durur.
+        const w = fmt.ETA_TARGET_W[e.target] || 0;
+        return h('td.n', h('span.' + (w >= 3 ? 'delta-up' : 'delta-flat'),
+          { text: fmt.eta(e) }));
+      }
       case 'sens': {
         const v = Number(p.sensitivity_pct || 0);
         const low = (p.status_flags || []).includes('SENSITIVITY_LOW') || v < 50;
@@ -623,7 +644,8 @@ export function create(ctx) {
   /** Bir satırın GÖRÜNEN içeriği. Değişmediyse o satıra hiç dokunmayız. */
   function satirImza(p) {
     return [p.severity, fmt.num(p.health_index, 0), fmt.num(p.theta_max, 2),
-      fmt.signed(p.theta_delta_7d, 2), fmt.num(p.sensitivity_pct, 0),
+      fmt.signed(p.theta_delta_7d, 2), fmt.eta(p.eta), fmt.etaReason(p.eta),
+      fmt.num(p.sensitivity_pct, 0),
       fmt.num(100 * Number(p.load_factor || 0), 0), p.alarm_count, p.devices_online,
       fmt.dur(p.data_age_s)].join('|');
   }
@@ -632,6 +654,20 @@ export function create(ctx) {
     const rows = lastPanels.filter(gecer).sort((a, b) => {
       const va = a[sortKey], vb = b[sortKey];
       if (sortKey === 'severity') return (fmt.sevRank(a.severity) - fmt.sevRank(b.severity)) * sortDir;
+      if (sortKey === 'eta') {
+        const ea = a.eta || {}, eb = b.eta || {};
+        const na = !fmt.etaHasDays(ea), nb = !fmt.etaHasDays(eb);
+        // Sayi vermeyen satirlar siralama yonu ne olursa olsun SONA gider:
+        // bos bir hucre "en yakin" listesinin basinda durmamalidir.
+        if (na !== nb) return na ? 1 : -1;
+        if (na && nb) return 0;
+        // ONCE hedefin agirligi, SONRA gun. Sadece gune bakmak IZLE'ye 3 gun
+        // kalan bir baglantiyi KRITIK'e 18 gun kalanin onune gecirirdi.
+        const wa = fmt.ETA_TARGET_W[ea.target] || 0;
+        const wb = fmt.ETA_TARGET_W[eb.target] || 0;
+        if (wa !== wb) return (wb - wa) * sortDir;
+        return ((Number(ea.days) || 0) - (Number(eb.days) || 0)) * sortDir;
+      }
       if (typeof va === 'string' || typeof vb === 'string') {
         return String(va || '').localeCompare(String(vb || ''), 'tr') * sortDir;
       }
