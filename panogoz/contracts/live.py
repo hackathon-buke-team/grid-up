@@ -20,6 +20,59 @@ from panogoz.contracts import channels, icd
 
 
 @dataclass
+class EtaView:
+    """Bir sonraki seviye basamagina kalan gun, ve vermeyi reddetme gerekcesi.
+
+    ``excess_r_*`` ile ayni dili konusur: bir kestirim ARALIK olarak verilir,
+    tek sayi olarak asla.  Burada ek olarak bir de SUSMA vardir - gerekce kodu
+    dolu oldugunda gun sayisi yoktur ve arayuz bunu bir arizadan ayri gosterir.
+
+    ``days_hi is None`` IKI ayri sey demek olabilir ve karistirilmamalidir:
+    ``reason`` bossa sonsuzdur (egimin guven araligi sifiri iceriyor, yani
+    yukseliyor olabilir de olmayabilir de); ``reason`` doluysa sayi hic yoktur.
+    Arayuz ``reason``a bakar, ``days_hi``ye bakmaz.
+    """
+
+    #: Hedef basamak adi.  theta'nin GUNLUK degerinin bir ustu; olayin fuzyon
+    #: seviyesi DEGIL.  Ark rolesi acmis ama theta'si 3 K olan bir baglantiya
+    #: "ACIL'e kalan gun" hesaplamak, isil olmayan bir kanitla isil bir
+    #: projeksiyon kurmak olurdu.
+    target: str | None = None
+
+    days: float | None = None
+    days_lo: float | None = None
+    days_hi: float | None = None
+
+    #: Projeksiyonun FIILEN kullandigi egim.  JointView.slope_k_per_week ile
+    #: ayni olmak zorunda degil: pencerede bir degisim noktasi varsa bu yalniz
+    #: ondan sonrasini gorur.  Iki sayi, iki soru.
+    slope_k_per_week: float = 0.0
+    slope_lo_k_per_week: float = 0.0
+    slope_hi_k_per_week: float = 0.0
+
+    #: Pencerede kac gecerli gun vardi.  14'un altinda YETERSIZ_GECMIS.
+    valid_days: int = 0
+
+    from_changepoint: bool = False
+    changepoint_ts: float | None = None
+
+    #: Model dogrusaldir.  thermal_runaway super-dogrusaldir, yani o modda
+    #: projeksiyon IYIMSERDIR ve gercek tarih daha erkendir.  Arayuz o modda
+    #: "en gec" der, "en erken" demez.
+    model: str = "dogrusal"
+
+    #: Medyan 90 gunu gecti; arayuz ">90 g" yazar, 412 gun yazmaz.
+    capped: bool = False
+
+    #: "" = sayi gecerli.  Digerleri: NOTR_KAPSAM_DISI, ZIRVEDE,
+    #: YETERSIZ_GECMIS, GORUNURLUK_DUSUK, EGIM_YOK.
+    reason: str = ""
+
+    def to_dict(self) -> dict:
+        return asdict(self)
+
+
+@dataclass
 class JointView:
     key: str
     label: str
@@ -68,6 +121,10 @@ class JointView:
     slope_k_per_week: float = 0.0
     changepoint_ts: float | None = None
     alarm_days: int = 0
+
+    #: Bir sonraki basamaga kalan gun.  Turetilmis bir sayidir, joint_state'e
+    #: yazilmaz: _refresh_stats her turda joint_daily'den yeniden hesaplar.
+    eta: EtaView = field(default_factory=EtaView)
 
     # None means no detector verdict; fusion may then grade a manual snapshot.
     # BILGI is an explicit, authoritative decision, not a missing value.
@@ -226,6 +283,12 @@ class PanelLive:
     theta_max: float = 0.0
     theta_max_joint: str | None = None
     theta_delta_7d: float = 0.0
+    #: Panonun projeksiyonu.  theta_delta_7d EN KOTU baglantidan yukseltilir;
+    #: bu FARKLI bir anahtarla yukseltilir - hedef seviyesi en yuksek, esitlikte
+    #: gunu en yakin olan.  Sadece min(gun) almak, IZLE'ye 3 gun kalan bir
+    #: baglantiyi KRITIK'e 18 gun kalanin onune gecirir ve kontrol odasi yanlis
+    #: panoya bakar.
+    eta: EtaView = field(default_factory=EtaView)
     sensitivity_pct: float = 0.0
     # Mean main-busbar phase current / main-busbar rating.
     load_factor: float = 0.0
