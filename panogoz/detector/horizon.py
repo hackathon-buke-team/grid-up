@@ -59,6 +59,11 @@ DAY_S = 86400.0
 
 #: Egimin uzerinde hesaplandigi pencere.  changepoint.slope_per_week ile AYNI
 #: olmak zorunda; ayrisirsa ekrandaki egim ile projeksiyonun egimi ayrisir.
+#:
+#: Sinir ``times[i] >= son - WINDOW_DAYS * DAY_S`` seklinde KAPALIDIR, yani tam
+#: 21 gun onceki nokta da pencereye girer ve gunluk bir seride 22 nokta gorulur.
+#: Bu, ``changepoint._window``'un bastan beri kullandigi semantiktir ve bilincli
+#: olarak degistirilmedi: iki kestirici ayni pencereyi gormek zorunda.
 WINDOW_DAYS = 21
 
 #: Pencerede istenen en az gecerli gun sayisi.

@@ -69,15 +69,17 @@ from __future__ import annotations
 import math
 from dataclasses import dataclass, field
 from statistics import median
-from typing import Any
+from typing import Any, Sequence
 
 from panogoz.contracts import assets, channels, icd
 from panogoz.contracts.envelope import Envelope, SeqTracker, is_stale
-from panogoz.contracts.live import ArcView, DeviceView, JointView, PanelLive, PdView
+from panogoz.contracts.live import (ArcView, DeviceView, EtaView, JointView,
+                                    PanelLive, PdView)
 
 from panogoz.detector import changepoint as cp
 from panogoz.detector import cusum as cs
 from panogoz.detector import dewpoint as dp
+from panogoz.detector import horizon as hz
 from panogoz.detector import neutral as nt
 from panogoz.detector import theta as th
 
@@ -120,6 +122,19 @@ THETA_ABS_IZLE_K = 2.0       # top of "possible deficiency"
 THETA_ABS_UYARI_K = 5.0      # inside "probable deficiency"
 THETA_ABS_KRITIK_K = 12.0    # upper "probable deficiency"
 THETA_ABS_ACIL_K = 25.0      # well into "major discrepancy"
+
+#: Mutlak theta merdiveni, ufuk projeksiyonunun hedef sectigi sira.
+#:
+#: Dort sabitten TUREIR, onlari tekrar etmez: bir esigi degistiren kisi tek
+#: yerde degistirir.  horizon.project() bunu PARAMETRE olarak alir; engine'i
+#: import etmez, cunku engine zaten changepoint'i import ediyor ve ters yon
+#: dongu kurardi.
+THETA_ABS_LADDER: tuple[tuple[str, float], ...] = (
+    ("IZLE", THETA_ABS_IZLE_K),
+    ("UYARI", THETA_ABS_UYARI_K),
+    ("KRITIK", THETA_ABS_KRITIK_K),
+    ("ACIL", THETA_ABS_ACIL_K),
+)
 
 # The RISE above a joint's own commissioned baseline is judged on daily medians
 # with a CUSUM confirmation.  Its thresholds are far lower, and legitimately so:
@@ -236,6 +251,21 @@ def _sibling_group(j: assets.Joint) -> str:
 # In-memory panel state
 # --------------------------------------------------------------------------
 
+def lift_panel_eta(joints: Sequence[JointView]) -> EtaView:
+    """Panonun projeksiyonu: hedefi en agir, esitlikte gunu en yakin baglanti.
+
+    Sadece min(gun) almak yanlis olurdu: IZLE'ye 3 gun kalan bir baglanti,
+    KRITIK'e 18 gun kalanin onune gecer ve kontrol odasi yanlis panoya bakar.
+    ``theta_delta_7d`` EN KOTU baglantidan yukseltilir; bu FARKLI bir anahtarla
+    yukseltilir ve ikisi ayni sey degildir.
+    """
+    ranked = [j.eta for j in joints if j.eta.days is not None and j.eta.target]
+    if not ranked:
+        return EtaView()
+    return max(ranked, key=lambda e: (channels.SEVERITY_RANK.get(e.target, 0),
+                                      -(e.days or 0.0)))
+
+
 @dataclass
 class _JointRuntime:
     theta: th.ThetaState = field(default_factory=th.ThetaState)
@@ -248,6 +278,7 @@ class _JointRuntime:
     theta_daily: float | None = None
     delta_7d: float = 0.0
     excess_r_uohm: float | None = None
+    eta: EtaView = field(default_factory=EtaView)
     note: str = ""
 
 
@@ -800,6 +831,8 @@ class DetectorEngine:
                 jr.changepoint = None
                 jr.alarm_days = 0
                 jr.delta_7d = cp.theta_delta(vals, days, 7.0)
+                jr.eta = hz.project([], [], [], THETA_ABS_LADDER,
+                                    conductor="N")
                 self._save_joint_state(panel_key, j.key, jr)
                 continue
             st = cs.CusumState()
@@ -833,6 +866,23 @@ class DetectorEngine:
             jr.alarm_days = sum(
                 1 for f, v in tail
                 if f and (v - base >= cs.QUALIFY_RISE_K or v >= cs.QUALIFY_THETA_K)
+            )
+            # Ufuk, gunluk tablonun GECERLI satirlarindan hesaplanir.  ``vals``
+            # yukarida None'lari 0.0'a cevirdigi icin yeniden kullanilamaz: bos
+            # bir gunu 0 K olarak okumak, olmayan bir gunu olculmus saymaktir.
+            #
+            # theta_min bilinmiyorsa ``inf`` gecilir, yani kapi "gorunurluk
+            # dusuk" tarafina duser.  Bilmedigimiz bir tabanla esigin gorunur
+            # oldugunu IDDIA ETMEYIZ.
+            ok = [r for r in rows
+                  if (r.get("n") or 0) > 0 and r.get("theta_med") is not None]
+            jr.eta = hz.project(
+                [float(r["theta_med"]) for r in ok],
+                [float(r["day"]) * DAY_S for r in ok],
+                [float(r["theta_min"]) if r.get("theta_min") is not None
+                 else float("inf") for r in ok],
+                THETA_ABS_LADDER,
+                conductor=j.conductor,
             )
             self._save_joint_state(panel_key, j.key, jr)
 
@@ -937,6 +987,7 @@ class DetectorEngine:
                 # K_N = dT/I^2 judged against its own baseline - rule H3.
                 jv.slope_k_per_week = jr.slope
                 jv.baseline_k = jr.cusum.baseline
+                jv.eta = jr.eta
                 jv.severity, jv.note = self._neutral_severity(jv, pr.h3)
                 views.append(jv)
                 continue
@@ -956,10 +1007,12 @@ class DetectorEngine:
             jv.slope_k_per_week = jr.slope
             jv.changepoint_ts = jr.changepoint
             jv.alarm_days = jr.alarm_days
+            jv.eta = jr.eta
             jv.note = jr.note
             jv.severity = self._joint_severity(jv, jr, live.learn_mode)
             views.append(jv)
         live.joints = views
+        live.eta = lift_panel_eta(views)
 
         # THE WORST JOINT IS NOT SIMPLY THE LARGEST THETA.
         #
@@ -1556,6 +1609,10 @@ if __name__ == "__main__":
           f"{jv.theta_min_k:.2f} K   görünürlük {jv.sensitivity_pct:.0f} %")
     print(f"      fazla direnç {jv.excess_r_lo_uohm:.1f} .. "
           f"{jv.excess_r_hi_uohm:.1f} µΩ  (R_th 2-4 K/W varsayımıyla)")
+    print(f"      ufuk: hedef {jv.eta.target or '—'} · "
+          f"{'—' if jv.eta.days is None else format(jv.eta.days, '.0f') + ' g'}"
+          f" · gerekçe {jv.eta.reason or '(yok)'} · "
+          f"geçerli gün {jv.eta.valid_days}")
     print(f"      CUSUM {jv.cusum:.1f}   taban {jv.baseline_k:.2f} K   "
           f"eğim {jv.slope_k_per_week:+.2f} K/hafta")
     print(f"      başlangıç {cpt}   nitelikli gün {jv.alarm_days}/5   "

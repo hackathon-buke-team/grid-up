@@ -311,3 +311,65 @@ def test_roll_daily_writes_theta_min(tmp_path):
     assert row is not None, "joint_daily satiri yazilmadi"
     assert row["theta_med"] is not None
     assert row["theta_min"] == 1.25, f"theta_min yazilmadi: {row['theta_min']!r}"
+
+
+# ---------------------------------------------------------- engine baglanti --
+
+def test_ladder_is_built_from_the_existing_constants():
+    from panogoz.detector import engine as eng
+    assert eng.THETA_ABS_LADDER == (
+        ("IZLE", eng.THETA_ABS_IZLE_K),
+        ("UYARI", eng.THETA_ABS_UYARI_K),
+        ("KRITIK", eng.THETA_ABS_KRITIK_K),
+        ("ACIL", eng.THETA_ABS_ACIL_K))
+    # Sayilar ikinci kez yazilmadi.
+    assert [t for _n, t in eng.THETA_ABS_LADDER] == [2.0, 5.0, 12.0, 25.0]
+
+
+def test_panel_eta_prefers_the_heaviest_target_not_the_soonest_day():
+    """IZLE'ye 3 gun, KRITIK'e 18 gunun onune GECMEZ."""
+    from panogoz.detector.engine import lift_panel_eta
+
+    def jv(key, target, days):
+        v = JointView(key=key, label="", zone="", conductor="L",
+                      feeder_index=1, rated_a=400.0, monitored=True)
+        v.eta = EtaView(target=target, days=days)
+        return v
+
+    joints = [jv("A", "IZLE", 3.0), jv("B", "KRITIK", 18.0),
+              jv("C", "KRITIK", 41.0), jv("D", None, None)]
+    got = lift_panel_eta(joints)
+    assert got.target == "KRITIK" and got.days == 18.0
+
+    # Hicbiri sayi vermiyorsa bos EtaView doner, uydurma yok.
+    assert lift_panel_eta([jv("D", None, None)]).days is None
+    assert lift_panel_eta([]).days is None
+
+
+# ------------------------------------------------------------------- API --
+
+def test_api_exposes_eta_in_fleet_and_panel(tmp_path):
+    from fastapi.testclient import TestClient
+
+    from panogoz.api.app import create_app
+    from panogoz.api.runtime import Runtime
+
+    rt = Runtime(n_panels=4, seed=42, db_path=str(tmp_path / "api.db"),
+                 backfill_days=40, scada_port=15921, quiet=True)
+    rt.bootstrap()
+    app = create_app(rt)
+    keys = {"target", "days", "days_lo", "days_hi", "reason", "valid_days",
+            "capped", "model", "from_changepoint", "changepoint_ts",
+            "slope_k_per_week", "slope_lo_k_per_week", "slope_hi_k_per_week"}
+    with TestClient(app) as c:
+        fleet = c.get("/api/fleet").json()
+        assert fleet["panels"], "filo bos"
+        for p in fleet["panels"]:
+            assert "eta" in p, "panel_summary eta tasimiyor"
+            assert set(p["eta"]) >= keys, sorted(keys - set(p["eta"]))
+        key = fleet["panels"][0]["panel_key"]
+        panel = c.get(f"/api/panel/{key}").json()
+        assert "eta" in panel
+        assert all("eta" in j for j in panel["joints"])
+        onset = c.get(f"/api/panel/{key}/onset").json()
+        assert "eta" in onset, "onset ileri yonu tasimiyor"
