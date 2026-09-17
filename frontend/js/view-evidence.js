@@ -27,6 +27,10 @@ const CH = {
   cusum: 'det.cusum',
 };
 
+// Eşik merdiveni. Sunucudaki engine.THETA_ABS_LADDER'in AYNISI olmak zorunda;
+// burada yalnız hedef eşik çizgisini nereye çizeceğimizi bilmek için duruyor.
+const THETA_LADDER = { IZLE: 2, UYARI: 5, KRITIK: 12, ACIL: 25 };
+
 // Kalem renkleri çizim anında belirteçlerden okunur. Canvas var() anlamaz, bu
 // yüzden değeri biz çözeriz; karşılığında açık temada da okunur bir çizgi
 // elde ederiz (koyu zeminin sarısı beyaz kağıtta kaybolur).
@@ -313,6 +317,16 @@ export function create(ctx) {
             ? [{ value: joint.baseline_k, color: C.base, label: 'taban ' + fmt.num(joint.baseline_k, 2) + ' K' }]
             : []),
           { value: 5.0, color: C.cusum, label: 'alarm eşiği 5 K' },
+          // Projeksiyonun hedefi. Kesişimin KENDISI çizilemez: dört grafik tek
+          // ve ortak bir x eksenini paylaşıyor ve o eksenin sağ kenarı
+          // "şimdi"dir, yani gelecekteki kesişim tuvalin dışına düşer. Alanı
+          // geleceğe uzatmak dört grafiği birden sıkıştırır. Eşiğin nerede
+          // olduğunu göstermek alan içinde kalır ve işi görür.
+          ...(fmt.etaHasDays(joint.eta) && THETA_LADDER[joint.eta.target]
+            ? [{ value: THETA_LADDER[joint.eta.target], color: C.esik,
+                 label: `${joint.eta.target} eşiği `
+                      + `${fmt.num(THETA_LADDER[joint.eta.target], 0)} K` }]
+            : []),
         ],
         vlines: joint.changepoint_ts
           ? [{ ts: joint.changepoint_ts, color: C.degisim,
@@ -401,6 +415,72 @@ export function create(ctx) {
               + '2-4 K/W doğrulukla bilinir, bu yüzden sonuç daima aralıktır. Sağlıklı kalaylı '
               + 'civatalı bir bağlantı 2-5 µΩ’dur; 50 µΩ’a bozulmuş bir 400 A pabucu 8 W harcar.',
         })));
+  }
+
+  /** Projeksiyon: bir sonraki basamağa kalan gün, ya da neden sustuğumuz.
+   *
+   *  Kesikli yelpaze ÇİZİLMİYOR ve bu bilinçli: dört grafik tek ve ortak bir x
+   *  eksenini paylaşıyor, o eksenin sağ kenarı "şimdi"dir ve gelecekteki
+   *  kesişim tuvalin dışına düşer. Alanı geleceğe uzatmak dört grafiği birden
+   *  sıkıştırır ve senkron eksen sözünü bozar. Üç sayının (başlangıç θ, eğim +
+   *  CI, hedef) taşımadığı bir bilgi de yok.
+   */
+  function projectionCard(joint) {
+    const e = (joint && joint.eta) || {};
+    const has = fmt.etaHasDays(e);
+    const rows = [];
+    if (has) {
+      rows.push(['hedef basamak',
+        `${e.target} · ${fmt.num(THETA_LADDER[e.target], 0)} K`]);
+      rows.push(['kalan', fmt.eta(e)]);
+      rows.push(['eğim · projeksiyonun kullandığı',
+        `${fmt.signed(e.slope_k_per_week, 2)} K/hafta`]);
+      rows.push(['%90 nominal güven aralığı',
+        `${fmt.signed(e.slope_lo_k_per_week, 2)} … `
+        + `${fmt.signed(e.slope_hi_k_per_week, 2)} K/hafta`]);
+      // "22 / 21" yazmak hata gibi okunur: pencere sınırı kapalı olduğu için
+      // 21 günlük pencerede 22 günlük nokta görülür (horizon.WINDOW_DAYS).
+      // Okunan sayı ölçülen gün, karşılaştırılan sayı KAPI olmalı.
+      rows.push(['pencerede ölçülen gün',
+        `${fmt.int(e.valid_days)} · kapı en az 14`]);
+    } else {
+      rows.push(['durum', fmt.etaReason(e) || 'veri yok']);
+      if (e.target) rows.push(['hedef basamak', e.target]);
+      if (e.valid_days) rows.push(['pencerede ölçülen gün',
+        `${fmt.int(e.valid_days)} · kapı en az 14`]);
+    }
+
+    const notes = [];
+    if (e.from_changepoint && e.changepoint_ts) {
+      notes.push(`${fmt.date(e.changepoint_ts)} tarihinde bir basamak var; `
+        + 'projeksiyon yalnız o günden sonrasını kullanıyor. Filo tablosundaki '
+        + '21 günlük eğim pencerenin tamamını görür — iki sayı, iki soru.');
+    }
+    if (has && (e.days_hi === null || e.days_hi === undefined)) {
+      notes.push('Güven aralığının alt sınırı sıfırın altında: yükseliyor '
+        + 'olabilir de olmayabilir de. Üst gün sınırı bu yüzden sonsuzdur.');
+    }
+    if (has && e.capped) {
+      notes.push('Medyan 90 günü geçiyor. 21 günlük bir pencereden daha uzun '
+        + 'bir tarih türetmek, gözlem penceresinin katlarına ekstrapolasyondur; '
+        + 'bu yüzden gün sayısı değil eşik yazılır.');
+    }
+    if (has) {
+      notes.push('Model doğrusaldır. Isıl kaçış süper-doğrusaldır, yani o modda '
+        + 'bu sayı iyimserdir: gerçek tarih daha erken olabilir.');
+    } else {
+      notes.push('Gerekçe sayının YERİNE yazılır, yanına değil. Bir erken uyarı '
+        + 'sisteminin söylemediği şey, söylediği kadar ürünün parçasıdır.');
+    }
+
+    return h('div.card',
+      h('header', h('h3', { text: 'Projeksiyon' }), h('span.sp'),
+        h('span.tag', { text: 'θ eğiminden · ileriye' })),
+      h('div.body.col',
+        h('div', ...rows.map(([k, v]) =>
+          h('div.small', h('span.muted', { text: k + ': ' }),
+            h('b', { text: v })))),
+        ...notes.map((t) => h('div.note.honest', { text: t }))));
   }
 
   function reasonCard(panel, joint) {
@@ -601,6 +681,7 @@ export function create(ctx) {
         formulaCard(joint),
         reasonCard(panel, joint),
         resistanceCard(joint),
+        projectionCard(joint),
         factsCard(panel, joint),
         dailyCard());
     }
