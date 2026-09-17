@@ -91,6 +91,11 @@ MIN_STEP_K = 0.4
 #: between 100 phantom dates and 20.
 BIC_PARAMS = 3.0
 
+#: Iki yonlu normal kuantiller.  scipy projenin bagimliligidir ama bu paketin
+#: degildir: detector/ altinda prpd_classify.py disinda her modul stdlib'dir ve
+#: guven araligi icin tam olarak iki kuantil gerekir.
+Z_TWO_SIDED: dict[float, float] = {0.90: 1.6449, 0.95: 1.9600}
+
 
 # --------------------------------------------------------------------------
 # Changepoint
@@ -206,6 +211,25 @@ def changepoint_detail(values: list[float], times: list[float],
 # Slope
 # --------------------------------------------------------------------------
 
+def _pairwise_slopes(values: Sequence[float],
+                     times: Sequence[float]) -> list[float]:
+    """Butun ikili egimler, deger-birimi/saniye, siralanmamis.
+
+    O(n^2) cift.  21 gunluk pencerede 210, 120 gunluk pencerede 7140 - ikisi de
+    bedava.  Ayri bir fonksiyon oldugu icin medyan ve rank sinirlari AYNI
+    listeden okunur; iki kez uretilmez.
+    """
+    n = min(len(values), len(times))
+    out: list[float] = []
+    for i in range(n - 1):
+        ti, vi = times[i], values[i]
+        for j in range(i + 1, n):
+            dt = times[j] - ti
+            if dt > 0:
+                out.append((values[j] - vi) / dt)
+    return out
+
+
 def theil_sen(values: Sequence[float], times: Sequence[float]) -> float:
     """Median of pairwise slopes, in value-units per second.
 
@@ -215,16 +239,70 @@ def theil_sen(values: Sequence[float], times: Sequence[float]) -> float:
     n = min(len(values), len(times))
     if n < 3:
         return 0.0
-    slopes: list[float] = []
-    for i in range(n - 1):
-        ti, vi = times[i], values[i]
-        for j in range(i + 1, n):
-            dt = times[j] - ti
-            if dt > 0:
-                slopes.append((values[j] - vi) / dt)
+    slopes = _pairwise_slopes(values, times)
     if not slopes:
         return 0.0
     return float(median(slopes))
+
+
+def theil_sen_ci(values: Sequence[float], times: Sequence[float],
+                 conf: float = 0.90) -> tuple[float, float, float]:
+    """(alt, medyan, ust) egim araligi, deger-birimi/saniye.
+
+    Sen (1968) rank araligi: N ikili egim siralanir, Kendall S istatistiginin
+    varyansindan turetilen rank sinirlari okunur.  Parametrik olmayan, ek model
+    varsaymayan bir aralik - ve zaten uretilmis olan listenin uzerinde bedava.
+
+    Rank secimi ``floor`` / ``ceil+1`` ile BILINCLI OLARAK MUHAFAZAKARDIR:
+    araligi bir rank genisletir.  Bedeli olculdu - nominal %90 seviyede fiili
+    kapsama %88-93, yani aralik nominalden bir miktar genis.  Emniyetle ilgili
+    bir sayida yanilma yonu budur.
+
+    Deger tarafindaki baglanmalar Var(S)'den dusulur.  Zaman tarafinda baglanma
+    OLAMAZ: joint_daily'nin birincil anahtari (day, panel_key, joint_key), yani
+    bir baglanti icin bir gunde tek satir vardir.
+    """
+    n = min(len(values), len(times))
+    if n < 3:
+        return 0.0, 0.0, 0.0
+    z = Z_TWO_SIDED.get(conf)
+    if z is None:
+        raise ValueError(
+            f"desteklenmeyen güven seviyesi: {conf} · "
+            f"tanımlı olanlar {sorted(Z_TWO_SIDED)}")
+    slopes = sorted(_pairwise_slopes(values, times))
+    total = len(slopes)
+    if total == 0:
+        return 0.0, 0.0, 0.0
+    counts: dict[float, int] = {}
+    for v in list(values)[:n]:
+        counts[v] = counts.get(v, 0) + 1
+    ties = sum(t * (t - 1) * (2 * t + 5) for t in counts.values() if t > 1)
+    var_s = (n * (n - 1) * (2 * n + 5) - ties) / 18.0
+    c = z * math.sqrt(var_s) if var_s > 0.0 else 0.0
+    lo_rank = max(1, min(total, int(math.floor((total - c) / 2.0))))
+    hi_rank = max(1, min(total, int(math.ceil((total + c) / 2.0)) + 1))
+    return slopes[lo_rank - 1], float(median(slopes)), slopes[hi_rank - 1]
+
+
+def _window(values: Sequence[float], times: Sequence[float],
+            window_days: int) -> tuple[list[float], list[float]]:
+    """Serinin son ``window_days`` gunu.  Uc noktadan az kalirsa son uc nokta.
+
+    slope_per_week ve slope_ci_per_week AYNI pencereyi gormek zorundadir; ikisi
+    ayri ayri kesse, ekranda gosterilen egim ile projeksiyonun kullandigi egim
+    sessizce ayrisirdi.
+    """
+    n = min(len(values), len(times))
+    if n < 3:
+        return [], []
+    t_end = times[n - 1]
+    cut = t_end - window_days * DAY_S
+    v = [values[i] for i in range(n) if times[i] >= cut]
+    t = [times[i] for i in range(n) if times[i] >= cut]
+    if len(v) < 3:
+        v, t = list(values[max(0, n - 3):n]), list(times[max(0, n - 3):n])
+    return v, t
 
 
 def slope_per_week(values: list[float], times: list[float], window_days: int = 21) -> float:
@@ -234,16 +312,22 @@ def slope_per_week(values: list[float], times: list[float], window_days: int = 2
     0.6 K of real movement against a ~0.8 K daily noise floor, short enough that
     a joint that stabilised a month ago is not still reported as climbing.
     """
-    n = min(len(values), len(times))
-    if n < 3:
+    v, t = _window(values, times, window_days)
+    if not v:
         return 0.0
-    t_end = times[n - 1]
-    cut = t_end - window_days * DAY_S
-    v = [values[i] for i in range(n) if times[i] >= cut]
-    t = [times[i] for i in range(n) if times[i] >= cut]
-    if len(v) < 3:
-        v, t = list(values[max(0, n - 3):n]), list(times[max(0, n - 3):n])
     return theil_sen(v, t) * 7.0 * DAY_S
+
+
+def slope_ci_per_week(values: Sequence[float], times: Sequence[float],
+                      window_days: int = 21,
+                      conf: float = 0.90) -> tuple[float, float, float]:
+    """slope_per_week ile ayni pencere, bu kez (alt, medyan, ust) K/hafta."""
+    v, t = _window(values, times, window_days)
+    if not v:
+        return 0.0, 0.0, 0.0
+    lo, med, hi = theil_sen_ci(v, t, conf)
+    k = 7.0 * DAY_S
+    return lo * k, med * k, hi * k
 
 
 # --------------------------------------------------------------------------
@@ -415,6 +499,26 @@ if __name__ == "__main__":
     print(f"    least squares, one 25 K outlier  {_ols(dirty, Tw):.3f} K/week   <- ruined")
     assert abs(slope_per_week(dirty, Tw) - 0.2) < 0.05
     assert abs(_ols(dirty, Tw) - 0.2) > 0.3
+
+    # ----------------------------------------------------------------- 5b --
+    print("\n[5b] Sen (1968) rank guven araligi")
+    n_ci = 14
+    N_ci = n_ci * (n_ci - 1) // 2
+    var_ci = n_ci * (n_ci - 1) * (2 * n_ci + 5) / 18.0
+    c_ci = Z_TWO_SIDED[0.90] * math.sqrt(var_ci)
+    print(f"    n={n_ci}  N={N_ci}  Var(S)={var_ci:.2f}  C={c_ci:.2f}  "
+          f"lo_rank={math.floor((N_ci - c_ci) / 2)}  "
+          f"hi_rank={math.ceil((N_ci + c_ci) / 2) + 1}")
+    hit_ci = 0
+    for trial in range(400):
+        r = random.Random(5000 + trial)
+        v_ci = [0.2 * (i / 7.0) + r.gauss(0.0, 0.8) for i in range(21)]
+        lo_ci, _m_ci, hi_ci = slope_ci_per_week(v_ci, _days(21), 21, 0.90)
+        if lo_ci <= 0.2 <= hi_ci:
+            hit_ci += 1
+    print(f"    400 rampada kapsama {100 * hit_ci / 400:.1f} %   "
+          f"nominal 90 % (muhafazakar rank secimi araligi genisletir)")
+    assert 84.0 <= 100 * hit_ci / 400 <= 96.0
 
     # ------------------------------------------------------------------ 6 --
     print("\n[6] theta_delta over 7 days - unbiased but noisy, and we say so")
