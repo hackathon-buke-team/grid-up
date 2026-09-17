@@ -276,3 +276,38 @@ def test_empty_series_is_insufficient_history_not_a_crash():
     eta = hz.project([], [], [], LADDER)
     assert eta.reason == hz.REASON_HISTORY
     assert eta.valid_days == 0
+
+
+# ------------------------------------------------------- rollup theta_min --
+
+def test_roll_daily_writes_theta_min(tmp_path):
+    """Sema theta_min kolonunu tanimliyor; rollup onu doldurmak zorunda.
+
+    Gorunurluk kapisi bu kolonu okur.  Bos kalirsa kapi olu dogar.
+    """
+    from panogoz.detector.engine import DetectorEngine
+    from panogoz.store.db import Store
+
+    store = Store(str(tmp_path / "t.db"))
+    store.upsert_panel(panel_key="T-1", panel_index=1, site="T", name="T",
+                       dso="ADM")
+    day = 20_000
+    ts0 = day * 86400.0 + 3600.0
+    for i in range(16):
+        ts = ts0 + i * 60.0
+        for ch, val in (("det.theta_k", 3.0), ("det.theta_min_k", 1.25),
+                        ("det.sensitivity_pct", 80.0)):
+            store.execute(
+                "INSERT INTO joint_sample (ts, panel_key, joint_key, channel, value) "
+                "VALUES (?,?,?,?,?)", (ts, "T-1", "C07-L2-PABUC", ch, val))
+    store.commit()
+
+    eng = DetectorEngine(store)
+    eng.roll_daily(ts0 + 3600.0, days_back=2, panel_key="T-1")
+    store.commit()
+
+    row = store.one("SELECT theta_min, theta_med FROM joint_daily "
+                    "WHERE panel_key=? AND joint_key=?", ("T-1", "C07-L2-PABUC"))
+    assert row is not None, "joint_daily satiri yazilmadi"
+    assert row["theta_med"] is not None
+    assert row["theta_min"] == 1.25, f"theta_min yazilmadi: {row['theta_min']!r}"

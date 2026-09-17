@@ -756,6 +756,12 @@ class DetectorEngine:
                     theta_med=float(median(s)), theta_p90=float(p90), n=n,
                     load_mean=float(median(loads)) if loads else 0.0,
                     sens_pct=float(median(sens)) if sens else 0.0,
+                    # Gorulebilirlik tabaninin KENDISI.  Sema bu kolonu bastan
+                    # tanimliyordu ama rollup onu atliyordu: tmins yalniz
+                    # load_mean'i turetmek icin okunuyordu.  Ufuk projeksiyonu
+                    # "bu esik bu yukte gorunur mu" sorusunu bu kolona soruyor,
+                    # yuzdeye degil.
+                    theta_min=float(median(tmins)) if tmins else None,
                 )
                 written += 1
             self._refresh_stats(pk, now)
