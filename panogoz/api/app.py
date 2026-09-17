@@ -48,7 +48,7 @@ from panogoz.api.runtime import (
     DAY_S, DEMO_PANEL, DETECT_PERIOD_S, VERSION, Runtime,
 )
 from panogoz.contracts import assets, channels, icd
-from panogoz.contracts.live import AlarmView, SuppressionView
+from panogoz.contracts.live import AlarmView, EtaView, SuppressionView
 from panogoz.sim import faults as fx
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -160,6 +160,7 @@ def panel_summary(live) -> dict:
         "theta_max": round(live.theta_max, 2),
         "theta_max_joint": live.theta_max_joint,
         "theta_delta_7d": round(live.theta_delta_7d, 2),
+        "eta": live.eta.to_dict(),
         "sensitivity_pct": round(live.sensitivity_pct, 1),
         "load_factor": round(live.load_factor, 4),
         "alarm_count": len(live.alarms),
@@ -653,8 +654,19 @@ def create_app(runtime: Runtime) -> FastAPI:
         live = rt.panel(key)
         joint = joint or live.theta_max_joint or ""
         if not joint:
-            return _clean({"panel_key": key, "joint_key": None, "days": 0})
-        return _clean(rt.first_alarm_day(key, joint))
+            # ``eta`` anahtari BURADA DA bulunur.  Arayuz alanin varligini
+            # kontrol etmek zorunda kalmamali; bos bir EtaView "projeksiyon
+            # yok" demenin sozlesmeye uygun halidir.
+            return _clean({"panel_key": key, "joint_key": None, "days": 0,
+                           "eta": EtaView().to_dict()})
+        out = dict(rt.first_alarm_day(key, joint))
+        # Ucun ucuncu zaman sorusu.  Ilk ikisi geriye bakiyor - bozulma ne zaman
+        # BASLADI, kanit ne zaman YETERLI oldu.  Bu ileriye bakar ve ayni
+        # joint_daily oynatmasindan cikar, bu yuzden ayri bir uc acilmiyor:
+        # kanit ekrani ucunu tek istekle alir.
+        jv = next((j for j in live.joints if j.key == joint), None)
+        out["eta"] = jv.eta.to_dict() if jv is not None else EtaView().to_dict()
+        return _clean(out)
 
     # -------------------------------------------------------------- PRPD --
 
