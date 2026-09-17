@@ -204,10 +204,22 @@ kuruyor. Bu bayrak için doğru bir eşiktir, projeksiyon için değildir: tam y
 her bağlantıyı susturur ve kolon neredeyse hep boş çıkar.
 
 Fiziksel olarak doğru soru şudur: **θ_min hedef eşiğin üstündeyse o eşiğe doğru yapılan
-projeksiyon anlamsızdır**, çünkü eşiğin kendisi gürültü tabanının altında kalır. θ_min =
-3σ/f² değeri `joint_daily.theta_min` olarak gün gün zaten saklanıyor. Yeni kolon
-gerekmiyor, yeni sabit gerekmiyor, kriter panonun o günkü yüküne göre kendiliğinden
+projeksiyon anlamsızdır**, çünkü eşiğin kendisi gürültü tabanının altında kalır.
+θ_min = 3σ/f² için `joint_daily`'de `theta_min` kolonu **vardır**, yeni kolon
+gerekmiyor, yeni sabit gerekmiyor ve kriter panonun o günkü yüküne göre kendiliğinden
 hareket ediyor.
+
+**Ön koşul — kolon tanımlı ama dolu değil.** Uygulama planı yazılırken ölçüldü:
+`schema.sql:106-125` `theta_min`'i tanımlıyor, fakat `engine.roll_daily()` onu
+**atlıyor** — `det.theta_min_k` örneklerini okuyup yalnız `load_mean`'i türetiyor,
+kolonu `NULL` bırakıyor. Bu kapı bugünkü kodda ölü doğardı.
+
+Düzeltme, aynı `upsert_joint_daily()` çağrısına tek bir kwarg eklemektir
+(`theta_min=float(median(tmins))`) ve uygulama planının kendi görevi vardır. Mevcut bir
+eksiğin kapatılmasıdır, yeni bir özellik değildir. Bedeli: `joint_sample` 90 günde
+budandığı için daha eski günlük satırlar geriye doldurulamaz; onlarda `theta_min`
+`NULL` kalır ve kapı — bilmediği bir tabanla eşiğin görünür olduğunu iddia etmemek
+için — susma tarafına düşer.
 
 Ekranda gösterilen sayı **kriterin kendisidir** (`θ_min 14 K`), sebebi olan yük değildir.
 Yükü ipucu metni açıklar: θ_min = 3σ/f², yani yük düştükçe taban yükselir. Kriter olarak
@@ -353,10 +365,19 @@ durumunda `—` ve parantez içinde kısa neden. Sıralama §7'deki bileşik ana
 (`view-fleet.js` başlığındaki gerekçe geçerliliğini koruyor). Kolon ipucu susma
 sözleşmesini operatörün dilinde anlatır.
 
-**Kanıt · S3.** Trend grafiğinin üstüne bugünden eşik kesişimine uzanan kesikli medyan
-çizgisi, altında/üstünde lo–hi yelpazesi, hedef eşik yatay çizgi olarak. Yanındaki metin
-blok: kullanılan eğim ve %90 CI, hedef basamak, gün aralığı, pencerede kaç geçerli gün
-vardı, basamak notu (varsa), doğrusallık notu (`thermal_runaway` varsa).
+**Kanıt · S3.** θ grafiğine **hedef eşik yatay çizgisi** eklenir. Projeksiyonun kendisi
+`resistanceCard` / `factsCard` desenini izleyen ayrı bir **metin kartı** olur: kullanılan
+eğim ve %90 nominal CI, hedef basamak, gün aralığı, pencerede kaç geçerli gün vardı,
+basamak notu (varsa), sonsuz sınır notu (varsa), doğrusallık notu.
+
+**Kesikli yelpaze çizilmiyor ve gerekçesi bir kısıt, bir tercih değil.** Ekranın dört
+grafiği tek ve ortak bir x eksenini paylaşıyor (`view-evidence.js` başlığındaki
+sözleşme) ve o eksenin sağ kenarı "şimdi"dir. `TimeChart` noktaları
+`X(t) = R.x + ((t − d[0]) / (d[1] − d[0])) · R.w` ile eşliyor, yani `t > d[1]` olan bir
+nokta tuvalin dışına düşer — gelecekteki kesişim **hiç çizilmez**. Alanı geleceğe uzatmak
+dört grafiğin hepsini birden sıkıştırır ve senkron eksen sözünü bozar. Projeksiyona ayrı
+bir küçük grafik açmak da reddedildi: üç sayının (başlangıç θ, eğim + CI, hedef)
+taşımadığı hiçbir bilgiyi taşımaz ve ekranda zaten dört grafik var.
 
 **Alarmlar · S5.** UYARI ve üstü olaylarda tek cümle: *"Bu gidişle KRITIK eşiğine 21 gün
 (13–32)."* Gerekçe kodu varsa cümle yazılmaz; yerine hiçbir şey yazılmaz. Boş bir alan,
@@ -368,8 +389,35 @@ uydurulmuş bir tarihten iyidir.
 
 ## 10 · Bildirim metni
 
-`notify/sms.py` KRITIK ve ACIL gövdesine `"KRITIK'e 21 g (13-32)"` ekler — 21 karakter,
-160'lık bütçeye sığar. Gerekçe kodu dönüyorsa satır hiç eklenmez.
+Metni kuran yer `notify/sms.py` değil, `notify/escalation.py:compose()`'dur. Gövdeye
+`" · KRITIK'e 21 g (13-32)"` eklenir — 24 karakter. Gerekçe kodu dönüyorsa satır hiç
+eklenmez.
+
+Bütçe **160 değildir** ve bu ölçüldü. Türkçe metin GSM-7'ye girmediği için UCS2 gider;
+tek parça 70, birleştirilmiş parça 67 karakterdir (`sms.py:73-74`). `compose()`'un kendi
+tavanı `2 * UCS2_SINGLE_CHARS` = 140 karakterdir ve tavan aşılırsa **aksiyon metnini
+kısaltır**.
+
+Ölçülen mevcut gövdeler ve eklemeden sonrası:
+
+| Seviye · mod | Şimdi | Parça | +eta | Parça |
+|---|---:|---:|---:|---:|
+| KRITIK · loose_connection | 84 | 2 | 108 | 2 |
+| ACIL · loose_connection | 82 | 2 | 106 | 2 |
+| ACIL · thermal_runaway | 90 | 2 | 114 | 2 |
+| UYARI · overload | 76 | 2 | 100 | 2 |
+
+Gövdeler zaten iki parçadır; ekleme üçüncü parça açmıyor ve 140 tavanına çarpmıyor, yani
+aksiyon metni kısalmıyor. `live` geçildiğinde metrik alanı (`θ=31.0K`) ~9 karakter daha
+ekler; en kötü hâl 123 karakter, yine iki parça.
+
+Marj ince olduğu için sözleşme şudur: **bütçe daralırsa ilk düşen şey eta satırıdır.**
+Operatöre "bağlantıyı torkla" demek, "21 gün" demekten değerlidir. Bir test bunu
+kilitler: eta eklenmiş gövde 2 parçayı geçemez; geçecekse eta düşer, aksiyon kalır.
+
+Tek sayı yazılmaz. README §8'in birinci dürüstlük kuralı bildirim gecikmesini 4–13 s
+aralığı olarak veriyor ve tek temiz sayı vermemeyi kural saymış; aynı kural burada da
+geçerlidir.
 
 Tek sayı yazılmaz. README §8'in birinci dürüstlük kuralı bildirim gecikmesini 4–13 s
 aralığı olarak veriyor ve tek temiz sayı vermemeyi kural saymış; aynı kural burada da
@@ -491,7 +539,7 @@ panogoz/detector/engine.py        THETA_ABS_LADDER; _JointRuntime.eta;
                                   _refresh_stats() çağrısı; JointView/PanelLive yazımı
 panogoz/contracts/live.py         EtaView; JointView.eta; PanelLive.eta   ← contracts/
 panogoz/api/app.py                panel_summary() ve joint çıktısı; /onset genişlemesi
-panogoz/notify/sms.py             KRITIK/ACIL gövdesine tek satır
+panogoz/notify/escalation.py      compose() gövdesine eta satırı + parça sözleşmesi
 frontend/js/fmt.js                eta biçimleyicisi
 frontend/js/view-fleet.js         "Eşiğe" kolonu + bileşik sıralama
 frontend/js/view-evidence.js      projeksiyon bandı + metin blok
