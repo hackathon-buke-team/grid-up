@@ -140,6 +140,47 @@ cihaz noktası.
 > "Alarm üç şartın **hepsini** ister: CUSUM sekizi geçecek, θ beş kelvini geçecek ve son
 > beş günün üçünde geçecek. Yalnız CUSUM geçtiğinde telefon çalmaz."
 
+**Ek cümle · ileri yön (bu, planlayıcının sorduğu soru):**
+
+Kanıt ekranındaki **Projeksiyon** kartını göster.
+
+> **Provada dikkat.** Aşağıdaki sayılar `python -m panogoz.run_local --panels 12
+> --backfill-days 45` koşumundan **ölçülmüştür** (SOKE-14 / C07-L2-PABUC). Bu beat'in
+> yukarısındaki tablo daha yavaş bir rampayı (θ 6,35 K, eğim +0,31 K/hafta) tarif ediyor ve
+> ikisi aynı koşumdan gelmiyor. Prova, hangi yapılandırma kullanılacaksa **onunla** bir kez
+> koşturulup sayılar tek bir koşuma göre tazelenmelidir. Yavaş rampada projeksiyonun
+> `KRITIK'e >90 g` diyeceğini bilerek gidin — o da geçerli bir cümledir ve "kötü ama sabit"
+> ile "hızla bozulan" arasındaki farkı tam olarak gösterir.
+
+| Ekrandaki değer | Aritmetiği |
+|---|---|
+| `hedef basamak: ACIL · 25 K` | θ'nın günlük değerinin bir üstündeki basamak; olayın füzyon seviyesi değil |
+| `kalan: ACIL'e 20 g (18-27)` | kalan_K × 7 / eğim; alt uç hızlı eğimden, üst uç yavaş eğimden |
+| `eğim: +2,90 K/hafta` | Theil-Sen, ama **yalnız değişim noktasından sonrası** |
+| `%90 nominal CI: +2,23 … +3,20` | Sen (1968) rank aralığı; muhafazakâr rank seçimi yüzünden fiilî kapsama %88-93 |
+| `pencerede ölçülen gün: 22 · kapı en az 14` | 14'ün altında sayı verilmez, `YETERSIZ_GECMIS` yazılır |
+
+> "Şimdiye kadar söylediğim her şey geçmişe bakıyordu: ne zaman başladı, kanıt ne zaman
+> yeterli oldu. Bakım planlayıcısının sorduğu soru bu değil. O şunu soruyor: **bu pabuç ne
+> zaman benim sorunum olacak?**
+>
+> Bu gidişle **yirmi gün.** On sekiz ile yirmi yedi arasında. Bu aralık uydurulmadı: eğimin
+> kendisinin bir güven aralığı var ve gün sayısı o aralığın iki ucuna bölünerek çıkıyor.
+>
+> Bu sayı bir iş emrinin bu haftaya mı gelecek aya mı yazılacağına karar vermeye yeter.
+> Bir kesinti tarihini buna göre planlamaya **yetmez** ve öyle sunmuyoruz."
+
+**Hemen ardından filo tablosuna dön ve susan satırları göster.**
+
+> "Aynı kolonda on iki pano **sayı vermiyor** ve her birinin yanında nedeni yazıyor:
+> 'yetersiz geçmiş, 1 gün'. Yirmi bir günlük pencerede on dört geçerli gün yoksa bu sistem
+> gün sayısı üretmiyor. Sayı üretmek kolaydı; **üretmemek** ürünün kendisi."
+
+**Jüri sorarsa — "ya bozulma hızlanırsa?"**
+> "Model doğrusal ve bunu ekranda yazıyoruz. Isıl kaçış süper-doğrusaldır, yani o modda bu
+> sayı **iyimser**: gerçek tarih daha erken olabilir. Süper-doğrusal bir model uydurabilirdik;
+> kalibre edecek saha verisi olmadan o bir iddia olurdu, ölçüm olmazdı."
+
 ---
 
 ## 4. BASTIRILMIŞ ALARM · 2:10 – 2:55 · **ASLA KESİLMEZ**
@@ -365,3 +406,4 @@ uzunlukta kalır.
 | Demo kontrol paneli ("ark olayı enjekte et" düğmesi) | **Çalışıyor**: 17 senaryo `sim/faults.py` içinde, uçları `GET /api/scenarios` ve `POST /api/scenario/{key}` |
 | Sunum sırasında canlı `modpoll` | `modpoll` ikili dosyası depoda yok; jüri makinesinde kurulu olmalı ya da ekran görüntüsü kullanılır |
 | Demoda geçen tarih ("14 Temmuz") | Değişim noktası kestiricisi tarihi **hesaplar**; buradaki tarih senaryonun enjeksiyon anına bağlıdır |
+| Projeksiyon beat'indeki gün sayıları | Ölçülmüş, ama 3. beat'in yavaş rampasıyla **aynı koşumdan değil**; prova öncesi tek bir yapılandırmayla tazelenmeli (bkz. 3. beat uyarısı) |

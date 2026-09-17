@@ -395,6 +395,150 @@ karelere göre aykırı değere sağlamdır; bir günlük bozuk medyan eğimi d�
 
 ---
 
+## 6.1 İleri yön: eşiğe kalan gün
+
+§5 ve §6 geçmişe bakar — CUSUM sürüklenmeyi **teyit eder**, değişim noktası
+bozulmanın **başladığı** günü tarihler. Bakım planlayıcısının sorduğu soru ise
+ileriye bakar: *bu pabuç ne zaman benim sorunum olacak?*
+
+Cevap elimizdeki verinin içindedir. `slope_per_week()` zaten K/hafta cinsinden
+bir eğim üretiyor; eksik olan eğimin **belirsizliği** ve sayı vermeyi **reddetme
+kurallarıydı**. Yeni bir kestirici eklenmedi; var olan kestirici bir tarihe
+çevrildi (`panogoz/detector/horizon.py`).
+
+**Fayda iddiası sınırlıdır ve böyle satılır:** bir iş emrinin bu haftaya mı
+gelecek aya mı yazılacağına karar vermeye yeter. Bir kesinti tarihini bu sayıya
+göre planlamaya **yetmez**.
+
+### 6.1.1 Aritmetik
+
+Hedef, θ'nın **günlük** değerinin bulunduğu bandın bir üstüdür (§8'in merdiveni:
+IZLE 2 K · UYARI 5 K · KRITIK 12 K · ACIL 25 K). Kalan kelvin, eğimin güven
+aralığının üç ucuna bölünür:
+
+```
+gün_med = kalan_K · 7 / eğim_med
+gün_lo  = kalan_K · 7 / eğim_hi      (hızlı uç -> az gün)
+gün_hi  = kalan_K · 7 / eğim_lo      (yavaş uç -> çok gün)
+```
+
+`eğim_lo <= 0` ise üst gün sınırı **sonsuzdur**. Bu, "yükseliyor olabilir de
+olmayabilir de" cümlesinin matematikten çıkan hâlidir; elle yazılan bir uyarı
+değildir.
+
+Yuvarlama yönü muhafazakârdır — aralık daralmaz, genişler: `gün_lo` aşağı,
+`gün_med` en yakına, `gün_hi` yukarı.
+
+Hedef **füzyon seviyesinden değil**, θ'nın kendi merdiveninden okunur. Ark
+rölesi açmış ama θ'sı 3 K olan bir bağlantı KRITIK görünür; onun için "ACIL'e
+kalan gün" hesaplamak, ısıl olmayan bir kanıtla ısıl bir projeksiyon kurmak
+olurdu.
+
+### 6.1.2 Belirsizlik: Sen (1968) rank aralığı
+
+`theil_sen()` bütün ikili eğimleri üretip medyanını alıyor ve listeyi atıyordu.
+Aynı listenin rank kuantilleri, eğimin **parametrik olmayan** güven aralığıdır:
+
+```
+N        = n(n-1)/2
+Var(S)   = [ n(n-1)(2n+5) - Σ t_g(t_g-1)(2t_g+5) ] / 18
+C        = z · sqrt(Var(S))
+alt rank = floor((N - C) / 2)
+üst rank = ceil((N + C) / 2) + 1
+```
+
+`t_g`, birbirine eşit θ değerlerinin grup büyüklükleridir. Zaman tarafında
+bağlanma **olamaz**: `joint_daily`'nin birincil anahtarı `(day, panel_key,
+joint_key)`.
+
+Rank seçimi `floor`/`ceil+1` ile bilinçli olarak muhafazakârdır ve **bedeli
+ölçüldü**: nominal %90 seviyede fiilî kapsama, n=21 · σ=0.8 K · 400 koşum · beş
+tohumda **%88.0–93.2**. Bu yüzden belge ve arayüz "**%90 nominal**" der, "tam
+%90" demez. Kapsama ölçek-bağımsızdır (σ 0.8 → 0.4'te aynı sayı): hem aralık hem
+gürültü σ ile doğrusal ölçeklenir.
+
+Bootstrap reddedildi: RNG bağımlılığı getirir ve 112 pano × 74 bağlantı ×
+yeniden örnekleme ölçülmemiş bir CPU maliyetidir. Çoklu pencere duyarlılığı
+(14/21/28 gün) reddedildi: okunması kolaydır ama bir güven aralığı **değildir**.
+
+### 6.1.3 Susma sözleşmesi
+
+Sözleşme tek cümledir: **gerekçe boş ise ve yalnız ise gün dolu.** Kapılar
+sırayla değerlendirilir, ilk tutan kazanır ve tek bir kod döner.
+
+| Sıra | Kod | Koşul |
+|---|---|---|
+| 0 | `IZLENMIYOR` | Bağlantı hiç ölçülmüyor (canlı bara bölmesi, gün 1 kapsamı dışı) |
+| 1 | `NOTR_KAPSAM_DISI` | Nötr: serisi θ değil K_N'dir, mutlak merdiven uygulanmaz (§9, H3) |
+| 2 | `ZIRVEDE` | θ >= 25 K; üstünde basamak yok |
+| 3 | `YETERSIZ_GECMIS` | 21 günlük pencerede 14'ten az geçerli gün |
+| 4 | `GORUNURLUK_DUSUK` | Pencere medyanı θ_min >= hedef eşik |
+| 5 | `EGIM_YOK` | Medyan eğim <= 0 |
+
+0, 1, 2 ve 5 **arıza değildir**; sistemin doğru çalıştığı durumlardır. 3 ve 4
+körlüğün kendisidir ve §3'ün diliyle raporlanır.
+
+**Görünürlük kapısının kriteri neden yüzde değil.** §8'in `SENSITIVITY_LOW`
+bayrağı `sensitivity_pct < 100` eşiğini kullanır; bu bayrak için doğrudur,
+projeksiyon için değildir — tam yükün altındaki her bağlantıyı susturur ve kolon
+neredeyse hep boş çıkar. Fiziksel olarak doğru soru şudur: **θ_min hedef eşiğin
+üstündeyse o eşiğe doğru yapılan projeksiyon anlamsızdır**, çünkü eşiğin kendisi
+gürültü tabanının altında kalır. θ_min = 3σ/f² artık `joint_daily.theta_min`
+olarak gün gün saklanıyor — şema kolonu baştan tanımlıyordu, `roll_daily()` onu
+bu sürüme kadar yazmıyordu.
+
+**14 gün nereden geliyor.** İstatistiksel güçten değil, pencere kapsamasından:
+pencere 21 gün, 14 geçerli gün istemek pencerenin en çok bir haftasının boş
+olmasına izin vermek demektir. Gürültüye karşı koruma bu kapıda değil, güven
+aralığının **kendisindedir** — seri gürültülüyse alt sınır sıfırın altına iner,
+üst gün sınırı sonsuz olur ve sayı kendi şüphesini taşır.
+
+**90 gün tavanı.** Medyan 90 günü geçerse arayüz gün sayısı değil `>90 g` yazar.
+21 günlük bir pencereden 412 günlük bir tarih türetmek, gözlem penceresinin
+yirmi katına ekstrapolasyondur; ayrıca 90 gün ileri bir mevsim sınırını geçer ve
+günlük medyanın gürültü tabanı yükle birlikte hareket eder.
+
+Tavan bir susma **değildir** ve bunun ölçülmüş bir sonucu vardır: sağlıklı bir
+pabuç, gürültü seviyesinde pozitif bir eğimle IZLE eşiğine 117–211 gün mesafede
+görünebilir ve ekranda `IZLE'ye >90 g` yazar. Bu bir alarm değildir — §8'de IZLE
+zaten "haftalık özet listesine girer, ekip çıkmaz" demektir — ve negatif
+kontrollerin sözleşmesi buna göre yazılmıştır: ağır hedefe projeksiyon yok,
+tavanın altında (takvime yazılabilir) gün yok.
+
+### 6.1.4 İki itiraz, iki cevap
+
+**Doğrusallık.** Model doğrusaldır. `thermal_runaway` süper-doğrusaldır — ısınan
+bir temas direncinin artması daha fazla ısınmaya yol açar — yani o modda bu
+projeksiyon **iyimserdir** ve gerçek tarih hesaplanandan erkendir. Sayı
+gizlenmez: `model` alanı taşınır ve kanıt ekranı "gerçek tarih daha erken
+olabilir" der. Süper-doğrusal bir model uydurmak, kalibre edecek saha verisi
+olmadan ölçülemeyen bir iddia eklemek olurdu.
+
+**Basamak ve rampa.** On gün önce 3 K'lık bir kademe atlayıp sonra düzleşen bir
+seri, 21 günlük pencerede sahte bir rampa üretir. Pencerede bir değişim noktası
+varsa (§6) projeksiyon **yalnız o günden sonrasını** kullanır. Modülün öz-testi
+ikisini yan yana basar: aynı seride pencere bütünü +1.16 K/hafta derken, değişim
+sonrası −0.04 K/hafta çıkar ve sistem susar.
+
+`slope_k_per_week` tanımına **dokunulmadı**: §5'in `SLOPE_ESCALATE` kuralı ve
+filo tablosunun eğim kolonu aynı anlamı korur. Projeksiyonun fiilen kullandığı
+eğim ayrı raporlanır ve ikisi ayrıştığında kanıt ekranı nedenini yazar. İki
+sayı, iki soru, iki yer.
+
+### 6.1.5 Bu bölümün yapmadıkları
+
+| Yapmadık | Neden |
+|---|---|
+| Süper-doğrusal ya da mevsimsel model | Kalibre edecek saha verisi yok; ölçmediğimiz bir modeli teklif etmeyiz |
+| Dört basamağın hepsi için ayrı gün sayısı | Yalnız bir sonraki basamak; operatörün sorduğu soru bu |
+| Nötr iletkenler için projeksiyon | Serisi K_N'dir, mutlak merdiven uygulanmaz |
+| Bu sayıya dayanarak otomatik iş emri, ekip yönlendirme, kesinti planı | Projeksiyon bir **göstergedir**; aksiyon merdiveni §8'e bağlı kalır |
+| SCADA register'ı | 48 register'lık pano bloğu **tam dolu**; büyütmek her panonun taban adresini kaydırır ve ICD v2.0'ı bozar. Eklemeli bir ETA bloğu tarif edildi, kurulmadı |
+| `joint_state`'e kalıcılık | Türetilmiş bir sayıdır; `_refresh_stats` her turda `joint_daily`'den yeniden hesaplar. Sekiz ay sonra `SELECT` ile yeniden üretilemeyen bir istatistik kanıt değildir |
+| Alarm ekranında gün sayısı | `/api/alarms` bir `incident` tablosu projeksiyonudur; canlı bir türetilmiş sayıyı oraya koymak iki kaynağı karıştırırdı |
+
+---
+
 ## 7. Yedi arıza modu ve sağlık endeksinin tam ayrışması
 
 ### 7.1 Kanıttan moda
@@ -764,3 +908,5 @@ eğitim verisi istemez.
 | Yeniden başlatmaya dayanıklı debounce | Debounce ve temizleme pencereleri bellekte; olay satırları kalıcı |
 | TS EN 61439-1 Çizelge 8 sayıları | Elimizde yok; 110/130 °C mühendislik çıkarımı olarak etiketli |
 | RF kanalının IEC 60270 kalibrasyonu | Yapılmadı ve **yapılmayacağı beyan ediliyor** (AG'de izlenebilir değil) |
+| Eşiğe kalan gün için SCADA register bloğu | **Yazılmadı.** 48 register'lık pano bloğu tam dolu; eklemeli bir ETA bloğu §6.1.5'te tarif edildi, kurulmadı |
+| Ufuk projeksiyonunun saha kalibrasyonu | Kapsama nominal %90'a karşı **simülasyonda** ölçüldü (%88-93). Gerçek haber verme süresi ancak etiketli saha geçmişiyle ölçülebilir |

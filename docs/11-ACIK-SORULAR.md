@@ -268,6 +268,28 @@ kullanılmamalıdır; kendi fizik tabanlı ikizimizi kurduk.
 
 ---
 
+### S9b · DSO'nun iş emri planlama ufku kaç gündür?
+
+**Neden önemli.** "Eşiğe kalan gün" projeksiyonunun iki sayısı bu cevaba bağlıdır
+([04] §6.1): 90 günlük **ufuk tavanı** ve 14 günlük **geçmiş kapısı**. Tavanın gerekçesi
+istatistikseldir (21 günlük pencereden daha uzun bir tarih türetmek ekstrapolasyondur),
+fakat *hangi* uzunluğun operasyonel olarak anlamlı olduğunu yalnız planlama süreci bilir.
+
+**Cevaba göre tasarım.**
+
+| Cevap | Sonuç |
+|---|---|
+| **Haftalık çizelge** (ufuk ~14 gün) | Tavan 30 güne inebilir; 30 günün ötesi "uzak" diye tek kelimeyle raporlanır ve kolon çok daha sakin olur |
+| **Aylık planlama** (ufuk ~90 gün) | Mevcut tavan doğrudur, değişiklik gerekmez |
+| **Yıllık bütçe / bakım kampanyası** | Tavan yükseltilemez: 21 günlük pencere daha uzun bir tarihi taşımaz. Bunun yerine **mevsimsel** bir model gerekir ve o model ancak bir yıllık saha geçmişiyle kalibre edilebilir |
+
+**Şimdilik varsaydık:** aylık planlama, tavan 90 gün. Yanlış varsayım sistemi bozmaz,
+kolonun işe yararlığını azaltır.
+
+**Kim cevaplar:** DSO varlık yönetimi / bakım planlama.
+
+---
+
 ### S10 · Filodaki MPR-53CS'lerin haberleşme ayarları nedir?
 
 **Neden önemli.** MPR-53CS'in baud oranı enum'u **terstir** (1 = 38400, 2 = 19200,
@@ -344,12 +366,13 @@ aynı dürüstlük kuralına tabidirler.
 | D8 | EMC ön uyum taraması | Önlem listesi var, tarama yok | [03] §8 |
 | D9 | Saha güvenilirlik verisi (MTBSV) | Parça sayımı kestirimi | [05] §8.5 |
 | D10 | Özel HFCT (nanokristal, 30 mm) tasarımı ve kalibrasyonu | BOM'da var, tasarlanmadı | [03] §9.3 |
+| D11 | Ufuk projeksiyonunun gerçek isabeti | Güven aralığı kapsaması simülasyonda ölçüldü (nominal %90'a karşı %88-93); saha isabeti etiketli geçmiş ister | [04] §6.1.2 |
 
 ---
 
 ## Kapanış
 
-On üç müşteri sorusu, on doğrulama borcu ve dokuz OG sorusu. Otuz iki açık madde.
+On dört müşteri sorusu, on bir doğrulama borcu ve dokuz OG sorusu. Otuz dört açık madde.
 
 Bunu bir zayıflık olarak sunmuyoruz. Bir hackathon teslimi ile sahaya çıkabilir bir ürün
 arasındaki fark tam olarak bu listedir; ve bu listeyi **yazmayan** bir teslim, listenin

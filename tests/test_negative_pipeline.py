@@ -74,9 +74,20 @@ def test_positive_control_raises_an_incident(monkeypatch):
     assert loose, f"pozitif kontrol alarm üretmedi: {modes(live)}"
     assert loose[0].joint_key == "C07-L2-PABUC"
 
+    # Ölçü çubuğunun ikinci yarısı: projeksiyon da ÇIKMALI. Onsuz negatif
+    # kontrollerdeki "ağır hedefe projeksiyon yok" iddiası, projeksiyonu hiç
+    # hesaplamayan bir sürümde de geçerdi.
+    hit = [j for j in live.joints if j.key == "C07-L2-PABUC"]
+    assert hit, "pozitif kontrolün bağlantısı görünümde yok"
+    eta = hit[0].eta
+    assert eta.reason == "", f"pozitif kontrolde projeksiyon susturuldu: {eta.reason}"
+    assert eta.days is not None and eta.target, "pozitif kontrolde gün yok"
+    assert eta.slope_k_per_week > 0.0
+    assert live.eta.days is not None and live.eta.target, "pano düzeyine yükselmedi"
+
 
 @pytest.mark.parametrize("name", fx.NEGATIVE_CONTROLS)
-def test_negative_control_opens_no_incident(monkeypatch, name):
+def test_negative_control_opens_no_incident_or_horizon(monkeypatch, name):
     spec = fx.SCENARIOS[name]
     live = run_panel(monkeypatch, [{
         "index": 14, "scenario": name,
@@ -85,6 +96,32 @@ def test_negative_control_opens_no_incident(monkeypatch, name):
     forbidden = [a for a in live.alarms if a.mode in spec.get("forbid_modes", ())]
     assert not forbidden, f"{name} yasak modda alarm açtı: {forbidden}"
     assert not live.alarms, f"{name} pano alarmı açtı: {modes(live)}"
+
+    # AYNI koşumun ikinci iddiası: ekip yola çıkaracak bir projeksiyon da yok.
+    # Ayrı bir test yazmak bu bootstrap'ı yedi kez daha kurardı; kanıt aynı,
+    # bedeli iki katı olurdu.
+    #
+    # Ölçülen davranış: sağlıklı bir pabuç, gürültü seviyesinde pozitif bir
+    # eğimle IZLE eşiğine 117-211 gün mesafede görünebilir. Bu bir alarm
+    # değildir ve öyle de sunulmaz - 90 gün tavanının üstünde olduğu için
+    # ekranda ">90 g" yazar, bir tarih yazmaz. §8'in merdiveninde IZLE zaten
+    # "haftalık özet listesine girer, ekip çıkmaz" demektir. Sözleşme bu yüzden
+    # "projeksiyon yok" değil, ikisi birden: ağır hedefe projeksiyon yok, VE
+    # tavanın altında (takvime yazılabilir) gün yok.
+    heavy = [(j.key, j.eta.target, j.eta.days) for j in live.joints
+             if j.eta.days is not None
+             and j.eta.target in ("UYARI", "KRITIK", "ACIL")]
+    assert not heavy, f"{name} ağır hedefe projeksiyon üretti: {heavy}"
+    soon = [(j.key, j.eta.target, j.eta.days) for j in live.joints
+            if j.eta.days is not None and not j.eta.capped]
+    assert not soon, f"{name} takvime yazılabilir bir gün verdi: {soon}"
+    # Gerekçe boş ISE VE YALNIZ ISE gün dolu. Sessiz boşluk yok.
+    for jv in live.joints:
+        if jv.eta.reason:
+            assert jv.eta.days is None, f"{name}: {jv.key} gerekçe VE gün taşıyor"
+        else:
+            assert jv.eta.days is not None, (
+                f"{name}: {jv.key} ne gerekçe ne gün taşıyor")
 
 
 def test_every_negative_control_is_covered():

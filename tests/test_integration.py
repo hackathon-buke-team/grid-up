@@ -339,6 +339,19 @@ def _end_to_end():
     assert worst.cusum > 8.0, f"CUSUM {worst.cusum:.1f} — sürüklenme teyit edilmedi"
     assert live.alarms, "kritik bağlantı için olay açılmadı"
 
+    # Ufuk projeksiyonu: kusurlu bağlantı bir HEDEF ve bir GÜN taşımak zorunda,
+    # ve pano düzeyine yükselmiş olmalı. Sözleşme tek cümle: gerekçe boş ise ve
+    # yalnız ise gün dolu - bu, bütün bağlantılar üzerinde denetlenir.
+    assert worst.eta.reason == "", f"kusurlu bağlantıda projeksiyon susturuldu: {worst.eta.reason}"
+    assert worst.eta.days is not None and worst.eta.target, "projeksiyon gün vermedi"
+    assert worst.eta.slope_k_per_week > 0.0, "projeksiyonun eğimi pozitif değil"
+    assert live.eta.days is not None, "pano düzeyine yükseltilmedi"
+    for jv_any in live.joints:
+        if jv_any.eta.reason:
+            assert jv_any.eta.days is None, f"{jv_any.key}: gerekçe VE gün birlikte"
+        else:
+            assert jv_any.eta.days is not None, f"{jv_any.key}: ne gerekçe ne gün"
+
     words = live.to_registers([j.key for j in assets.JOINTS])
     assert len(words) == 48
     r = icd.PANEL_BY_NAME["THETA_MAX"]
@@ -349,7 +362,8 @@ def _end_to_end():
     rt.stop()
     return (f"{len(fleet.panels)} pano · {worst.key} θ={live.theta_max:.1f} K "
             f"({age_days:.0f} gün önce başladı) → register +{r.offset} = {got} K · "
-            f"{len(live.alarms)} olay")
+            f"{len(live.alarms)} olay · {worst.eta.target}'e "
+            f"{worst.eta.days:.0f} gün")
 
 
 @check("Ark açması → ACİL olay → bildirim → SCADA")

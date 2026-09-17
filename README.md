@@ -27,7 +27,9 @@ ilk okumada doğrudan kullanılabilir. Bunun **kapsamı buraya kadardır**. Ür�
 haber veren yolu — kendi taban çizgisine göre yükselme, CUSUM teyidi, değişim noktası ve
 3/5 günlük debounce — günlük medyanlar üzerinde çalışır ve **geçmiş gerektirir**: `joint_daily`
 tablosunda en az beş gün olmadan sürüklenme teyit edilemez, kaynağından kurulan bir sistem o
-beş günü beklemek zorundadır. İki yol birlikte satılır; "geçmiş gerektirmez" cümlesi yalnız
+beş günü beklemek zorundadır. Aynı tablodan **ileriye** bakan yol — bir sonraki seviye
+basamağına kalan gün — daha fazlasını ister: 21 günlük pencerede en az **14 geçerli gün**
+olmadan bir gün sayısı verilmez, `YETERSIZ_GECMIS` yazılır. İki yol birlikte satılır; "geçmiş gerektirmez" cümlesi yalnız
 kardeş karşılaştırması için doğrudur. θ yeni bir icat değildir;
 IR termografi pratiğinin zaten şart koştuğu "benzer bileşene göre benzer yük altında ΔT"
 ölçütünün, yılda bir kez bir müteahhit tarafından değil, dakikada bir sürekli hesaplanan
@@ -284,3 +286,5 @@ Bu paketin her belgesinin sonunda aynı başlıkla bir liste vardır. Kısa öze
 | Enerji hasadı | Ölçülmedi, iddia edilmiyor |
 | OG hücre donanımı | Konsept, prototip yok |
 | NFC ile devreye alma | Akış tasarlandı, NFC yongası tezgâhta denenmedi |
+| "Eşiğe kalan gün" için SCADA register'ı | **Yok.** 48 register'lık pano bloğu tam dolu; büyütmek her panonun taban adresini kaydırır ve yayınlanmış ICD v2.0'ı bozar. Eklemeli bir ETA bloğu [docs/04](docs/04-ANOMALI-TESPIT.md) §6.1.5'te tarif edildi, kurulmadı |
+| Ufuk projeksiyonunun saha kalibrasyonu | Güven aralığının kapsaması **simülasyonda** ölçüldü (nominal %90'a karşı %88-93). Gerçek haber verme süresi ancak etiketli saha geçmişiyle ölçülebilir |
