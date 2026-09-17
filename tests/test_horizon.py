@@ -373,3 +373,79 @@ def test_api_exposes_eta_in_fleet_and_panel(tmp_path):
         assert all("eta" in j for j in panel["joints"])
         onset = c.get(f"/api/panel/{key}/onset").json()
         assert "eta" in onset, "onset ileri yonu tasimiyor"
+
+
+# --------------------------------------------------------------- bildirim --
+
+def test_sms_carries_the_horizon_and_never_a_third_part():
+    from panogoz.notify import escalation as esc
+    from panogoz.notify import sms
+
+    live = PanelLive(panel_key="SOKE-14", panel_index=14, site="Söke",
+                     name="Söke 14")
+    jv = JointView(key="C07-L2-PABUC", label="", zone="", conductor="L",
+                   feeder_index=7, rated_a=400.0, monitored=True)
+    jv.theta_k = 8.4
+    jv.eta = EtaView(target="KRITIK", days=21.0, days_lo=13.0, days_hi=32.0)
+    live.joints = [jv]
+    live.health_index = 71.0
+    inc = {"id": 1284, "panel_key": "SOKE-14", "joint_key": "C07-L2-PABUC",
+           "severity": "KRITIK", "mode": "loose_connection"}
+
+    body = esc.compose(inc, live)
+    assert "KRITIK'e 21 g (13-32)" in body
+    assert len(sms.split_ucs2(body)) <= 2, \
+        f"ucuncu parca acildi: {len(body)} karakter"
+
+    # Gerekce kodu varsa satir HIC eklenmez.
+    jv.eta = EtaView(reason="YETERSIZ_GECMIS", valid_days=9)
+    assert " g (" not in esc.compose(inc, live)
+
+    # Sonsuz ust sinir SMS'te '+' ile yazilir; unicode sonsuz isareti gitmez.
+    # Yonelme eki unlu uyumuna uyar: UYARI'ya, UYARI'e degil.
+    jv.eta = EtaView(target="UYARI", days=62.0, days_lo=38.0, days_hi=None)
+    inf_body = esc.compose(inc, live)
+    assert "UYARI'ya 62 g (38+)" in inf_body
+    assert "∞" not in inf_body
+
+    # Butce daralirsa ILK dusen sey eta satiridir, aksiyon metni DEGIL.
+    #
+    # Kurgu bunu izole eder: 32 karakterlik bir pano anahtariyla eta'li govde
+    # ucuncu parcayi acar (>134 karakter), eta'siz govde iki parcaya sigar ve
+    # 140 karakter tavanina carpmaz - yani aksiyon kisaltma dongusu hic
+    # calismaz.  Daha uzun bir anahtarla aksiyonun da kisalmasi MEVCUT ve dogru
+    # davranistir ("trim the action, never the identifiers"), bu testin konusu
+    # degil.
+    jv.eta = EtaView(target="KRITIK", days=21.0, days_lo=13.0, days_hi=32.0)
+    tight_inc = dict(inc, panel_key="S" * 32)
+    with_eta_len = len(esc.compose(inc, live)) + (32 - len("SOKE-14"))
+    assert with_eta_len > 2 * 67, "kurgu ucuncu parcayi acmiyor, test anlamsiz"
+    tight = esc.compose(tight_inc, live)
+    assert " g (" not in tight, "eta satiri dusmeliydi"
+    assert "bağlantıyı torkla" in tight, "aksiyon metni eta'dan once kisaldi"
+    assert len(sms.split_ucs2(tight)) <= 2
+    assert "onay: TAMAM" in tight
+
+
+def test_compose_ceiling_counts_characters_not_parts_known_limit():
+    """MEVCUT SINIR - eta satirindan once de vardi, bu surumde duzeltilmedi.
+
+    compose()'un docstring'i hedefini "under 140 UCS2 characters (two parts)"
+    diye yaziyor, fakat iki BIRLESIK UCS2 parcasi 2 x 67 = 134 karakter tutar.
+    Aksiyon kisaltma dongusu 140 karakteri esik aldigi icin 135-140 karakter
+    araligindaki bir govde tavani gecmeden ucuncu parcayi acabilir.
+
+    Bu test o davranisi KILITLER, onaylamaz: duzeltilirse test duser ve
+    duzeltmenin bilincli oldugu gorulur.  Kapsami buyutmemek icin bu surumde
+    yalniz eta yolu split_ucs2 ile korundu.
+    """
+    from panogoz.notify import escalation as esc
+    from panogoz.notify import sms
+
+    inc = {"id": 1284, "panel_key": "X" * 60, "joint_key": "C07-L2-PABUC",
+           "severity": "KRITIK", "mode": "loose_connection"}
+    body = esc.compose(inc)
+    assert len(body) <= 2 * sms.UCS2_SINGLE_CHARS, "karakter tavani tutmuyor"
+    assert len(sms.split_ucs2(body)) == 3, (
+        "artik ucuncu parca acilmiyor - tavan parca sayisina cevrilmis olabilir, "
+        "oyleyse bu testi ve escalation.compose docstring'ini guncelle")

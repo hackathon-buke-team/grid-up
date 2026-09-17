@@ -54,6 +54,7 @@ from dataclasses import dataclass, field
 from typing import Any, Iterable
 
 from panogoz.contracts.channels import (
+    SEVERITY_DATIVE_TR,
     DISPATCH_SEVERITIES,
     MODES_BY_KEY,
     SEVERITY_ACTION_TR,
@@ -177,12 +178,42 @@ def compose(incident: dict, live: PanelLive | None = None,
         metric = f"HI={live.health_index:.0f}"
 
     action = _short_action(mode, incident)
+
+    # Ufuk satiri.  Metni kuran yer burasi; sms.py yalniz tasima katmanidir.
+    #
+    # Butce 160 DEGILDIR: Turkce metin GSM-7'ye girmedigi icin UCS2 gider ve tek
+    # parca 70, birlesik parca 67 karakterdir.  Olculen mevcut govdeler 76-90
+    # karakter, yani zaten iki parca; +24 karakter ucuncu parca acmiyor.
+    eta_bit = ""
+    if live is not None:
+        jv_eta = next((j.eta for j in live.joints
+                       if j.key == incident.get("joint_key")), None)
+        if jv_eta is not None and not jv_eta.reason and jv_eta.days is not None:
+            lo = 0 if jv_eta.days_lo is None else int(jv_eta.days_lo)
+            # Sonsuz ust sinir '+' ile yazilir: Unicode sonsuz isareti UCS2'de
+            # yer kaplar ve bazi eski terminallerde okunmaz.
+            span = (f"{lo}+" if jv_eta.days_hi is None
+                    else f"{lo}-{int(jv_eta.days_hi)}")
+            where = SEVERITY_DATIVE_TR.get(jv_eta.target or "",
+                                           f"{jv_eta.target}'e")
+            eta_bit = f" · {where} {int(jv_eta.days)} g ({span})"
+
     head = f"PANO GÖZ {SEVERITY_TR[sev].upper()} · {panel} · {joint}"
-    body = f"{head} {metric} · {action} · onay: TAMAM {incident.get('id', 0)} {tok}"
+
+    def _build() -> str:
+        return (f"{head} {metric} · {action}{eta_bit} · "
+                f"onay: TAMAM {incident.get('id', 0)} {tok}")
+
+    body = _build()
+    # Butce daralirsa ILK dusen sey ufuk satiridir.  Operatore "baglantiyi
+    # torkla" demek, "21 gun" demekten degerlidir.
+    if eta_bit and len(split_ucs2(body)) > 2:
+        eta_bit = ""
+        body = _build()
     # Trim the action, never the identifiers or the token.
     while len(body) > 2 * UCS2_SINGLE_CHARS and len(action) > 6:
         action = action[: max(6, len(action) - 6)].rstrip(" ,.")
-        body = f"{head} {metric} · {action} · onay: TAMAM {incident.get('id', 0)} {tok}"
+        body = _build()
     return body
 
 

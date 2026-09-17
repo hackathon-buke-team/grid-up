@@ -238,6 +238,18 @@ SEVERITY_TR = {
     "ACIL": "Acil",
 }
 
+#: Seviye adinin YONELME hali ("KRITIK'e 21 gun").  Turkce'de ek unlu uyumuna
+#: gore degisir ve tek bir "'e" ile gecistirilemez: UYARI'ya, IZLE'ye, KRITIK'e,
+#: ACIL'e.  Ufuk projeksiyonunun cumlesi bu tabloyu kullanir; "UYARI'e" yazan
+#: bir arayuz, kendi dilini bilmeyen bir arayuzdur.
+SEVERITY_DATIVE_TR = {
+    "BILGI": "BILGI'ye",
+    "IZLE": "IZLE'ye",
+    "UYARI": "UYARI'ya",
+    "KRITIK": "KRITIK'e",
+    "ACIL": "ACIL'e",
+}
+
 #: Operational meaning of each level.  These are shown in the UI next to the
 #: badge so an operator never has to guess what a colour means.
 SEVERITY_ACTION_TR = {
