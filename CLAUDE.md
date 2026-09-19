@@ -222,8 +222,22 @@ SCADA protokolü.
 
 - [ ] **4.1** Gerçek bildirim kanalı: WhatsApp Business API veya on-prem'e uygun
       alternatif (GSM modem/SMS). Seçim gerekçesi + veri mahremiyeti notu yazılı olsun.
-- [ ] **4.2** Eskalasyon: rota, onay token'ı, tekrar aralığı, fırtına sınırı, sessize
-      alma, nöbet devri.
+      **KISMİ (2026-09-19):** seçim gerekçesi + veri mahremiyeti notu yazıldı
+      (`docs/12-BILDIRIM-ESKALASYON.md`: üretimde on-prem GSM modem SMS, demoda
+      Telegram); iki kanal da kodlu ve testli (Telegram sahte-HTTP, GSM modem sahte
+      seri port). **GERÇEK kanaldan tek mesaj HENÜZ GÖNDERİLMEDİ** — ortamda
+      `TELEGRAM_BOT_TOKEN`/`TELEGRAM_CHAT_ID` yok, gerçek GSM modem yok. Komut:
+      `python -m tools.send_real_alarm_demo --send --wait-ack 120`. Bu satır gerçek
+      mesaj gidince `[x]` olur.
+- [x] **4.2** Eskalasyon: rota, onay token'ı, tekrar aralığı, fırtına sınırı, sessize
+      alma, nöbet devri. *Bitti sayılır:* gerçek senaryodan uçtan uca testli;
+      alarm yaşam döngüsü (aç/yükselt/temizle/onayla/7 gün otomatik kapan/sessize al)
+      + kademeli eskalasyon + 4 haneli onay belirteci + fırtına sınırı/özet +
+      kişi/tür bazlı sessize alma (KRİTİK bastırılamaz) + nöbet devri + teslimat
+      hatasında kademe atlama + Telegram'dan `ONAY <id> <belirteç>` iki yönlü onay.
+      → `panogoz/rules/alarms.py`, `panogoz/notify/{escalation,gsm_modem}.py`,
+      `tests/test_{alarm_lifecycle,escalation,gsm_modem}.py` (51 test),
+      `docs/12-BILDIRIM-ESKALASYON.md` (2026-09-19).
 - [x] **4.3** `expect_flags` sözleşme açıkları: STALE, SENSOR_DRIFT, DE_ENERGISED
       bayrakları cihaz düzeyinde doğru mu kuruluyor? *Bitti sayılır:* üç bayrak
       da gerçek testle doğrulandı, θ'nın düşük-yük `None` durumuyla
