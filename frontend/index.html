@@ -3,62 +3,248 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>PANO GÖZ — İzleme Konsolu</title>
-<link rel="stylesheet" href="styles.css" />
+<link rel="icon" href="data:," />
+<title>PANO GÖZ — Alarm Konsolu</title>
+<link rel="stylesheet" href="console.css" />
 </head>
 <body>
-  <header>
-    <h1>PANO GÖZ</h1>
-    <p>Pano/Hücre İçi Anomali Erken Uyarı Sistemi — İzleme Konsolu</p>
+  <header class="topbar">
+    <div class="brand">
+      <h1>PANO GÖZ</h1>
+      <p>Pano/Hücre İçi Anomali Erken Uyarı Sistemi · Merkezi Operasyon Konsolu</p>
+    </div>
+    <div class="clock" id="clock" aria-live="polite">
+      <span class="chip" id="clock-day">Filo hazırlanıyor…</span>
+      <span class="chip paused" id="clock-state">—</span>
+      <span class="chip storm" id="storm-chip" hidden>Alarm fırtınası</span>
+      <button class="btn small" id="demo-toggle" aria-expanded="true">Demo kontrolü</button>
+    </div>
   </header>
 
+  <section class="demo-bar" id="demo-bar" aria-label="Demo kontrol paneli">
+    <div class="group">
+      <span class="label">Saat</span>
+      <button class="btn primary" id="play-btn">▶ Başlat</button>
+      <select id="speed-select" aria-label="Hız">
+        <option value="3600">1 sa / sn</option>
+        <option value="14400">4 sa / sn</option>
+        <option value="43200">12 sa / sn</option>
+        <option value="86400">1 gün / sn</option>
+      </select>
+      <select id="jump-select" aria-label="Güne atla">
+        <option value="">Güne atla…</option>
+        <option value="34">Gün 34</option>
+        <option value="38">Gün 38</option>
+        <option value="42">Gün 42</option>
+        <option value="46">Gün 46</option>
+        <option value="52">Gün 52</option>
+      </select>
+    </div>
+    <div class="group">
+      <span class="label">Senaryo</span>
+      <select id="inject-panel" aria-label="Pano"></select>
+      <select id="inject-scenario" aria-label="Senaryo"></select>
+      <button class="btn" id="inject-btn">Enjekte et</button>
+      <button class="btn" id="clear-btn">Temizle</button>
+    </div>
+    <div class="group">
+      <button class="btn danger" id="storm-btn" title="8 panoda aynı anda ortak nedenli olay">Fırtına başlat</button>
+      <button class="btn" id="reset-btn">Sıfırla</button>
+      <span class="note" id="demo-msg" role="status"></span>
+    </div>
+  </section>
+
+  <nav class="tabs" role="tablist" aria-label="Konsol bölümleri">
+    <button class="tab" role="tab" data-tab="alarms" aria-selected="true">Alarmlar <span class="count" id="cnt-alarms">0</span></button>
+    <button class="tab" role="tab" data-tab="panels" aria-selected="false">Panolar</button>
+    <button class="tab" role="tab" data-tab="suppression" aria-selected="false">Bastırma</button>
+    <button class="tab" role="tab" data-tab="scada" aria-selected="false">SCADA (Modbus)</button>
+    <button class="tab" role="tab" data-tab="phones" aria-selected="false">Bildirimler</button>
+    <a class="tab" href="kanit.html" style="text-decoration:none">Kanıt ekranı (θ + CUSUM)</a>
+  </nav>
+
   <main>
-    <section id="connections" class="cards"></section>
+    <div id="loading" class="banner" hidden>Filo hazırlanıyor (22 senaryolu pano, ilk açılışta ≈15 sn sürer)…</div>
+    <div id="storm-banner" class="banner" hidden></div>
+    <div id="fatal" class="banner" hidden></div>
 
-    <section class="detail">
-      <div class="detail-header">
-        <h2 id="detail-title">—</h2>
-        <span id="detail-severity" class="badge">—</span>
-      </div>
-
-      <div class="readouts">
-        <div><span class="label">θ (anomali metriği)</span><span id="readout-theta" class="value">—</span></div>
-        <div><span class="label">Akım</span><span id="readout-current" class="value">—</span></div>
-        <div><span class="label">Yüzey Sıcaklığı</span><span id="readout-temp" class="value">—</span></div>
-        <div><span class="label">Zaman</span><span id="readout-time" class="value">—</span></div>
-      </div>
-
-      <canvas id="chart" width="900" height="260"></canvas>
-
-      <div class="controls">
-        <button id="play-btn">▶ Oynat</button>
-        <input id="time-slider" type="range" min="0" max="0" value="0" />
-      </div>
-    </section>
-
-    <section class="evidence">
-      <h2>Kanıt Ekranı</h2>
-
-      <div class="evidence-block">
-        <h3>Kardeş Faz Karşılaştırması <span class="sub">(yüzey sıcaklığı, θ'nın normalize ettiği kardeş medyanın kaynağı)</span></h3>
-        <canvas id="siblings-chart" width="900" height="200"></canvas>
-        <div class="legend" id="siblings-legend"></div>
-      </div>
-
-      <div class="evidence-block">
-        <div class="evidence-block-header">
-          <h3>CUSUM / Değişim Noktası <span class="sub">(günlük θ medyanı, sürüklenme tespiti)</span></h3>
-          <button id="cusum-demo-btn" class="link-btn">Uzatılmış demo örneği göster</button>
+    <!-- ===================== ALARMLAR ===================== -->
+    <section id="tab-alarms" role="tabpanel">
+      <div class="kpis" id="kpis"></div>
+      <div class="split">
+        <div class="card">
+          <h2>Alarm listesi</h2>
+          <div class="filters">
+            <label>Durum
+              <select id="f-state">
+                <option value="active">Aktif + onay bekleyen</option>
+                <option value="open">Yalnız onay bekleyen</option>
+                <option value="acked">Onaylanmış</option>
+                <option value="cleared">Temizlendi (onay bekliyor)</option>
+                <option value="closed">Kapalı</option>
+                <option value="">Tümü</option>
+              </select>
+            </label>
+            <label>En az şiddet
+              <select id="f-sev">
+                <option value="">Hepsi</option>
+                <option value="WARNING">UYARI +</option>
+                <option value="ALARM">ALARM +</option>
+                <option value="CRITICAL">KRİTİK</option>
+              </select>
+            </label>
+            <label>Aile
+              <select id="f-family">
+                <option value="">Hepsi</option>
+                <option value="thermal">Isıl</option>
+                <option value="load">Yük</option>
+                <option value="environment">Ortam</option>
+                <option value="pd">PD</option>
+                <option value="arc">Ark</option>
+                <option value="system">Sistem</option>
+              </select>
+            </label>
+            <label>Pano <select id="f-panel"><option value="">Hepsi</option></select></label>
+            <label>Sırala
+              <select id="f-sort">
+                <option value="priority">Öncelik</option>
+                <option value="opened">En yeni</option>
+                <option value="severity">Şiddet</option>
+                <option value="panel">Pano</option>
+                <option value="state">Durum</option>
+              </select>
+            </label>
+          </div>
+          <div class="alarm-list" id="alarm-list" role="list"></div>
         </div>
-        <p id="cusum-status" class="note">—</p>
-        <canvas id="cusum-chart" width="900" height="160" hidden></canvas>
-      </div>
 
-      <p class="scope-note">Kapsam dışı: bastırma gerekçeleri (dead-band, fırtına sınırı, 7 gün
-        kendiliğinden kapanma — bkz. CLAUDE.md §2) bu ekranda yok, o katman henüz kurulmadı.</p>
+        <div class="card detail" id="detail">
+          <div class="empty" id="detail-empty">Ayrıntı için soldan bir alarm seçin.</div>
+          <div id="detail-body" hidden>
+            <h2><span class="badge" id="d-badge">—</span> <span id="d-title">—</span></h2>
+            <div class="sub" id="d-sub"></div>
+            <div class="kv" id="d-kv"></div>
+
+            <div class="section">
+              <h3>Kanıt</h3>
+              <canvas id="d-chart" data-h="190"></canvas>
+              <div class="chips" id="d-reasons" style="margin-top:8px"></div>
+              <p class="note" id="d-evidence-note"></p>
+            </div>
+
+            <div class="section wo" id="d-wo"></div>
+
+            <div class="section">
+              <h3>Onay ve kapatma</h3>
+              <div id="d-ack-info" class="note"></div>
+              <div class="form" id="ack-form">
+                <label>Belirteç (mesajdaki 4 hane)
+                  <input id="ack-token" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="0000" />
+                </label>
+                <label>Adınız
+                  <input id="ack-by" autocomplete="off" placeholder="Ad Soyad" />
+                </label>
+                <label class="full"><button class="btn primary" id="ack-btn" type="button">Onayla</button></label>
+              </div>
+              <div class="err" id="ack-err" role="alert"></div>
+
+              <details class="fold">
+                <summary>Alarmı kapat (gerekçe zorunlu)</summary>
+                <div class="form" style="margin-top:8px">
+                  <label>Gerekçe <select id="close-reason"></select></label>
+                  <label>Adınız <input id="close-by" autocomplete="off" placeholder="Ad Soyad" /></label>
+                  <label class="full"><button class="btn danger" id="close-btn" type="button">Kapat</button></label>
+                </div>
+                <div class="err" id="close-err" role="alert"></div>
+              </details>
+
+              <details class="fold">
+                <summary>Bu türü sessize al (KRİTİK bastırılamaz)</summary>
+                <div class="form" style="margin-top:8px">
+                  <label>Süre
+                    <select id="mute-min">
+                      <option value="30">30 dk</option><option value="120">2 saat</option><option value="480">8 saat</option>
+                    </select>
+                  </label>
+                  <label>Gerekçe <input id="mute-reason" autocomplete="off" placeholder="Bakım penceresi" /></label>
+                  <label>Adınız <input id="mute-by" autocomplete="off" placeholder="Ad Soyad" /></label>
+                  <label class="full"><button class="btn" id="mute-btn" type="button">Sessize al</button></label>
+                </div>
+                <div class="err" id="mute-err" role="alert"></div>
+              </details>
+            </div>
+
+            <div class="section">
+              <h3>Bildirim geçmişi</h3>
+              <div class="msg-list" id="d-msgs"></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
+
+    <!-- ===================== PANOLAR ===================== -->
+    <section id="tab-panels" role="tabpanel" hidden>
+      <div class="panel-grid" id="panel-grid"></div>
+      <div id="panel-detail" hidden>
+        <div class="card" style="margin-bottom:12px">
+          <h2 id="pd-title">—</h2>
+          <div class="sub" id="pd-sub" style="color:var(--muted);font-size:12px;margin-top:2px"></div>
+        </div>
+        <div class="charts" id="pd-charts"></div>
+        <div class="card" style="margin-top:12px">
+          <h2>İzler (dedektörler) ve son durum</h2>
+          <div class="tbl-wrap"><table class="tbl" id="pd-tracks"></table></div>
+          <p class="note" id="pd-tau"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== BASTIRMA ===================== -->
+    <section id="tab-suppression" role="tabpanel" hidden>
+      <div class="explain">
+        <b>Alarm hijyeni: sıra sabit.</b>
+        <ol>
+          <li><b>Bastırma</b> — veri yok / enerjisiz / düşük yük / ısınma örnekleri gerekçesiyle puansız bırakılır (aşağıda sayılır).</li>
+          <li><b>Onay</b> — %40 ölü bant + 3/5 debounce; maskeli örnek durumu tutar ("bilgi yok" ≠ "normal").</li>
+          <li><b>Füzyon</b> — PD, ısı veya nem ailesinden destek gelmedikçe UYARI'da tavanlanır (iki kanal ailesi şartı).</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h2>Pano bazında bastırma sayaçları (şimdiye kadar, örnek adedi)</h2>
+        <div class="tbl-wrap"><table class="tbl" id="sup-table"></table></div>
+        <p class="note">Bir örnek = 15 dakika. Kural dışı sessize almalar (bakım penceresi) ayrı sayılır ve KRİTİK'i bastıramaz.</p>
+      </div>
+    </section>
+
+    <!-- ===================== SCADA ===================== -->
+    <section id="tab-scada" role="tabpanel" hidden>
+      <div class="card">
+        <h2>SCADA — Modbus TCP register haritası (ICD v2.0)</h2>
+        <div class="filters">
+          <label>Pano <select id="scada-panel"></select></label>
+          <a class="btn small" href="/api/fleet/scada/points.csv" download="panogoz-icd-v2.0-points.csv" style="text-decoration:none">CSV nokta listesi indir</a>
+        </div>
+        <div class="kv" id="scada-kv"></div>
+        <div class="tbl-wrap"><table class="tbl" id="scada-table"></table></div>
+        <p class="note">Bu tablo ile bir Modbus master'ın (FC04) okuduğu değerler <b>aynı fonksiyondan</b> çıkar; "Ekranda" sütunu her register'ın konsoldaki karşılığını gösterir.</p>
+        <code class="cmd" id="scada-cmd"></code>
+      </div>
+    </section>
+
+    <!-- ===================== BİLDİRİMLER ===================== -->
+    <section id="tab-phones" role="tabpanel" hidden>
+      <div class="explain">
+        Nöbetçilerin telefonlarına giden mesajlar (bellek içi <b>gösterim</b>; gerçek Telegram/SMS yalnızca <code>PANOGOZ_LIVE_NOTIFY=1</code> ile açılır).
+        Onay belirteci <b>konsolda görünmez</b>, yalnızca mesajdadır; "Onay için doldur" düğmesi telefondaki yanıtı temsil eder.
+      </div>
+      <div class="phones" id="phones"></div>
+    </section>
+
+    <p class="footnote">Simülasyon: 22 senaryolu pano filosu, gerçek CT yük biçimi + fizik tabanlı sentetik kanallar (docs/09). Saha doğrulaması değildir.</p>
   </main>
 
-  <script src="app.js"></script>
+  <script src="charts.js"></script>
+  <script src="console.js"></script>
 </body>
 </html>

@@ -7,8 +7,11 @@ kodu ister -- konsolda GÖSTERİLMEZ, yalnız bildirim mesajında gider.
 """
 from __future__ import annotations
 
+import io
+import socket
 import threading
 from typing import Callable
+from urllib.parse import quote, urlsplit
 
 from flask import Flask, Response, jsonify, request
 
@@ -17,6 +20,36 @@ from panogoz.rules.alarms import CLOSE_REASONS, AckError
 from panogoz.scada import icd
 from panogoz.scada.fleet_bridge import scada_view
 from panogoz.sim.scenarios import SCENARIOS
+
+
+def lan_ip() -> str:
+    """Yerel ağdaki bu makinenin IP'si (telefonun taraması için). Paket GÖNDERİLMEZ:
+    UDP 'connect' yalnız yönlendirme tablosuna bakar."""
+    try:
+        with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+            sock.connect(("10.255.255.255", 1))
+            return sock.getsockname()[0]
+    except OSError:
+        return "127.0.0.1"
+
+
+def panel_link(base_url: str, panel_id: str, host_url: str) -> str:
+    """Saha görünümüne doğrudan bağlantı. `base_url` verilmemişse isteğin kendi adresi kullanılır;
+    o localhost ise telefon erişemeyeceği için LAN IP'siyle değiştirilir."""
+    base = (base_url or host_url).rstrip("/")
+    parts = urlsplit(base)
+    if parts.hostname in ("localhost", "127.0.0.1", "::1"):
+        port = f":{parts.port}" if parts.port else ""
+        base = f"{parts.scheme}://{lan_ip()}{port}"
+    return f"{base}/saha.html?panel={quote(panel_id)}"
+
+
+def qr_svg(url: str) -> str:
+    import segno
+
+    buf = io.BytesIO()
+    segno.make(url, error="m").save(buf, kind="svg", scale=6, border=2, dark="#111827", light="#ffffff", xmldecl=False, nl=False)
+    return buf.getvalue().decode("utf-8")
 
 
 def register_fleet_routes(
@@ -135,6 +168,22 @@ def register_fleet_routes(
     @app.get("/api/fleet/suppression")
     def suppression():
         return guarded(lambda: get().suppression_summary(request.args.get("panel")))
+
+    @app.get("/api/fleet/panels/<panel_id>/link")
+    def panel_link_route(panel_id: str):
+        def build():
+            get().panels[panel_id]  # yoksa KeyError -> 404
+            return {"panel_id": panel_id, "url": panel_link(request.args.get("base", ""), panel_id, request.host_url)}
+
+        return guarded(build)
+
+    @app.get("/api/fleet/panels/<panel_id>/qr.svg")
+    def panel_qr(panel_id: str):
+        try:
+            get().panels[panel_id]
+        except KeyError:
+            return err("pano bulunamadı", 404)
+        return Response(qr_svg(panel_link(request.args.get("base", ""), panel_id, request.host_url)), mimetype="image/svg+xml")
 
     @app.get("/api/fleet/scada")
     def scada():

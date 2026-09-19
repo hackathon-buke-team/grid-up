@@ -1,0 +1,39 @@
+/* PANO GÖZ — Saha (mobil öncelikli; 400 px'te yatay kaydırma YOK) */
+body.saha { overflow-x: hidden; }
+.s-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 16px; background: var(--panel); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10; }
+.s-brand strong { letter-spacing: 0.05em; }
+.s-brand span { color: var(--muted); font-size: 12px; margin-left: 4px; }
+.s-link { color: var(--accent-soft); text-decoration: none; font-weight: 600; padding: 6px 10px; border: 1px solid var(--border-2); border-radius: 7px; }
+.s-main { max-width: 560px; margin: 0 auto; padding: 14px 16px 40px; }
+.s-pick { display: flex; flex-direction: column; gap: 4px; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; }
+.s-pick select { width: 100%; min-height: 44px; font-size: 15px; text-transform: none; letter-spacing: 0; }
+.s-card { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; margin-bottom: 14px; }
+.s-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.s-row h1 { font-size: 17px; min-width: 0; overflow-wrap: anywhere; }
+.s-loc { color: var(--muted); font-size: 13px; margin: 6px 0 4px; overflow-wrap: anywhere; }
+.s-clock { color: var(--faint); font-size: 12px; margin-bottom: 10px; }
+.s-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.s-grid > div { background: var(--panel-2); border: 1px solid var(--border); border-radius: 10px; padding: 8px 10px; min-width: 0; }
+.s-grid .k { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+.s-grid .v { font-size: 20px; font-weight: 700; margin-top: 2px; font-variant-numeric: tabular-nums; }
+.s-h { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent-soft); margin: 18px 0 8px; }
+
+.s-alarm { background: var(--panel); border: 1px solid var(--border); border-left: 5px solid var(--border-2); border-radius: 12px; padding: 12px 14px; margin-bottom: 12px; }
+.s-alarm.b-WARNING { border-left-color: var(--warn); }
+.s-alarm.b-ALARM { border-left-color: var(--alarm); }
+.s-alarm.b-CRITICAL { border-left-color: var(--crit); }
+.s-alarm h3 { font-size: 15px; margin: 6px 0 2px; overflow-wrap: anywhere; }
+.s-alarm .meta { color: var(--muted); font-size: 12px; overflow-wrap: anywhere; }
+.s-alarm .btn { min-height: 44px; }
+.s-alarm .wo { margin-top: 10px; }
+.s-alarm .wo ol, .s-alarm .wo ul { padding-left: 20px; }
+.s-alarm .form { grid-template-columns: minmax(0, 1fr); }
+.s-alarm input, .s-alarm select { width: 100%; min-height: 44px; font-size: 16px; }
+.s-alarm .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.s-alarm .actions .btn { flex: 1 1 140px; }
+.s-ok { border: 1px solid #2f6f4a; background: var(--ok-bg); color: var(--ok); border-radius: 12px; padding: 14px; font-weight: 600; }
+
+.s-qr { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+.s-qr img { background: #fff; border-radius: 8px; padding: 4px; max-width: 100%; height: auto; }
+.s-qr > div { flex: 1 1 200px; min-width: 0; }
+.chips { margin-top: 10px; }

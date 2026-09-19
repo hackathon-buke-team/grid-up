@@ -152,3 +152,38 @@ def test_demo_controls_can_be_disabled_for_production(svc):
 def test_legacy_endpoints_still_work_alongside_fleet_api(client):
     assert client.get("/api/connections").status_code == 200
     assert client.get("/").status_code == 200
+
+
+# ---- K3 3.3: QR + doğrudan bağlantı ----------------------------------------------------
+def test_panel_link_uses_lan_ip_instead_of_localhost_so_a_phone_can_open_it(client, monkeypatch):
+    from panogoz.api import fleet_routes
+
+    monkeypatch.setattr(fleet_routes, "lan_ip", lambda: "10.20.30.40")
+    url = client.get("/api/fleet/panels/P01/link", base_url="http://localhost:8080").get_json()["url"]
+    assert url == "http://10.20.30.40:8080/saha.html?panel=P01"
+    explicit = client.get("/api/fleet/panels/P01/link?base=https://konsol.ornek.local").get_json()["url"]
+    assert explicit == "https://konsol.ornek.local/saha.html?panel=P01"
+    assert client.get("/api/fleet/panels/P99/link").status_code == 404
+
+
+def test_qr_endpoint_serves_svg_and_404s_for_unknown_panel(client):
+    resp = client.get("/api/fleet/panels/P02/qr.svg?base=http://10.0.0.5:8080")
+    assert resp.status_code == 200 and resp.mimetype == "image/svg+xml" and resp.data.startswith(b"<svg")
+    assert client.get("/api/fleet/panels/P99/qr.svg").status_code == 404
+
+
+def test_qr_code_decodes_back_to_the_panel_link():
+    cv2 = pytest.importorskip("cv2")
+    np = pytest.importorskip("numpy")
+    import io
+
+    import segno
+
+    from panogoz.api.fleet_routes import panel_link
+
+    url = panel_link("http://10.0.0.5:8080", "P07", "http://x/")
+    buf = io.BytesIO()
+    segno.make(url, error="m").save(buf, kind="png", scale=8, border=4)
+    img = cv2.imdecode(np.frombuffer(buf.getvalue(), np.uint8), cv2.IMREAD_COLOR)
+    decoded, _, _ = cv2.QRCodeDetector().detectAndDecode(img)
+    assert decoded == url == "http://10.0.0.5:8080/saha.html?panel=P07"

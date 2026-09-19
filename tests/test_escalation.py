@@ -310,3 +310,15 @@ def test_cleared_alarm_gets_no_reminders():
     before = len(disp.delivered)
     mgr.tick(NOON + 3 * H, list(eng.alarms.values()))
     assert len(disp.delivered) == before
+
+
+def test_reminders_go_only_to_the_latest_tier_not_to_everyone_already_paged():
+    disp, mgr, eng = setup()
+    feed(mgr, eng, NOON, Severity.ALARM)
+    alarms = list(eng.alarms.values())
+    mgr.tick(NOON + 30 * M, alarms)  # eskalasyon: Mehmet aranır
+    assert to_names(disp) == ["Ayşe", "Ayşe", "Mehmet"] or to_names(disp)[-1] == "Mehmet"
+    before = len(disp.delivered)
+    mgr.tick(NOON + 45 * M, alarms)  # hatırlatma zamanı
+    new = to_names(disp)[before:]
+    assert new == ["Mehmet"]  # Ayşe'ye yeniden gitmez

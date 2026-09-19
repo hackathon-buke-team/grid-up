@@ -8,7 +8,8 @@ ve ulaştığından emin olur. Tasarım ilkeleri:
   `ack_timeout` sonra bir üst kademeye YÜKSELİR.
 - **Onay belirteci:** her mesaj `ONAY <alarm> <4 haneli belirteç>` talimatı taşır;
   belirteçsiz veya kimliksiz onay alarm motorunda reddedilir.
-- **Tekrar aralığı:** onaylanana kadar `repeat` aralığıyla hatırlatma (üst sınırlı).
+- **Tekrar aralığı:** onaylanana kadar `repeat` aralığıyla hatırlatma (üst sınırlı); hatırlatma
+  yalnız en son aranan kademeye gider, üst kademeler eskalasyonda bir kez aranır (spam yok).
 - **Fırtına sınırı:** alıcı başına saatte en fazla `rate_limit_per_hour` mesaj; fazlası
   tek bir "N bildirim bastırıldı" özetine dönüşür. KRİTİK ilk bildirimler sınırı aşar.
 - **Sessize alma:** kişi bazlı; KRİTİK alarm sessizdeki kişiyi de arar. Sessizdeki
@@ -268,17 +269,28 @@ class EscalationManager:
                 self._notify_tiers(alarm, t_s, upto=tr.tiers_notified + 1, kind="escalation", track=tr)
             elif t_s - tr.last_sent_t >= self.policy.repeat_s[alarm.severity] and tr.repeats < self.policy.max_repeats:
                 tr.repeats += 1
-                self._notify_tiers(alarm, t_s, upto=tr.tiers_notified, kind="reminder", track=tr, force_all=True)
+                # hatırlatma yalnız EN SON aranan kademeye gider; üst kademeler eskalasyonda bir kez aranmıştır
+                self._notify_tiers(
+                    alarm, t_s, upto=tr.tiers_notified, kind="reminder", track=tr, from_tier=max(0, tr.tiers_notified - 1)
+                )
         self._flush_digests(t_s)
 
     # ------------------------------------------------------------ gönderim
     def _notify_tiers(
-        self, alarm: Alarm, t: float, *, upto: int, kind: str, track: _Track, force_all: bool = False
+        self,
+        alarm: Alarm,
+        t: float,
+        *,
+        upto: int,
+        kind: str,
+        track: _Track,
+        force_all: bool = False,
+        from_tier: int | None = None,
     ) -> None:
         tiers = self.schedule.tiers_at(t)
         upto = min(upto, len(tiers))
         holders_now = frozenset(r.name for tier in tiers[:upto] for r in tier)
-        start = 0 if force_all else track.tiers_notified
+        start = from_tier if from_tier is not None else (0 if force_all else track.tiers_notified)
         idx = start
         while idx < upto:
             reached = self._send_tier(alarm, t, tiers[idx], idx, kind, track)

@@ -5,3 +5,4 @@ pymodbus>=3.15
 flask>=3.1
 paho-mqtt>=2.1
 amqtt>=0.12  # K2 2.1 test-only real MQTT broker, see docs/01-MIMARI.md
+segno>=1.6  # K3 3.3: saha görünümü QR kodu (saf Python, bulut yok)

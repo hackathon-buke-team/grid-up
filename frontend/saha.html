@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" href="data:," />
+<title>PANO GÖZ — Saha</title>
+<link rel="stylesheet" href="console.css" />
+<link rel="stylesheet" href="saha.css" />
+</head>
+<body class="saha">
+  <header class="s-top">
+    <div class="s-brand"><strong>PANO GÖZ</strong> <span>Saha</span></div>
+    <a class="s-link" href="/">Konsol</a>
+  </header>
+
+  <main class="s-main">
+    <div id="s-fatal" class="banner" hidden></div>
+
+    <label class="s-pick">Pano
+      <select id="s-panel" aria-label="Pano seç"></select>
+    </label>
+
+    <section class="s-card" id="s-status" aria-live="polite">
+      <div class="s-row">
+        <h1 id="s-name">—</h1>
+        <span class="badge" id="s-badge">—</span>
+      </div>
+      <p class="s-loc" id="s-loc"></p>
+      <div class="s-clock" id="s-clock"></div>
+      <div class="s-grid" id="s-read"></div>
+      <div class="chips" id="s-flags"></div>
+    </section>
+
+    <section aria-label="Aktif alarmlar">
+      <h2 class="s-h">Aktif alarmlar</h2>
+      <div id="s-alarms"></div>
+    </section>
+
+    <section class="s-card" aria-label="Bu panoya QR ile açılış">
+      <h2 class="s-h" style="margin-top:0">QR ile doğrudan açılış</h2>
+      <div class="s-qr">
+        <img id="s-qr" alt="Bu panonun saha görünümüne QR bağlantısı" width="132" height="132" />
+        <div>
+          <p class="note" style="margin-top:0">Panonun kapağındaki etiketi telefonla okutunca bu ekran doğrudan bu panoyla açılır.</p>
+          <code class="mono" id="s-url" style="overflow-wrap:anywhere"></code>
+        </div>
+      </div>
+    </section>
+
+    <p class="footnote">Simülasyon verisi · saha doğrulaması değildir.</p>
+  </main>
+
+  <script src="saha.js"></script>
+</body>
+</html>
