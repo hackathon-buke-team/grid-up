@@ -416,6 +416,8 @@ class FleetService:
         i = self.now_index
         process = [t for t in panel.analysis.tracks if t.spec.family is not Family.SYSTEM]
         sev = max((t.fused[i] for t in process), default=Severity.NORMAL)
+        # olay tipi (latching) alarm sinyal dönse de onaylanana kadar panonun şiddetinde görünür
+        sev = max([sev, *[a.severity for a in panel.engine.alarms.values() if a.latching and a.is_active]])
         system = next((t for t in panel.analysis.tracks if t.spec.kind == "comms_lost"), None)
         stale = bool(system and system.fused[i] >= Severity.WARNING)
         d = panel.data

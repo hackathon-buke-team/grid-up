@@ -10,10 +10,12 @@ from __future__ import annotations
 import threading
 from typing import Callable
 
-from flask import Flask, jsonify, request
+from flask import Flask, Response, jsonify, request
 
 from panogoz.api.fleet_service import FleetService
 from panogoz.rules.alarms import CLOSE_REASONS, AckError
+from panogoz.scada import icd
+from panogoz.scada.fleet_bridge import scada_view
 from panogoz.sim.scenarios import SCENARIOS
 
 
@@ -133,6 +135,17 @@ def register_fleet_routes(
     @app.get("/api/fleet/suppression")
     def suppression():
         return guarded(lambda: get().suppression_summary(request.args.get("panel")))
+
+    @app.get("/api/fleet/scada")
+    def scada():
+        """SCADA sekmesi: bir panonun ICD v2 register bloğu (ham + çözülmüş + ekran eşlemesi)."""
+        svc = get()
+        panel_id = request.args.get("panel") or next(iter(svc.panels))
+        return guarded(lambda: scada_view(svc, panel_id))
+
+    @app.get("/api/fleet/scada/points.csv")
+    def scada_points_csv():
+        return Response(icd.csv_point_list(), mimetype="text/csv; charset=utf-8")
 
     # ---- demo kontrol paneli (K3 3.5): yalnız `demo_controls=True` iken
     def demo_only(fn):
