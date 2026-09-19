@@ -10,6 +10,7 @@ on_connect/on_disconnect callbacks and re-issues subscriptions on every
 """
 from __future__ import annotations
 
+import ssl
 import threading
 
 import paho.mqtt.client as mqtt
@@ -19,7 +20,20 @@ from panogoz.bus.interface import OnMessage
 
 
 class MqttBus:
-    def __init__(self, host: str, port: int, *, client_id: str | None = None, keepalive: int = 5) -> None:
+    def __init__(
+        self,
+        host: str,
+        port: int,
+        *,
+        client_id: str | None = None,
+        keepalive: int = 5,
+        tls_ca: str | None = None,
+        tls_cert: str | None = None,
+        tls_key: str | None = None,
+    ) -> None:
+        """`tls_ca` verilirse bağlantı TLS'tir: sunucu sertifikası bu CA'ya karşı DOĞRULANIR (ana bilgisayar
+        adı dahil, `tls_insecure` yok). `tls_cert`+`tls_key` = istemci sertifikası (karşılıklı TLS; cihaz
+        kimliği = sertifika CN'i, bkz. panogoz/bus/topics.py)."""
         self._host = host
         self._port = port
         self._keepalive = keepalive
@@ -28,6 +42,17 @@ class MqttBus:
             protocol=mqtt.MQTTv311,
             callback_api_version=mqtt.CallbackAPIVersion.VERSION2,
         )
+        if tls_ca:
+            self._client.tls_set(
+                ca_certs=tls_ca,
+                certfile=tls_cert,
+                keyfile=tls_key,
+                cert_reqs=ssl.CERT_REQUIRED,
+                tls_version=ssl.PROTOCOL_TLS_CLIENT,
+            )
+            self._client.tls_insecure_set(False)
+        elif tls_cert or tls_key:
+            raise ValueError("istemci sertifikası için tls_ca da verilmeli")
         self._client.reconnect_delay_set(min_delay=1, max_delay=4)
         self._client.on_connect = self._handle_connect
         self._client.on_disconnect = self._handle_disconnect

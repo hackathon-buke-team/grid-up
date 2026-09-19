@@ -228,6 +228,17 @@ def create_app(
         filodaki hiçbir bağlantının verisi/indexi değil."""
         return jsonify(_evidence_payload(_get_cusum_demo_connection()))
 
+    @app.get("/healthz")
+    def healthz():
+        """Canlılık: süreç yanıt veriyor (orkestratör/HEALTHCHECK için, filo hazır olmasa da 200)."""
+        return jsonify({"status": "ok"})
+
+    @app.get("/readyz")
+    def readyz():
+        """Hazırlık: filo servisi kuruldu mu (kurulmadıysa 503, trafik yönlendirilmez)."""
+        ready = app.config["FLEET_READY"]()
+        return (jsonify({"status": "ready"}), 200) if ready else (jsonify({"status": "starting"}), 503)
+
     @app.get("/")
     def index():
         return send_from_directory(FRONTEND_DIR, "index.html")

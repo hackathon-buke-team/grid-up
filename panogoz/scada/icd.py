@@ -22,6 +22,11 @@ BLOCK_SIZE = 32
 MAX_PANELS = 200
 AGE_SATURATION_S = 0xFFFF
 
+# ---- IEC 60870-5-104 nokta adresleme (aynı 32'lik blok; K2 2.3) ----
+IEC104_COMMON_ADDRESS = 1
+IEC104_FLAG_IOA_BASE = 10000  # bayrak bit'i tekil nokta: 10001 + pano*8 + bit
+FLAG_BIT_COUNT = 7
+
 
 @dataclass(frozen=True)
 class Point:
@@ -97,6 +102,21 @@ def block_base(panel_index: int) -> int:
     if not 0 <= panel_index < MAX_PANELS:
         raise ValueError(f"pano indeksi 0..{MAX_PANELS - 1} olmalı")
     return panel_index * BLOCK_SIZE
+
+
+def ioa_measurand(panel_index: int, offset: int) -> int:
+    """M_ME_NB_1 (ölçülen değer, ölçekli) IOA'sı: 1 + pano*32 + ofset (1..6400)."""
+    if not 0 <= offset < BLOCK_SIZE:
+        raise ValueError("ofset 0..31 olmalı")
+    return 1 + block_base(panel_index) + offset
+
+
+def ioa_flag(panel_index: int, bit: int) -> int:
+    """M_SP_NA_1 / M_SP_TB_1 (tekil bilgi) IOA'sı: 10001 + pano*8 + bit."""
+    if not 0 <= bit < 8:
+        raise ValueError("bit 0..7 olmalı")
+    block_base(panel_index)
+    return IEC104_FLAG_IOA_BASE + 1 + panel_index * 8 + bit
 
 
 def total_registers(n_panels: int = MAX_PANELS) -> int:
@@ -211,6 +231,22 @@ def markdown_doc() -> str:
         f"JOINT_TEMP_L2_X10  -> adres {2 * BLOCK_SIZE + point('JOINT_TEMP_L2_X10').offset} (FC04)",
         "modpoll -m tcp -a 1 -r <adres+1> -c 1 -t 3 127.0.0.1 -p 5020   # modpoll 1 tabanlı adres kullanır",
         "```",
+        "",
+        "## IEC 60870-5-104 (ikinci SCADA protokolü)",
+        "",
+        f"Aynı 32'lik blok IEC 104 üzerinden de yayınlanır (`panogoz/scada/iec104.py`, TCP **2404**, ortak adres **{IEC104_COMMON_ADDRESS}**).",
+        "",
+        "| Bilgi | Tip | IOA | Not |",
+        "| --- | --- | --- | --- |",
+        f"| 32 ölçüm/kod (bloğun tüm ofsetleri) | `M_ME_NB_1` (11), ölçekli | `1 + pano × {BLOCK_SIZE} + ofset` (1…{MAX_PANELS * BLOCK_SIZE}) | Değer = Modbus register'ı ile aynı tam sayı (s16 işaretli; u16 32767'de doyar → OV bitli). STALE iken NT biti. |",
+        f"| FLAGS bit'leri ({FLAG_BIT_COUNT} adet) | `M_SP_NA_1` (1) genel taramada, `M_SP_TB_1` (30, CP56Time2a) anlık olayda | `{IEC104_FLAG_IOA_BASE + 1} + pano × 8 + bit` | Bit adları yukarıdaki FLAGS tablosunda |",
+        "| Genel tarama | `C_IC_NA_1` (100), QOI 20 | — | ACT_CON → veri (COT 20) → ACT_TERM |",
+        "| Kendiliğinden bildirim | COT 3 | — | Şiddet/alarm sayacı/SEV_* değişimi (`M_ME_NB_1`), bayrak değişimi (`M_SP_TB_1`) |",
+        "| Saat senkronu | `C_CS_NA_1` (103) | — | Sunucunun olay zaman damgası ofseti ayarlanır |",
+        "| Okuma / test | `C_RD_NA_1` (102) / `C_TS_NA_1` (104) | — | Okuma COT 5 ile yanıtlanır |",
+        "| Kontrol komutları (45…69) | — | — | **Reddedilir** (yalnız izleme; ACT_CON negatif, COT 44) |",
+        "",
+        "Varsayılan APCI parametreleri: k=12, w=8, t1=15 s, t2=10 s, t3=20 s.",
         "",
         "## Alarm ↔ register eşlemesi",
         "",

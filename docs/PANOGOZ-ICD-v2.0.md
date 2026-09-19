@@ -80,6 +80,22 @@ JOINT_TEMP_L2_X10  -> adres 74 (FC04)
 modpoll -m tcp -a 1 -r <adres+1> -c 1 -t 3 127.0.0.1 -p 5020   # modpoll 1 tabanlı adres kullanır
 ```
 
+## IEC 60870-5-104 (ikinci SCADA protokolü)
+
+Aynı 32'lik blok IEC 104 üzerinden de yayınlanır (`panogoz/scada/iec104.py`, TCP **2404**, ortak adres **1**).
+
+| Bilgi | Tip | IOA | Not |
+| --- | --- | --- | --- |
+| 32 ölçüm/kod (bloğun tüm ofsetleri) | `M_ME_NB_1` (11), ölçekli | `1 + pano × 32 + ofset` (1…6400) | Değer = Modbus register'ı ile aynı tam sayı (s16 işaretli; u16 32767'de doyar → OV bitli). STALE iken NT biti. |
+| FLAGS bit'leri (7 adet) | `M_SP_NA_1` (1) genel taramada, `M_SP_TB_1` (30, CP56Time2a) anlık olayda | `10001 + pano × 8 + bit` | Bit adları yukarıdaki FLAGS tablosunda |
+| Genel tarama | `C_IC_NA_1` (100), QOI 20 | — | ACT_CON → veri (COT 20) → ACT_TERM |
+| Kendiliğinden bildirim | COT 3 | — | Şiddet/alarm sayacı/SEV_* değişimi (`M_ME_NB_1`), bayrak değişimi (`M_SP_TB_1`) |
+| Saat senkronu | `C_CS_NA_1` (103) | — | Sunucunun olay zaman damgası ofseti ayarlanır |
+| Okuma / test | `C_RD_NA_1` (102) / `C_TS_NA_1` (104) | — | Okuma COT 5 ile yanıtlanır |
+| Kontrol komutları (45…69) | — | — | **Reddedilir** (yalnız izleme; ACT_CON negatif, COT 44) |
+
+Varsayılan APCI parametreleri: k=12, w=8, t1=15 s, t2=10 s, t3=20 s.
+
 ## Alarm ↔ register eşlemesi
 
 SCADA'nın alarm listesi `SEVERITY_CODE` ve `SEV_*` register'larından türetilir; `FLAGS` bit'leri

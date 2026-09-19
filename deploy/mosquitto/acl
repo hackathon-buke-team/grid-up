@@ -1,0 +1,21 @@
+# PANO GÖZ — Mosquitto ACL (varsayılan: REDDET). Tek kaynak: panogoz/bus/topics.py
+# use_identity_as_username true olduğundan kullanıcı adı = istemci sertifikası CN'i.
+# Bu dosyanın anlamı tests/test_deploy.py içinde tools/mosquitto_acl.py ile sınanır.
+
+# ---- uygulama sunucusu: tüm cihazların telemetrisini okur, yalnız komut konularına yazar
+user panogoz-server
+topic read panogoz/v1/dev/+/telemetry
+topic write panogoz/v1/dev/+/cmd
+topic readwrite panogoz/v1/srv/#
+
+# ---- sağlık denetimi: yalnız broker çalışma süresi ve kendi sağlık konusu.
+# NOT: Mosquitto'da %u/%c yer tutucuları YALNIZ `pattern` satırlarında çalışır; `topic` satırında değişmez metindir.
+# Bu yüzden sağlık istemcisinin sabit kimliği (docker-compose.yml: -i health-probe) yazılır.
+user panogoz-health
+topic read $SYS/broker/uptime
+topic readwrite panogoz/v1/health/health-probe
+
+# ---- HER cihaz (CN = cihaz kimliği): yalnız KENDİ telemetri konusuna yazar, KENDİ komut konusunu okur.
+# Başka bir cihazın konusuna yazamaz/abone olamaz, joker ile hepsini dinleyemez.
+pattern write panogoz/v1/dev/%u/telemetry
+pattern read panogoz/v1/dev/%u/cmd

@@ -72,6 +72,8 @@ def register_fleet_routes(
                     holder["building"] = False
             return holder["svc"]
 
+    app.config["FLEET_READY"] = lambda: holder["svc"] is not None
+
     def body() -> dict:
         data = request.get_json(silent=True)
         return data if isinstance(data, dict) else {}

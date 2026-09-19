@@ -163,16 +163,39 @@ SCADA protokolü.
       protokolü konuşan, ayrı process olarak çalışan `amqtt` kullanıldı —
       testler gerçek soket/gerçek protokol üzerinden geçiyor (2026-09-16).
 - [ ] **2.2** Compose sertleştirme: mTLS listener, cihaz başına ACL, ters vekil, sağlık
-      kontrolleri.
-- [ ] **2.3** IEC 60870-5-104 slave (nokta listesi + IOA şeması hazır → sunucu
-      yazılacak: genel tarama, kendiliğinden bildirim, saat senkronu).
+      kontrolleri. **KISMİ (2026-09-19):** `docker-compose.yml`, `Dockerfile`,
+      `deploy/mosquitto/{mosquitto.conf,acl}`, `deploy/nginx/*`, `tools/gen_certs.py`,
+      `/healthz`+`/readyz`, `MqttBus` TLS yazıldı. **Doğrulanan:** yapılandırma
+      değişmezleri, ACL anlamı (Python yeniden uygulaması), PKI + GERÇEK mTLS
+      el sıkışması, MqttBus TLS yolu (`tests/test_deploy.py`, 31 test).
+      **Doğrulanmayan:** `docker compose up` — bu makinede Docker/Mosquitto/nginx
+      YOK, konteyner hiç çalıştırılmadı (bkz. `docs/13-DAGITIM-SERTLESTIRME.md` §0/§5).
+      Docker'lı makinede canlı doğrulanınca `[x]` olur.
+- [x] **2.3** IEC 60870-5-104 slave (nokta listesi + IOA şeması hazır → sunucu
+      yazılacak: genel tarama, kendiliğinden bildirim, saat senkronu). *Bitti
+      sayılır:* asyncio APCI durum makinesi (STARTDT/STOPDT/TESTFR, k/w penceresi,
+      t1/t2/t3), genel tarama, kendiliğinden bildirim (M_ME_NB_1 + M_SP_TB_1/CP56),
+      saat senkronu, okuma/test komutu, kontrol komutlarının reddi; **bağımsız
+      üçüncü taraf master (Fraunhofer `c104`) ile** GI değerleri ICD register'larına
+      eşit, olaylar/saat senkronu/komut reddi doğrulandı (30 test, 3 mutasyon
+      yakalandı). Sınır: TLS (IEC 62351-3) yok, sahadaki farklı üretici
+      master'larla denenmedi. → `panogoz/scada/{iec104,iec104_codec}.py`,
+      `tests/test_iec104.py` (2026-09-19).
 - [x] **2.4** 1000 pano yük testi + kaynak ölçümü (CPU/RAM/disk/yazma hızı/tur süresi)
       — kademeli 250→500→1000. *Bitti sayılır:* gerçek `psutil` ölçümü, 250/500/1000
       kademesinde doğrusal ölçekleniyor, kırılma noktası yok. →
       `panogoz/run_local.py`, `tools/run_load_test.py`,
       `docs/06-OLCEKLENEBILIRLIK.md` (2026-09-16).
-- [ ] **2.5** ICD ↔ Modbus otomatik tutarlılık testi + üçüncü taraf için CSV nokta
-      listesi.
+- [x] **2.5** ICD ↔ Modbus otomatik tutarlılık testi + üçüncü taraf için CSV nokta
+      listesi. *Bitti sayılır:* ICD v2.0 (pano başına 32 register, 200 pano)
+      `panogoz/scada/icd.py`'de VERİ olarak tanımlı; doküman + CSV bundan ÜRETİLİR
+      (`python -m tools.gen_icd`) ve test diskteki dosyanın koddan üretilenle aynı
+      olduğunu doğrular; GERÇEK pymodbus istemcisiyle canlı Modbus sunucusu konsolla
+      aynı değerleri okur, yazma/FC03/FC01 reddedilir. → `panogoz/scada/{icd,
+      fleet_bridge,fleet_modbus}.py`, `docs/PANOGOZ-ICD-v2.0.md`,
+      `docs/data/panogoz-icd-v2.0-points.csv`, `tests/test_icd.py` (2026-09-19).
+      *(CLAUDE.md'nin eski "48 register/pano" iddiası bu depoda gerçek değildi;
+      gerçek olan 32 register/pano.)*
 
 **Dosyalar:** `panogoz/bus/`, `panogoz/store/`, `panogoz/scada/`, `panogoz/gateway/`,
 `docker-compose.yml`, `Dockerfile`, `docs/01-MIMARI.md`, `docs/06-OLCEKLENEBILIRLIK.md`,
@@ -187,8 +210,15 @@ SCADA protokolü.
 ### K3 · Monitoring ve Operasyon Deneyimi
 **Teslimat:** jürinin ekranda göreceği her şey — merkez + saha için iki ayrı akış.
 
-- [ ] **3.1** Alarm konsolu: onay akışı, iş emri kartı, filtre/sıralama, fırtına
-      görünümü, kapatma gerekçesi.
+- [x] **3.1** Alarm konsolu: onay akışı, iş emri kartı, filtre/sıralama, fırtına
+      görünümü, kapatma gerekçesi. *Bitti sayılır:* KPI şeridi, durum/şiddet/aile/pano
+      filtresi + 5 sıralama, alarm detayı (kanıt grafiği, bastırma gerekçeleri, iş emri
+      kartı: kesinti/güvenlik/adımlar, bildirim geçmişi), kimlikli onay (belirteç
+      yalnız bildirim mesajında; "onay için doldur" telefon akışı), gerekçeli kapatma,
+      sessize alma, fırtına bandı. GERÇEK Edge'de Playwright ile testli.
+      → `frontend/{index.html,console.js,console.css,charts.js}`,
+      `panogoz/api/{fleet_service,fleet_routes}.py`, `panogoz/rules/workorders.py`,
+      `tests/test_{fleet_service,fleet_api,ui_e2e}.py` (2026-09-19).
 - [x] **3.2** Kanıt ekranı: θ zaman serisi, CUSUM, değişim noktası işareti, kardeş
       karşılaştırma, bastırma gerekçeleri. *Bitti sayılır (kısmi — bkz. not):*
       θ serisi (zaten vardı) + kardeş faz karşılaştırması (3 fazın gerçek yüzey
@@ -196,20 +226,28 @@ SCADA protokolü.
       CUSUM/değişim noktası (gerçek demo filosunda dürüstçe "yetersiz veri",
       ayrı bir "uzatılmış demo örneği" düğmesiyle gerçekten tetiklenen bir
       CUSUM/değişim-noktası gösterimi — gün 30, gerçek ölçümün döşenmiş
-      tekrarı). **"Bastırma gerekçeleri" bilinçli olarak KAPSAM DIŞI** —
-      CLAUDE.md §2'deki bastırma→füzyon→alarm katmanı (dead-band, fırtına
-      sınırı, 7 gün kapanma) repo'da henüz kurulmadı, ekranda da bunu açıkça
-      belirten bir not var. → `panogoz/api/app.py` (`_evidence_payload`,
+      tekrarı). ~~"Bastırma gerekçeleri" kapsam dışı~~ — 2026-09-19'da bastırma→onay→
+      füzyon→alarm katmanı kuruldu; gerekçeler artık alarm detayında ve Bastırma
+      sekmesinde (bu eski ekran `frontend/kanit.html`'de olduğu gibi duruyor). → `panogoz/api/app.py` (`_evidence_payload`,
       `/api/connections/<i>/evidence`, `/api/cusum-demo/evidence`),
       `panogoz/sim/demo_fleet.py` (`build_cusum_demo_connection`),
       `frontend/{index.html,app.js,styles.css}`, `tests/test_api.py`
       (2026-09-16).
-- [ ] **3.3** Mobil/tablet görünüm: tek pano/bağlantı, konum, iş emri; QR ile doğrudan
-      açılış (400px'te yatay kaydırma yok).
-- [ ] **3.4** Bastırma ekranı + SCADA register canlı görünümü cilası (register ↔ ekran
-      eşlemesi görsel olarak kanıtlı).
-- [ ] **3.5** Demo kontrol paneli: senaryo enjekte/temizle, hız ayarı, sıfırlama —
-      yalnız fareyle yönetilebilir.
+- [x] **3.3** Mobil/tablet görünüm: tek pano/bağlantı, konum, iş emri; QR ile doğrudan
+      açılış (400px'te yatay kaydırma yok). *Bitti sayılır:* `saha.html` (tek pano,
+      konum, aktif alarm + iş emri, mobilden onay); GERÇEK Edge'de 400 px'te
+      `scrollWidth == 400` ölçüldü, QR ekran görüntüsünden OpenCV ile çözülüp doğru
+      bağlantıyı verdi. → `frontend/saha.{html,css,js}`, `/api/fleet/panels/<id>/{qr.svg,link}`,
+      `tests/test_ui_e2e.py` (2026-09-19).
+- [x] **3.4** Bastırma ekranı + SCADA register canlı görünümü cilası (register ↔ ekran
+      eşlemesi görsel olarak kanıtlı). *Bitti sayılır:* Bastırma sekmesi (gerekçe
+      sayaçları: STALE/ENERJİSİZ/DÜŞÜK YÜK, füzyon tavanı, sessize alma) + SCADA sekmesi
+      (32 register ham/hex/çözülmüş + her birinin konsoldaki karşılığı; canlı Modbus
+      ile AYNI fonksiyon). → `frontend/console.js`, `panogoz/scada/fleet_bridge.py`.
+- [x] **3.5** Demo kontrol paneli: senaryo enjekte/temizle, hız ayarı, sıfırlama —
+      yalnız fareyle yönetilebilir. *Bitti sayılır:* saat başlat/duraklat/hız/güne atla,
+      pano+senaryo seçip enjekte/temizle, fırtına başlat, sıfırla; hepsi düğme/açılır
+      liste (klavye gerekmez); UI testiyle doğrulandı. Üretimde `--no-demo-controls`.
 - [ ] **3.6** Ekran görüntülerinin docs/08 demo senaryosuyla birebir eşlenmesi.
 
 **Dosyalar:** `frontend/`, `panogoz/api/app.py`, `docs/08-DEMO-SENARYOSU.md`,

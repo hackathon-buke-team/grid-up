@@ -1,0 +1,16 @@
+.git
+.gitignore
+__pycache__
+*.pyc
+.pytest_cache
+tests
+docs
+sunum
+firmware
+hardware
+deploy/certs
+**/*.pdf
+*.zip
+*.docx
+.env
+.env.*

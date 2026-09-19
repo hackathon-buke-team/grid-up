@@ -12,3 +12,7 @@ firmware/node/*.elf
 firmware/node/*.map
 firmware/node/panogoz_node
 firmware/node/panogoz_node.exe
+
+# on-prem PKI: anahtarlar ASLA depoya girmez (tools/gen_certs.py)
+deploy/certs/
+*.key

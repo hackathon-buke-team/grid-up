@@ -6,3 +6,7 @@ flask>=3.1
 paho-mqtt>=2.1
 amqtt>=0.12  # K2 2.1 test-only real MQTT broker, see docs/01-MIMARI.md
 segno>=1.6  # K3 3.3: saha görünümü QR kodu (saf Python, bulut yok)
+c104>=2.2  # K2 2.3 bağımsız IEC-104 master, yalnız test (tests/test_iec104.py)
+playwright>=1.45  # K3 arayüz uçtan uca testi, yalnız test (Edge/Chromium, tests/test_ui_e2e.py)
+opencv-python-headless>=4.9  # QR çözme doğrulaması, yalnız test
+waitress>=3.0  # üretim sınıfı WSGI (run_local varsayılanı)
