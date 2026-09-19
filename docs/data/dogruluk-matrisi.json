@@ -1,0 +1,1121 @@
+{
+ "seeds": [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10
+ ],
+ "summaries": [
+  {
+   "key": "loose_bolt_abrupt",
+   "expect": "detect",
+   "expected_kind": "loose_bolt",
+   "runs": 10,
+   "detect_rate": 1.0,
+   "detect_ci": [
+    0.7224598312333834,
+    1.0
+   ],
+   "warning_rate": 1.0,
+   "latency_days_median": 0.020833333333333332,
+   "latency_days_p90": 0.03125,
+   "lead_days_median": 0.3333333333333333,
+   "lead_days_min": 0.3229166666666667,
+   "warning_lead_days_median": 0.3333333333333333,
+   "alarmed_before_danger": 1.0,
+   "false_alarm_runs": 0,
+   "false_alarm_episodes": 0,
+   "false_alarm_kinds": [],
+   "advisory_capped_samples": 0,
+   "warning_runs": 0,
+   "warning_latency_days_median": 0.020833333333333332,
+   "fixed_abs": {
+    "detected": 10,
+    "false_alarms": 0,
+    "latency_days_median": 0.16145833333333331
+   },
+   "fixed_rise": {
+    "detected": 10,
+    "false_alarms": 0,
+    "latency_days_median": 0.15625
+   },
+   "days": 59.989583333333336
+  },
+  {
+   "key": "loose_bolt_gradual",
+   "expect": "detect",
+   "expected_kind": "loose_bolt",
+   "runs": 10,
+   "detect_rate": 1.0,
+   "detect_ci": [
+    0.7224598312333834,
+    1.0
+   ],
+   "warning_rate": 1.0,
+   "latency_days_median": 7.666666666666666,
+   "latency_days_p90": 8.052083333333334,
+   "lead_days_median": 2.604166666666667,
+   "lead_days_min": 0.9479166666666666,
+   "warning_lead_days_median": 7.5625,
+   "alarmed_before_danger": 1.0,
+   "false_alarm_runs": 0,
+   "false_alarm_episodes": 0,
+   "false_alarm_kinds": [],
+   "advisory_capped_samples": 0,
+   "warning_runs": 0,
+   "warning_latency_days_median": 3.0208333333333335,
+   "fixed_abs": {
+    "detected": 10,
+    "false_alarms": 0,
+    "latency_days_median": 5.84375
+   },
+   "fixed_rise": {
+    "detected": 10,
+    "false_alarms": 0,
+    "latency_days_median": 5.84375
+   },
+   "days": 59.989583333333336
+  },
+  {
+   "key": "loose_bolt_in_summer",
+   "expect": "detect",
+   "expected_kind": "loose_bolt",
+   "runs": 10,
+   "detect_rate": 1.0,
+   "detect_ci": [
+    0.7224598312333834,
+    1.0
+   ],
+   "warning_rate": 1.0,
+   "latency_days_median": 0.020833333333333332,
+   "latency_days_p90": 0.03125,
+   "lead_days_median": 0.3333333333333333,
+   "lead_days_min": 0.3229166666666667,
+   "warning_lead_days_median": 0.3333333333333333,
+   "alarmed_before_danger": 1.0,
+   "false_alarm_runs": 0,
+   "false_alarm_episodes": 0,
+   "false_alarm_kinds": [],
+   "advisory_capped_samples": 0,
+   "warning_runs": 0,
+   "warning_latency_days_median": 0.020833333333333332,
+   "fixed_abs": {
+    "detected": 0,
+    "false_alarms": 10,
+    "latency_days_median": null
+   },
+   "fixed_rise": {
+    "detected": 10,
+    "false_alarms": 0,
+    "latency_days_median": 0.15625
+   },
+   "days": 59.989583333333336
+  },
+  {
+   "key": "loose_bolt_low_load",
+   "expect": "detect",
+   "expected_kind": "loose_bolt",
+   "runs": 10,
+   "detect_rate": 1.0,
+   "detect_ci": [
+    0.7224598312333834,
+    1.0
+   ],
+   "warning_rate": 1.0,
+   "latency_days_median": 0.020833333333333332,
+   "latency_days_p90": 0.03125,
+   "lead_days_median": null,
+   "lead_days_min": null,
+   "warning_lead_days_median": null,
+   "alarmed_before_danger": null,
+   "false_alarm_runs": 0,
+   "false_alarm_episodes": 0,
+   "false_alarm_kinds": [],
+   "advisory_capped_samples": 0,
+   "warning_runs": 0,
+   "warning_latency_days_median": 0.020833333333333332,
+   "fixed_abs": {
+    "detected": 0,
+    "false_alarms": 0,
+    "latency_days_median": null
+   },
+   "fixed_rise": {
+    "detected": 0,
+    "false_alarms": 0,
+    "latency_days_median": null
+   },
+   "days": 59.989583333333336
+  },
+  {
+   "key": "overload_sustained",
+   "expect": "detect",
+   "expected_kind": "overload",
+   "runs": 10,
+   "detect_rate": 1.0,
+   "detect_ci": [
+    0.7224598312333834,
+    1.0
+   ],
+   "warning_rate": 1.0,
+   "latency_days_median": 1.2708333333333333,
+   "latency_days_p90": 1.2708333333333333,
+   "lead_days_median": null,
+   "lead_days_min": null,
+   "warning_lead_days_median": null,
+   "alarmed_before_danger": null,
+   "false_alarm_runs": 0,
+   "false_alarm_episodes": 0,
+   "false_alarm_kinds": [],
+   "advisory_capped_samples": 0,
+   "warning_runs": 0,
+   "warning_latency_days_median": 0.3645833333333333,
+   "fixed_abs": {
+    "detected": 10,
+    "false_alarms": 0,
+    "latency_days_median": 0.3541666666666667
+   },
+   "fixed_rise": {
+    "detected": 10,
+    "false_alarms": 0,
+    "latency_days_median": 0.16666666666666666
+   },
+   "days": 59.989583333333336
+  },
+  {
+   "key": "condensation_leak",
+   "expect": "detect",
+   "expected_kind": "condensation",
+   "runs": 10,
+   "detect_rate": 1.0,
+   "detect_ci": [
+    0.7224598312333834,
+    1.0
+   ],
+   "warning_rate": 1.0,
+   "latency_days_median": 5.130208333333334,
+   "latency_days_p90": 5.21875,
+   "lead_days_median": 1.0104166666666667,
+   "lead_days_min": 0.90625,
+   "warning_lead_days_median": 2.067708333333333,
+   "alarmed_before_danger": 1.0,
+   "false_alarm_runs": 0,
+   "false_alarm_episodes": 0,
+   "false_alarm_kinds": [],
+   "advisory_capped_samples": 0,
+   "warning_runs": 0,
+   "warning_latency_days_median": 4.109375,
+   "fixed_abs": {
+    "detected": 0,
+    "false_alarms": 0,
+    "latency_days_median": null
+   },
+   "fixed_rise": {
+    "detected": 0,
+    "false_alarms": 0,
+    "latency_days_median": null
+   },
+   "days": 59.989583333333336
+  },
+  {
+   "key": "neutral_harmonic",
+   "expect": "detect",
+   "expected_kind": "neutral_overload",
+   "runs": 10,
+   "detect_rate": 1.0,
+   "detect_ci": [
+    0.7224598312333834,
+    1.0
+   ],
+   "warning_rate": 1.0,
+   "latency_days_median": 1.1770833333333333,
+   "latency_days_p90": 1.1770833333333333,
+   "lead_days_median": 1.6458333333333333,
+   "lead_days_min": 1.5833333333333333,
+   "warning_lead_days_median": 2.1979166666666665,
+   "alarmed_before_danger": 1.0,
+   "false_alarm_runs": 0,
+   "false_alarm_episodes": 0,
+   "false_alarm_kinds": [],
+   "advisory_capped_samples": 0,
+   "warning_runs": 0,
+   "warning_latency_days_median": 0.625,
+   "fixed_abs": {
+    "detected": 0,
+    "false_alarms": 0,
+    "latency_days_median": null
+   },
+   "fixed_rise": {
+    "detected": 0,
+    "false_alarms": 0,
+    "latency_days_median": null
+   },
+   "days": 59.989583333333336
+  },
+  {
+   "key": "neutral_joint_loose",
+   "expect": "detect",
+   "expected_kind": "neutral_joint",
+   "runs": 10,
+   "detect_rate": 1.0,
+   "detect_ci": [
+    0.7224598312333834,
+    1.0
+   ],
+   "warning_rate": 1.0,
+   "latency_days_median": 0.020833333333333332,
+   "latency_days_p90": 0.020833333333333332,
+   "lead_days_median": null,
+   "lead_days_min": null,
+   "warning_lead_days_median": null,
+   "alarmed_before_danger": null,
+   "false_alarm_runs": 0,
+   "false_alarm_episodes": 0,
+   "false_alarm_kinds": [],
+   "advisory_capped_samples": 0,
+   "warning_runs": 0,
+   "warning_latency_days_median": 0.020833333333333332,
+   "fixed_abs": {
+    "detected": 0,
+    "false_alarms": 0,
+    "latency_days_median": null
+   },
+   "fixed_rise": {
+    "detected": 0,
+    "false_alarms": 0,
+    "latency_days_median": null
+   },
+   "days": 59.989583333333336
+  },
+  {
+   "key": "pd_tracking_humid",
+   "expect": "detect",
+   "expected_kind": "pd_tracking",
+   "runs": 10,
+   "detect_rate": 1.0,
+   "detect_ci": [
+    0.7224598312333834,
+    1.0
+   ],
+   "warning_rate": 1.0,
+   "latency_days_median": 8.171875,
+   "latency_days_p90": 9.104166666666666,
+   "lead_days_median": null,
+   "lead_days_min": null,
+   "warning_lead_days_median": null,
+   "alarmed_before_danger": null,
+   "false_alarm_runs": 0,
+   "false_alarm_episodes": 0,
+   "false_alarm_kinds": [],
+   "advisory_capped_samples": 1313,
+   "warning_runs": 0,
+   "warning_latency_days_median": 2.96875,
+   "fixed_abs": {
+    "detected": 0,
+    "false_alarms": 0,
+    "latency_days_median": null
+   },
+   "fixed_rise": {
+    "detected": 0,
+    "false_alarms": 0,
+    "latency_days_median": null
+   },
+   "days": 59.989583333333336
+  },
+  {
+   "key": "arc_trip",
+   "expect": "detect",
+   "expected_kind": "arc_trip",
+   "runs": 10,
+   "detect_rate": 1.0,
+   "detect_ci": [
+    0.7224598312333834,
+    1.0
+   ],
+   "warning_rate": 1.0,
+   "latency_days_median": 0.0,
+   "latency_days_p90": 0.0,
+   "lead_days_median": 0.0,
+   "lead_days_min": 0.0,
+   "warning_lead_days_median": 0.0,
+   "alarmed_before_danger": 1.0,
+   "false_alarm_runs": 0,
+   "false_alarm_episodes": 0,
+   "false_alarm_kinds": [],
+   "advisory_capped_samples": 0,
+   "warning_runs": 0,
+   "warning_latency_days_median": 0.0,
+   "fixed_abs": {
+    "detected": 0,
+    "false_alarms": 0,
+    "latency_days_median": null
+   },
+   "fixed_rise": {
+    "detected": 0,
+    "false_alarms": 0,
+    "latency_days_median": null
+   },
+   "days": 59.989583333333336
+  },
+  {
+   "key": "arc_integrity_fault",
+   "expect": "detect",
+   "expected_kind": "arc_integrity",
+   "runs": 10,
+   "detect_rate": 1.0,
+   "detect_ci": [
+    0.7224598312333834,
+    1.0
+   ],
+   "warning_rate": 1.0,
+   "latency_days_median": 0.020833333333333332,
+   "latency_days_p90": 0.020833333333333332,
+   "lead_days_median": null,
+   "lead_days_min": null,
+   "warning_lead_days_median": null,
+   "alarmed_before_danger": null,
+   "false_alarm_runs": 0,
+   "false_alarm_episodes": 0,
+   "false_alarm_kinds": [],
+   "advisory_capped_samples": 0,
+   "warning_runs": 0,
+   "warning_latency_days_median": 0.020833333333333332,
+   "fixed_abs": {
+    "detected": 0,
+    "false_alarms": 0,
+    "latency_days_median": null
+   },
+   "fixed_rise": {
+    "detected": 0,
+    "false_alarms": 0,
+    "latency_days_median": null
+   },
+   "days": 59.989583333333336
+  },
+  {
+   "key": "pd_only_dry",
+   "expect": "advisory",
+   "expected_kind": "pd_tracking",
+   "runs": 10,
+   "detect_rate": 0.0,
+   "detect_ci": [
+    0.0,
+    0.2775401687666166
+   ],
+   "warning_rate": 1.0,
+   "latency_days_median": null,
+   "latency_days_p90": null,
+   "lead_days_median": null,
+   "lead_days_min": null,
+   "warning_lead_days_median": null,
+   "alarmed_before_danger": null,
+   "false_alarm_runs": 0,
+   "false_alarm_episodes": 0,
+   "false_alarm_kinds": [],
+   "advisory_capped_samples": 17301,
+   "warning_runs": 0,
+   "warning_latency_days_median": 2.96875,
+   "fixed_abs": {
+    "detected": 0,
+    "false_alarms": 0,
+    "latency_days_median": null
+   },
+   "fixed_rise": {
+    "detected": 0,
+    "false_alarms": 0,
+    "latency_days_median": null
+   },
+   "days": 59.989583333333336
+  },
+  {
+   "key": "healthy_baseline",
+   "expect": "quiet",
+   "expected_kind": null,
+   "runs": 10,
+   "detect_rate": null,
+   "detect_ci": null,
+   "warning_rate": null,
+   "latency_days_median": null,
+   "latency_days_p90": null,
+   "lead_days_median": null,
+   "lead_days_min": null,
+   "warning_lead_days_median": null,
+   "alarmed_before_danger": null,
+   "false_alarm_runs": 0,
+   "false_alarm_episodes": 0,
+   "false_alarm_kinds": [],
+   "advisory_capped_samples": 0,
+   "warning_runs": 0,
+   "warning_latency_days_median": null,
+   "fixed_abs": {
+    "detected": 0,
+    "false_alarms": 0,
+    "latency_days_median": null
+   },
+   "fixed_rise": {
+    "detected": 0,
+    "false_alarms": 0,
+    "latency_days_median": null
+   },
+   "days": 59.989583333333336
+  },
+  {
+   "key": "hot_summer",
+   "expect": "quiet",
+   "expected_kind": null,
+   "runs": 10,
+   "detect_rate": null,
+   "detect_ci": null,
+   "warning_rate": null,
+   "latency_days_median": null,
+   "latency_days_p90": null,
+   "lead_days_median": null,
+   "lead_days_min": null,
+   "warning_lead_days_median": null,
+   "alarmed_before_danger": null,
+   "false_alarm_runs": 0,
+   "false_alarm_episodes": 0,
+   "false_alarm_kinds": [],
+   "advisory_capped_samples": 0,
+   "warning_runs": 0,
+   "warning_latency_days_median": null,
+   "fixed_abs": {
+    "detected": 0,
+    "false_alarms": 10,
+    "latency_days_median": null
+   },
+   "fixed_rise": {
+    "detected": 0,
+    "false_alarms": 0,
+    "latency_days_median": null
+   },
+   "days": 59.989583333333336
+  },
+  {
+   "key": "heavy_balanced_load",
+   "expect": "quiet",
+   "expected_kind": null,
+   "runs": 10,
+   "detect_rate": null,
+   "detect_ci": null,
+   "warning_rate": null,
+   "latency_days_median": null,
+   "latency_days_p90": null,
+   "lead_days_median": null,
+   "lead_days_min": null,
+   "warning_lead_days_median": null,
+   "alarmed_before_danger": null,
+   "false_alarm_runs": 0,
+   "false_alarm_episodes": 0,
+   "false_alarm_kinds": [],
+   "advisory_capped_samples": 0,
+   "warning_runs": 0,
+   "warning_latency_days_median": null,
+   "fixed_abs": {
+    "detected": 0,
+    "false_alarms": 0,
+    "latency_days_median": null
+   },
+   "fixed_rise": {
+    "detected": 0,
+    "false_alarms": 0,
+    "latency_days_median": null
+   },
+   "days": 59.989583333333336
+  },
+  {
+   "key": "load_step_moderate",
+   "expect": "quiet",
+   "expected_kind": null,
+   "runs": 10,
+   "detect_rate": null,
+   "detect_ci": null,
+   "warning_rate": null,
+   "latency_days_median": null,
+   "latency_days_p90": null,
+   "lead_days_median": null,
+   "lead_days_min": null,
+   "warning_lead_days_median": null,
+   "alarmed_before_danger": null,
+   "false_alarm_runs": 0,
+   "false_alarm_episodes": 0,
+   "false_alarm_kinds": [],
+   "advisory_capped_samples": 0,
+   "warning_runs": 0,
+   "warning_latency_days_median": null,
+   "fixed_abs": {
+    "detected": 0,
+    "false_alarms": 0,
+    "latency_days_median": null
+   },
+   "fixed_rise": {
+    "detected": 0,
+    "false_alarms": 0,
+    "latency_days_median": null
+   },
+   "days": 59.989583333333336
+  },
+  {
+   "key": "phase_imbalance",
+   "expect": "quiet",
+   "expected_kind": null,
+   "runs": 10,
+   "detect_rate": null,
+   "detect_ci": null,
+   "warning_rate": null,
+   "latency_days_median": null,
+   "latency_days_p90": null,
+   "lead_days_median": null,
+   "lead_days_min": null,
+   "warning_lead_days_median": null,
+   "alarmed_before_danger": null,
+   "false_alarm_runs": 0,
+   "false_alarm_episodes": 0,
+   "false_alarm_kinds": [],
+   "advisory_capped_samples": 0,
+   "warning_runs": 3,
+   "warning_latency_days_median": null,
+   "fixed_abs": {
+    "detected": 0,
+    "false_alarms": 0,
+    "latency_days_median": null
+   },
+   "fixed_rise": {
+    "detected": 0,
+    "false_alarms": 0,
+    "latency_days_median": null
+   },
+   "days": 59.989583333333336
+  },
+  {
+   "key": "sensor_glitch",
+   "expect": "quiet",
+   "expected_kind": null,
+   "runs": 10,
+   "detect_rate": null,
+   "detect_ci": null,
+   "warning_rate": null,
+   "latency_days_median": null,
+   "latency_days_p90": null,
+   "lead_days_median": null,
+   "lead_days_min": null,
+   "warning_lead_days_median": null,
+   "alarmed_before_danger": null,
+   "false_alarm_runs": 0,
+   "false_alarm_episodes": 0,
+   "false_alarm_kinds": [],
+   "advisory_capped_samples": 0,
+   "warning_runs": 0,
+   "warning_latency_days_median": null,
+   "fixed_abs": {
+    "detected": 0,
+    "false_alarms": 0,
+    "latency_days_median": null
+   },
+   "fixed_rise": {
+    "detected": 0,
+    "false_alarms": 0,
+    "latency_days_median": null
+   },
+   "days": 59.989583333333336
+  },
+  {
+   "key": "de_energised_maintenance",
+   "expect": "quiet",
+   "expected_kind": null,
+   "runs": 10,
+   "detect_rate": null,
+   "detect_ci": null,
+   "warning_rate": null,
+   "latency_days_median": null,
+   "latency_days_p90": null,
+   "lead_days_median": null,
+   "lead_days_min": null,
+   "warning_lead_days_median": null,
+   "alarmed_before_danger": null,
+   "false_alarm_runs": 0,
+   "false_alarm_episodes": 0,
+   "false_alarm_kinds": [],
+   "advisory_capped_samples": 0,
+   "warning_runs": 0,
+   "warning_latency_days_median": null,
+   "fixed_abs": {
+    "detected": 0,
+    "false_alarms": 0,
+    "latency_days_median": null
+   },
+   "fixed_rise": {
+    "detected": 0,
+    "false_alarms": 0,
+    "latency_days_median": null
+   },
+   "days": 59.989583333333336
+  },
+  {
+   "key": "comms_dropout",
+   "expect": "quiet",
+   "expected_kind": null,
+   "runs": 10,
+   "detect_rate": null,
+   "detect_ci": null,
+   "warning_rate": null,
+   "latency_days_median": null,
+   "latency_days_p90": null,
+   "lead_days_median": null,
+   "lead_days_min": null,
+   "warning_lead_days_median": null,
+   "alarmed_before_danger": null,
+   "false_alarm_runs": 0,
+   "false_alarm_episodes": 0,
+   "false_alarm_kinds": [],
+   "advisory_capped_samples": 0,
+   "warning_runs": 0,
+   "warning_latency_days_median": null,
+   "fixed_abs": {
+    "detected": 0,
+    "false_alarms": 0,
+    "latency_days_median": null
+   },
+   "fixed_rise": {
+    "detected": 0,
+    "false_alarms": 0,
+    "latency_days_median": null
+   },
+   "days": 59.989583333333336
+  },
+  {
+   "key": "humid_but_warm",
+   "expect": "quiet",
+   "expected_kind": null,
+   "runs": 10,
+   "detect_rate": null,
+   "detect_ci": null,
+   "warning_rate": null,
+   "latency_days_median": null,
+   "latency_days_p90": null,
+   "lead_days_median": null,
+   "lead_days_min": null,
+   "warning_lead_days_median": null,
+   "alarmed_before_danger": null,
+   "false_alarm_runs": 0,
+   "false_alarm_episodes": 0,
+   "false_alarm_kinds": [],
+   "advisory_capped_samples": 0,
+   "warning_runs": 4,
+   "warning_latency_days_median": null,
+   "fixed_abs": {
+    "detected": 0,
+    "false_alarms": 0,
+    "latency_days_median": null
+   },
+   "fixed_rise": {
+    "detected": 0,
+    "false_alarms": 0,
+    "latency_days_median": null
+   },
+   "days": 59.989583333333336
+  },
+  {
+   "key": "pd_noise_bursts",
+   "expect": "quiet",
+   "expected_kind": null,
+   "runs": 10,
+   "detect_rate": null,
+   "detect_ci": null,
+   "warning_rate": null,
+   "latency_days_median": null,
+   "latency_days_p90": null,
+   "lead_days_median": null,
+   "lead_days_min": null,
+   "warning_lead_days_median": null,
+   "alarmed_before_danger": null,
+   "false_alarm_runs": 0,
+   "false_alarm_episodes": 0,
+   "false_alarm_kinds": [],
+   "advisory_capped_samples": 0,
+   "warning_runs": 0,
+   "warning_latency_days_median": null,
+   "fixed_abs": {
+    "detected": 0,
+    "false_alarms": 0,
+    "latency_days_median": null
+   },
+   "fixed_rise": {
+    "detected": 0,
+    "false_alarms": 0,
+    "latency_days_median": null
+   },
+   "days": 59.989583333333336
+  }
+ ],
+ "false_alarm_budget": {
+  "panel_days": 6598.854166666667,
+  "false_alarm_episodes": 0,
+  "per_panel_year": 0.0,
+  "upper95_per_panel_year": 0.16593789957221108
+ },
+ "sweeps": {
+  "thermal_tau": {
+   "healthy": [
+    {
+     "label": 600.0,
+     "runs": 10,
+     "warning_rate": 0.0,
+     "alarm_rate": 0.0,
+     "latency_days_median": null,
+     "lead_days_median": null,
+     "warning_lead_days_median": null,
+     "false_alarm_runs": 0,
+     "extra_warning_runs": 0
+    },
+    {
+     "label": 1200.0,
+     "runs": 10,
+     "warning_rate": 0.0,
+     "alarm_rate": 0.0,
+     "latency_days_median": null,
+     "lead_days_median": null,
+     "warning_lead_days_median": null,
+     "false_alarm_runs": 0,
+     "extra_warning_runs": 0
+    },
+    {
+     "label": 1800.0,
+     "runs": 10,
+     "warning_rate": 0.0,
+     "alarm_rate": 0.0,
+     "latency_days_median": null,
+     "lead_days_median": null,
+     "warning_lead_days_median": null,
+     "false_alarm_runs": 0,
+     "extra_warning_runs": 0
+    },
+    {
+     "label": 3600.0,
+     "runs": 10,
+     "warning_rate": 0.0,
+     "alarm_rate": 0.0,
+     "latency_days_median": null,
+     "lead_days_median": null,
+     "warning_lead_days_median": null,
+     "false_alarm_runs": 0,
+     "extra_warning_runs": 0
+    },
+    {
+     "label": 7200.0,
+     "runs": 10,
+     "warning_rate": 0.0,
+     "alarm_rate": 0.0,
+     "latency_days_median": null,
+     "lead_days_median": null,
+     "warning_lead_days_median": null,
+     "false_alarm_runs": 0,
+     "extra_warning_runs": 0
+    }
+   ],
+   "imbalance": [
+    {
+     "label": 600.0,
+     "runs": 10,
+     "warning_rate": 0.0,
+     "alarm_rate": 0.0,
+     "latency_days_median": null,
+     "lead_days_median": null,
+     "warning_lead_days_median": null,
+     "false_alarm_runs": 0,
+     "extra_warning_runs": 1
+    },
+    {
+     "label": 1200.0,
+     "runs": 10,
+     "warning_rate": 0.0,
+     "alarm_rate": 0.0,
+     "latency_days_median": null,
+     "lead_days_median": null,
+     "warning_lead_days_median": null,
+     "false_alarm_runs": 0,
+     "extra_warning_runs": 2
+    },
+    {
+     "label": 1800.0,
+     "runs": 10,
+     "warning_rate": 0.0,
+     "alarm_rate": 0.0,
+     "latency_days_median": null,
+     "lead_days_median": null,
+     "warning_lead_days_median": null,
+     "false_alarm_runs": 0,
+     "extra_warning_runs": 3
+    },
+    {
+     "label": 3600.0,
+     "runs": 10,
+     "warning_rate": 0.0,
+     "alarm_rate": 0.0,
+     "latency_days_median": null,
+     "lead_days_median": null,
+     "warning_lead_days_median": null,
+     "false_alarm_runs": 0,
+     "extra_warning_runs": 1
+    },
+    {
+     "label": 7200.0,
+     "runs": 10,
+     "warning_rate": 0.0,
+     "alarm_rate": 0.0,
+     "latency_days_median": null,
+     "lead_days_median": null,
+     "warning_lead_days_median": null,
+     "false_alarm_runs": 0,
+     "extra_warning_runs": 0
+    }
+   ],
+   "fault": [
+    {
+     "label": 600.0,
+     "runs": 10,
+     "warning_rate": 1.0,
+     "alarm_rate": 1.0,
+     "latency_days_median": 0.020833333333333332,
+     "lead_days_median": -0.010416666666666666,
+     "warning_lead_days_median": -0.010416666666666666,
+     "false_alarm_runs": 0,
+     "extra_warning_runs": 0
+    },
+    {
+     "label": 1200.0,
+     "runs": 10,
+     "warning_rate": 1.0,
+     "alarm_rate": 1.0,
+     "latency_days_median": 0.020833333333333332,
+     "lead_days_median": -0.010416666666666666,
+     "warning_lead_days_median": -0.010416666666666666,
+     "false_alarm_runs": 0,
+     "extra_warning_runs": 0
+    },
+    {
+     "label": 1800.0,
+     "runs": 10,
+     "warning_rate": 1.0,
+     "alarm_rate": 1.0,
+     "latency_days_median": 0.020833333333333332,
+     "lead_days_median": 0.3333333333333333,
+     "warning_lead_days_median": 0.3333333333333333,
+     "false_alarm_runs": 0,
+     "extra_warning_runs": 0
+    },
+    {
+     "label": 3600.0,
+     "runs": 10,
+     "warning_rate": 1.0,
+     "alarm_rate": 1.0,
+     "latency_days_median": 0.041666666666666664,
+     "lead_days_median": null,
+     "warning_lead_days_median": null,
+     "false_alarm_runs": 0,
+     "extra_warning_runs": 0
+    },
+    {
+     "label": 7200.0,
+     "runs": 10,
+     "warning_rate": 1.0,
+     "alarm_rate": 1.0,
+     "latency_days_median": 0.08854166666666666,
+     "lead_days_median": null,
+     "warning_lead_days_median": null,
+     "false_alarm_runs": 0,
+     "extra_warning_runs": 0
+    }
+   ]
+  },
+  "fault_magnitude": [
+   {
+    "label": 1.2,
+    "runs": 10,
+    "warning_rate": 1.0,
+    "alarm_rate": 0.0,
+    "latency_days_median": null,
+    "lead_days_median": null,
+    "warning_lead_days_median": null,
+    "false_alarm_runs": 0,
+    "extra_warning_runs": 0
+   },
+   {
+    "label": 1.4,
+    "runs": 10,
+    "warning_rate": 1.0,
+    "alarm_rate": 0.0,
+    "latency_days_median": null,
+    "lead_days_median": null,
+    "warning_lead_days_median": null,
+    "false_alarm_runs": 0,
+    "extra_warning_runs": 0
+   },
+   {
+    "label": 1.7,
+    "runs": 10,
+    "warning_rate": 1.0,
+    "alarm_rate": 0.7,
+    "latency_days_median": 0.3958333333333333,
+    "lead_days_median": null,
+    "warning_lead_days_median": null,
+    "false_alarm_runs": 0,
+    "extra_warning_runs": 0
+   },
+   {
+    "label": 2.0,
+    "runs": 10,
+    "warning_rate": 1.0,
+    "alarm_rate": 1.0,
+    "latency_days_median": 0.03125,
+    "lead_days_median": 0.3229166666666667,
+    "warning_lead_days_median": 0.3333333333333333,
+    "false_alarm_runs": 0,
+    "extra_warning_runs": 0
+   },
+   {
+    "label": 3.0,
+    "runs": 10,
+    "warning_rate": 1.0,
+    "alarm_rate": 1.0,
+    "latency_days_median": 0.020833333333333332,
+    "lead_days_median": -0.010416666666666666,
+    "warning_lead_days_median": -0.010416666666666666,
+    "false_alarm_runs": 0,
+    "extra_warning_runs": 0
+   },
+   {
+    "label": 4.0,
+    "runs": 10,
+    "warning_rate": 1.0,
+    "alarm_rate": 1.0,
+    "latency_days_median": 0.020833333333333332,
+    "lead_days_median": -0.020833333333333332,
+    "warning_lead_days_median": -0.020833333333333332,
+    "false_alarm_runs": 0,
+    "extra_warning_runs": 0
+   }
+  ],
+  "noise_detect": [
+   {
+    "label": 1.0,
+    "runs": 10,
+    "warning_rate": 1.0,
+    "alarm_rate": 1.0,
+    "latency_days_median": 0.020833333333333332,
+    "lead_days_median": -0.010416666666666666,
+    "warning_lead_days_median": -0.010416666666666666,
+    "false_alarm_runs": 0,
+    "extra_warning_runs": 0
+   },
+   {
+    "label": 2.0,
+    "runs": 10,
+    "warning_rate": 1.0,
+    "alarm_rate": 1.0,
+    "latency_days_median": 0.020833333333333332,
+    "lead_days_median": -0.010416666666666666,
+    "warning_lead_days_median": -0.010416666666666666,
+    "false_alarm_runs": 0,
+    "extra_warning_runs": 0
+   },
+   {
+    "label": 4.0,
+    "runs": 10,
+    "warning_rate": 1.0,
+    "alarm_rate": 1.0,
+    "latency_days_median": 0.020833333333333332,
+    "lead_days_median": -0.010416666666666666,
+    "warning_lead_days_median": -0.010416666666666666,
+    "false_alarm_runs": 1,
+    "extra_warning_runs": 8
+   }
+  ],
+  "noise_healthy": [
+   {
+    "label": 1.0,
+    "runs": 10,
+    "warning_rate": 0.0,
+    "alarm_rate": 0.0,
+    "latency_days_median": null,
+    "lead_days_median": null,
+    "warning_lead_days_median": null,
+    "false_alarm_runs": 0,
+    "extra_warning_runs": 0
+   },
+   {
+    "label": 2.0,
+    "runs": 10,
+    "warning_rate": 0.0,
+    "alarm_rate": 0.0,
+    "latency_days_median": null,
+    "lead_days_median": null,
+    "warning_lead_days_median": null,
+    "false_alarm_runs": 0,
+    "extra_warning_runs": 1
+   },
+   {
+    "label": 4.0,
+    "runs": 10,
+    "warning_rate": 0.0,
+    "alarm_rate": 0.0,
+    "latency_days_median": null,
+    "lead_days_median": null,
+    "warning_lead_days_median": null,
+    "false_alarm_runs": 1,
+    "extra_warning_runs": 10
+   }
+  ],
+  "ramp_duration": [
+   {
+    "label": 7.0,
+    "runs": 10,
+    "warning_rate": 1.0,
+    "alarm_rate": 1.0,
+    "latency_days_median": 1.9947916666666665,
+    "lead_days_median": 0.671875,
+    "warning_lead_days_median": 1.6458333333333333,
+    "false_alarm_runs": 0,
+    "extra_warning_runs": 0
+   },
+   {
+    "label": 14.0,
+    "runs": 10,
+    "warning_rate": 1.0,
+    "alarm_rate": 1.0,
+    "latency_days_median": 3.942708333333333,
+    "lead_days_median": 1.0260416666666665,
+    "warning_lead_days_median": 2.9166666666666665,
+    "false_alarm_runs": 0,
+    "extra_warning_runs": 0
+   },
+   {
+    "label": 28.0,
+    "runs": 10,
+    "warning_rate": 1.0,
+    "alarm_rate": 1.0,
+    "latency_days_median": 7.666666666666666,
+    "lead_days_median": 2.604166666666667,
+    "warning_lead_days_median": 7.5625,
+    "false_alarm_runs": 0,
+    "extra_warning_runs": 0
+   },
+   {
+    "label": 56.0,
+    "runs": 10,
+    "warning_rate": 1.0,
+    "alarm_rate": 1.0,
+    "latency_days_median": 15.427083333333332,
+    "lead_days_median": 3.072916666666667,
+    "warning_lead_days_median": 14.979166666666666,
+    "false_alarm_runs": 0,
+    "extra_warning_runs": 0
+   }
+  ]
+ }
+}

@@ -48,18 +48,61 @@ class SeverityEvent:
     severity: Severity
 
 
+DEADBAND_FRACTION = 0.40  # CLAUDE.md §2: %40 ölü bant
+
+_LEVELS_DESC = (Severity.CRITICAL, Severity.ALARM, Severity.WARNING)
+
+
+def debounce_severity(
+    raw: list[Severity], *, window: int = DEBOUNCE_WINDOW, min_hits: int = DEBOUNCE_MIN_HITS
+) -> list[Severity]:
+    """Klasik M/N onayı: son `window` örnekte en az `min_hits` kez bir seviyeye
+    (veya üstüne) ulaşılmadıysa o seviye onaylanmaz."""
+    confirmed_series: list[Severity] = []
+    for i in range(len(raw)):
+        recent = raw[max(0, i - window + 1) : i + 1]
+        confirmed = Severity.NORMAL
+        if len(recent) >= min_hits:
+            for severity in _LEVELS_DESC:
+                if sum(1 for s in recent if s >= severity) >= min_hits:
+                    confirmed = severity
+                    break
+        confirmed_series.append(confirmed)
+    return confirmed_series
+
+
+def severity_with_deadband(
+    scores: list[float | None],
+    thresholds: dict[Severity, float],
+    *,
+    deadband: float = DEADBAND_FRACTION,
+) -> list[Severity]:
+    """Histerezisli ham şiddet: bir seviyeye eşiği aşınca girilir, ancak puan o
+    seviyenin eşiğinin `(1 - deadband)` katının altına inince çıkılır. Sınırda
+    dolaşan bir puanın alarmı açıp kapatıp durmasını (flapping) önler.
+    Puan None (bastırılmış örnek) ise durum sıfırlanır: bastırılmış bir aralık
+    bir sonraki değerlendirmeye seviye taşımaz."""
+    state = Severity.NORMAL
+    result: list[Severity] = []
+    for score in scores:
+        if score is None:
+            state = Severity.NORMAL
+            result.append(Severity.NORMAL)
+            continue
+        entry = Severity.NORMAL
+        hold = Severity.NORMAL
+        for level in _LEVELS_DESC:
+            if entry == Severity.NORMAL and score >= thresholds[level]:
+                entry = level
+            if hold == Severity.NORMAL and level <= state and score >= thresholds[level] * (1.0 - deadband):
+                hold = level
+        state = max(entry, hold)
+        result.append(state)
+    return result
+
+
 def evaluate_severity_series(theta_samples: list[ThetaSample]) -> list[SeverityEvent]:
     """Her örnek için debounce uygulanmış şiddeti döner."""
     raw = [_raw_severity(s.theta) for s in theta_samples]
-    result: list[SeverityEvent] = []
-    for i, sample in enumerate(theta_samples):
-        window = raw[max(0, i - DEBOUNCE_WINDOW + 1) : i + 1]
-        confirmed = Severity.NORMAL
-        if len(window) >= DEBOUNCE_MIN_HITS:
-            for severity in (Severity.CRITICAL, Severity.ALARM, Severity.WARNING):
-                hits = sum(1 for s in window if s >= severity)
-                if hits >= DEBOUNCE_MIN_HITS:
-                    confirmed = severity
-                    break
-        result.append(SeverityEvent(t_s=sample.t_s, severity=confirmed))
-    return result
+    confirmed = debounce_severity(raw)
+    return [SeverityEvent(t_s=sample.t_s, severity=sev) for sample, sev in zip(theta_samples, confirmed)]

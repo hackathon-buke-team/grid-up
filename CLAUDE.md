@@ -233,9 +233,18 @@ SCADA protokolü.
       K3 3.2'nin arka uç temeli — UI kısmı henüz yapılmadı) sıfırdan kuruldu.
       → `panogoz/detector/{cusum,flags}.py`, `tests/test_cusum.py`,
       `tests/test_expect_flags.py`, `docs/04-ANOMALI-TESPIT.md` (2026-09-16).
-- [ ] **4.4** Doğruluk sunumu: 17 senaryo × tespit matrisi, haber verme süresi
-      dağılımı, yanlış alarm bütçesi, duyarlılık eğrisi. *(Data science tarafına en
-      yakın görev.)*
+- [x] **4.4** Doğruluk sunumu: senaryo × tespit matrisi, haber verme süresi
+      dağılımı, yanlış alarm bütçesi, duyarlılık eğrisi. *Bitti sayılır:* gerçek
+      koşuyla 22 senaryo (11 arıza + 1 yalnız-uyarı + 10 negatif kontrol) × 10
+      tohum = 220 koşu: 110/110 tespit, 18,1 pano-yılında 0 ALARM-üstü yanlış
+      alarm (%95 üst sınır 0,17/pano-yılı), sabit eşik kıyası, gürültü/τ
+      dayanıklılığı, kör bölge. **Saha doğrulaması DEĞİL — model içi
+      öz-tutarlılık** (docs/09 §0). Çok kanallı dedektörler (aşırı yük, nötr,
+      yoğuşma/nem, PD, ark) + bastırma→onay→füzyon hattı da bu kapsamda kuruldu.
+      → `panogoz/sim/scenarios.py`, `panogoz/detector/{overload,condensation,
+      neutral,pd,arc,thermal_tau}.py`, `panogoz/rules/pipeline.py`,
+      `panogoz/eval/matrix.py`, `tools/run_accuracy_matrix.py`,
+      `docs/09-VERI-ANALIZI.md` (2026-09-19).
 - [x] **4.5** Sunum paketi: 15 dk anlatı, slaytlar, demo videosu, jüri Q&A kartları,
       yedek plan. *Bitti sayılır:* zamanlanmış anlatı + gerçek çalışan konsoldan
       kaydedilmiş demo + Q&A kartları + yedek plan. → `sunum/anlati-script.md`,

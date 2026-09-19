@@ -80,6 +80,7 @@ def cusum_changepoint(
     baseline_days: int = 30,
     k_sigma: float = 0.5,
     h_sigma: float = 5.0,
+    min_sigma: float = MIN_SIGMA,
 ) -> CusumResult:
     """`daily` en az `baseline_days + 1` gun icermeli (baseline tahmini +
     en az bir izlenecek gun). Baseline penceresi serinin ilk `baseline_days`
@@ -98,7 +99,14 @@ def cusum_changepoint(
     kayma testi de gercekten gecti -- bu sayi bir teorik secim degil, olcerek
     bulundu. Daha kisa bir baseline (ör. 14 gun) istenirse h_sigma'yi da
     (ör. 6-7'ye) artirmak dengelenmeyi geri getirebilir, ayrica test
-    edilmeli."""
+    edilmeli.
+
+    `min_sigma`: taban çizgisi sigma'sının alt sınırı = "pratik anlamlılık
+    tabanı". Ölçüm zincirinin çözünürlüğünün (örn. termokupl 0,25 K + ofset
+    ~0,5 K) çok altındaki bir sapma, istatistiksel olarak anlamlı olsa bile
+    eyleme dönüştürülemez; taban çizgisi bu kadar kararlı çıkınca (θ'da
+    σ=0,1 K) CUSUM 0,1 K'lık zararsız bir kaymayı "değişim noktası" ilan
+    ederdi. Varsayılan MIN_SIGMA eski davranışı korur."""
     if len(daily) < baseline_days + 1:
         raise ValueError(
             f"cusum_changepoint icin en az {baseline_days + 1} gunluk veri gerekli, {len(daily)} verildi"
@@ -106,7 +114,7 @@ def cusum_changepoint(
 
     baseline_vals = [d.median_theta for d in daily[:baseline_days]]
     mu0 = mean(baseline_vals)
-    sigma0 = max(pstdev(baseline_vals), MIN_SIGMA)
+    sigma0 = max(pstdev(baseline_vals), min_sigma)
     k = k_sigma * sigma0
     h = h_sigma * sigma0
 
