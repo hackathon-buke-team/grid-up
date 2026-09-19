@@ -7,9 +7,10 @@
   gerektirir (bkz. panogoz/notify/escalation.py).
 - Şiddet artarsa aynı alarm YÜKSELİR ve önceki onayı geçersiz kılar (daha kötü bir
   duruma verilmiş onay eski durum için verilmişti).
-- İz normale dönünce alarm TEMİZLENİR ama otomatik kapanmaz: biri onaylayana kadar
-  "onay bekliyor" kalır; onay gelirse anında, gelmezse 7 gün sonra KAPANIR
-  ("kendiliğinden kapanma").
+- İz normale dönünce ALARM+ bir alarm TEMİZLENİR ama otomatik kapanmaz: biri onaylayana
+  kadar "onay bekliyor" kalır; onay gelirse anında, gelmezse 7 gün sonra KAPANIR
+  ("kendiliğinden kapanma"). Hiç ALARM'a çıkmamış (yalnız UYARI) kayıt kimseye sevk
+  edilmediğinden normale dönünce onay beklemeden kapanır.
 - Olay tipi (latching) alarmlar (ark TRIP) sinyal dönse de temizlenmez; onayla kapanır.
 - Bir izin temizlendikten `reopen_within_s` içinde yeniden yükselmesi yeni alarm
   değil aynı alarmın yeniden açılmasıdır (sınırda gezinme = flapping tek kayıt).
@@ -108,7 +109,9 @@ class Alarm:
 
     @property
     def needs_notification(self) -> bool:
-        return self.severity >= Severity.ALARM
+        """ALARM+ ve süreç alarmı. Sistem alarmları (cihaz susuyor) bakım biletidir,
+        nöbetçiyi aramaz; konsolda ve KPI'da görünür."""
+        return self.severity >= Severity.ALARM and self.family != "system"
 
     def to_dict(self, *, include_token: bool = False) -> dict:
         data = {
@@ -291,6 +294,10 @@ class AlarmEngine:
             if alarm.state is AlarmState.ACKED:
                 self._close(alarm, t_s, "sahada_giderildi", "sistem (onaylı alarm normale döndü)")
                 out.append(AlarmEvent(t_s, EventType.CLOSED, alarm.id, alarm.severity, "cleared_after_ack"))
+            elif alarm.peak < Severity.ALARM:
+                # UYARI seviyesinde kalmış alarm kimseye sevk edilmedi: onay beklemeden kapanır
+                self._close(alarm, t_s, "diger", "sistem (uyarı normale döndü)")
+                out.append(AlarmEvent(t_s, EventType.CLOSED, alarm.id, alarm.severity, "warning_cleared"))
             else:
                 alarm.state = AlarmState.CLEARED
                 alarm.cleared_t_s = t_s

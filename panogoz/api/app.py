@@ -10,6 +10,8 @@ from pathlib import Path
 
 from flask import Flask, jsonify, request, send_from_directory
 
+from panogoz.api.fleet_routes import register_fleet_routes
+from panogoz.api.fleet_service import FleetService
 from panogoz.contracts.channels import Phase
 from panogoz.detector.cusum import cusum_changepoint, daily_median_series
 from panogoz.detector.flags import Flag, flags_for_connection
@@ -176,14 +178,25 @@ def _get_cusum_demo_connection() -> ConnectionTimeline:
     return _cusum_demo_cache
 
 
-def create_app(fleet: list[ConnectionTimeline] | None = None) -> Flask:
+def create_app(
+    fleet: list[ConnectionTimeline] | None = None,
+    *,
+    fleet_service: FleetService | None = None,
+    demo_controls: bool = True,
+) -> Flask:
     """`fleet` verilmezse (varsayılan, mevcut davranış) sabit 2-panolu demo
     filosunu kullanır -- `panogoz.run_local` gibi çağıranlar kendi
     `build_fleet(n)` çıktısını geçirerek N-panolu bir sunucu ayağa
-    kaldırabilir (bkz. K2 2.4, docs/06-OLCEKLENEBILIRLIK.md)."""
+    kaldırabilir (bkz. K2 2.4, docs/06-OLCEKLENEBILIRLIK.md).
+
+    `/api/fleet/*` ve `/api/sim/*`: çok kanallı senaryo filosu + alarm konsolu
+    (panogoz/api/fleet_routes.py). `fleet_service` verilmezse ilk istekte varsayılan
+    22 panolu filo kurulur (~15 sn); `app.config["FLEET_GETTER"]()` ile önceden
+    ısıtılabilir."""
     if fleet is None:
         fleet = build_demo_fleet()
     app = Flask(__name__, static_folder=None)
+    app.config["FLEET_GETTER"] = register_fleet_routes(app, fleet_service=fleet_service, demo_controls=demo_controls)
 
     @app.get("/api/connections")
     def list_connections():

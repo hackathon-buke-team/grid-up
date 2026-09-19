@@ -240,3 +240,27 @@ def test_until_parameter_stops_the_replay_at_the_requested_time():
     data = generate(SCENARIOS["loose_bolt_abrupt"], seed=1)
     early = build_alarm_log("F02", analyze(data), id_prefix="F02", until_t_s=data.truth.onset_t_s - D)
     assert early.alarms == {}
+
+
+def test_warning_only_alarm_closes_on_clear_without_waiting_for_ack():
+    e = engine()
+    e.step(0, [tn(Severity.WARNING)])
+    ev = e.step(900, [tn(Severity.NORMAL)])
+    a = only(e)
+    assert a.state is AlarmState.CLOSED and ev[0].detail == "warning_cleared"  # kimseye sevk edilmedi
+    assert "uyarı normale döndü" in a.closed_by
+
+
+def test_alarm_that_reached_alarm_level_still_waits_for_ack_after_dropping_to_warning():
+    e = engine()
+    e.step(0, [tn(Severity.ALARM)])
+    e.step(900, [tn(Severity.WARNING)])
+    e.step(1800, [tn(Severity.NORMAL)])
+    assert only(e).state is AlarmState.CLEARED  # zirvesi ALARM idi: onay beklenir
+
+
+def test_system_alarm_never_needs_notification():
+    e = engine()
+    e.step(0, [TrackNow(SPECS["comms_lost"], None, Severity.ALARM, 96.0)])
+    a = only(e)
+    assert a.severity is Severity.ALARM and a.family == "system" and not a.needs_notification

@@ -58,7 +58,7 @@
     1.0
    ],
    "warning_rate": 1.0,
-   "latency_days_median": 7.666666666666666,
+   "latency_days_median": 7.583333333333334,
    "latency_days_p90": 8.052083333333334,
    "lead_days_median": 2.604166666666667,
    "lead_days_min": 0.9479166666666666,
@@ -828,7 +828,7 @@
      "lead_days_median": null,
      "warning_lead_days_median": null,
      "false_alarm_runs": 0,
-     "extra_warning_runs": 1
+     "extra_warning_runs": 2
     },
     {
      "label": 1200.0,
@@ -839,7 +839,7 @@
      "lead_days_median": null,
      "warning_lead_days_median": null,
      "false_alarm_runs": 0,
-     "extra_warning_runs": 2
+     "extra_warning_runs": 5
     },
     {
      "label": 1800.0,
@@ -1022,7 +1022,7 @@
     "lead_days_median": -0.010416666666666666,
     "warning_lead_days_median": -0.010416666666666666,
     "false_alarm_runs": 0,
-    "extra_warning_runs": 0
+    "extra_warning_runs": 1
    },
    {
     "label": 4.0,
@@ -1032,8 +1032,8 @@
     "latency_days_median": 0.020833333333333332,
     "lead_days_median": -0.010416666666666666,
     "warning_lead_days_median": -0.010416666666666666,
-    "false_alarm_runs": 1,
-    "extra_warning_runs": 8
+    "false_alarm_runs": 3,
+    "extra_warning_runs": 10
    }
   ],
   "noise_healthy": [
@@ -1057,7 +1057,7 @@
     "lead_days_median": null,
     "warning_lead_days_median": null,
     "false_alarm_runs": 0,
-    "extra_warning_runs": 1
+    "extra_warning_runs": 4
    },
    {
     "label": 4.0,
@@ -1067,7 +1067,7 @@
     "latency_days_median": null,
     "lead_days_median": null,
     "warning_lead_days_median": null,
-    "false_alarm_runs": 1,
+    "false_alarm_runs": 3,
     "extra_warning_runs": 10
    }
   ],
@@ -1099,7 +1099,7 @@
     "runs": 10,
     "warning_rate": 1.0,
     "alarm_rate": 1.0,
-    "latency_days_median": 7.666666666666666,
+    "latency_days_median": 7.583333333333334,
     "lead_days_median": 2.604166666666667,
     "warning_lead_days_median": 7.5625,
     "false_alarm_runs": 0,

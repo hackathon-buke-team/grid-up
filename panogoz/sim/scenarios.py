@@ -28,7 +28,7 @@ from __future__ import annotations
 import cmath
 import math
 import random
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from enum import Enum
 from functools import lru_cache
 
@@ -329,6 +329,31 @@ def generate(scenario: Scenario | ScenarioParams, *, seed: int = 1, key: str | N
         valid=valid_l,
         truth=Truth(kind=kind, onset_t_s=onset_t if has_fault else None, danger_t_s=danger_t if has_fault else None),
     )
+
+
+def shift_scenario(scenario: Scenario, new_onset_day: float) -> Scenario:
+    """Senaryoyu zamanda kaydırır: arıza `new_onset_day`'de başlar (demo enjeksiyonu).
+
+    Mutlak gün alanları (onset, ark, veri kaybı, enerjisiz pencere) aynı miktarda
+    kaydırılır; göreli süreler (rampa, pencere uzunluğu) değişmez."""
+    p = scenario.params
+    delta = new_onset_day - p.onset_day
+
+    def move(value):
+        return None if value is None else value + delta
+
+    def move_window(win):
+        return None if win is None else (win[0] + delta, win[1] + delta)
+
+    shifted = replace(
+        p,
+        onset_day=new_onset_day,
+        arc_trip_day=move(p.arc_trip_day),
+        arc_sensor_fault_day=move(p.arc_sensor_fault_day),
+        dropout=move_window(p.dropout),
+        de_energised=move_window(p.de_energised),
+    )
+    return replace(scenario, params=shifted)
 
 
 def _s(

@@ -282,3 +282,31 @@ def test_end_to_end_real_scenario_pages_once_then_stops_after_ack():
     assert any(m.kind == "escalation" for m in mgr.sent())
     after = [m for m in mgr.sent() if m.t_s > data.truth.onset_t_s + 3 * H and m.kind in ("reminder", "escalation")]
     assert after == []  # onaydan sonra sessizlik
+
+
+def test_flapping_reopen_does_not_repage_a_person_already_notified():
+    disp, mgr, eng = setup()
+    feed(mgr, eng, NOON, Severity.ALARM)
+    assert to_names(disp) == ["Ayşe"]
+    feed(mgr, eng, NOON + 15 * M, Severity.NORMAL)  # CLEARED (yayın yok)
+    feed(mgr, eng, NOON + 30 * M, Severity.ALARM)  # REOPENED (aynı alarm)
+    assert to_names(disp) == ["Ayşe"]  # yeniden sayfalama yok
+    assert [m.kind for m in mgr.sent()] == ["first"]
+    # bekleyen hatırlatma zamanlayıcısı sürer
+    mgr.tick(NOON + 15 * M + 1, list(eng.alarms.values()))
+    assert [m.kind for m in mgr.sent()][-1] == "reminder"
+
+
+def test_system_alarm_never_pages_anyone():
+    disp, mgr, eng = setup()
+    feed(mgr, eng, NOON, Severity.ALARM, spec=SPECS["comms_lost"], phase=None)
+    assert disp.delivered == []
+
+
+def test_cleared_alarm_gets_no_reminders():
+    disp, mgr, eng = setup()
+    feed(mgr, eng, NOON, Severity.ALARM)
+    feed(mgr, eng, NOON + 5 * M, Severity.NORMAL)
+    before = len(disp.delivered)
+    mgr.tick(NOON + 3 * H, list(eng.alarms.values()))
+    assert len(disp.delivered) == before

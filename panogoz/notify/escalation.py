@@ -217,13 +217,20 @@ class EscalationManager:
     # ------------------------------------------------------------- olaylar
     def on_event(self, ev: AlarmEvent, alarm: Alarm) -> None:
         t = ev.t_s
-        if ev.type in (EventType.OPENED, EventType.REOPENED):
-            if alarm.severity >= Severity.ALARM:
+        if ev.type is EventType.OPENED:
+            if alarm.needs_notification:
+                tr = self._tracks.setdefault(alarm.id, _Track())
+                tr.last_escalation_t = t
+                self._notify_tiers(alarm, t, upto=self.policy.initial_tiers[alarm.severity], kind="first", track=tr)
+        elif ev.type is EventType.REOPENED:
+            # Aynı alarm sınırda gezindi (flapping): ilk kez sevk ediliyorsa sayfala, zaten
+            # sevk edilmişse YENİDEN SAYFALAMA -- bekleyen hatırlatma zamanlayıcısı sürer.
+            if alarm.needs_notification and alarm.id not in self._tracks:
                 tr = self._tracks.setdefault(alarm.id, _Track())
                 tr.last_escalation_t = t
                 self._notify_tiers(alarm, t, upto=self.policy.initial_tiers[alarm.severity], kind="first", track=tr)
         elif ev.type is EventType.ESCALATED:
-            if alarm.severity >= Severity.ALARM:
+            if alarm.needs_notification:
                 tr = self._tracks.setdefault(alarm.id, _Track())
                 want = self.policy.initial_tiers[alarm.severity]
                 tr.last_escalation_t = t
@@ -238,14 +245,8 @@ class EscalationManager:
             tr = self._tracks.pop(alarm.id, None)
             if tr:
                 self._broadcast(alarm, t, tr, "closed", f"[KAPANDI] {alarm.connection_id} · {alarm.id} — {alarm.close_reason or ''}.")
-        elif ev.type is EventType.CLEARED:
-            tr = self._tracks.get(alarm.id)
-            if tr:
-                self._broadcast(
-                    alarm, t, tr, "cleared",
-                    f"[NORMALE DÖNDÜ] {alarm.connection_id} · {alarm.id} — onay bekliyor: ONAY {alarm.id} <belirteç>.",
-                )
-                self._tracks.pop(alarm.id, None)
+        # CLEARED: yayın YOK ve takip sürer (flapping'de tekrar sayfalamayı önlemek için);
+        # OPEN olmayan alarm için tick zaten hatırlatma/eskalasyon üretmez.
 
     def tick(self, t_s: float, alarms: Iterable[Alarm]) -> None:
         """Zamana bağlı işler: onaylanmayan alarm için hatırlatma / üst kademe / nöbet devri."""
@@ -253,7 +254,7 @@ class EscalationManager:
             tr = self._tracks.get(alarm.id)
             if tr is None:
                 continue
-            if alarm.state is not AlarmState.OPEN or alarm.severity < Severity.ALARM:
+            if alarm.state is not AlarmState.OPEN or not alarm.needs_notification:
                 continue
             tiers = self.schedule.tiers_at(t_s)
             holders_now = frozenset(r.name for tier in tiers[: tr.tiers_notified] for r in tier)

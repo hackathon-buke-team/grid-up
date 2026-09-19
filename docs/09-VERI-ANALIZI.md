@@ -51,7 +51,7 @@ nemli ama marj yeterli, PD gürültü patlamaları.
 | İz (kind) | Aile | Puan | Eşik UYARI / ALARM / KRİTİK | Gerekçe |
 | --- | --- | --- | --- | --- |
 | `loose_bolt` | Isıl | \|θ\| (K), kardeş medyanına göre, süzülmüş I²'ye normalize | 15 / 30 / 60 | θ = "anma akımında ek sıcaklık artışı". Sağlıklı artış ≈37,5 K, ALARM'da (+30 K) anma akımında ≈67,5 K → **standart sınırı (70 K) anma yükünde aşacak** demek. Yük seviyesinden bağımsız. |
-| `loose_bolt_trend` | Isıl | Günlük θ medyanı üzerinde nedensel CUSUM / h | 1,0 (yalnız UYARI) | Yavaş kalıcı kayma; σ tabanı 1 K. |
+| `loose_bolt_trend` | Isıl | Günlük θ medyanı üzerinde nedensel CUSUM (yalnız S+, ısınma yönü) / h | 1,0 (yalnız UYARI) | Yavaş kalıcı ısınma; σ tabanı 1 K. Negatif kayma sağlıklı fazlarda medyan değişiminin yan etkisi olduğundan izlenmez (iki yönlü sürükleme `SENSOR_DRIFT` bayrağının işi). |
 | `overload` | Yük | 1 sa RMS (en yüklü faz) / anma | 1,10 / 1,25 / 1,40 | Isınma I²'nin zaman ortalamasıyla belirlenir, anlık tepe ile değil. |
 | `neutral_overload` | Yük | 1 sa RMS(I_N) / nötr anma | 0,85 / 1,00 / 1,20 | 3. harmonik nötrde aritmetik toplanır. |
 | `neutral_joint` | Isıl | K_N oranı (rezidü tabanlı, süzülmüş I² ve ortam) | 1,5 / 2,0 / 3,0 | CLAUDE.md §2 `K_N=ΔT/I²`, ısıl gecikme telafili. |
@@ -75,7 +75,7 @@ PD, son 24 saatte ısıl veya ortam ailesinden en az UYARI gelmedikçe UYARI'da 
 | Senaryo | Beklenen | Tespit (95% GA) | ALARM gecikmesi med/p90 (gün) | UYARI gecikmesi med (gün) | Tehlikeye kalan (ALARM) med/min (gün) | ALARM tehlikeden önce | Yanlış alarm (koşu) | Ek uyarı (koşu) |
 |---|---|---|---|---|---|---|---|---|
 | Gevşek cıvata (ani) | loose_bolt | 100% (72%–100%) | 0.02 / 0.03 | 0.02 | 0.33 / 0.32 | 100% | 0/10 | 0/10 |
-| Gevşek cıvata (kademeli) | loose_bolt | 100% (72%–100%) | 7.67 / 8.05 | 3.02 | 2.60 / 0.95 | 100% | 0/10 | 0/10 |
+| Gevşek cıvata (kademeli) | loose_bolt | 100% (72%–100%) | 7.58 / 8.05 | 3.02 | 2.60 / 0.95 | 100% | 0/10 | 0/10 |
 | Gevşek cıvata (sıcak yaz) | loose_bolt | 100% (72%–100%) | 0.02 / 0.03 | 0.02 | 0.33 / 0.32 | 100% | 0/10 | 0/10 |
 | Gevşek cıvata (düşük yükte gizli) | loose_bolt | 100% (72%–100%) | 0.02 / 0.03 | 0.02 | — / — | — | 0/10 | 0/10 |
 | Sürekli aşırı yük | overload | 100% (72%–100%) | 1.27 / 1.27 | 0.36 | — / — | — | 0/10 | 0/10 |
@@ -113,7 +113,7 @@ ALARM-üstü yanlış alarm** → %95 üst sınır **0,17 / pano-yılı** ("üç
 - *Ani* arızalarda "tehlikeye kalan" ≈ 0,3 gün: ×2,2 direnç yükün tepe saatinde
   birkaç saatte tehlikeye varır. Hiçbir dedektör bunu haftalar önce bilemez; ALARM
   yarım saat içinde gelir.
-- *Kademeli* bozulmada UYARI 3 günde, ALARM 7,7 günde gelir, tehlikeye **≥0,95
+- *Kademeli* bozulmada UYARI 3 günde, ALARM 7,6 günde gelir, tehlikeye **≥0,95
   gün (medyan 2,6 gün)** kalır.
 - Nötr eklem, PD ve ark bütünlüğünde tehlike anı tanımlı değil (ölçülen sıcaklık
   artışı 70 K'ya ulaşmıyor); yalnız gecikme raporlanır.
@@ -123,7 +123,7 @@ ALARM-üstü yanlış alarm** → %95 üst sınır **0,17 / pano-yılı** ("üç
 | Senaryo | Bu sistem: tespit / ALARM gecikmesi (gün) | Sabit 75 °C: tespit / yanlış alarm / gecikme (gün) | Sabit +45 K: tespit / yanlış alarm / gecikme (gün) |
 |---|---|---|---|
 | Gevşek cıvata (ani) | 10/10 / 0.02 | 10/10 / 0/10 / 0.16 | 10/10 / 0/10 / 0.16 |
-| Gevşek cıvata (kademeli) | 10/10 / 7.67 | 10/10 / 0/10 / **5.84** | 10/10 / 0/10 / **5.84** |
+| Gevşek cıvata (kademeli) | 10/10 / 7.58 | 10/10 / 0/10 / **5.84** | 10/10 / 0/10 / **5.84** |
 | Gevşek cıvata (sıcak yaz) | 10/10 / 0.02 | **0/10 / 10/10 yanlış** / — | 10/10 / 0/10 / 0.16 |
 | Gevşek cıvata (düşük yükte gizli) | 10/10 / 0.02 | **0/10** / 0/10 / — | **0/10** / 0/10 / — |
 | Sürekli aşırı yük | 10/10 / 1.27 | 10/10 / 0/10 / 0.35 | 10/10 / 0/10 / 0.17 |
@@ -132,7 +132,7 @@ ALARM-üstü yanlış alarm** → %95 üst sınır **0,17 / pano-yılı** ("üç
 Ne kazandırıyor, ne kazandırmıyor (dürüstçe):
 - **Sabit 75 °C yazın kör ve yanlış alarmlı:** sıcak yaz kontrolünde 10/10 yanlış alarm, sıcak yazda gerçek arızayı ise hiç yakalayamıyor (alarm arızadan önce zaten çalıyor). θ ikisinde de doğru.
 - **Düşük yükte gizli arıza:** hem 75 °C hem +45 K kuralı 0/10; θ yüke göre normalize ettiği için 10/10. Bu, θ'nın asıl üstünlüğü: bugün görünmeyen arıza, yük artınca yanacak.
-- **Ortama göre +45 K kuralı güçlü bir rakip:** ani ve kademeli arızada bizden erken/eşit (kademelide **5,84 gün, bizim ALARM'ımız 7,67 gün**). Bizim kademeli arızadaki avantajımız ALARM değil **UYARI (3,0 gün)** ve düşük yük görünürlüğü.
+- **Ortama göre +45 K kuralı güçlü bir rakip:** ani ve kademeli arızada bizden erken/eşit (kademelide **5,84 gün, bizim ALARM'ımız 7,58 gün**). Bizim kademeli arızadaki avantajımız ALARM değil **UYARI (3,0 gün)** ve düşük yük görünürlüğü.
 - Aşırı yükte sıcaklık kuralları bizden erken (0,17–0,35 gün); bizim yük dedektörümüz (1,27 gün) ALARM eşiği (1,25× anma, 1 sa RMS) ve debounce nedeniyle daha ihtiyatlı. UYARI 0,36 günde.
 
 ### 3.3 Duyarlılık: kör bölge (L2 gevşek cıvata, direnç çarpanı)
@@ -167,15 +167,16 @@ bozulma haftalar sürüyorsa geçerlidir; bunu biz seçmiyoruz, fizik belirliyor
 
 **Sensör gürültüsü + ofset çarpanı** (×1: σ_gürültü=0,25 K, σ_ofset=0,5 K):
 
-| Çarpan | Arıza (k×3) ALARM oranı | Arıza yanlış alarm koşusu | Sağlıklı yanlış alarm koşusu | Sağlıklı ek uyarı koşusu |
+| Çarpan | Arıza (k×3) ALARM oranı | Arıza koşusunda yanlış alarm | Sağlıklı yanlış alarm koşusu | Sağlıklı ek uyarı koşusu |
 |---|---|---|---|---|
-| ×1 | 100% | 0 | 0 | 0 |
-| ×2 | 100% | 0 | 0 | 1 |
-| ×4 | 100% | **1** | **1** | 10 |
+| ×1 | 100% | 0/10 | 0/10 | 0/10 |
+| ×2 | 100% | 0/10 | 0/10 | **4/10** |
+| ×4 | 100% | **3/10** | **3/10** | 10/10 |
 
-×2'ye kadar sağlam; **×4'te (1 K gürültü, 2 K ofset) kırılma başlıyor** — sağlıklı
-panoda her koşu UYARI veriyor, bir koşuda ALARM çıkıyor. Sahada sensör ofset
-kalibrasyonu (sıfır-yük izotermal referans) bu yüzden bir kurulum adımı olmalıdır.
+×2'ye kadar ALARM düzeyinde sağlam (yanlış alarm 0) ama ×2'de 4/10 sağlıklı koşu UYARI
+veriyor; **×4'te (1 K gürültü, 2 K ofset) kırılma**: 3/10 sağlıklı koşuda yanlış ALARM,
+tümünde UYARI. Sahada sensör ofset kalibrasyonu (sıfır-yük izotermal referans) bu yüzden
+bir kurulum adımı olmalıdır.
 
 **Gerçek ısıl zaman sabiti** (dedektör τ'yu taban çizgisinden tahmin eder; gerçek
 τ = 600…7200 s):
@@ -224,6 +225,17 @@ gelmesi §4'teki ikinci bulgunun sonucudur; öncesinde 7200 s'de sağlıklı ko�
    değil, rakibi adil kılmak için yapıldı (θ kardeş farkı olduğundan ortam seviyesinden
    bağımsızdır).
 
+6. **Maskeli örnek durumu sıfırlıyordu → tek arıza için 179 mesaj** (filo servisi testinde
+   bulundu, matris görmemişti). Düşük yükte gizli arıza her gece `LOW_LOAD` maskesine
+   düşünce alarm "temizleniyor", her gün yeniden açılıyor ve 6,4 günde 179 bildirim
+   üretiyordu. "Bilgi yok" "normal" demek değildir: maskeli örnekte histerezis durumu
+   artık TUTULUR (`severity_with_deadband`). Eşlik eden hijyen düzeltmeleri: yeniden
+   açılışta (flapping) tekrar sayfalama yok; hiç ALARM'a çıkmamış (yalnız UYARI) alarm
+   normale dönünce onay beklemeden kapanır; sistem alarmı (cihaz susuyor) nöbetçiyi aramaz.
+   **Dürüst bedel:** durum tutma, gürültüyle tetiklenen geçici UYARI'yı biraz uzatıyor —
+   gürültü ×4'te sağlıklı yanlış-ALARM koşusu 1/10 → 3/10, ×2'de ek-UYARI koşusu 1/10 → 4/10
+   oldu (ana matris değişmedi: 0/220 yanlış alarm, 110/110 tespit).
+
 ## 5. Bilinen sınırlar (jüri sorusuna hazır)
 
 - **Sentetik + öz-tutarlı:** dedektör ve simülatör aynı ekipten; 1. derece ısıl model
@@ -236,7 +248,7 @@ gelmesi §4'teki ikinci bulgunun sonucudur; öncesinde 7200 s'de sağlıklı ko�
   15 K altına sevk çıkarmak yanlış alarm bütçesini bozar.
 - **Ani şiddetli arıza:** haber verme ≈ 0 (fizik: dakikalar içinde tehlike). Sistem
   yarım saat içinde ALARM verir; "önceden" iddia edilmez.
-- **Sensör gürültüsü ×4'te** yanlış alarm başlıyor (§3.5); ofset kalibrasyonu şart.
+- **Sensör gürültüsü ×4'te** 3/10 sağlıklı koşuda yanlış ALARM başlıyor (§3.5); ofset kalibrasyonu şart.
 - **Donanımda eksik:** yoğuşma dedektörü için iç hava T/RH sensörü ve duvar (soğuk nokta)
   NTC'si var sayıldı; **bugünkü KiCad tasarımında (docs/03) yok.** IR/PD düğümüne
   I²C T/RH sensörü + NTC girişi eklenmesi K1'e açık madde.

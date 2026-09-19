@@ -80,14 +80,16 @@ def severity_with_deadband(
     """Histerezisli ham şiddet: bir seviyeye eşiği aşınca girilir, ancak puan o
     seviyenin eşiğinin `(1 - deadband)` katının altına inince çıkılır. Sınırda
     dolaşan bir puanın alarmı açıp kapatıp durmasını (flapping) önler.
-    Puan None (bastırılmış örnek) ise durum sıfırlanır: bastırılmış bir aralık
-    bir sonraki değerlendirmeye seviye taşımaz."""
+    Puan None (bastırılmış örnek: düşük yük, veri yok, enerjisiz) ise durum TUTULUR:
+    "bilgi yok" "normal" demek değildir. Aksi halde yalnız yüksek yükte görünen bir
+    arıza (düşük-yük senaryosu) her gece maskelenince "temizlenir", her gün yeniden
+    açılır ve tek arıza için onlarca alarm/bildirim üretir (ölçüldü: 6,4 günde 179
+    mesaj). Durum, ilk geçerli örnekte güncellenir."""
     state = Severity.NORMAL
     result: list[Severity] = []
     for score in scores:
         if score is None:
-            state = Severity.NORMAL
-            result.append(Severity.NORMAL)
+            result.append(state)
             continue
         entry = Severity.NORMAL
         hold = Severity.NORMAL

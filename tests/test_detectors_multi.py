@@ -104,9 +104,14 @@ def test_deadband_steps_down_one_level_at_a_time():
     assert out == [Severity.ALARM, Severity.ALARM, Severity.WARNING, Severity.NORMAL]
 
 
-def test_deadband_resets_on_masked_sample():
-    out = severity_with_deadband([40.0, None, 12.0], THETA_THR, deadband=0.40)
-    assert out == [Severity.ALARM, Severity.NORMAL, Severity.NORMAL]  # 12 < 15: taşınan seviye yok
+def test_masked_sample_holds_state_because_no_information_is_not_normal():
+    out = severity_with_deadband([40.0, None, None, 12.0], THETA_THR, deadband=0.40)
+    # maskeli örneklerde ALARM tutulur; ilk geçerli örnek (12 < 15*0.6... ALARM'ın çıkış eşiği 18) seviyeyi düşürür
+    assert out == [Severity.ALARM, Severity.ALARM, Severity.ALARM, Severity.WARNING]
+
+
+def test_masked_start_stays_normal():
+    assert severity_with_deadband([None, None, 20.0], THETA_THR) == [Severity.NORMAL, Severity.NORMAL, Severity.WARNING]
 
 
 def test_debounce_requires_three_of_five():

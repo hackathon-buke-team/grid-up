@@ -179,7 +179,12 @@ def _theta_scored(data: ScenarioData, theta: dict[Phase, list[ThetaSample]], pha
 
 def _trend_scored(data: ScenarioData, theta: dict[Phase, list[ThetaSample]], phase: Phase) -> Scored:
     """Günlük θ medyanları üzerinde nedensel (causal) CUSUM: gün d'nin örnekleri,
-    yalnız gün d-1'in sonuna kadar görülen veriden hesaplanan istatistiği kullanır."""
+    yalnız gün d-1'in sonuna kadar görülen veriden hesaplanan istatistiği kullanır.
+
+    Yalnız POZİTİF (ısınma) kayma izlenir: gevşek bağlantı direnç -> sıcaklık artışı
+    üretir. Negatif kayma sağlıklı fazlarda 'kardeş medyanı' değişiminin yan etkisidir
+    (arızalı faz medyanın üstüne çıkınca medyan diğer sağlam faza geçer ve o fazlar
+    çıkarılmış olur); iki yönlü sürükleme SENSOR_DRIFT bayrağının (flags.py) işidir."""
     n = len(data.t_s)
     masked = [
         ThetaSample(t_s=s.t_s, phase=phase, theta=s.theta if (data.valid[i] and data.current_a[phase][i] >= DE_ENERGISED_MAX_LOAD_FRACTION * data.rated_current_a) else None)
@@ -192,7 +197,7 @@ def _trend_scored(data: ScenarioData, theta: dict[Phase, list[ThetaSample]], pha
         return Scored([None] * n, [REASON_WARMUP] * n)
 
     baseline_end_day = result.day_index[29] if len(result.day_index) >= 30 else result.day_index[-1]
-    ratio_by_day = {d: max(sp, -sn) / result.h for d, sp, sn in zip(result.day_index, result.s_pos, result.s_neg)}
+    ratio_by_day = {d: sp / result.h for d, sp in zip(result.day_index, result.s_pos)}  # yalnız ısınma yönü (S+)
     values: list[float | None] = []
     reasons: list[str | None] = []
     last_ratio: float | None = None
