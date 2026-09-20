@@ -102,6 +102,10 @@ def _print_notify(rt, args) -> None:
             print("    Saha PIN'leri (rastgele, yalniz bu konsolda; sabitlemek icin notify.local.json):")
             for name, pin in cfg.generated_pins.items():
                 print(f"      {name:<22} {pin}")
+        elif str(cfg.source).endswith("notify.demo.json"):
+            print("    Saha PIN'leri (DEMO, sabit; notify.demo.json):")
+            for m in cfg.rota:
+                print(f"      {m['name']:<22} {m['pin']}")
     print()
 
 

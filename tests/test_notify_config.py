@@ -163,3 +163,28 @@ def test_factory_starts_the_telegram_poller_only_when_asked(tmp_path):
         finally:
             n.close()
         assert not n.telegram.running
+
+
+def test_demo_file_gives_fixed_pins_when_there_is_no_local_file(tmp_path, monkeypatch):
+    """Whoever clones the repo logs in with the documented PINs, no console needed."""
+    monkeypatch.setattr(cfg, "LOCAL_PATH", tmp_path / "yok.json")
+    c = cfg.load(env={})
+    assert c.source == str(cfg.DEMO_PATH)
+    assert c.generated_pins == {}
+    assert [m["pin"] for m in c.rota] == ["1111", "2222", "3333"]
+    assert any("DEMO" in w for w in c.warnings)
+    assert c.telegram is None and c.sms["provider"] == "sim"       # nothing real, nothing secret
+    from panogoz.notify.escalation import DEFAULT_ROTA
+    assert [(m["name"], m["level"], m["number"]) for m in c.rota] == \
+           [(m["name"], m["level"], m["number"]) for m in DEFAULT_ROTA]
+
+
+def test_local_file_beats_the_demo_file(tmp_path, monkeypatch):
+    real = tmp_path / "notify.local.json"
+    real.write_text(json.dumps({"rota": [{"name": "A", "number": "+905551110000", "pin": "9876"}]}),
+                    encoding="utf-8")
+    monkeypatch.setattr(cfg, "LOCAL_PATH", real)
+    c = cfg.load(env={})
+    assert c.source == str(real)
+    assert [m["pin"] for m in c.rota] == ["9876"]
+    assert not any("DEMO" in w for w in c.warnings)

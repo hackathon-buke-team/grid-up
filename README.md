@@ -47,6 +47,27 @@ ve yükseltiriz**.
 
 ## 2. Tek komutla çalıştırma
 
+**İlk kez indiren için** (Windows, Python 3.11+ kurulu olmalı):
+
+```powershell
+git clone --branch k1-saha-web https://github.com/hackathon-buke-team/grid-up.git
+cd grid-up
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt   # yalnız bir kez; internet ister
+.\baslat.ps1
+```
+
+- Konsol: http://127.0.0.1:8080/ · **Saha uygulaması: http://127.0.0.1:8080/saha/**
+- Saha girişi, demo için **sabit PIN** ile (`notify.demo.json`, sunucu konsolunda da yazar):
+  Nöbetçi tekniker **1111** · Vardiya amiri **2222** · İşletme müdürü **3333**.
+  Bu PIN'ler repoda herkese açıktır; telefonu/LAN'ı açmadan önce `notify.example.json`'u
+  `notify.local.json` olarak kopyalayıp kendi PIN'lerinizi yazın (o dosya git'e girmez).
+- SMS ve sesli arama **simüledir**, Telegram kapalıdır: hiçbir yere mesaj gitmez.
+- Onay bekleyen bir uyarı görmek için bir ark olayı tetikleyin (konsoldaki senaryo düğmesi ya da
+  `Invoke-RestMethod -Method Post http://127.0.0.1:8080/api/scenario/ark_olayi`). Açılışta
+  geçmiş veriden gelen olaylara bildirim gitmez; bu tasarım gereğidir.
+- Port 8080 doluysa: `.\baslat.ps1 -Port 8099`.
+
 ```powershell
 # Windows PowerShell, proje kökünde
 .\baslat.ps1

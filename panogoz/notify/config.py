@@ -22,9 +22,14 @@ Search order
 ------------
 
 1. ``PANOGOZ_NOTIFY_CONFIG`` (a path; must exist),
-2. ``notify.local.json`` in the repository root (optional),
-3. the built-in demo defaults - the simulated modem, no Telegram, the three-person
-   demo rota with **random per-start PINs**.
+2. ``notify.local.json`` in the repository root (optional, git-ignored: it holds the
+   real token, numbers and PINs),
+3. ``notify.demo.json`` in the repository root (committed, no secrets): the same
+   three-person rota with **fixed demo PINs**, so whoever clones the repo can log in
+   to the field app without reading a console,
+4. the built-in demo defaults - the simulated modem, no Telegram, the three-person
+   demo rota with **random per-start PINs** (only when neither file exists, and always
+   for a process that did not ask for live channels).
 
 Then the environment overrides individual values: ``PANOGOZ_TELEGRAM_TOKEN``,
 ``PANOGOZ_TELEGRAM_API``, ``PANOGOZ_TELEGRAM_PRIVACY``, ``PANOGOZ_PUBLIC_URL``,
@@ -54,6 +59,7 @@ from panogoz.notify.escalation import DEFAULT_ROTA
 DEFAULT_API = "https://api.telegram.org"
 ROOT = Path(__file__).resolve().parents[2]
 LOCAL_PATH = ROOT / "notify.local.json"
+DEMO_PATH = ROOT / "notify.demo.json"
 EXAMPLE_PATH = ROOT / "notify.example.json"
 
 _PLACEHOLDER_SUFFIX = "DEGISTIR"
@@ -97,6 +103,8 @@ def load(path: str | None = None, env: Mapping[str, str] | None = None) -> Notif
             raise ConfigError(f"PANOGOZ_NOTIFY_CONFIG dosyasi yok: {explicit}")
     elif LOCAL_PATH.exists():
         data, source = _read(LOCAL_PATH), str(LOCAL_PATH)
+    elif DEMO_PATH.exists():
+        data, source = _read(DEMO_PATH), str(DEMO_PATH)
 
     return _build(data, env, source)
 
@@ -118,6 +126,9 @@ def _build(data: dict, env: Mapping[str, str], source: str) -> NotifyConfig:
     telegram = _telegram(data.get("telegram"), env, warnings)
     sms = _sms(data.get("sms"), env)
     rota, generated = _rota(data.get("rota"))
+    if source == str(DEMO_PATH):
+        warnings.append("sabit DEMO PIN'leri kullaniliyor (repoda herkese acik); LAN'a acmadan once "
+                        "notify.local.json ile degistirin")
     return NotifyConfig(public_url=public_url, rota=rota, telegram=telegram, sms=sms,
                         source=source, generated_pins=generated, warnings=warnings)
 

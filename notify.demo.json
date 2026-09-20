@@ -1,0 +1,9 @@
+{
+  "_aciklama": "DEMO yapilandirmasi: repoda durur, GIZLI BILGI ICERMEZ. notify.local.json yoksa run_local bunu okur; indirip calistiran herkes ayni PIN'lerle girer. SMS simuledir (hicbir yere mesaj gitmez), Telegram kapalidir. Gercek dagitimda notify.example.json'u notify.local.json olarak kopyalayip PIN'leri, telefon numaralarini ve bot anahtarini orada degistirin.",
+
+  "rota": [
+    { "name": "Nöbetçi tekniker", "role": "birincil", "level": 1, "number": "+905321112233", "pin": "1111" },
+    { "name": "Vardiya amiri",    "role": "ikincil",  "level": 2, "number": "+905321112244", "pin": "2222" },
+    { "name": "İşletme müdürü",   "role": "yönetici", "level": 3, "number": "+905321112255", "pin": "3333" }
+  ]
+}
