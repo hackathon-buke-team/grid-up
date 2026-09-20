@@ -314,7 +314,11 @@ düzeltmesidir. **Atlanamaz:** düşürülürse 19 112 → 5 944 olur, yani 3.2 
 cusum > 8   VE   θ_günlük ≥ 5 K   VE   son 5 günün 3'ü
 ```
 
-Yukarıdaki sayılar bu nedenle alarm hızının **üst sınırıdır**, kendisi değil.
+Analitik olarak yukarıdaki sayılar bu nedenle alarm hızının **üst sınırı** olmalıdır.
+
+**Uçtan uca ölçüm bunu DESTEKLEMİYOR** ([sunum/dogruluk.md](../sunum/dogruluk.md) §3, `tests/test_dogruluk.py` kilitler). Arızasız simüle pano, gerçek boru hattı, gün gün işletme, 20 koşum × 53 gün = 1060 pano-günü: **26 adet ≥ UYARI olay** = 8,95 olay/pano-yıl (%95 kesin Poisson aralığı 5,85–13,12); yukarıdaki tablonun geçiş hızı ise pano başına 0,76 olay/pano-yıl. Ölçülen alarm hızının **alt** sınırı bile analitik "üst sınırın" üstündedir. Bu rakam bu yüzden **üst sınır olarak sunulmamalıdır**; docs/08 §10'daki jüri cevabı (K3) güncellenmelidir.
+
+Olası neden §5.5'te zaten yazılı (günlük medyanlar otokorelasyonlu ve ρ cezası üsteldir) ama **bu ölçümle doğrulanmadı**: simülatörün sağlıklı pabuç dağılımı da neden olabilir. Ölçüm simülatör üzerindedir; gerçek yanlış alarm oranı yalnız etiketli saha geçmişiyle ölçülür.
 
 ### 5.5 Dürüst uyarılar
 

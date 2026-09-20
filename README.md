@@ -129,6 +129,7 @@ dekonvolüsyon yapmadığımız orada, ölçülmüş sayılarla yazılıdır.
 | [docs/08-DEMO-SENARYOSU.md](docs/08-DEMO-SENARYOSU.md) | 5 dakikalık demo, replikleriyle ve kesme çizgileriyle |
 | [docs/09-VERI-ANALIZI.md](docs/09-VERI-ANALIZI.md) | Sağlanan `İstenen Veriler.xlsx` dosyasının tam karakterizasyonu — §6'daki kanıtların uzun hâli |
 | [docs/10-MV-HUCRE-KONSEPTI.md](docs/10-MV-HUCRE-KONSEPTI.md) | OG hücre konsepti — çizim verilmedi, dürüstçe konsept |
+| [sunum/dogruluk.md](sunum/dogruluk.md) | **Doğruluk raporu** (görev 4.4): 17 senaryolu tespit matrisi, haber verme süresi, yanlış alarm bütçesi, duyarlılık eğrisi, iki grafik. Her sayı `python -m sunum.rapor` ile koşumdan üretilir |
 | [docs/12-BILDIRIM-KANALLARI.md](docs/12-BILDIRIM-KANALLARI.md) | SMS + Telegram + saha uygulaması: tek merdiven, veri mahremiyeti değerlendirmesi, kurulum, demo provası, **doğrulanmayanlar** |
 | [docs/11-ACIK-SORULAR.md](docs/11-ACIK-SORULAR.md) | Yalnız müşterinin cevaplayabileceği sorular ve her birinin tasarımı nasıl değiştireceği |
 | [docs/PANOGOZ-ICD-v2.0.md](docs/PANOGOZ-ICD-v2.0.md) | SCADA arayüz kontrol dokümanı — koddan üretilir, elle yazılmaz |
@@ -162,6 +163,7 @@ baslat.ps1        Windows tek komut sarmalayıcısı (ağa çıkmaz, paket kurma
 firmware/node/    Uç düğüm firmware'i, C99, STM32WLE5CC, float yok, malloc yok
 frontend/         Arayüz: dijital ikiz, alarm konsolu, bastırma ekranı, SCADA görünümü
 saha/             Ekip telefonu uygulaması (PWA, sıfır bağımlılık): /saha/
+sunum/            Doğruluk ölçümü (`python -m sunum.rapor`): koşum düzeneği, rapor, grafikler
 notify.example.json  Bildirim yapılandırması şablonu (notify.local.json git'e girmez)
 analysis/         Sağlanan xlsx dosyasının istatistiksel karakterizasyonu
 tests/            Kabul testleri; her modülün ayrıca kendi self-test'i var
@@ -191,6 +193,7 @@ Gerileme takımı, daha önce gerçekten yaşanmış hataları yeniden üretip k
 | `tests/test_negative_pipeline.py` | Yedi negatif kontrolün gerçek boru hattında alarm üretmemesi — ve aynı koşumda pozitif kontrolün üretmesi |
 | `tests/test_notify_ladder.py` | Merdivenin her kanala açılması, bir kanaldan onayın hepsini durdurması, `minimal` Telegram'da ölçüm sızmaması; **eşiğe kalan gün satırının gerçek SMS'e girmesi** (`compose` `live` almadan çağrılıyordu) |
 | `tests/test_notify_e2e.py` | Gerçek `Runtime` + üretim fabrikası: demo senaryosu → Telegram → onay; **konsolun ark düğmesinin bir saat beklemeden telefonu çaldırması** (`ark_olayi` varsayılanı `at_s=3600`) |
+| `tests/test_dogruluk.py` | Rapordaki her sayının kayıtlı koşumlardan birebir üretilmesi; iki koşumun saat sabitken aynı sonucu vermesi; amiral gemisi ve arkın taban çizgisi; **ölçülmüş boşlukların kilidi** (kaçan senaryolar, kurulmayan bayraklar, docs/04 §5.4 iddiası) |
 | `tests/test_notify_telegram.py`, `test_gsm_serial.py`, `test_saha_api.py`, `test_notify_config.py` | Telegram taşıması ve token gizliliği; GSM PDU baytları ve AT diyaloğu; saha uygulamasının oturum/kilit/onay sözleşmesi; sırların yeri ve gerçek kanalların yalnız başlatıcıdan açılması |
 
 ---

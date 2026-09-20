@@ -218,7 +218,7 @@ süresi dolmadı"*. Güvenlik özelliği olduğu için gevşetilmedi; ayrıntı 
 `frontend/`, `panogoz/contracts/`, `store/schema.sql` **değişmedi**; iş emri durumu şema
 değişikliği olmadan `audit` zincirine yazılır.
 
-**Doğrulandı.** `python -m pytest -q` → **285 geçti, 4 düştü** (172 taban + 117 yeni = 289; bir önceki tam koşumda 6 düşmüştü, yani düşen sayı koşumdan koşuma değişiyor). Düşen
+**Doğrulandı.** `python -m pytest -q` → **312 geçti, 1 düştü** (313 = 172 taban + 141 yeni [117 bildirim + 24 doğruluk]). Düşen sayı koşumdan koşuma değişti (art arda tam koşumlarda 6, 4, sonra 1): kök neden Tur 4'te ölçüldü, simülatör mutlak zamana bağlı. Düşen
 testler `tests/test_negative_pipeline.py::test_negative_control_opens_no_incident_or_horizon[*]`'tir ve
 **bu turun değişikliğinden bağımsızdır**: değişmemiş `origin/main`'in izole bir kopyasında (git
 worktree) aynı testler aynı biçimde düştü ve aynı gün iki tam koşumda (14:5x, 15:5x) geçmişti.
@@ -237,6 +237,51 @@ bildirimi. Ayrıntı: docs/12 §9.
 
 **Açık (görev 4.2).** "Sessize alma" ve "nöbet devri" yok; `/sessiz`, `/devral` komutları ve
 rota değişikliği eklenmedi.
+
+---
+
+## Tur 4 (K4 · doğruluk sunumu, görev 4.4)
+
+Tarih: 20 Eylül 2026 · Rapor: [sunum/dogruluk.md](sunum/dogruluk.md) · Komut: `python -m sunum.rapor`
+(tüm çekirdeklerle ≈ 10 dk; `--hizli` ≈ 3 dk; `--kayittan` koşum yapmadan raporu kayıtlardan yeniden üretir).
+
+**Ne eklendi.** `sunum/dogruluk.py` (tek koşum: gerçek boru hattı, gün gün, **saat sabit**, ayrı süreç),
+`sunum/rapor.py` (plan, toplama, tek sayfalık rapor, iki grafik), `sunum/dogruluk.{json,md}` ve iki PNG,
+`tests/test_dogruluk.py` (24 test). 202 koşum; her sayı bir kayıttan üretilir ve
+test raporu kayıttan birebir yeniden üretir.
+
+**Sonuç (hepsi simülatörde; saha verisiyle doğrulanmamıştır):**
+
+* Amiral gemisi (gevşek bağlantı 4,0 K/hafta) 30/30 koşumda ekip alarmı verdi, medyan
+  15,0 gün sonra; 90 °C'lik sabit eşik 0/30 koşumda hiç atmazdı.
+  Ark olayı 6/6 (ACİL).
+* **10 alarm-beklenen senaryonun yalnız 2'si her koşumda ekip alarmı veriyor.** Hiç vermeyenler: harmonik yük,
+  aşırı yük, havalandırma tıkalı, yoğuşma, ark dedektörü arızası. Panel modlarında birleşik risk yükseliyor ama
+  eşiğe (0,40 İZLE / 0,65 UYARI) ulaşmıyor; nedeni (şiddet, füzyon ağırlığı, eşik) ayrılamadı.
+* `faults.py` `gevsek_baglanti`'yı `expect_alarm: True` ilan ediyor ama varsayılan 0,2 K/hafta 41 günde alarm vermiyor
+  (0/8). Yarı yarıya duyarlılık ≈ 0,5 K/hafta.
+* **Yanlış alarm bütçesi:** arızasız panoda 26 adet ≥ UYARI olay / 1060 pano-günü
+  = 8,95 olay/pano-yıl (%95: 5,85–13,12);
+  telefona çıkan (≥ KRİTİK) 2 olay. **docs/04 §5.4'ün "üst sınır" iddiası ve docs/08 §10'daki
+  jüri cevabı ("4,8 günde bir") bu ölçümle desteklenmiyor**; ilki düzeltildi, ikincisi K3'ün dosyasıdır ve
+  **sunumdan önce güncellenmeli**.
+* Görev 4.3 sayıyla: 5 senaryonun ilan ettiği bayrak hiçbir koşumda kurulmadı (ark/DE_ENERGISED, sensör takıldı/STALE,
+  sensör kayması/SENSOR_DRIFT, düğüm sessiz/STALE, pano enerjisiz/DE_ENERGISED).
+
+**Yolda bulunan ve düzeltilen düzenek hataları** (bunlar olmasa yanlış sonuç yayınlanırdı):
+
+| Bulgu | Etki | Şimdi |
+|---|---|---|
+| **Simülatör mutlak zamana bağlı.** Aynı tohum ve aynı saat bit bit aynı sonucu veriyor; saat 5 saat kayınca θ tepesi, CUSUM ilk aşımı ve "eşiğe kalan gün" değişiyor | `tests/test_negative_pipeline.py`'nin **saate göre düşmesinin kök nedeni** (ölçülmüş, varsayım değil) | Ölçüm düzeneği saati sabitler. O testin kendisi DÜZELTİLMEDİ: saati sabitlemek kırmızıyı gizlerdi; asıl bulgu "sağlıklı pabuç için < 90 günlük ufuk" oranıdır (rapor §3) |
+| **Pano donanımı tohuma göre rastgele:** 30 tohumun 16'sında analizör + ark rölesi tam | Ark senaryosu "algılanmadı" göründü; rölesiz panoda ark alarmı zaten verilemez | Yalnız tam donanımlı tohumlar; `test_no_stored_run_came_from_an_unequipped_panel` |
+| `Runtime.bootstrap` toplu yükleme yolu **panel düzeyi modları ölçemez** (debounce kovaları yalnız eklem modları için önyüklenir) | 9 senaryo sessiz göründü | Gün gün işletme |
+| Yoğuşma senaryosu yalnız 05:12–07:42'de ve 3 gün süreli | "10 gün önce" başlatmak onu ölçümden önce bitirirdi | Zamanlamalar senaryonun kendi tanımına uyar; `test_every_timing_puts_the_fault_inside_the_measured_window` |
+| Koşumun ilk günleri soğuk dedektör (öğrenme haftası yok) | Sahte yanlış alarm | İlk 7 gün ısınma, ayrıca kaydedilir |
+
+**Doğrulanmadı / sınırlar.** Saha verisi yok; simülatörün sağlıklı pabuç dağılımı gerçek olanı temsil etmiyor olabilir.
+Kaçan panel modlarının nedeni ayrılamadı. Küçük n'de aralıklar geniş (matris satırı başına 6 koşum). Ark dedektörü
+arızası için simülatörün reg 222/223'ü dedektörün beklediği biçimde sunup sunmadığı bilinmiyor. Yanlış alarm oranı
+koşum süresine göre artıyor (ilk görülme medyan 32,0. gün); yıllığa extrapolasyon kabadır.
 
 ---
 
