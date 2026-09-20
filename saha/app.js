@@ -1,7 +1,8 @@
 /* PANO GÖZ · Saha uygulaması
    ---------------------------
    Düz JavaScript, bağımlılık yok. Sunucudan gelen HER metin textContent ile
-   basılır; hiçbir yerde innerHTML'e veri verilmez.
+   basılır; hiçbir yerde innerHTML'e veri verilmez. Simgeler createElementNS ile
+   elle çizilir (dış istek yok, ikon paketi yok).
 
    Üç ekran: giriş, gelen kutusu, olay ayrıntısı (#/olay/<id> ile doğrudan açılır;
    Telegram mesajındaki bağlantı ve QR bunu kullanır).
@@ -20,14 +21,23 @@
 
   const POLL_MS = 3000;
   const POLL_HIDDEN_MS = 10000;
+  const CLOCK_MS = 10000;             // yaş ve onay süresi çubukları bu aralıkla tazelenir
   const SNOOZE_MS = 5 * 60 * 1000;
   const STEPS = ['yolda', 'sahada', 'tamam'];
   const STEP_LABEL = { yolda: 'Yola çıktım', sahada: 'Sahadayım', tamam: 'İşi tamamladım' };
+  const NODE_LABEL = ['Onay', 'Yolda', 'Sahada', 'Tamam'];
   const SEV = {
     UYARI: { cls: 'uyari', shape: '▲', name: 'UYARI', rank: 1 },
     KRITIK: { cls: 'kritik', shape: '◆', name: 'KRİTİK', rank: 2 },
     ACIL: { cls: 'acil', shape: '■', name: 'ACİL', rank: 3 },
   };
+  const ZONE = [                         // θ ölçeğinin beş bölgesi (eşikler sunucudan gelir)
+    { name: 'Normal', color: 'var(--ok)' },
+    { name: 'İzle', color: 'var(--sev-izle)' },
+    { name: 'Uyarı', color: 'var(--sev-uyari)' },
+    { name: 'Kritik', color: 'var(--sev-kritik)' },
+    { name: 'Acil', color: 'var(--sev-acil)' },
+  ];
   const CHANNEL = { SMS: 'SMS', TELEGRAM: 'Telegram', MOBIL: 'Uygulama', SESLI: 'Sesli arama',
                     EPOSTA: 'E-posta', MATRIX: 'Sohbet', PANO: 'Pano' };
   const NSTATE = { KUYRUKTA: 'kuyrukta', GONDERILDI: 'gönderildi', ILETILDI: 'iletildi', HATA: 'HATA' };
@@ -49,7 +59,7 @@
       if (k === 'class') el.className = v;
       else if (k === 'text') el.textContent = v;
       else if (k.startsWith('on')) el.addEventListener(k.slice(2), v);
-      else if (k === 'aria-pressed') el.setAttribute(k, String(v));
+      else if (k === 'aria-pressed' || k === 'aria-checked') el.setAttribute(k, String(v));
       else el.setAttribute(k, v === true ? '' : v);
     }
     for (const kid of kids.flat()) {
@@ -59,10 +69,51 @@
     return el;
   }
 
+  // ---- simgeler: 24×24 çizgi simgeleri, currentColor ile boyanır
+  const NS = 'http://www.w3.org/2000/svg';
+  const ICON = {
+    check: ['M5 12.5l4.5 4.5L19 7.5'],
+    back: ['M15 5l-7 7 7 7'],
+    chevron: ['M9 5l7 7-7 7'],
+    pin: ['M12 21s-7-6.2-7-11a7 7 0 0114 0c0 4.8-7 11-7 11z', 'M12 7.5a2.5 2.5 0 100 5 2.5 2.5 0 000-5z'],
+    backspace: ['M20 6H9l-6 6 6 6h11V6z', 'M13 10l4 4M17 10l-4 4'],
+    shield: ['M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z', 'M8.5 12.2l2.6 2.6 4.6-5'],
+  };
+  function icon(name, cls) {
+    const el = document.createElementNS(NS, 'svg');
+    for (const [k, v] of Object.entries({ viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor',
+      'stroke-width': '2', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'aria-hidden': 'true' })) el.setAttribute(k, v);
+    if (cls) el.setAttribute('class', cls);
+    for (const d of ICON[name]) {
+      const p = document.createElementNS(NS, 'path');
+      p.setAttribute('d', d);
+      el.append(p);
+    }
+    return el;
+  }
+  // PANO GÖZ işareti: konsolun favicon'uyla aynı (mavi halka + ölçüm sarısı nokta)
+  function logo(size) {
+    const el = document.createElementNS(NS, 'svg');
+    el.setAttribute('viewBox', '0 0 512 512');
+    el.setAttribute('width', size); el.setAttribute('height', size);
+    el.setAttribute('aria-hidden', 'true'); el.setAttribute('class', 'logo');
+    const shapes = [['rect', { width: 512, height: 512, rx: 96, fill: '#0c0f10' }],
+      ['circle', { cx: 256, cy: 256, r: 150, fill: 'none', stroke: '#4fa8d8', 'stroke-width': 34 }],
+      ['circle', { cx: 256, cy: 256, r: 52, fill: '#ffea46' }]];
+    for (const [tag, attrs] of shapes) {
+      const s = document.createElementNS(NS, tag);
+      for (const [k, v] of Object.entries(attrs)) s.setAttribute(k, v);
+      el.append(s);
+    }
+    return el;
+  }
+
   const num = (v, d = 1) => (v === null || v === undefined || Number.isNaN(v)) ? null
     : Number(v).toLocaleString('tr-TR', { maximumFractionDigits: d, minimumFractionDigits: 0 });
   const clock = (ts) => ts ? new Date(ts * 1000).toLocaleTimeString('tr-TR',
     { hour: '2-digit', minute: '2-digit', second: '2-digit' }) : '—';
+  const initials = (name) => String(name || '?').split(/\s+/).filter(Boolean).slice(0, 2)
+    .map((w) => w[0]).join('').toLocaleUpperCase('tr-TR');
 
   // API, SMS ile aynı ASCII seviye adlarını taşır (KRITIK'e, ACIL'e); ekranda Türkçe yazılır.
   const trSeverity = (t) => String(t).replace(/KRITIK/g, 'KRİTİK').replace(/ACIL/g, 'ACİL')
@@ -75,6 +126,12 @@
     if (s < 86400) return `${Math.floor(s / 3600)} sa ${Math.floor((s % 3600) / 60)} dk önce`;
     return `${Math.floor(s / 86400)} g önce`;
   }
+  function span(seconds) {
+    const s = Math.max(0, Math.round(seconds));
+    if (s < 60) return `${s} sn`;
+    if (s < 3600) return `${Math.floor(s / 60)} dk ${String(s % 60).padStart(2, '0')} sn`;
+    return `${Math.floor(s / 3600)} sa ${String(Math.floor((s % 3600) / 60)).padStart(2, '0')} dk`;
+  }
 
   // ------------------------------------------------------------------- durum --
 
@@ -86,6 +143,7 @@
     detailErr: null,
     filter: 'benim',
     route: parseRoute(),
+    screen: '',
     offline: false,
     syncedAt: 0,
     offset: 0,                       // sunucu saati - yerel saat (sn)
@@ -96,6 +154,8 @@
     note: '',
     busy: false,
     sig: '',
+    alarmSig: '',
+    loginCtl: null,
     timer: null,
   };
 
@@ -103,6 +163,7 @@
     const m = location.hash.match(/^#\/olay\/(\d+)/);
     return m ? { name: 'olay', id: Number(m[1]) } : { name: 'liste' };
   }
+  const nowSrv = () => Date.now() / 1000 + S.offset;
 
   // --------------------------------------------------------------------- api --
 
@@ -135,8 +196,9 @@
           const AC = window.AudioContext || window.webkitAudioContext;
           if (AC) this.ctx = new AC();
         }
-        if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume();
+        if (this.ctx && this.ctx.state === 'suspended') return this.ctx.resume();
       } catch (e) { /* ses yok */ }
+      return Promise.resolve();
     },
     ready() { return !!this.ctx && this.ctx.state === 'running'; },
     start() {
@@ -162,8 +224,16 @@
       this.osc = null;
     },
   };
-  const unlockAudio = () => Siren.unlock();
-  document.addEventListener('pointerdown', unlockAudio, { passive: true });
+  // İlk dokunuş sesi açar. Alarm örtüsü BURADA yeniden kurulmaz: parmağın altındaki
+  // düğme pointerdown ile click arasında yok olursa dokunuş kaybolur. Yalnız ipucu
+  // satırı kalkar ve siren başlar.
+  document.addEventListener('pointerdown', () => {
+    Siren.unlock().then(() => {
+      const hint = document.getElementById('alarm-ses');
+      if (hint && Siren.ready()) hint.remove();
+      if (document.getElementById('alarm') && S.soundOn) Siren.start();
+    });
+  }, { passive: true });
 
   let vibeTimer = null;
   function vibrate(on) {
@@ -218,6 +288,7 @@
     if (!list.length) {
       Siren.stop(); vibrate(false);
       if (host) host.remove();
+      S.alarmSig = '';
       document.title = 'PANO GÖZ · Saha';
       return;
     }
@@ -228,20 +299,27 @@
     for (const x of list) {
       if (!S.seen.has(x.id)) { S.seen.add(x.id); systemNotify(x); }
     }
+    // Örtü yalnız İÇERİĞİ değişince yeniden kurulur; her yoklamada kurulsa halka
+    // animasyonu her üç saniyede baştan başlar ve göz yorar.
+    const sig = [list.map((x) => x.id).join(','), S.soundOn].join('|');
+    if (host && sig === S.alarmSig) return;
+    S.alarmSig = sig;
     const sev = SEV[c.severity] || SEV.KRITIK;
-    const node = h('div', { id: 'alarm', class: `alarm ${sev.cls} yanip`, role: 'alertdialog', 'aria-label': 'Alarm' },
-      h('div', { class: `etiket ${sev.cls}` }, `${sev.shape} ${sev.name}${list.length > 1 ? ` · ${list.length} olay onay bekliyor` : ''}`),
+    const snooze = () => { S.snooze[c.id] = Date.now() + SNOOZE_MS; syncAlarm(); };
+    const node = h('div', { id: 'alarm', class: `alarm ${sev.cls}`, role: 'alertdialog', 'aria-label': 'Alarm' },
+      h('div', { class: 'simge', text: sev.shape }),
+      h('div', { class: 'seviye', text: `${sev.name}${list.length > 1 ? ` · ${list.length} olay onay bekliyor` : ''}` }),
       h('h1', { text: 'Onay bekleyen olay' }),
       h('div', { class: 'konum', text: `${c.panel_key} · ${c.joint_short}` }),
-      h('div', { class: 'dim', text: c.mode_label }),
+      h('div', { class: 'mod', text: c.mode_label }),
       h('div', { class: 'yapilacak', text: c.action || c.title }),
       Siren.ready() || !S.soundOn ? null
-        : h('div', { class: 'notu', text: 'Sesin çalması için ekrana bir kez dokunun.' }),
+        : h('div', { id: 'alarm-ses', class: 'notu', style: 'text-align:center', text: 'Sesin çalması için ekrana bir kez dokunun.' }),
       h('div', { class: 'dizi' },
-        h('button', { class: 'btn birincil', onclick: () => doAck(c.id) }, 'ONAYLA'),
+        h('button', { class: `btn ${sev.cls === 'acil' ? 'acil' : 'birincil'}`, onclick: () => doAck(c.id) }, icon('check'), 'ONAYLA'),
         h('div', { class: 'satir' },
-          h('button', { class: 'btn', onclick: () => { location.hash = `#/olay/${c.id}`; S.snooze[c.id] = Date.now() + SNOOZE_MS; syncAlarm(); } }, 'Ayrıntı'),
-          h('button', { class: 'btn', onclick: () => { S.snooze[c.id] = Date.now() + SNOOZE_MS; syncAlarm(); } }, '5 dk sessiz'))));
+          h('button', { class: 'btn', onclick: () => { location.hash = `#/olay/${c.id}`; snooze(); } }, 'Ayrıntı'),
+          h('button', { class: 'btn', onclick: snooze }, '5 dk sessiz'))));
     if (host) host.replaceWith(node); else document.body.append(node);
   }
 
@@ -253,7 +331,7 @@
     try {
       const r = await api(`/api/saha/olay/${id}/onay`, { method: 'POST', body: {} });
       if (!r.ok) banner(r.reason || 'Onay reddedildi.', true);
-      else banner('Onaylandı. Tekrarlar durduruldu.');
+      else banner('Onaylandı · tekrarlar durduruldu');
     } catch (e) { banner(errText(e), true); }
     S.busy = false;
     await pollNow();
@@ -266,7 +344,7 @@
       const r = await api(`/api/saha/olay/${id}/durum`, { method: 'POST',
         body: { durum: step, not: step === 'tamam' ? S.note : '' } });
       if (step === 'tamam') S.note = '';
-      banner(r.message_tr || 'Kaydedildi.');
+      banner(step === 'tamam' ? 'İş tamamlandı olarak kaydedildi' : (r.message_tr || 'Kaydedildi'));
     } catch (e) { banner(errText(e), true); }
     S.busy = false;
     await pollNow();
@@ -295,6 +373,7 @@
     store.del(LS.token);
     Siren.stop(); vibrate(false);
     const a = document.getElementById('alarm'); if (a) a.remove();
+    S.alarmSig = '';
     clearTimeout(S.timer);
     render(message);
   }
@@ -350,9 +429,24 @@
 
   function render(loginMessage) {
     const root = app();
-    if (!S.token) { root.replaceChildren(loginView(loginMessage)); return; }
+    if (!S.token) {
+      S.screen = 'giris';
+      document.body.classList.remove('eylemli');
+      root.replaceChildren(loginView(loginMessage));
+      return;
+    }
+    S.loginCtl = null;
     S.sig = signature();
-    root.replaceChildren(topBar(), S.route.name === 'olay' ? detailView() : listView());
+    const screen = S.route.name === 'olay' ? `olay:${S.route.id}` : 'liste';
+    const changed = screen !== S.screen;
+    const y = window.scrollY;
+    S.screen = screen;
+
+    const body = S.route.name === 'olay' ? detailView() : listView();
+    root.replaceChildren(topBar(), h('div', { class: changed ? 'gecis' : '' }, body.view));
+    document.body.classList.toggle('eylemli', !!body.bar);
+    if (body.bar) root.append(body.bar);
+    window.scrollTo(0, changed ? 0 : y);
     paintStatus();
   }
 
@@ -360,38 +454,48 @@
     const el = document.getElementById('sync');
     if (!el) return;
     el.replaceChildren(h('span', { class: S.offline ? 'dot off' : 'dot' }),
-      S.offline ? `Bağlantı yok · son bilinen durum ${clock(S.syncedAt / 1000)}` : `Güncel ${clock(S.syncedAt / 1000)}`);
+      S.offline ? `Bağlantı yok · ${clock(S.syncedAt / 1000)}` : `Güncel ${clock(S.syncedAt / 1000)}`);
   }
 
   function topBar() {
     return h('header', { class: 'bar' },
-      h('div', { class: 'marka' }, 'PANO GÖZ', h('small', { text: 'Saha' })),
+      h('div', { class: 'marka' }, logo(34), h('div', {}, h('b', { text: 'PANO GÖZ' }), h('small', { text: 'Saha ekibi' }))),
       h('div', { class: 'fill' }),
-      h('div', { class: 'durum', style: 'text-align:right' },
-        h('div', { text: S.member ? S.member.name : '' }),
-        h('div', { id: 'sync', class: 'mute' })));
+      h('div', { class: 'kisi' },
+        h('div', {}, h('div', { class: 'ad', text: S.member ? S.member.name : '' }), h('div', { id: 'sync', class: 'durum' })),
+        h('div', { class: 'avatar', 'aria-hidden': 'true', text: S.member ? initials(S.member.name) : '' })));
   }
 
   // ---- giriş
 
   function loginView(message) {
-    const nameSel = h('select', { class: 'girdi', id: 'ad', 'aria-label': 'Ad' });
-    const pin = h('input', { class: 'girdi pin', id: 'pin', type: 'password', inputmode: 'numeric',
-      autocomplete: 'one-time-code', maxlength: '8', 'aria-label': 'PIN', placeholder: '••••' });
+    const ctl = { name: store.get(LS.name), pin: '', busy: false };
+    const membersEl = h('div', { class: 'uyeler', role: 'radiogroup', 'aria-label': 'Ad' });
+    const dotsEl = h('div', { class: 'noktalar', role: 'img', 'aria-label': 'PIN' });
     const err = h('div', { class: 'hata', role: 'alert', text: message || '' });
-    const btn = h('button', { class: 'btn birincil', type: 'submit' }, 'Giriş');
+    const goBtn = h('button', { class: 'tus gir', type: 'button', disabled: true, onclick: () => submit() }, 'Giriş');
 
-    api('/api/saha/rota').then((rota) => {
-      const last = store.get(LS.name);
-      nameSel.replaceChildren(...rota.map((m) => h('option', { value: m.name, selected: m.name === last }, `${m.name} · ${m.role}`)));
-    }).catch(() => { err.textContent = 'Sunucuya ulaşılamıyor.'; });
-
-    const form = h('form', { class: 'giris', onsubmit: async (ev) => {
-      ev.preventDefault();
+    function paintDots() {
+      const n = Math.max(4, ctl.pin.length);
+      dotsEl.replaceChildren(...Array.from({ length: n }, (_, i) => h('span', { class: `nokta${i < ctl.pin.length ? ' dolu' : ''}` })));
+      goBtn.disabled = ctl.pin.length < 4 || !ctl.name || ctl.busy;
+    }
+    function paintMembers(rota) {
+      if (!rota.some((m) => m.name === ctl.name)) ctl.name = rota.length ? rota[0].name : null;
+      membersEl.replaceChildren(...rota.map((m) => h('button', { type: 'button', class: 'uye', role: 'radio',
+        'aria-checked': m.name === ctl.name, onclick: () => { ctl.name = m.name; paintMembers(rota); paintDots(); } },
+        h('div', { class: 'avatar', text: initials(m.name) }),
+        h('div', { class: 'kimlik' }, h('b', { text: m.name }), h('span', { text: `${m.role} · seviye ${m.level}` })),
+        h('div', { class: 'secim' }, icon('check')))));
+    }
+    const press = (d) => { if (!ctl.busy && ctl.pin.length < 8) { ctl.pin += d; err.textContent = ''; paintDots(); } };
+    const back = () => { ctl.pin = ctl.pin.slice(0, -1); paintDots(); };
+    async function submit() {
+      if (ctl.busy || ctl.pin.length < 4 || !ctl.name) return;
       Siren.unlock();
-      btn.disabled = true; err.textContent = '';
+      ctl.busy = true; paintDots(); err.textContent = '';
       try {
-        const r = await api('/api/saha/login', { method: 'POST', body: { name: nameSel.value, pin: pin.value } });
+        const r = await api('/api/saha/login', { method: 'POST', body: { name: ctl.name, pin: ctl.pin } });
         S.token = r.token; store.set(LS.token, r.token); store.set(LS.name, r.member.name);
         S.member = r.member;
         if (S.wantWake) setWake(true);
@@ -400,60 +504,108 @@
         pollNow();
       } catch (e) {
         err.textContent = errText(e);
-        pin.value = ''; btn.disabled = false; pin.focus();
+        ctl.pin = ''; ctl.busy = false; paintDots();
+        dotsEl.classList.add('salla');
+        setTimeout(() => dotsEl.classList.remove('salla'), 420);
       }
-    } },
-      h('div', {}, h('h1', { text: 'PANO GÖZ · Saha' }), h('p', { class: 'dim', text: 'Nöbet listesindeki adınızı seçin ve PIN girin.' })),
-      h('label', {}, 'Ad', nameSel),
-      h('label', {}, 'PIN', pin),
-      err, btn);
-    return form;
+    }
+    S.loginCtl = { press, back, submit };
+
+    api('/api/saha/rota').then(paintMembers).then(paintDots)
+      .catch(() => { err.textContent = 'Sunucuya ulaşılamıyor. Bağlantıyı kontrol edip sayfayı yenileyin.'; });
+    paintDots();
+
+    const keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9'].map((d) => h('button', { type: 'button', class: 'tus', onclick: () => press(d), 'aria-label': d }, d));
+    return h('form', { class: 'giris gecis', onsubmit: (e) => e.preventDefault() },
+      h('div', { class: 'hero' }, logo(56),
+        h('h1', { text: 'PANO GÖZ · Saha' }),
+        h('p', { text: 'Pano içi anomali erken uyarı — ekip uygulaması' })),
+      h('div', {}, h('div', { class: 'etiket-kucuk', text: 'Nöbet listesinden adınızı seçin' }), membersEl),
+      h('div', {}, h('div', { class: 'etiket-kucuk', text: 'PIN' }), dotsEl, err),
+      h('div', { class: 'tuslar' }, keys,
+        h('button', { type: 'button', class: 'tus', onclick: back, 'aria-label': 'Sil' }, icon('backspace')),
+        h('button', { type: 'button', class: 'tus', onclick: () => press('0'), 'aria-label': '0' }, '0'),
+        goBtn));
   }
 
   // ---- gelen kutusu
 
-  function listView() {
-    const mine = S.list.filter((c) => c.notified_at !== null);
-    const shown = S.filter === 'benim' ? mine : S.list;
-    const offset = S.offset;
-    const nowSrv = Date.now() / 1000 + offset;
-
-    const tabs = h('div', { class: 'sekmeler', role: 'group', 'aria-label': 'Filtre' },
-      h('button', { class: 'sekme', 'aria-pressed': S.filter === 'benim', onclick: () => { S.filter = 'benim'; renderIfChanged(); } }, `Bana gelenler (${mine.length})`),
-      h('button', { class: 'sekme', 'aria-pressed': S.filter === 'tum', onclick: () => { S.filter = 'tum'; renderIfChanged(); } }, `Tümü (${S.list.length})`));
-
-    const cards = shown.length
-      ? h('div', { class: 'liste' }, shown.map((c) => incidentCard(c, nowSrv)))
-      : h('div', { class: 'bos' }, h('div', { class: 'buyuk', text: '✓' }),
-          h('p', { text: S.filter === 'benim' ? 'Size gönderilmiş açık olay yok.' : 'Açık olay yok.' }));
-
-    return h('div', {}, tabs, cards, settingsView());
+  function summaryCard(waiting, mine) {
+    if (waiting.length) {
+      const top = waiting.slice().sort((a, b) => (SEV[b.severity]?.rank || 0) - (SEV[a.severity]?.rank || 0))[0];
+      const sev = SEV[top.severity] || SEV.KRITIK;
+      return h('div', { class: `ozet bekliyor ${sev.cls}`, role: 'status' },
+        h('div', { class: 'simge', text: sev.shape }),
+        h('div', {}, h('b', { text: `${waiting.length} olay onay bekliyor` }),
+          h('span', { text: `${top.panel_key} · ${top.joint_short}` })));
+    }
+    const open = mine.filter((c) => c.state !== 'KAPANDI').length;
+    return h('div', { class: 'ozet rahat', role: 'status' },
+      h('div', { class: 'simge' }, icon('shield')),
+      h('div', {}, h('b', { text: 'Bekleyen onay yok' }),
+        h('span', { text: open ? `${open} açık olay takipte` : 'Size gönderilmiş açık olay yok' })));
   }
 
-  function incidentCard(c, nowSrv) {
+  function listView() {
+    const mine = S.list.filter((c) => c.notified_at !== null);
+    const waiting = mine.filter((c) => c.needs_ack);
+    const shown = S.filter === 'benim' ? mine : S.list;
+
+    const tabs = h('div', { class: 'segment', role: 'group', 'aria-label': 'Filtre' },
+      h('button', { 'aria-pressed': S.filter === 'benim', onclick: () => { S.filter = 'benim'; renderIfChanged(); } }, `Bana gelenler · ${mine.length}`),
+      h('button', { 'aria-pressed': S.filter === 'tum', onclick: () => { S.filter = 'tum'; renderIfChanged(); } }, `Tümü · ${S.list.length}`));
+
+    const cards = shown.length
+      ? h('div', { class: 'liste' }, shown.map((c) => incidentCard(c)))
+      : h('div', { class: 'bos' }, icon('shield'),
+          h('b', { text: S.filter === 'benim' ? 'Size gönderilmiş açık olay yok' : 'Açık olay yok' }),
+          h('span', { text: 'Yeni bir olay olduğunda burada görünür ve telefon çalar.' }));
+
+    return { view: h('div', {}, summaryCard(waiting, mine), tabs, cards, settingsView()), bar: null };
+  }
+
+  function slaBlock(c) {
+    if (!c.needs_ack || c.notified_at === null || !c.ack_deadline_s) return null;
+    const left = c.ack_deadline_s - Math.max(0, nowSrv() - c.notified_at);
+    const frac = Math.max(0, Math.min(1, left / c.ack_deadline_s));
+    const cls = left <= 0 ? 'doldu az' : frac < 0.25 ? 'az' : frac < 0.55 ? 'orta' : '';
+    return h('div', { class: `sla ${cls}` },
+      h('div', { class: 'yazi' }, h('span', { text: left > 0 ? 'Onay için kalan süre' : 'Onay süresi doldu' }),
+        h('b', { text: left > 0 ? span(left) : 'üst kademeye bildirildi' })),
+      h('div', { class: 'cubuk' }, h('span', { style: `width:${(frac * 100).toFixed(1)}%` })));
+  }
+
+  function miniSteps(c) {
+    const done = c.work ? STEPS.indexOf(c.work.durum) + 1 : 0;
+    return h('span', { class: 'mini', 'aria-hidden': 'true' }, STEPS.map((s, i) => h('i', { class: i < done ? 'dolu' : '' })));
+  }
+
+  function incidentCard(c) {
     const sev = SEV[c.severity] || SEV.UYARI;
-    const waiting = c.needs_ack;
+    const waiting = c.needs_ack && c.notified_at !== null;
     let status;
     if (c.state === 'KAPANDI') status = h('span', { class: 'mute', text: 'Kapandı' });
     else if (c.state === 'ONAYLANDI') {
       const w = c.work ? ` · ${STEP_LABEL[c.work.durum] || c.work.durum}` : '';
-      status = h('span', { class: 'tamam', text: `✓ ${c.acked_by || 'Onaylandı'}${w}` });
-    } else if (waiting) status = h('span', { class: 'bekle', text: 'ONAY BEKLİYOR' });
+      status = h('span', { class: 'durum-yazi tamam', text: `✓ ${c.acked_by || 'Onaylandı'}${w}` });
+    } else if (c.needs_ack) status = h('span', { class: 'durum-yazi bekle', text: 'ONAY BEKLİYOR' });
     else if (c.severity !== 'UYARI' && !c.dispatched) status = h('span', { class: 'dim', text: 'Henüz kimseye bildirilmedi (bekleme/teyit koşulları)' });
     else status = h('span', { class: 'dim', text: 'Kayıt (telefon çaldırmaz)' });
-    return h('button', { class: `kart ${sev.cls}${waiting && c.notified_at ? ' bekliyor' : ''}`,
+    return h('button', { class: `kart ${sev.cls}${waiting ? ' bekliyor' : ''}`,
       onclick: () => { location.hash = `#/olay/${c.id}`; } },
-      h('div', { class: 'ust' }, h('span', { class: `etiket ${sev.cls}` }, `${sev.shape} ${sev.name}`),
-        h('span', { class: 'mute', text: ago(nowSrv - c.opened_at) })),
-      h('div', { class: 'konum', text: `${c.panel_key} · ${c.joint_short}` }),
+      h('div', { class: 'ust' }, h('span', { class: `rozet ${sev.cls}`, text: `${sev.shape} ${sev.name}` }),
+        h('span', { class: 'yas', text: ago(nowSrv() - c.opened_at) })),
+      h('div', { class: 'konum' }, h('b', { text: c.panel_key }), h('span', { class: 'chip mono', text: c.joint_short })),
       h('div', { class: 'mod', text: c.mode_label }),
-      h('div', { class: 'alt' }, status));
+      slaBlock(c),
+      h('div', { class: 'alt' }, status,
+        c.state === 'ONAYLANDI' ? miniSteps(c) : icon('chevron', 'ok-ikon')));
   }
 
   function settingsView() {
     const secure = window.isSecureContext;
     const canNotify = secure && 'Notification' in window;
-    return h('details', { style: 'margin-top:20px' },
+    return h('details', { style: 'margin-top:22px' },
       h('summary', { text: 'Ayarlar' }),
       h('div', { class: 'dizi', style: 'padding-bottom:12px' },
         h('button', { class: 'btn', onclick: () => { S.soundOn = !S.soundOn; store.set(LS.sound, S.soundOn ? '1' : '0'); Siren.unlock(); syncAlarm(); renderIfChanged(); } },
@@ -471,62 +623,106 @@
   // ---- ayrıntı
 
   function detailView() {
-    const back = h('button', { class: 'btn kucuk geri', onclick: () => { location.hash = '#/'; } }, '← Olaylar');
-    if (S.detailErr) return h('div', {}, back, h('div', { class: 'bos', text: S.detailErr }));
+    const back = h('button', { class: 'btn kucuk geri', onclick: () => { location.hash = '#/'; } }, icon('back'), 'Olaylar');
+    if (S.detailErr) return { view: h('div', {}, back, h('div', { class: 'bos' }, h('b', { text: S.detailErr }))), bar: null };
     const d = S.detail;
-    if (!d || d.olay.id !== S.route.id) return h('div', {}, back, h('div', { class: 'bos', text: 'Yükleniyor…' }));
+    if (!d || d.olay.id !== S.route.id) {
+      return { view: h('div', {}, back, h('div', { class: 'iskelet' }), h('div', { class: 'iskelet', style: 'height:7rem' }),
+        h('div', { class: 'iskelet', style: 'height:9rem' })), bar: null };
+    }
     const c = d.olay;
     const sev = SEV[c.severity] || SEV.UYARI;
 
-    return h('div', {}, back,
-      h('div', { class: `serit ${sev.cls}` },
-        h('div', { class: `etiket ${sev.cls}` }, `${sev.shape} ${sev.name} · olay #${c.id}`),
-        h('h1', { text: `${c.panel_key} · ${c.joint_short}` }),
-        h('div', { class: 'mod', text: c.mode_label })),
+    const hero = h('div', { class: `serit ${sev.cls}` },
+      h('div', { class: 'ust' }, h('span', { class: `rozet ${sev.cls}`, text: `${sev.shape} ${sev.name}` }),
+        h('span', { class: 'yas', text: `olay #${c.id} · ${ago(nowSrv() - c.opened_at)}` })),
+      h('h1', {}, c.panel_key, h('span', { class: 'chip mono', text: c.joint_short })),
+      h('div', { class: 'mod', text: c.mode_label }));
+
+    const view = h('div', {}, back, hero,
       section('Ne yapmalı', h('div', { class: 'yapilacak', text: c.action || c.title })),
-      actionsSection(c),
+      workSection(c),
       locationSection(d.pano),
       measuresSection(d.olcum),
       whySection(d.neden),
-      timelineSection(d.zaman_cizgisi));
+      timelineSection(d.zaman_cizgisi),
+      h('div', { class: 'alt-bosluk' }));
+    return { view, bar: actionBar(c) };
   }
 
   function section(title, ...body) {
     return h('section', { class: 'bolum' }, h('h2', { text: title }), ...body);
   }
 
-  function actionsSection(c) {
-    if (c.state === 'KAPANDI') return section('Durum', h('p', { class: 'dim', text: 'Olay kapandı.' }));
+  // Sabit eylem çubuğu: bir sonraki adım her zaman başparmağın altında.
+  function actionBar(c) {
+    if (c.state === 'KAPANDI') return null;
+    const sev = SEV[c.severity] || SEV.UYARI;
+    let inner;
     if (c.state === 'ACIK') {
-      return section('Onay', h('button', { class: c.needs_ack ? 'btn birincil' : 'btn', disabled: S.busy, onclick: () => doAck(c.id) },
-        c.needs_ack ? 'ONAYLA · tekrarları durdur' : 'Gördüm · onayla'),
-        h('p', { class: 'notu', text: 'Onay, oturumunuzla kaydedilir ve SMS/Telegram tekrarlarını durdurur.' }));
+      inner = h('button', { class: `btn ${c.needs_ack && sev.cls === 'acil' ? 'acil' : 'birincil'}`, disabled: S.busy, onclick: () => doAck(c.id) },
+        icon('check'), c.needs_ack ? 'ONAYLA · tekrarları durdur' : 'Gördüm · onayla');
+    } else {
+      const done = c.work ? STEPS.indexOf(c.work.durum) : -1;
+      const next = STEPS[done + 1];
+      inner = next
+        ? h('button', { class: 'btn birincil', disabled: S.busy, onclick: () => doStep(c.id, next) }, STEP_LABEL[next])
+        : h('div', { class: 'bitti-yazi' }, '✓ İş tamamlandı',
+            h('small', { text: 'Sensörler yedi gün temiz okuyunca olay kendiliğinden kapanır' }));
     }
-    const done = c.work ? STEPS.indexOf(c.work.durum) : -1;
-    const next = STEPS[done + 1];
-    const btns = STEPS.map((s, i) => {
-      if (i <= done) return h('div', { class: 'btn bitti' }, `✓ ${STEP_LABEL[s]}`);
-      return h('button', { class: i === done + 1 ? 'btn birincil' : 'btn', disabled: S.busy || i !== done + 1,
-        onclick: () => doStep(c.id, s) }, STEP_LABEL[s]);
+    return h('div', { class: 'eylem-bar' }, inner);
+  }
+
+  function workSection(c) {
+    if (c.state === 'KAPANDI') return section('Durum', h('p', { class: 'dim', text: 'Olay kapandı.' }));
+    const doneCount = c.state === 'ACIK' ? 0 : 1 + (c.work ? STEPS.indexOf(c.work.durum) + 1 : 0);
+    const nodes = NODE_LABEL.map((label, i) => {
+      const cls = i < doneCount ? 'bitti' : (i === doneCount ? 'simdi' : '');
+      return h('div', { class: `adim ${cls}` }, h('div', { class: 'd' }, i < doneCount ? icon('check') : String(i + 1)), label);
     });
+    const progress = Math.max(0, Math.min(doneCount, 4) - 1) / 3 * 75;
+    const next = c.state === 'ONAYLANDI' ? STEPS[(c.work ? STEPS.indexOf(c.work.durum) : -1) + 1] : null;
     return section('İş emri',
-      h('p', { class: 'tamam', text: `✓ Onaylandı · ${c.acked_by || ''}` }),
-      h('div', { class: 'adim', style: 'margin-top:10px' }, btns,
-        next === 'tamam' ? h('textarea', { class: 'girdi', placeholder: 'Yapılan işlem (örn. tork 40 Nm, pabuç yenilendi)', maxlength: '500',
-          'aria-label': 'Not', oninput: (e) => { S.note = e.target.value; } }, S.note) : null),
-      h('p', { class: 'notu', text: '"Tamamladım", olayı kapatmaz: sensörler yedi gün temiz okuyunca sistem kendisi kapatır.' }));
+      h('div', { class: 'adimlar' }, h('div', { class: 'ilerleme', style: `width:${progress}%` }), nodes),
+      c.state === 'ACIK'
+        ? h('p', { class: 'notu', text: 'Onay, oturumunuzla kaydedilir ve SMS/Telegram tekrarlarını durdurur.' })
+        : h('p', { class: 'notu', text: `Onaylayan: ${c.acked_by || ''}` }),
+      next === 'tamam' ? h('textarea', { class: 'girdi', placeholder: 'Yapılan işlem (örn. tork 40 Nm, pabuç yenilendi)', maxlength: '500',
+        'aria-label': 'Not', oninput: (e) => { S.note = e.target.value; } }, S.note) : null,
+      c.state === 'ONAYLANDI' ? h('p', { class: 'notu', text: '"Tamamladım", olayı kapatmaz: sensörler yedi gün temiz okuyunca sistem kendisi kapatır.' }) : null);
   }
 
   function locationSection(p) {
     const has = p && p.lat !== null && p.lon !== null;
     return section('Konum',
       h('div', { class: 'konum-kutu' },
-        h('div', { class: 'ad', text: p && p.name ? p.name : (p ? p.panel_key : '') }),
+        h('div', { class: 'ad' }, icon('pin'), p && p.name ? p.name : (p ? p.panel_key : '')),
         h('div', { class: 'dim', text: [p && p.site, p && p.dso].filter(Boolean).join(' · ') }),
         has ? h('div', { class: 'mono mute', text: `${num(p.lat, 5)}, ${num(p.lon, 5)}` }) : h('div', { class: 'mute', text: 'Konum kaydı yok.' }),
         has ? h('div', { class: 'satir', style: 'margin-top:10px' },
           h('a', { class: 'btn kucuk', href: p.maps_url, target: '_blank', rel: 'noopener' }, 'Yol tarifi'),
           h('a', { class: 'btn kucuk', href: p.geo_url }, 'Haritada aç')) : null));
+  }
+
+  // θ'yı mutlak basamaklar üzerinde gösterir. Beş bölge eşit genişliktedir (Normal, İzle,
+  // Uyarı, Kritik, Acil); işaret bölge içinde doğrusal yerleşir. Ölçek θ'nın basamağıdır:
+  // olayın seviyesi birden çok kanıttan çıkar ve bu ölçekten farklı olabilir (ark olayı gibi).
+  function thetaScale(theta, ladder) {
+    if (theta === null || theta === undefined || !Array.isArray(ladder) || ladder.length !== 4) return null;
+    const t = ladder.map((x) => x[1]);
+    let z = 0;
+    while (z < 4 && theta >= t[z]) z += 1;                      // z = bölge indeksi 0..4
+    let within;
+    if (z === 0) within = theta / t[0];
+    else if (z === 4) within = Math.min(1, (theta - t[3]) / t[3]);
+    else within = (theta - t[z - 1]) / (t[z] - t[z - 1]);
+    const pos = Math.max(0.01, Math.min(0.99, (z + Math.max(0, within)) / 5));
+    return h('div', { class: 'olcek', role: 'img',
+      'aria-label': `θ ${num(theta, 1)} K, ${ZONE[z].name} bölgesinde` },
+      h('div', { class: 'zemin' }, ZONE.map((zn, i) => h('i', { class: i === z ? 'aktif' : '', style: `--z:${zn.color}` })),
+        h('div', { class: 'isaret', style: `left:${(pos * 100).toFixed(1)}%` }, h('b', { text: `${num(theta, 1)} K` }))),
+      h('div', { class: 'etiketler' }, ZONE.map((zn) => h('span', { text: zn.name }))),
+      h('div', { class: 'esikler' }, t.map((v) => h('span', { text: `${num(v, 0)} K` })), h('span', { text: '' })));
   }
 
   function measuresSection(o) {
@@ -543,7 +739,9 @@
     add('Sağlık endeksi', num(o.health_index, 0), '');
     if (o.eta) cells.push(h('div', { class: 'olcum metin' }, h('div', { class: 'e', text: 'Eşiğe kalan' }), h('div', { class: 'd', text: trSeverity(o.eta) })));
     if (!cells.length) return section('Ölçümler', h('p', { class: 'mute', text: 'Bu olay için bağlantı ölçümü yok (pano düzeyinde bulgu).' }));
-    return section('Ölçümler', h('div', { class: 'olcumler' }, cells),
+    const scale = thetaScale(o.theta_k, o.theta_merdiven);
+    return section('Ölçümler', scale, h('div', { class: 'olcumler' }, cells),
+      scale ? h('p', { class: 'notu', text: 'Ölçek θ\'nın mutlak basamaklarıdır; olayın seviyesi birden çok kanıttan çıkar ve ölçekten farklı olabilir.' }) : null,
       o.excess_resistance
         ? h('p', { class: 'notu', text: 'Fazla direnç tek sayı değil aralıktır: yerel ısıl direnç yalnız 2–4 K/W aralığında bilinir.' })
         : null);
@@ -562,12 +760,12 @@
 
   function timelineSection(list) {
     const items = (list || []).map((e) => {
-      let text = '', cls = '';
-      if (e.tip === 'acilis') text = `Olay açıldı`;
-      else if (e.tip === 'bildirim') text = `${CHANNEL[e.kanal] || e.kanal} → ${e.hedef} · ${NSTATE[e.durum] || e.durum}`;
-      else if (e.tip === 'durum') { text = `${e.by}: ${STEP_LABEL[e.durum] || e.durum}${e.not ? ` — ${e.not}` : ''}`; cls = e.durum === 'tamam' ? 'tamam' : ''; }
-      else if (e.tip === 'onay') { text = `Onaylandı · ${e.by}`; cls = 'onay'; }
-      return h('li', { class: cls }, h('span', { class: 's', text: clock(e.ts) }), text);
+      let content, cls = e.tip;
+      if (e.tip === 'acilis') content = ['Olay açıldı'];
+      else if (e.tip === 'bildirim') content = [h('span', { class: `kanal ${e.kanal}`, text: CHANNEL[e.kanal] || e.kanal }), `${e.hedef} · ${NSTATE[e.durum] || e.durum}`];
+      else if (e.tip === 'durum') { content = [`${e.by}: ${STEP_LABEL[e.durum] || e.durum}${e.not ? ` — ${e.not}` : ''}`]; cls = e.durum === 'tamam' ? 'tamam' : 'durum'; }
+      else if (e.tip === 'onay') content = [`Onaylandı · ${e.by}`];
+      return h('li', { class: cls }, h('span', { class: 's', text: clock(e.ts) }), ...content);
     });
     return section('Zaman çizgisi', h('ol', { class: 'zaman' }, items));
   }
@@ -586,7 +784,20 @@
   document.addEventListener('visibilitychange', () => {
     if (!document.hidden && S.token) { if (S.wantWake) setWake(true); pollNow(); }
   });
-  setInterval(() => { if (S.token && !document.hidden) renderIfChanged(); }, 20000);
+  // Fiziksel klavye (masaüstünde deneyen için): rakam, geri silme, Enter.
+  document.addEventListener('keydown', (e) => {
+    const c = S.loginCtl;
+    if (!c || S.token || e.ctrlKey || e.metaKey || e.altKey) return;
+    if (/^\d$/.test(e.key)) c.press(e.key);
+    else if (e.key === 'Backspace') c.back();
+    else if (e.key === 'Enter') c.submit();
+  });
+  // Zamana bağlı göstergeler (yaş, onay süresi çubuğu) veri değişmese de akar.
+  setInterval(() => {
+    if (!S.token || document.hidden || S.route.name !== 'liste') return;
+    S.sig = '';
+    renderIfChanged();
+  }, CLOCK_MS);
 
   render();
   if (S.token) { registerWorker(); if (S.wantWake) setWake(true); pollNow(); }
