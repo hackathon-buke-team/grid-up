@@ -1,44 +1,46 @@
 # K4 · 4.5 Yedek Plan
 
-> Canlı demo bir online yarışmada ağ/donanım riskiyle geliyor. Her canlı adımın
-> önceden kaydedilmiş/statik bir yedeği olmalı — hiçbiri "umarım çalışır"a
-> bağlı kalmasın.
+> Canlı demo online bir yarışmada ağ/donanım riskiyle gelir. Her canlı adımın önceden
+> kaydedilmiş/statik bir yedeği olmalı; hiçbiri "umarım çalışır"a bağlı kalmasın.
+> **Son güncelleme: 2026-09-20.**
 
 ## Genel kural
 
 Sunumdan **önce** (canlı demo başlamadan):
-1. `docs/ekran-goruntuleri/panogoz-demo-walkthrough.gif` açık bir sekmede/
-   görüntüleyicide hazır dursun (gerçek, önceden kaydedilmiş çalışma kaydı).
-2. 3 KiCad PDF + 3D render PNG'leri yerel diskte, internetsiz açılabilir
-   şekilde hazır olsun (`hardware/kicad/*/export/`).
-3. `python -m pytest -q` çıktısının bir ekran görüntüsü/kaydı alınsın (26/26
-   yeşil) — canlı çalıştırma başarısız olursa bu gösterilir.
+1. `docs/ekran-goruntuleri/panogoz-demo-walkthrough.gif` ve `01…12-*.png` açık bir görüntüleyicide
+   hazır dursun. Hepsi çalışan sistemden `tools/record_demo.py` ile çekildi (elle çekim yok).
+2. `docs/ekran-goruntuleri/scada-okuma.txt` (Modbus + IEC 104 okuması) hazır dursun.
+3. Sunucu önceden başlatılıp ısıtılsın (≈15 sn): `python -m panogoz.run_local --port 8080
+   --modbus-port 5020 --iec104-port 2404`. Sunumda ısınmayı bekleme.
+4. 3 KiCad PDF + 3B render PNG'leri yerel diskte, internetsiz açılabilir (`hardware/kicad/*/export/`).
+5. `python -m pytest -q` çıktısı (291 test, ~80 sn) sunumdan önce bir kez alınıp ekran görüntüsü kaydedilsin.
 
 ## Adım bazlı yedekler
 
 | Canlı adım | Risk | Yedek |
 | --- | --- | --- |
-| Monitoring konsolu (`python -m panogoz.api.app`) | Port çakışması, ağ/firewall, Flask başlamama | `panogoz-demo-walkthrough.gif` — aynı iki bağlantıyı (F01 sağlıklı, F02 kritik) ve zaman kaydırmayı gösteriyor, gerçek kayıt. |
-| Gerçek Telegram mesajı gönderimi | Bot token/ağ sorunu, mesaj geç gelebilir, **jüri önünde gerçek bir dış kanala mesaj atmak öngörülemez bir zamanlama riski taşır** | Önceki oturumdan gerçek gönderim kanıtı (kod + `panogoz/notify/telegram_channel.py` + proje notlarındaki doğrulama) anlatılır; canlı gönderim yalnızca zaman/ortam uygunsa ve **açıkça planlanmışsa** yapılır — anlık doğaçlama gönderim yapılmaz. |
-| Gerçek Modbus client bağlantısı (`tools/run_modbus_server.py`) | Port/ağ, iki terminal senkronizasyonu | Register haritası tablosu (`docs/modbus-haritalama.md`) + önceden alınmış bir client çıktısı ekran görüntüsü gösterilir. |
-| Gerçek MQTT E2E testi canlı çalıştırma | ~13 saniye sürüyor ama process/port çakışması olabilirse | Önceden alınmış `pytest -v` çıktısı (bu oturumda doğrulandı, `docs/01-MIMARI.md` §5'te ham çıktı zaten var) okunur/gösterilir. |
-| KiCad 3D render canlı KiCad GUI'sinde açma | KiCad kurulum/lisans/performans riski, jüri makinesinde KiCad olmayabilir | Statik PNG render'lar (`hardware/kicad/*/export/*-3d.png`) ve PDF'ler — zaten "bitti sayılır" kriterinin kendisi bu dosyalar. |
+| Konsol (`run_local`) açılmıyor | Port çakışması, firewall, ısınma bitmedi | `--port` değiştir (8090); olmazsa GIF + PNG'ler (adım ↔ görüntü tablosu: `docs/08` §2). |
+| Saat/demo düğmeleri tepki vermiyor | Sunucu takıldı | **Sıfırla**; olmazsa sunucuyu yeniden başlat (Windows'ta `pkill` yok: PowerShell `Get-CimInstance`+`Stop-Process`). Yedek: ilgili PNG. |
+| Adım 2 (sıcak yaz) | Doğru güne atlanmadı | *Gün 34'e atla*, P14'e tıkla; yedek `02-sicak-yaz-normal.png`. |
+| Adım 8 (PD füzyonu) | 12 sa/sn ile fazla ilerledi | **Sıfırla** → *Gün 52'ye atla* → ~5 sn → Duraklat; yedek `08-pd-fuzyon.png`. |
+| Adım 10 (SCADA) canlı Modbus/IEC 104 istemcisi | Port/ağ, ikinci terminal | Konsolun SCADA sekmesi (ekran) + `scada-okuma.txt` (aynı anın gerçek okuması). Register haritası: `docs/PANOGOZ-ICD-v2.0.md`. |
+| Adım 7 mobil/QR | Telefon aynı ağda değil | Dar tarayıcı penceresinde `saha.html?panel=P01`; yedek `07-mobil-saha.png`. |
+| Gerçek Telegram/SMS gönderimi (yapılırsa) | Token/ağ, gecikme; **jüri önünde dış kanala mesaj öngörülemez** | Canlı gönderim yalnız açıkça planlandıysa; yoksa Bildirimler sekmesi (bellek içi gösterim) ve anlatıda "gerçek kanal henüz gönderilmedi" denir. Doğaçlama gönderim yapılmaz. |
+| Gerçek MQTT E2E'yi canlı çalıştırma | ~13 sn, süreç/port çakışması | Önceden alınmış `pytest -v` çıktısı (`docs/01-MIMARI.md` §5'te ham çıktı var). |
+| KiCad 3B render canlı açma | Jüri makinesinde KiCad yok | Statik PNG/PDF/SVG'ler (`hardware/kicad/*/export/`). |
 
 ## Zaman aşımı planı (15 dk yerine 10 dk verilirse)
 
-Kısaltma sırası (önce bunlar atlanır, en son bunlar kalır):
-1. §5 Donanım bölümünü (anlati-script.md) 3 cümleye indir: "3 kart, ERC+DRC
-   temiz, fiziksel prototip yok/istenmiyor."
-2. Canlı Modbus/MQTT gösterimini atla, yalnızca "gerçek broker'a karşı 5/5
-   test geçti" diye söyle.
-3. **Asla atlanmayacak iki şey:** θ metriğinin ne olduğu (ürünün kalbi) ve
-   §6'daki dürüst açık maddeler (jüri bunu sormadan söylemek güven inşa
-   ediyor).
+Atlama sırası (önce bunlar):
+1. §5 mimari/donanım bölümünü 3 cümleye indir: "3 kart, ERC+DRC temiz, firmware gerçek hedefte
+   derleniyor, fiziksel prototip yok/istenmiyor."
+2. Canlı demoyu 3 adıma indir: **sıcak yaz (2)**, **alarm + iş emri + onay (3–6)**, **PD füzyonu (8)**.
+   Fırtına ve SCADA yalnız görüntüyle.
+3. **Asla atlanmayacaklar:** θ'nın ne olduğu (ürünün kalbi), §3 doğruluk sayıları "öz-tutarlılık"
+   çerçevesiyle ve §6 dürüst açık maddeler (jüri sormadan söylemek güven kurar).
 
 ## Soru anında donarsan
 
-- Bilmediğin bir şey sorulursa: "Bu konuda şu an elimde doğrulanmış bir veri
-  yok, tahmin etmek istemiyorum" de — CLAUDE.md'nin kendi ilkesi de bu
-  ("yapılmayan hiçbir şey yapılmış gibi yazılmaz").
-- `juri-qa-kartlari.md`'deki kartlar tükenirse, en güvenli dönüş cümlesi:
-  "Şu an [X] doğrulanmadı, roadmap'te [Y] maddesi altında."
+- "Bu konuda şu an elimde doğrulanmış bir veri yok, tahmin etmek istemiyorum." CLAUDE.md ilkesi:
+  yapılmayan hiçbir şey yapılmış gibi yazılmaz.
+- Kartlar tükenirse güvenli dönüş: "Şu an [X] doğrulanmadı, roadmap'te [Y] altında."

@@ -81,6 +81,23 @@ tüketen kısmı (θ hesaplama + outbox yazma) izole edildi.
   zamanlama artefaktı, gerçek bir anormallik değil (tek thread hiçbir zaman
   >100'ü anlamlı şekilde aşamaz).
 
+## 3b. Çok kanallı filo servisi (2026-09-20 ölçümü — §1–3'ten AYRI, daha yeni yol)
+
+§1–3, eski yalnız-θ yolunu (`build_fleet`) ölçtü. Konsolun kullandığı **yeni yol** (22 senaryo,
+5 dedektör ailesi, bastırma → onay → füzyon, alarm motoru, eskalasyon) `tools/bench_fleet.py` ile,
+tek çekirdekte, 22 pano × 60 gün × 15 dk (126 720 pano-örneği) için ölçüldü:
+
+| Aşama | Süre | Hız |
+| --- | --- | --- |
+| Kurulum: senaryo üretimi + tüm dedektör analizi (toplu/geriye dönük) | 11,2–11,6 sn (≈0,51–0,53 sn/pano) | ≈11 bin pano-örneği/sn |
+| Filo ilerletme: alarm motoru + eskalasyon | 0,73–0,77 sn | ≈165–174 bin pano-örneği/sn |
+
+**Yorum (kestirim, ölçüm değil):** 1000 panonun canlı akışı 15 dk aralıkla 1000/900 ≈ 1,1
+pano-örneği/sn'dir; ölçülen toplu hızın dört büyüklük mertebesi altında. **Ancak:** (a) dedektörler
+bugün toplu çalışır, artımlı (akış) sürümü yazılmadı; (b) 1000 panoluk çok kanallı yük testi
+YAPILMADI, yalnız 22 pano ölçüldü ve doğrusal ölçekleme varsayıldı (§2'deki eski yolda doğrusal
+çıktı); (c) 1000 panonun geriye dönük 60 günlük ilk analizi bu hızla ≈8,5 dk sürer.
+
 ## 4. Sıradaki adım (K2'nin geri kalanıyla tutarlı, kapsam dışı bırakılan)
 
 - Gerçek bir tur-süresi SLA'sı tanımlanıp bu ölçüme karşı test edilmeli.

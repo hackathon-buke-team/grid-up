@@ -103,5 +103,8 @@ yeni modüller mevcut hiçbir testi bozmadı.
 - [ ] `panogoz/bus`/`panogoz/store`, henüz `panogoz/sim` → `detector` →
       `rules` → `api` üretim pipeline'ına gerçekten TELLENMEDİ (bu görev
       yalnızca modülleri kurup E2E ile kanıtladı) — sonraki bir K2 maddesi.
-- [ ] Compose sertleştirme (mTLS, ACL) — 2.2, henüz yapılmadı.
-- [ ] IEC 60870-5-104 slave — 2.3, henüz yapılmadı.
+- [~] Compose sertleştirme (mTLS, ACL) — 2.2 **kısmi (2026-09-19)**: yapılandırma, ACL
+      anlamı, PKI + gerçek mTLS el sıkışması ve `MqttBus` TLS yolu doğrulandı;
+      `docker compose up` bu makinede (Docker yok) çalıştırılmadı. Bkz. `13-DAGITIM-SERTLESTIRME.md`.
+- [x] IEC 60870-5-104 slave — 2.3 **bitti (2026-09-19)**: `panogoz/scada/iec104*.py`,
+      bağımsız `c104` master ile doğrulandı (`tests/test_iec104.py`). Sınır: IEC 62351-3 TLS yok.

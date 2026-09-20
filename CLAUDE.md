@@ -248,7 +248,16 @@ SCADA protokolü.
       yalnız fareyle yönetilebilir. *Bitti sayılır:* saat başlat/duraklat/hız/güne atla,
       pano+senaryo seçip enjekte/temizle, fırtına başlat, sıfırla; hepsi düğme/açılır
       liste (klavye gerekmez); UI testiyle doğrulandı. Üretimde `--no-demo-controls`.
-- [ ] **3.6** Ekran görüntülerinin docs/08 demo senaryosuyla birebir eşlenmesi.
+- [x] **3.6** Ekran görüntülerinin docs/08 demo senaryosuyla birebir eşlenmesi. *Bitti
+      sayılır:* `docs/08-DEMO-SENARYOSU.md` 12 adımı, her biri GERÇEK Edge + çalışan
+      sunucudan `tools/record_demo.py` ile çekilmiş 12 ekran görüntüsüne (+ GIF +
+      `scada-okuma.txt`) eşler. Betik sessiz geçmez (mobilde alarm yok / [ÖZET] yok /
+      yatay kaydırma / Modbus-IEC 104 okuması başarısız → çöker). Doğrulanan: fare-yalnız
+      yollar (Gün 34→Başlat, Gün 52→Başlat, Sıfırla→Fırtına→Başlat) API ile denendi;
+      07'de scrollWidth=400; SCADA okuması (pymodbus + c104) `10-scada.png` ile aynı
+      değerler. Kayıtta iki gerçek kusur bulunup giderildi (yapışkan başlık tam sayfa
+      çekimde ortaya düşüyordu; mobil görüntü alarmsız pano gösteriyordu; IEC 104 okuması
+      Playwright döngüsü içinde başarısız oluyordu) (2026-09-20).
 
 **Dosyalar:** `frontend/`, `panogoz/api/app.py`, `docs/08-DEMO-SENARYOSU.md`,
 `docs/ekran-goruntuleri/`
@@ -403,7 +412,7 @@ gibi yazılmaz · `contracts/` değişikliği önce gruba duyurulur.
 ```bash
 python -m panogoz.run_local --panels 112 --port 8080
 python -m panogoz.run_local --panels 8 --backfill-days 20   # hızlı başlangıç
-python -m pytest -q                                          # tüm regresyon (31 test)
+python -m pytest -q                                          # tüm regresyon (291 test, ~80 sn — 2026-09-20)
 python -m pytest tests/test_theta.py                         # tek dosya (pytest ile, `python -m tests.X` DEĞİL)
 python -m pytest tests/test_rules.py
 python -m pytest tests/test_bus_mqtt_e2e.py -v                # gerçek broker E2E (K2 2.1)
