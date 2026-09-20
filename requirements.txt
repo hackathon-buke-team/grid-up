@@ -34,3 +34,10 @@ matplotlib==3.10.9          # offline figures for the report (not the live UI)
 
 # --- test-only -------------------------------------------------------------
 httpx==0.28.1               # fastapi.testclient, used by the API self-test
+pytest>=8                   # `python -m pytest -q` (the regression suite); was missing here
+
+# --- OPTIONAL: real GSM modem ----------------------------------------------
+# Needed only when notify.local.json says "sms": {"provider": "serial"}; imported
+# lazily, so the simulated default and the tests never need it.  Install with:
+#   python -m pip install pyserial
+# pyserial>=3.5

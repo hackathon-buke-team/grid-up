@@ -1,0 +1,38 @@
+{
+  "_aciklama": "Bu dosyayi 'notify.local.json' adiyla kopyalayin ve doldurun. notify.local.json git'e GIRMEZ (.gitignore). Token, PIN ve telefon numaralari yalnizca orada durur.",
+
+  "public_url": "http://192.168.1.201:8080",
+  "_public_url_notu": "Telefonun sunucuya ulasacagi adres. Telegram mesajindaki 'Saha uygulamasinda ac' baglantisi ve QR bunu kullanir. Sunucuyu --host 0.0.0.0 ile baslatin.",
+
+  "telegram": {
+    "token": "123456789:BOTFATHER-DAN-ALDIGIN-TOKEN-DEGISTIR",
+    "privacy": "minimal",
+    "_privacy_notu": "minimal: mesajda pano, baglanti, seviye, aksiyon ve onay kodu var; OLCUM YOK. standard: theta, sicaklik ve 'esige kalan gun' da gider (kamu bulutuna cikar)."
+  },
+
+  "sms": {
+    "provider": "sim",
+    "_provider_notu": "sim: modem SIMULE, hicbir yere mesaj gitmez. serial: gercek GSM modem, ornek {\"provider\":\"serial\",\"port\":\"COM5\",\"baud\":115200,\"sim_pin\":null}"
+  },
+
+  "rota": [
+    {
+      "name": "Nöbetçi tekniker", "role": "birincil", "level": 1,
+      "number": "+905XXXXXXXXX",
+      "telegram_chat_id": null,
+      "pin": "4821"
+    },
+    {
+      "name": "Vardiya amiri", "role": "ikincil", "level": 2,
+      "number": "+905XXXXXXXXX",
+      "telegram_chat_id": null,
+      "pin": "5932"
+    },
+    {
+      "name": "İşletme müdürü", "role": "yönetici", "level": 3,
+      "number": "+905XXXXXXXXX",
+      "telegram_chat_id": null,
+      "pin": "6043"
+    }
+  ]
+}

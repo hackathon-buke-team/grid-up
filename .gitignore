@@ -35,3 +35,8 @@ Hackathon Verileri-*.zip
 .DS_Store
 Thumbs.db
 *.swp
+
+# --- Bildirim yapilandirmasi: bot anahtari, PIN'ler, telefon numaralari ---
+# Sir icerir; yalnizca notify.example.json depoya girer.
+notify.local.json
+.env
