@@ -7,6 +7,8 @@
 ## Genel kural
 
 Sunumdan **önce** (canlı demo başlamadan):
+0. **Slayt çevrimdışı:** `sunum/slayt/index.html` (tarayıcıda aç; görseller `sunum/slayt/img/`, yazı tipi
+   yoksa sistem yazı tipine düşer). Çevrimiçi sürüm: bağlantı `anlati-script.md` §8'de.
 1. `docs/ekran-goruntuleri/panogoz-demo-walkthrough.gif` ve `01…12-*.png` açık bir görüntüleyicide
    hazır dursun. Hepsi çalışan sistemden `tools/record_demo.py` ile çekildi (elle çekim yok).
 2. `docs/ekran-goruntuleri/scada-okuma.txt` (Modbus + IEC 104 okuması) hazır dursun.

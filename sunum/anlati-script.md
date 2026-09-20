@@ -138,5 +138,8 @@ Gerçek (kanıtı olan) entegrasyonlar:
 
 ## 8. Slayt destesi
 
-Artifact linki: https://claude.ai/artifact/K1jkB1boP5dvzKd1KtV7Kt (2026-09-20'de gerçek verilerle
-yeniden kuruldu; içindeki grafikler ve görüntüler çalışan sistemden alındı).
+13 slayt. Artifact linki: https://claude.ai/artifact/K1jkB1boP5dvzKd1KtV7Kt (2026-09-20'de gerçek
+verilerle yeniden kuruldu; θ/sıcaklık grafikleri çalışan sunucunun `/api/fleet/panels/<id>/series`
+çıktısından, ekran görüntüleri `tools/record_demo.py` kaydından, 3B renderlar KiCad'den). Çevrimdışı
+kopya: `sunum/slayt/index.html`. Slayt ↔ bölüm: 1–2 Problem, 3 θ, 4–7 Kanıt ve demo, 8 Doğruluk,
+9–11 Mimari/SCADA/Donanım, 12 Dürüst açık maddeler, 13 Kapanış.
