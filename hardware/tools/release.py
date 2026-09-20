@@ -8,9 +8,9 @@ extras={'.gitignore','.gitattributes','README.md','CLAUDE_CODE_DEVIR.md',
         'docs/02-DONANIM-TASARIMI.md','docs/03-ELEKTRONIK-DOKUMANTASYON.md',
         'docs/07-MALIYET-FAYDA.md','docs/10-MV-HUCRE-KONSEPTI.md',
         'docs/11-ACIK-SORULAR.md','panogoz/hardware_profile.py',
-        'panogoz/sim/panel.py','panogoz/api/app.py','panogoz/detector/engine.py',
+        'panogoz/sim/panel.py','panogoz/api/app.py','panogoz/api/hardware.py','panogoz/detector/engine.py',
         'panogoz/gateway/gateway.py','frontend/js/view-panel.js','frontend/js/twin.js',
-        'tests/test_sim_acceptance.py'}
+        'frontend/js/hardware-view.js','frontend/css/views.css','frontend/css/base.css','tests/test_sim_acceptance.py'}
 files=subprocess.check_output(['git','ls-files','-z'],cwd=ROOT).decode('utf8').split('\0')
 chosen=[n for n in files if n and (n.startswith(prefixes) or n in extras)]
 inventory={n:hashlib.sha256((ROOT/n).read_bytes()).hexdigest() for n in chosen}
@@ -24,11 +24,15 @@ Giris: grid-up/hardware/README.md
 Gorsel tasarim: grid-up/hardware/B1/K1-B1-TASARIM-DOSYASI.pdf
 KiCad 10: grid-up/hardware/B1/{TC,IR,PD,GW}/PANOGOZ-*-B1.kicad_pro
 STEP: grid-up/hardware/B1/mechanical/*/assembly.step
+Dijital ikiz: Pano ekraninda cihaz veya "Kart ve kutu cizimlerini ac" dugmesi.
+API, arayuz ve hardware/B1 dosyalarini birlikte alin, sunucuyu yeniden baslatin.
+Kutu/PCB onizlemeleri ve PDF/STEP/KiCad baglantilari kaynak CAD ciktilaridir.
 Derleme kaniti: grid-up/hardware/B1/evidence/target/
 
 Uyum dogrulamasi: grid-up/hardware/B1/UYUM-DOGRULAMA.md
 K1 odakli 74 test basarili. Tam repo kosusu 188 basarili / 4 basarisiz;
 negatif kontrol ufuk hatalarindan biri degismemis ana surumde de tekrarlandi.
+Dijital ikiz-CAD baglantisi ve B1 entegrasyonu: ayrica 9 test basarili.
 Host oz testi 0 hata; dort ERC temiz. PCB yerlesimdir,
 bakir routing ve fiziksel test yoktur. Firmware hedef portu TC icindir.
 BOM fiyat/MPN/termin teyitleri kismi (K1 1.6 acik). IR/PD/GW uygulama portlari,

@@ -343,6 +343,8 @@
 .tw-dev       { cursor: pointer; }
 .tw-dev-body  { fill: var(--tw-cell); stroke: var(--accent); stroke-width: 3; }
 .tw-dev-off   { stroke: var(--sev-kritik); stroke-dasharray: 6 4; }
+.tw-dev.sel > .tw-dev-body, .tw-dev:focus-visible > .tw-dev-body { stroke: var(--fg); stroke-width: 5; }
+.tw-dev:focus-visible { outline: none; }
 .tw-dev-txt   { fill: var(--accent); font-size: 18px; font-family: var(--font); }
 .tw-lead      { stroke: var(--accent); stroke-width: 1.5; stroke-dasharray: 4 3; }
 
@@ -358,6 +360,25 @@
 .ramp .bar { width: 140px; height: 9px; border: 1px solid var(--line); }
 
 .joint-list { max-height: 340px; overflow: auto; }
+
+/* K1 source exports stay beside the live twin and survive telemetry refreshes. */
+.twin-card > header, .hardware-card > header { flex-wrap: wrap; }
+.twin-card > header h2, .hardware-card > header h3 { flex-shrink: 1; }
+.hardware-select, .hardware-tabs, .hardware-links, .hardware-dimensions {
+  display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+}
+.hardware-select { padding: 12px 13px; border-bottom: 1px solid var(--line); }
+.hardware-tabs { margin-bottom: 8px; }
+.hardware-dimensions { gap: 8px 22px; font-variant-numeric: tabular-nums; }
+.hardware-previews { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; }
+.hardware-figure { margin: 0; min-width: 0; }
+.hardware-image { display: block; background: #fff; border: 1px solid var(--line); }
+.hardware-image img { display: block; width: 100%; aspect-ratio: 5 / 4; object-fit: contain; }
+.hardware-image img[hidden], .hardware-figure > [hidden] { display: none; }
+.hardware-figure figcaption { font-size: var(--t-xs); color: var(--fg-dim); padding-top: 7px; }
+.hardware-card h3:focus { outline: 2px solid var(--accent); outline-offset: 3px; }
+.hardware-card p { margin: 0; }
+@media (max-width: 760px) { .hardware-previews { grid-template-columns: minmax(0, 1fr); } }
 
 /* ================================================================== S3 kanıt */
 

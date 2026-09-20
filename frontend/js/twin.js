@@ -68,7 +68,7 @@ export function renderTwin(o = {}) {
   const devices = o.devices || [];
   const svg = s('svg', {
     viewBox: `-110 -60 ${PANEL_W + 330} ${PANEL_H + 180}`,
-    role: 'img',
+    role: 'group',
     'aria-label': 'TEDAŞ 1600 kVA AG dağıtım panosu dijital ikizi',
   });
 
@@ -292,18 +292,44 @@ export function renderTwin(o = {}) {
   for (const d of devices) {
     const x = d.x_mm || 0, y = Y(d.y_mm || 0);
     const kind = deviceGlyph(d.kind);
-    const g = s('g.tw-dev', { dataset: { device: d.key } });
+    const design = (o.designs || {})[d.hardware_board];
+    const g = s('g.tw-dev' + (o.selectedDevice === d.key ? '.sel' : ''), {
+      dataset: { device: d.key }, role: 'button', tabindex: '0',
+      'aria-label': `${d.key} · K1 tasarımını aç`,
+      'aria-pressed': String(o.selectedDevice === d.key),
+    });
     const offCls = d.online === false ? '.tw-dev-off' : '';
 
-    if (kind === 'clip') {
+    if (design) {
+      // B1 mechanical dimensions, in panel millimetres. The preview is an
+      // isometric illustration INSIDE that nominal envelope, not an orthoview.
+      const [w, h] = design.front_mm;
+      g.appendChild(s('rect.tw-dev-body' + offCls, {
+        x: x - w / 2, y: y - h / 2, width: w, height: h, rx: 1,
+      }));
+      g.appendChild(s('image', {
+        href: design.images.assembly, x: x - w / 2 + 1, y: y - h / 2 + 1,
+        width: w - 2, height: h - 2, preserveAspectRatio: 'xMidYMid meet',
+        'pointer-events': 'none', 'aria-hidden': 'true',
+      }));
+      if (kind === 'ir') {
+        gD.appendChild(s('path', {
+          d: `M${x} ${y - h / 2} L${x - 560} ${Y(470)} L${x + 560} ${Y(470)} Z`,
+          fill: 'url(#fov)', stroke: 'none', 'pointer-events': 'none',
+        }));
+      }
+      if (kind !== 'clip') {
+        g.appendChild(txt(x, y + h / 2 + 17, d.key, 'tw-dev-txt'));
+      }
+    } else if (kind === 'clip') {
       g.appendChild(s('path.tw-dev-body' + offCls, {
         d: `M${x - 20} ${y - 16} h40 v32 h-40 z M${x - 20} ${y} h-10 M${x + 20} ${y} h10`,
       }));
     } else if (kind === 'ir') {
       // görüş alanı konisi: pabuç sırasına yukarı bakar
-      g.appendChild(s('path', {
+      gD.appendChild(s('path', {
         d: `M${x} ${y - 10} L${x - 560} ${Y(470)} L${x + 560} ${Y(470)} Z`,
-        fill: 'url(#fov)', stroke: 'none',
+        fill: 'url(#fov)', stroke: 'none', 'pointer-events': 'none',
       }));
       g.appendChild(s('path.tw-dev-body' + offCls, {
         d: `M${x - 34} ${y + 18} h68 v-26 l-20 -14 h-28 l-20 14 z`,
@@ -323,12 +349,18 @@ export function renderTwin(o = {}) {
     }
     g.appendChild(s('title', {}, [
       `${d.key} · ${d.label || ''}`,
+      design ? `B1 kutu: ${design.outer_mm.join(' × ')} mm · çizimleri aç` : '',
       d.online === false ? 'ÇEVRİMDIŞI' : 'çevrimiçi',
       d.battery_pct !== null && d.battery_pct !== undefined ? `pil %${num(d.battery_pct, 0)}` : '',
       d.mount ? 'montaj: ' + d.mount : '',
     ].filter(Boolean).join('\n')));
     if (o.onDevice) {
       g.addEventListener('click', () => o.onDevice(d.key));
+      g.addEventListener('keydown', (ev) => {
+        if (ev.key === 'Enter' || ev.key === ' ') {
+          ev.preventDefault(); ev.stopPropagation(); o.onDevice(d.key);
+        }
+      });
     }
     gD.appendChild(g);
   }

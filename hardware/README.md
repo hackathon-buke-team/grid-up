@@ -32,6 +32,14 @@ Varsayılan dijital ikiz 6 TC noktasından bağımsız sıcaklık/akım üretir.
 
 [Güncel maliyet](../docs/07-MALIYET-FAYDA.md), [tedarik açıkları](B1/TEDARIK-ACIKLARI.md), [maliyet çıktısı](B1/cost-summary.json). Eski demo veritabanı ideal IR geçmişi içerebilir; B1 demosu yeni bir `PANOGOZ_DB` dosyasıyla başlatılmalıdır, eski veri silinmez.
 
+## Dijital ikizde K1 çizimleri
+
+Pano ekranındaki bir cihaza veya **Kart ve kutu çizimlerini aç** düğmesine basın. TC-01–TC-06 aynı TC kartına; TN-IR, PD-01 ve GW-01 kendi B1 tasarımlarına bağlanır. Galeride mekanik kutu modeli, PCB 3B/üst/alt görünümleri, şematik PDF, STEP ve KiCad PCB bağlantıları bulunur. Pano montaj PDF'si de buradan açılır. Önizlemeler mevcut CAD çıktılarıdır; etkileşimli 3B döndürme yoktur, STEP dosyası CAD yazılımında açılabilir.
+
+Pano çizimindeki cihaz kutuları `mechanical/dimensions.json` nominal ölçülerini kullanır. İçlerindeki izometrik görsel ön görünüş ölçülendirmesi değildir; gerçek pano açıklıkları ve montaj hâlâ fiziksel doğrulama gerektirir. Canlı ölçümler ve bağlantı tıklamaları korunur.
+
+Sunucu `/api/panel/{key}/twin` yanıtında cihaz–tasarım eşlemesini ve `design_catalog` alanını verir; `/api/hardware/B1/` yalnız 29 açıkça listelenmiş teslim dosyasını sunar. Başka donanım dosyaları servis edilmez. Ekip güncellemesinde API, arayüz ve `hardware/B1/` birlikte alınmalı ve sunucu yeniden başlatılmalıdır. Ek program kurulumu gerekmez.
+
 ## Testlerin anlamı
 
 KiCad ERC elektriksel pin/ağ tutarlılığını kontrol eder; analog doğruluk, RF uyumu veya doğru firmware pin-mux seçimini tek başına kanıtlamaz. Pin-mux kontrolü üretici tablolarına göre ayrıca yapılmıştır. Yerleşim DRC ihlali 0 olmakla birlikte TC/IR/PD/GW için sırasıyla **167/162/253/396 yönlendirilmemiş bağlantı** vardır. Bu paket bir Gerber/üretim sürümü değildir. DRC bulguları gizlenmedi; raporların `unconnected_items` alanları teslim edilir.

@@ -12,6 +12,7 @@ import { h, mount, empty, clear } from './dom.js';
 import * as fmt from './fmt.js';
 import { api } from './api.js';
 import { renderTwin, twinLegend } from './twin.js';
+import { createHardwareView } from './hardware-view.js';
 import { zoomPan, fullscreen, exitFullscreen, isFullscreen } from './zoompan.js';
 
 const twinCache = new Map();
@@ -31,7 +32,11 @@ export function create(ctx) {
   const head = h('div.view-head');
   const stage = h('div.surface.twin-card');
   const side = h('div.col');
-  const grid = h('div.twin-grid', h('div.col', stage), side);
+  const hardware = createHardwareView(() => {
+    lastSig = '';
+    ctx.refresh();
+  });
+  const grid = h('div.twin-grid', h('div.col', stage, hardware.el), side);
 
   // Çizim canlı veriyle yeniden kurulur, ama kullanıcının yakınlaştırması
   // kurulumu aşar: bir pabucun üstüne yaklaşmış operatör, bir sonraki ölçüm
@@ -102,14 +107,20 @@ export function create(ctx) {
 
   function renderStage(p, twin, selected) {
     const joints = mergeJoints(p, twin);
-    const devices = (p.devices && p.devices.length) ? p.devices
-      : ((twin && twin.devices) || []);
+    const liveDevices = new Map((p.devices || []).map((d) => [d.key, d]));
+    const devices = ((twin && twin.devices) || p.devices || [])
+      .map((d) => Object.assign({}, d, liveDevices.get(d.key) || {}));
     const svg = renderTwin({
       joints,
       devices,
       selected,
+      designs: twin?.design_catalog?.boards || {},
+      selectedDevice: hardware.selected(),
       onJoint: (key) => ctx.navigate('kanit', p.panel_key, key),
-      onDevice: (key) => ctx.toast('Cihaz', key + ' · ' + ((devices.find((d) => d.key === key) || {}).label || '')),
+      onDevice: (key) => {
+        if (isFullscreen(stage)) exitFullscreen();
+        hardware.select(key, true);
+      },
     });
     // ---- araç şeridi ----------------------------------------------------
     dropFsListeners();
@@ -155,6 +166,11 @@ export function create(ctx) {
         h('span.tag', { text: `${devices.length} cihaz` }),
         h('span.sp.grow'),
         bar),
+      h('div.strip',
+        h('span.small', { text: 'K1 B1 · kutular nominal ölçülerinde gösterilir' }),
+        h('span.sp.grow'),
+        h('button.btn.sm', { text: 'Kart ve kutu çizimlerini aç ↓',
+          onclick: () => hardware.select(hardware.selected(), true) })),
       h('div.twin-stage', svg),
       twinLegend(devices),
       h('div.pad',
@@ -286,7 +302,8 @@ export function create(ctx) {
                 h('th.nosort', { text: 'Sinyal' }))),
               h('tbody', ...devs.map((d) => h('tr',
                 h('td',
-                  h('div', { text: d.key }),
+                  h('button.btn.sm', { text: d.key, title: d.key + ' K1 tasarımını aç',
+                    onclick: () => hardware.select(d.key, true) }),
                   h('div.tiny.muted', { text: d.label || d.kind })),
                 h('td', d.online
                   ? h('span.tag.ok', { text: 'çevrimiçi' })
@@ -413,6 +430,7 @@ export function create(ctx) {
     }
     if (key !== lastKey) { lastKey = key; lastSig = ''; }
     layout();
+    hardware.el.hidden = true;
     if (state.panelError) {
       mount(head, h('h1', { text: key }), h('span.sp'),
         h('button.btn', { text: 'Filoya dön', onclick: () => ctx.navigate('filo') }));
@@ -429,6 +447,8 @@ export function create(ctx) {
       return;
     }
     ensureTwin(key);
+    hardware.el.hidden = false;
+    hardware.update(twinCache.get(key));
     renderHead(p);
 
     // Çizim yalnızca GÖRÜNEN bir şey değişince yeniden kurulur. θ 0,1 K
@@ -438,6 +458,7 @@ export function create(ctx) {
     // görsel farka karşılık gelmiyordu.
     const sig = JSON.stringify([
       state.jointKey,
+      hardware.selected(),
       (p.joints || []).map((j) => [j.key, Math.round((j.theta_k || 0) * 10), j.severity]),
       (p.devices || []).map((d) => [d.key, d.online]),
       twinCache.get(key) ? 1 : 0,

@@ -27,9 +27,17 @@ Tam koşunun başarısız senaryoları: `dugum_sessiz`, `sicak_hava_dalgasi`, `s
 
 Tam koşu çıktısı: `evidence/b1-update-full.log`. Odaklı koşu: `evidence/b1-update-focused.log`. Eski `pytest-final.log` önceki teslimin tarihsel kanıtıdır; bu güncellemenin tamamının geçtiği anlamına gelmez.
 
+## Dijital ikiz–CAD bağlantısı (20.09.2026)
+
+- Dört B1 kartı dokuz cihazla eşlendi; mekanik ve PCB görselleri pano ekranından açılır. Şematik PDF, kutu STEP, PCB KiCad ve pano montaj PDF bağlantıları kaynak teslim dosyalarını kullanır.
+- Nominal kutu ölçüleri mekanik boyut dosyasından gelir; TC'nin uzun ekseni pano derinliğine yöneliktir. Çizimdeki izometrik küçük resim yalnız tanıtımdır; fiziksel montaj veya üretim doğrulaması sayılmaz.
+- `firmware/tests/test_hardware_assets.py` ve `test_b1_integration.py`: **9 test geçti**. 29 sunulan dosyanın kaynak dosyalarla bayt düzeyinde aynı olduğu, MIME/indirme başlıkları, cihaz eşlemeleri ve izin verilmeyen yolların 404 döndürdüğü kontrol edildi. Çıktı: `evidence/hardware-ui-tests.log`.
+- Canlı tarayıcıda pano üzerinden IR seçimi, klavye ile PD seçimi, GW seçimi ve PCB üst/alt geçişleri doğrulandı. Görseller başarıyla yüklendi; seçilen cihaz ve PCB görünümü telemetri yenilenirken korundu. Dar uygulama panelinde önizlemeler alt alta görünür.
+- Bu bağlantı için şematik, PCB, firmware, ortak sözleşmeler ve alarm/tahmin eşikleri değiştirilmedi. Önceki tam repo testlerindeki açık negatif kontrol hataları bu sonuçla kapanmış değildir.
+
 ## Ekip birleştirmesi
 
-K1 kaynaklarına ek olarak gateway, simülatör, API ve iki arayüz dosyası değişti. Ortak kanal/varlık/Envelope sözleşmesi korunur. API'de mevcut `joints_monitored` ve `monitored` alanları aday bölgeyi temsil etmeyi sürdürür; gerçek B1 kapsamı `joints_resolved`, `measurement_supported` ve `hardware_profile` ile ayrıca verilir. Eski istemciler bu ayrımı kullanmıyorsa arayüzleri de güncellenmelidir.
+K1 kaynaklarına ek olarak gateway, simülatör, API ve arayüz dosyaları değişti. Ortak kanal/varlık/Envelope sözleşmesi korunur. API'de mevcut `joints_monitored` ve `monitored` alanları aday bölgeyi temsil etmeyi sürdürür; gerçek B1 kapsamı `joints_resolved`, `measurement_supported` ve `hardware_profile` ile ayrıca verilir. Eski istemciler bu ayrımı kullanmıyorsa arayüzleri de güncellenmelidir.
 
 Eski veritabanında ideal IR geçmişi bulunabilir. Silmek yerine yeni dosya kullanın:
 

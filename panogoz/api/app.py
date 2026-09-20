@@ -49,6 +49,7 @@ from panogoz.api.runtime import (
 )
 from panogoz.contracts import assets, channels, icd
 from panogoz.hardware_profile import coverage, TC_JOINTS, IR_VALIDATED_JOINTS
+from panogoz.api.hardware import catalog as hardware_catalog, KINDS as HARDWARE_KINDS, router as hardware_router
 from panogoz.contracts.live import AlarmView, EtaView, SuppressionView
 from panogoz.sim import faults as fx
 
@@ -564,6 +565,7 @@ def create_app(runtime: Runtime) -> FastAPI:
             "devices": [
                 {
                     "key": d.key, "kind": d.kind, "label": d.label, "zone": d.zone,
+                    "hardware_board": HARDWARE_KINDS.get(d.kind),
                     "mount": d.mount, "x_mm": d.x_mm, "y_mm": d.y_mm,
                     "covers": list(d.covers) if d.kind != "TN-IR" else sorted(IR_VALIDATED_JOINTS),
                     "candidate_covers": list(d.covers), "battery": d.battery,
@@ -581,6 +583,7 @@ def create_app(runtime: Runtime) -> FastAPI:
                 "roof_stubs": sum(1 for j in assets.JOINTS if j.zone == "roof"),
             },
             "hardware_profile": coverage(),
+            "design_catalog": hardware_catalog(),
         })
 
     # ------------------------------------------------------------- trend --
@@ -1074,6 +1077,7 @@ def create_app(runtime: Runtime) -> FastAPI:
 
     # ------------------------------------------------------------ static --
 
+    app.include_router(hardware_router)
     FRONTEND_DIR.mkdir(parents=True, exist_ok=True)
     app.mount("/", UiFiles(directory=str(FRONTEND_DIR), html=True), name="ui")
     return app
