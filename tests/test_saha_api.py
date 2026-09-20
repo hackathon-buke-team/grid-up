@@ -368,3 +368,27 @@ def test_without_a_notifier_the_routes_say_so(tmp_path):
     c = TestClient(app)
     assert c.get("/api/saha/rota").status_code == 503
     assert c.get("/api/notify/status").status_code == 503
+
+
+# ------------------------------------------------- what the redesigned UI draws --
+
+@pytest.mark.parametrize("severity,deadline", [("ACIL", 15 * 60), ("KRITIK", 45 * 60),
+                                                ("UYARI", 8 * 3600)])
+def test_card_carries_the_acknowledgement_deadline_of_its_severity(env, severity, deadline):
+    """The inbox draws a countdown bar; the number must be the ladder's own, not a copy."""
+    open_incident(env, severity=severity)
+    card = env.client.get("/api/saha/olaylar", headers=login(env)).json()["olaylar"][0]
+    assert card["ack_deadline_s"] == deadline
+
+
+def test_detail_carries_the_theta_ladder_the_scale_is_drawn_against(env):
+    """The detail screen places theta on IZLE/UYARI/KRITIK/ACIL zones.  Those four
+    numbers live in detector.engine.THETA_ABS_LADDER; the API forwards them so the
+    phone never hard-codes a threshold that someone later changes in one place."""
+    from panogoz.detector.engine import THETA_ABS_LADDER
+    inc = open_incident(env)
+    d = env.client.get(f"/api/saha/olay/{inc['id']}", headers=login(env)).json()
+    ladder = d["olcum"]["theta_merdiven"]
+    assert ladder == [[name, float(k)] for name, k in THETA_ABS_LADDER]
+    assert [n for n, _ in ladder] == ["IZLE", "UYARI", "KRITIK", "ACIL"]
+    assert [k for _, k in ladder] == sorted(k for _, k in ladder)

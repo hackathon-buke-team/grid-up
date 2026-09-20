@@ -195,12 +195,15 @@ listesinden **ad + PIN**. Bir olay `#/olay/42` ile doğrudan açılır.
 
 | Ekran | İçerik |
 |---|---|
-| **Gelen kutusu** | Olay kartları; "Bana gelenler" (merdivenin bana gönderdiği) / "Tümü". Onay bekleyen kart nabız atar. Seviye rengi her zaman ▲ ◆ ■ şekli ve Türkçe etiketle birlikte. |
-| **Alarm örtüsü** | Onay bekleyen olay varken tam ekran; siren, titreşim, **ONAYLA**, Ayrıntı, 5 dk sessiz. Sekme başlığı `🔴 (1) ONAY BEKLİYOR`. |
-| **Olay ayrıntısı** | Ne yapmalı · onay · **iş emri** (Yola çıktım → Sahadayım → İşi tamamladım + not) · konum ve yol tarifi · ölçümler (θ, T, ΔT, yük, eğim, fazla direnç *aralığı*, eşiğe kalan gün) · **neden alarm verildi** (hangi bağımsız ölçüm aileleri hemfikir) · **neler elendi** (yük, ortam, yayıcılık…) · zaman çizgisi (hangi kanaldan kime, ne zaman, iletildi mi) |
+| **Giriş** | Marka, nöbet listesinden **üye kartları** ve dört-sekiz haneli PIN için **rakam tuş takımı** (eldivenle basılır; masaüstünde fiziksel klavye de çalışır). Yanlış PIN'de noktalar sallanır. |
+| **Gelen kutusu** | Üstte **özet kartı**: "N olay onay bekliyor" (nabız atar) ya da "Bekleyen onay yok". "Bana gelenler" / "Tümü". Her kartta seviye rozeti (▲ ◆ ■ + Türkçe etiket), pano, bağlantı ve onay bekleyen olayda **onay süresi çubuğu**: süre merdivenin kendi sayısıdır (ACİL 15 dk, KRİTİK 45 dk; `escalation.ACK_DEADLINE_S`), dolunca "üst kademeye bildirildi" yazar. |
+| **Alarm örtüsü** | Onay bekleyen olay varken tam ekran; nabız halkaları, siren, titreşim, **ONAYLA**, Ayrıntı, 5 dk sessiz. Sekme başlığı `🔴 (1) ONAY BEKLİYOR`. Örtü yalnız içeriği değişince yeniden kurulur (aksi halde animasyon üç saniyede bir baştan başlar ve parmağın altındaki düğme kaybolabilir). |
+| **Olay ayrıntısı** | Ne yapmalı · **iş emri adım göstergesi** (Onay → Yolda → Sahada → Tamam) · konum ve yol tarifi · ölçümler: **θ ölçeği** (θ, mutlak basamakların — İzle 2, Uyarı 5, Kritik 12, Acil 25 K — hangi bölgesinde; eşikler `detector.engine.THETA_ABS_LADDER`'den gelir, telefonda ikinci bir kopya yoktur) ve θ, T, ΔT, yük, eğim, fazla direnç *aralığı*, eşiğe kalan gün · **neden alarm verildi** · **neler elendi** · kanal etiketli zaman çizgisi. Bir sonraki adım (**ONAYLA**, Yola çıktım, Sahadayım, İşi tamamladım) ekranın altında **opak, sabit bir çubukta** durur: başparmağın altında ve arkasındaki yazı görünmez. |
 
 Uygulamanın en ayırt edici yanı, konsolun ayırt edici yanıyla aynıdır: telefonda da **"neden
-alarm verdim / neyi eledim"** görünür. Ölçüm olmayan bir olayda (ör. ark, pano düzeyi) ölçüm
+alarm verdim / neyi eledim"** görünür. θ ölçeği bir uyarıyla gelir: ölçek θ'nın *mutlak*
+basamağıdır, olayın seviyesi birden çok kanıttan çıkar ve ölçekten farklı olabilir (ark olayı
+gibi); ekran bunu yazar. Ölçüm olmayan bir olayda (ör. ark, pano düzeyi) ölçüm
 hücreleri gösterilmez; bir pabucun akım kelepçesi yoksa "Akım 0 A" yazmaz.
 
 **Onay** oturumla yapılır. Olay kodunu (4 hane) telefonda yazmak gerekmez: o kod, SMS'te

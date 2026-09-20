@@ -196,7 +196,7 @@ bir kanaldan onay hepsinde tekrarı durdurur ve her Telegram kopyasının düğm
 | Yapılandırma ve fabrika (sırlar dosyada/ortamda; gerçek kanal yalnız başlatıcıdan) | `panogoz/notify/config.py`, `factory.py`, `notify.example.json` |
 | Saha uygulaması (PWA, sıfır bağımlılık) | `saha/` |
 | Merdiven: `TELEGRAM` + `MOBIL` kanalları, asenkron gönderim, çok kanallı onay, `/start` `/durum` | `panogoz/notify/escalation.py` |
-| Testler (+113) | `tests/test_notify_*.py`, `test_gsm_serial.py`, `test_saha_api.py`, `fake_telegram.py` |
+| Testler (+117) | `tests/test_notify_*.py`, `test_gsm_serial.py`, `test_saha_api.py`, `fake_telegram.py` |
 
 **Yolda bulunan ve düzeltilen gerçek hatalar** (her biri önce kırmızı testle):
 
@@ -218,8 +218,8 @@ süresi dolmadı"*. Güvenlik özelliği olduğu için gevşetilmedi; ayrıntı 
 `frontend/`, `panogoz/contracts/`, `store/schema.sql` **değişmedi**; iş emri durumu şema
 değişikliği olmadan `audit` zincirine yazılır.
 
-**Doğrulandı.** `python -m pytest -q` → **279 geçti, 6 düştü** (172 taban + 113 yeni = 285). Düşen
-6 test `tests/test_negative_pipeline.py::test_negative_control_opens_no_incident_or_horizon[*]`'tir ve
+**Doğrulandı.** `python -m pytest -q` → **285 geçti, 4 düştü** (172 taban + 117 yeni = 289; bir önceki tam koşumda 6 düşmüştü, yani düşen sayı koşumdan koşuma değişiyor). Düşen
+testler `tests/test_negative_pipeline.py::test_negative_control_opens_no_incident_or_horizon[*]`'tir ve
 **bu turun değişikliğinden bağımsızdır**: değişmemiş `origin/main`'in izole bir kopyasında (git
 worktree) aynı testler aynı biçimde düştü ve aynı gün iki tam koşumda (14:5x, 15:5x) geçmişti.
 Sağlıklı bir pabuç için ufuk özelliği, testin sözleşmesinin (90 günlük tavanın **altında** gün

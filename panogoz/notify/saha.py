@@ -76,6 +76,21 @@ _ACK_REASON_TR = {
 }
 
 
+def _theta_ladder() -> list[list]:
+    """``[["IZLE", 2.0], ["UYARI", 5.0], ...]`` from the detector's single definition.
+
+    The detail screen draws theta on these zones.  The thresholds live in
+    ``detector.engine.THETA_ABS_LADDER`` ("whoever changes a threshold changes it in
+    one place"); forwarding them keeps the phone from hard-coding a second copy.
+    Empty when the detector cannot be imported - the phone then draws no scale.
+    """
+    try:
+        from panogoz.detector.engine import THETA_ABS_LADDER
+        return [[str(name), float(k)] for name, k in THETA_ABS_LADDER]
+    except Exception:  # noqa: BLE001
+        return []
+
+
 class NoStoreFiles(StaticFiles):
     """The app shell is never cached by the browser.
 
@@ -241,6 +256,9 @@ def install(app: FastAPI, runtime: Any, *, clock: Callable[[], float] | None = N
             "notified_at": notified, "needs_ack": needs_ack,
             "sound": bool(needs_ack and notified is not None),
             "work": work.get(iid),
+            #: The ladder's own number (escalation.ACK_DEADLINE_S): the inbox draws a
+            #: countdown from it, and it must not be a second copy that can drift.
+            "ack_deadline_s": esc.ACK_DEADLINE_S.get(sev),
         }
 
     def my_notified(member_name: str) -> dict[int, float]:
@@ -357,6 +375,7 @@ def install(app: FastAPI, runtime: Any, *, clock: Callable[[], float] | None = N
             "health_index": ev.get("health_index"),
             "excess_resistance": ev.get("excess_resistance"),
             "eta": esc.eta_text(dict(row), live) or None,
+            "theta_merdiven": _theta_ladder(),
         }
         neden = {"aileler": ev.get("family_labels_tr") or [],
                  "terimler": [t.get("label_tr") for t in (ev.get("terms") or []) if t.get("label_tr")],
