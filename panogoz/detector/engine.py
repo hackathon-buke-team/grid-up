@@ -288,7 +288,8 @@ class _JointRuntime:
     theta_daily: float | None = None
     delta_7d: float = 0.0
     excess_r_uohm: float | None = None
-    eta: EtaView = field(default_factory=EtaView)
+    # A joint with no accepted samples must still explain why no forecast exists.
+    eta: EtaView = field(default_factory=lambda: EtaView(reason=hz.REASON_HISTORY))
     note: str = ""
 
 

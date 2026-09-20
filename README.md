@@ -9,6 +9,8 @@ Varlık: TEDAŞ-MLZ/2003-06.B, EK-II/14 çizimli, 1600 kVA dahili tip AG dağıt
 
 **K1 B1 (20.09.2026):** [Tasarım teslimi](hardware/README.md) repo içindedir. Dört kartın düzenlenebilir KiCad kaynakları, PDF/PNG, mekanik STEP, STM32WLE5 hedef portu ve derleme kanıtı eklendi. BOM teklifleri kısmi; fiziksel donanım çalıştırılmadı. Eski 13,1 yıl pil varsayımı B1 için geçerli değildir.
 
+**B1 kapsam düzeltmesi:** Çalışan ikizde bağımsız sıcaklık/akım kapsamı **6 TC noktasıdır**. 40 pabuç, fizik modelinin aday kapsamıdır; mevcut IR geometrisinde tekil pabuç ayrımı doğrulanmadığı için IR pabuç sıcaklığı üretilmez. TC pil hesabı 721 gün varsayımıdır; IR/PD ömrü belirsizdir. [Güncel maliyet](docs/07-MALIYET-FAYDA.md) eksik fiyatları sıfır saymaz. Yeni B1 demosunu eski ideal-IR geçmişi içermeyen ayrı bir `--db` dosyasıyla başlatın.
+
 ## 1. Tez — bir paragrafta
 
 Her yarışmacı panoya bir termometre koyar ve bir eşiğin üstünde alarm üretir. Bu sahada

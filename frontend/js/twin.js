@@ -15,7 +15,7 @@
 //   * altta "En az 400mm" serbest kablo bölmesi, taban tamamen açık
 //   * sağda ölçü kolonu: analizör, sayaç ve "Modem" bölmesi (Madde 2.2.8.1.iv)
 //
-// Kaplama (overlay): 40 izlenen bağlantı θ'ya göre cividis renkli, seviyeye göre
+// Kaplama (overlay): ölçümü desteklenen bağlantılar θ'ya göre cividis renkli, seviyeye göre
 // büyüyen noktalar; 9 cihaz kendi glifiyle; bara ve çatı bağlantıları YALNIZCA
 // kontur ve "izlenmiyor — kesinti gerektirir" etiketiyle. Sahip olmadığımız
 // kapsamı varmış gibi göstermek, güvenilirliği kaybetmenin en hızlı yoludur.
@@ -165,13 +165,12 @@ export function renderTwin(o = {}) {
 
   // ------------------------------------------------------------ pabuç sırası
   svg.appendChild(s('rect.tw-zone', { x: 26, y: Y(545), width: PANEL_W - 52, height: 90 }));
-  const bottomCount = joints.filter((j) => j.zone === 'bottom').length;
   // Pabuç noktaları x = 58..1018 arasında duruyor; bölmenin sağ ucu (x > 1030)
   // boştur. Etiket oraya yazılır ve gövde kenarını (x = 1600) aşmaz - eskiden
   // x = 1580'den başlayıp çerçeveden taşıyordu.
   svg.appendChild(txt(1548, Y(526), '48 pabuçluk çıkış sırası',
     'tw-txt-xs', { 'text-anchor': 'end', x: 1548 }));
-  svg.appendChild(txt(1548, Y(496), `${bottomCount} izleniyor · 2 yedek boş`,
+  svg.appendChild(txt(1548, Y(496), `${joints.filter((j) => j.measurement_supported === true).length} TC noktası · IR ayrımı doğrulanmadı`,
     'tw-txt-xs', { 'text-anchor': 'end', x: 1548, opacity: 0.75 }));
 
   // --------------------------------------------------- alt kablo bölmesi ---
@@ -258,13 +257,14 @@ export function renderTwin(o = {}) {
     const g = s('g.tw-joint-g', { dataset: { joint: j.key } });
     const dot = s('circle.tw-joint' + (o.selected === j.key ? '.sel' : ''), {
       cx: j.x_mm, cy: Y(j.y_mm), r,
-      fill: thetaColor(j.theta_k),
+      fill: j.measurement_supported === false ? 'none' : thetaColor(j.theta_k),
     });
     dot.appendChild(s('title', {}, [
       `${j.label || j.key}`,
+      j.measurement_supported === false ? 'B1: bağımsız IR ölçümü doğrulanmadı' : 'TC ölçüm noktası',
       `θ = ${num(j.theta_k, 2)} K`,
       `T = ${num(j.temp_c, 1)} °C`,
-      `${sevMeta(sev).label}`,
+      j.measurement_supported === false ? 'Ölçüm yok' : `${sevMeta(sev).label}`,
     ].join('\n')));
     g.appendChild(dot);
     if (sevRank(sev) >= 2) {
@@ -365,6 +365,8 @@ export function twinLegend(devices) {
       `Ağ geçidi (${counts.GW || 0})`),
     li(glyph((e) => e.appendChild(s('circle', { cx: 12, cy: 12, r: 6, fill: 'none', stroke: 'var(--tw-unmon)', 'stroke-width': 2, 'stroke-dasharray': '3 2' }))),
       'İzlenmiyor · kesinti gerektirir'),
+    li(glyph((e) => e.appendChild(s('circle', { cx: 12, cy: 12, r: 6, fill: 'none', stroke: 'var(--accent)', 'stroke-width': 2 }))),
+      'Bağımsız IR ölçümü doğrulanmadı'),
     h('span.li',
       h('span.ramp',
         h('span', { text: 'θ 0 K' }),

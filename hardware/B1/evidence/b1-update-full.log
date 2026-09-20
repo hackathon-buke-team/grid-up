@@ -1,0 +1,36 @@
+........................................................................ [ 37%]
+.......................FFFF............................................. [ 75%]
+................................................                         [100%]
+================================== FAILURES ===================================
+______ test_negative_control_opens_no_incident_or_horizon[dugum_sessiz] _______
+tests\test_negative_pipeline.py:117: in test_negative_control_opens_no_incident_or_horizon
+    assert not soon, f"{name} takvime yaz�labilir bir g�n verdi: {soon}"
+E   AssertionError: dugum_sessiz takvime yaz�labilir bir g�n verdi: [('C07-L3-PABUC', 'IZLE', 88.0)]
+E   assert not [('C07-L3-PABUC', 'IZLE', 88.0)]
+___ test_negative_control_opens_no_incident_or_horizon[sicak_hava_dalgasi] ____
+tests\test_negative_pipeline.py:117: in test_negative_control_opens_no_incident_or_horizon
+    assert not soon, f"{name} takvime yaz�labilir bir g�n verdi: {soon}"
+E   AssertionError: sicak_hava_dalgasi takvime yaz�labilir bir g�n verdi: [('C07-L3-PABUC', 'IZLE', 87.0)]
+E   assert not [('C07-L3-PABUC', 'IZLE', 87.0)]
+______ test_negative_control_opens_no_incident_or_horizon[sebeke_olayi] _______
+tests\test_negative_pipeline.py:117: in test_negative_control_opens_no_incident_or_horizon
+    assert not soon, f"{name} takvime yaz�labilir bir g�n verdi: {soon}"
+E   AssertionError: sebeke_olayi takvime yaz�labilir bir g�n verdi: [('C07-L3-PABUC', 'IZLE', 83.0)]
+E   assert not [('C07-L3-PABUC', 'IZLE', 83.0)]
+___ test_negative_control_opens_no_incident_or_horizon[trafo_devreye_alma] ____
+tests\test_negative_pipeline.py:117: in test_negative_control_opens_no_incident_or_horizon
+    assert not soon, f"{name} takvime yaz�labilir bir g�n verdi: {soon}"
+E   AssertionError: trafo_devreye_alma takvime yaz�labilir bir g�n verdi: [('C07-L3-PABUC', 'IZLE', 88.0)]
+E   assert not [('C07-L3-PABUC', 'IZLE', 88.0)]
+============================== warnings summary ===============================
+tests/test_detector.py::test_8_end_to_end
+  C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\tests\test_detector.py:681: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+    _dt.datetime.utcfromtimestamp(jv.changepoint_ts).strftime("%d %B %Y"))
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_negative_pipeline.py::test_negative_control_opens_no_incident_or_horizon[dugum_sessiz]
+FAILED tests/test_negative_pipeline.py::test_negative_control_opens_no_incident_or_horizon[sicak_hava_dalgasi]
+FAILED tests/test_negative_pipeline.py::test_negative_control_opens_no_incident_or_horizon[sebeke_olayi]
+FAILED tests/test_negative_pipeline.py::test_negative_control_opens_no_incident_or_horizon[trafo_devreye_alma]
+4 failed, 188 passed, 1 warning in 141.97s (0:02:21)

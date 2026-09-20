@@ -2,8 +2,8 @@
 from pathlib import Path
 import json
 ROOT=Path(__file__).resolve().parents[2];B=ROOT/'hardware/B1'
-circuits={k:json.loads((B/k/'circuit.json').read_text()) for k in ('TC','IR','PD','GW')}
-bom=json.loads((B/'bom.json').read_text());mem=json.loads((ROOT/'firmware/node/build/stm32wle5/memory_report.json').read_text())
+circuits={k:json.loads((B/k/'circuit.json').read_text(encoding='utf8')) for k in ('TC','IR','PD','GW')}
+bom=json.loads((B/'bom.json').read_text(encoding='utf8'));mem=json.loads((ROOT/'firmware/node/build/stm32wle5/memory_report.json').read_text(encoding='utf8'))
 d02='''# 02 · Donanım tasarımı / B1
 
 20.09.2026. Bu belge K1'in repo ile uyumlu B1 sürümünü tanımlar. Önceki A1 blok tasarımındaki fiyat/pil ömrü ve parça varyantı varsayımlarının yerine geçer. Ana teslim dizini [hardware/README.md](../hardware/README.md); ölçülendirilmiş montaj çizimi [tasarım dosyası](../hardware/B1/K1-B1-TASARIM-DOSYASI.pdf).
@@ -25,7 +25,7 @@ Referans: repo içindeki `AG Pano Teknik Çizim-1600kVA.pdf`, EK-II/14, 1600×15
 
 TC gövdesi 34×126×19,5 mm, kenarı öne döndürülür. 20 mm faz adımında Ø42 mm dış kelepçeler aynı düzlemde çakışacağından z=80/140/200 mm kademesi tasarlanır. En gerideki 126 mm gövde z=326 mm'ye ulaşır. Gerçek kablo bükülmesi ve elektriksel açıklıklar bilinmediğinden sahaya sığdığı iddia edilmez. Nominal Ø32 mm kelepçe için değişebilir yalıtkan insert ve kayış öngörülür. Pabuçtan 50-100 mm aşağıdaki **yalıtılmış kablo yüzeyi** ölçülür; çıplak bara üzerine pil/PCB temas etmez.
 
-IR kutusu 54×82×26 mm; iki kapsüllü mıknatıs ve ayarlanabilir kaide konsepti. SHT açıklığı kaplanmaz; su itici geçirgen membran gerekir. IR pencere LWIR uyumlu olmalı; sıradan cam uygun değildir. 350 mm düşey +235 mm derinlik farkında optik mesafe 422 mm, yatay görüş yaklaşık 1205 mm olur. Ancak 32 piksel genişlik yaklaşık 38 mm/piksel demektir: **20 mm adımlı tüm pabuçlar tek tek çözülemez**. Engellenen/örtüşen ROI ölçümleri geçerli gibi sunulmamalıdır; K3/K4 saha kalibrasyonunda bunu göstermelidir.
+IR kutusu 54×82×26 mm; iki kapsüllü mıknatıs ve ayarlanabilir kaide konsepti. SHT açıklığı kaplanmaz; su itici geçirgen membran gerekir. IR pencere LWIR uyumlu olmalı; sıradan cam uygun değildir. 350 mm düşey +235 mm derinlik farkında optik mesafe 422 mm, yatay görüş yaklaşık 1205 mm olur. Ancak 32 piksel genişlik yaklaşık 38 mm/piksel demektir: **20 mm adımlı tüm pabuçlar tek tek çözülemez**. B1 yazılımında kalibre edilmiş pabuç ROI listesi boştur. Varsayılan simülasyon yalnız 6 TC sıcaklığını yayınlar; fiziksel modelin diğer bağlantıları ölçüm sayılmaz. API ve dijital ikiz kapsam sınırını gösterir. Tekil IR ölçümü için optik/montaj değişikliği ve ROI kalibrasyonu gerekir.
 
 PD kutusu 80×118×45 mm. Mevcut M12 saplamaya aksesuar braket konsepti; PE bağlantısı gevşetilmez/sökülmez. HFCT ayrılabilir çekirdeği PE üzerine oturur. TEV yalıtılmış yüzey kuplajıdır. Faz konnektörü yalnız harici yalıtılmış 0..3,3 V referans alır.
 
@@ -55,7 +55,7 @@ GW 2×10 F/2,7 V seri EDLC paketi yaklaşık 5 F eşdeğerdir; 10k dengeleme ve 
 ## BOM / tedarik
 
 '''
-d02+=f'B1 BOM {len(bom["rows"])} satır içerir. Doğrulanmış fiyatlı satırların kit ara toplamı **{bom["known_subtotal_usd"]:.2f} USD**, fiyatı bilinmeyen satır sayısı **{bom["unpriced_line_count"]}**. Tam kit maliyeti henüz hesaplanamaz. Eski €470,59/€660,91 tabloları B1 için güncel teklif değildir. docs/07 başındaki revizyon notu bu sınırı açıklar. Kaynak/alternatif/termin: [BOM.md](../hardware/B1/BOM.md), [bom.json](../hardware/B1/bom.json).\n'
+d02+=f'B1 BOM {len(bom["rows"])} satır içerir. Doğrulanmış fiyatlı satırların kit ara toplamı **{bom["known_subtotal_usd"]:.2f} USD**, fiyatı bilinmeyen satır sayısı **{bom["unpriced_line_count"]}**. Tam kit maliyeti henüz hesaplanamaz. Eski €470,59/€660,91 tabloları B1 için güncel teklif değildir. docs/07 güncel maliyet modelini, TC için beş yılda iki pil değişim turunu ve eksik girdileri gösterir. Kaynak/alternatif/termin: [BOM.md](../hardware/B1/BOM.md), [bom.json](../hardware/B1/bom.json).\n'
 d03='''# 03 · Elektronik dokümantasyon / B1
 
 Bu sürüm gerçek KiCad 10 şematik/PCB kaynaklarını belgeler. [hardware/README.md](../hardware/README.md) dosya dizinidir. Her fiziksel pin ve ağ `circuit.json` ile `pinmap.csv` içinde bulunur. Aşağıdaki tablolar aynı manifestten üretilir; sanal kaynak bayrakları BOM'a/PCB'ye eklenmez.

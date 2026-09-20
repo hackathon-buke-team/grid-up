@@ -48,6 +48,7 @@ from panogoz.api.runtime import (
     DAY_S, DEMO_PANEL, DETECT_PERIOD_S, VERSION, Runtime,
 )
 from panogoz.contracts import assets, channels, icd
+from panogoz.hardware_profile import coverage, TC_JOINTS, IR_VALIDATED_JOINTS
 from panogoz.contracts.live import AlarmView, EtaView, SuppressionView
 from panogoz.sim import faults as fx
 
@@ -555,6 +556,7 @@ def create_app(runtime: Runtime) -> FastAPI:
                                             if j.feeder_index is not None
                                             else f"{j.zone}:GIRIS")),
                     "monitored": j.zone in assets.MONITORED_ZONES,
+                    "measurement_supported": j.key in TC_JOINTS | IR_VALIDATED_JOINTS,
                     "live": (by_key[j.key].to_dict() if j.key in by_key else None),
                 }
                 for j in assets.JOINTS
@@ -563,7 +565,8 @@ def create_app(runtime: Runtime) -> FastAPI:
                 {
                     "key": d.key, "kind": d.kind, "label": d.label, "zone": d.zone,
                     "mount": d.mount, "x_mm": d.x_mm, "y_mm": d.y_mm,
-                    "covers": list(d.covers), "battery": d.battery,
+                    "covers": list(d.covers) if d.kind != "TN-IR" else sorted(IR_VALIDATED_JOINTS),
+                    "candidate_covers": list(d.covers), "battery": d.battery,
                     "live": (dev_by_key[d.key].to_dict() if d.key in dev_by_key else None),
                 }
                 for d in assets.DEVICES
@@ -571,11 +574,13 @@ def create_app(runtime: Runtime) -> FastAPI:
             "counts": {
                 "joints_total": len(assets.JOINTS),
                 "joints_monitored": len(assets.monitored_joints()),
+                "joints_resolved": len(TC_JOINTS | IR_VALIDATED_JOINTS),
                 "devices": assets.DEVICES_PER_PANEL,
                 "bottom_lugs": sum(1 for j in assets.JOINTS if j.zone == "bottom"),
                 "busbar_joints": sum(1 for j in assets.JOINTS if j.zone == "busbar"),
                 "roof_stubs": sum(1 for j in assets.JOINTS if j.zone == "roof"),
             },
+            "hardware_profile": coverage(),
         })
 
     # ------------------------------------------------------------- trend --

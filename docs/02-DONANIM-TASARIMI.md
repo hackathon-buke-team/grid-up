@@ -19,7 +19,7 @@ Referans: repo içindeki `AG Pano Teknik Çizim-1600kVA.pdf`, EK-II/14, 1600×15
 
 TC gövdesi 34×126×19,5 mm, kenarı öne döndürülür. 20 mm faz adımında Ø42 mm dış kelepçeler aynı düzlemde çakışacağından z=80/140/200 mm kademesi tasarlanır. En gerideki 126 mm gövde z=326 mm'ye ulaşır. Gerçek kablo bükülmesi ve elektriksel açıklıklar bilinmediğinden sahaya sığdığı iddia edilmez. Nominal Ø32 mm kelepçe için değişebilir yalıtkan insert ve kayış öngörülür. Pabuçtan 50-100 mm aşağıdaki **yalıtılmış kablo yüzeyi** ölçülür; çıplak bara üzerine pil/PCB temas etmez.
 
-IR kutusu 54×82×26 mm; iki kapsüllü mıknatıs ve ayarlanabilir kaide konsepti. SHT açıklığı kaplanmaz; su itici geçirgen membran gerekir. IR pencere LWIR uyumlu olmalı; sıradan cam uygun değildir. 350 mm düşey +235 mm derinlik farkında optik mesafe 422 mm, yatay görüş yaklaşık 1205 mm olur. Ancak 32 piksel genişlik yaklaşık 38 mm/piksel demektir: **20 mm adımlı tüm pabuçlar tek tek çözülemez**. Engellenen/örtüşen ROI ölçümleri geçerli gibi sunulmamalıdır; K3/K4 saha kalibrasyonunda bunu göstermelidir.
+IR kutusu 54×82×26 mm; iki kapsüllü mıknatıs ve ayarlanabilir kaide konsepti. SHT açıklığı kaplanmaz; su itici geçirgen membran gerekir. IR pencere LWIR uyumlu olmalı; sıradan cam uygun değildir. 350 mm düşey +235 mm derinlik farkında optik mesafe 422 mm, yatay görüş yaklaşık 1205 mm olur. Ancak 32 piksel genişlik yaklaşık 38 mm/piksel demektir: **20 mm adımlı tüm pabuçlar tek tek çözülemez**. B1 yazılımında kalibre edilmiş pabuç ROI listesi boştur. Varsayılan simülasyon yalnız 6 TC sıcaklığını yayınlar; fiziksel modelin diğer bağlantıları ölçüm sayılmaz. API ve dijital ikiz kapsam sınırını gösterir. Tekil IR ölçümü için optik/montaj değişikliği ve ROI kalibrasyonu gerekir.
 
 PD kutusu 80×118×45 mm. Mevcut M12 saplamaya aksesuar braket konsepti; PE bağlantısı gevşetilmez/sökülmez. HFCT ayrılabilir çekirdeği PE üzerine oturur. TEV yalıtılmış yüzey kuplajıdır. Faz konnektörü yalnız harici yalıtılmış 0..3,3 V referans alır.
 
@@ -48,4 +48,4 @@ GW 2×10 F/2,7 V seri EDLC paketi yaklaşık 5 F eşdeğerdir; 10k dengeleme ve 
 
 ## BOM / tedarik
 
-B1 BOM 214 satır içerir. Doğrulanmış fiyatlı satırların kit ara toplamı **162.68 USD**, fiyatı bilinmeyen satır sayısı **206**. Tam kit maliyeti henüz hesaplanamaz. Eski €470,59/€660,91 tabloları B1 için güncel teklif değildir. docs/07 başındaki revizyon notu bu sınırı açıklar. Kaynak/alternatif/termin: [BOM.md](../hardware/B1/BOM.md), [bom.json](../hardware/B1/bom.json).
+B1 BOM 214 satır içerir. Doğrulanmış fiyatlı satırların kit ara toplamı **260.09 USD**, fiyatı bilinmeyen satır sayısı **195**. Tam kit maliyeti henüz hesaplanamaz. Eski €470,59/€660,91 tabloları B1 için güncel teklif değildir. docs/07 güncel maliyet modelini, TC için beş yılda iki pil değişim turunu ve eksik girdileri gösterir. Kaynak/alternatif/termin: [BOM.md](../hardware/B1/BOM.md), [bom.json](../hardware/B1/bom.json).

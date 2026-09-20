@@ -51,7 +51,7 @@ Host OTA durum makinesi senaryosu vardır. **TC hedefinde OTA kapalıdır:** imz
 
 ## K2 ile uyum
 
-`tools/radio_bridge.py` 35 bayt C radyo çerçevesini mevcut `Envelope` biçimine dönüştürür. `node/tests/wire_fixtures.c` vektör kaynağı; CRC/uzunluk/sürüm/kimlik/kadans ve geçersiz ölçüm testleri `tests/test_radio_bridge.py` altında. Node seq/boot korunur. MQTT outbox devri, zaman senkronizasyonu ve gerçek GW donanımı alıcısı [hedef port README](node/port/stm32wle5/README.md) içinde K2 için tanımlanmıştır; çalışan donanım zinciri iddiası yoktur.
+`tools/radio_bridge.py` 35 bayt C radyo çerçevesini mevcut `Envelope` biçimine dönüştürür. `node/tests/wire_fixtures.c` vektör kaynağı; CRC/uzunluk/sürüm/kimlik/kadans ve geçersiz ölçüm testleri `tests/test_radio_bridge.py` altında. `forward()` zarfı `Gateway.ingest_node_envelope()` ile kalıcı outbox/QoS1 yoluna verir; seq/boot/kadans değişmez. Kuyruk yazımı, yeniden başlama, PUBACK ve hata halinde radyo tesliminin reddi `tests/test_b1_integration.py` ile doğrulanır. Fiziksel GW alıcısı ve RF ACK sürücüsü henüz yoktur; [hedef port README](node/port/stm32wle5/README.md).
 
 ## Kanıtlar
 

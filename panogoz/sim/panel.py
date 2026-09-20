@@ -9,8 +9,9 @@ model, because they are the same tuple.
 What is measured, and what is not
 ---------------------------------
 
-The day-1 kit reaches the **bottom cable compartment** only.  Forty bolted lugs
-(10 live ways x 4 conductors) are instrumented; the 36 busbar-to-DSYA joints and
+The day-1 kit reaches the **bottom cable compartment** only. Forty bolted lugs
+(10 live ways x 4 conductors) are candidate measurement locations; B1 resolves
+only the six TC points. The 36 busbar-to-DSYA joints and
 the 4 incoming stubs are modelled and drawn but explicitly *not* measured,
 because reaching them means opening a cover over a live 2312 A bar and there is
 no LV incoming breaker to make dead (Madde 2.2.10.2.vi, "direk bara baglanti").
@@ -22,13 +23,11 @@ Within those forty:
   only conductors in the panel with their own CT.  No outgoing way has a utility
   CT - the 2500/5 measures the incomer only - which is precisely why each clip
   brings its own split-core CT.
-* ``ir.lug_temp_c`` is emitted for **all forty**, from the MLX90640 32x24 array
-  looking up at the lug row.
-* The other 34 joints therefore have a temperature and no current of their own.
-  We do not fabricate one.  The detector normalises them on the panel load
-  factor and reports the reduced confidence that follows from it.  Inventing a
-  per-conductor current we never measured would be the easiest way to lose this
-  competition.
+* B1 has no calibrated per-lug IR ROIs: 38 mm/pixel cannot independently
+  resolve the 20 mm lug pitch. Only the six TC joints enter telemetry.
+* The forty-joint physical truth still exists for blind-spot evaluation.
+  ``ideal_ir=True`` explicitly enables an offline ideal-optics experiment;
+  FleetSim and the running demo never enable it.
 
 Options that really exist in the field
 --------------------------------------
@@ -48,6 +47,7 @@ from dataclasses import dataclass, field
 from typing import Any, Iterator
 
 from panogoz.contracts import assets, channels
+from panogoz.hardware_profile import TC_LIFE_DAYS, IR_VALIDATED_JOINTS, coverage
 from panogoz.sim import faults as fx
 from panogoz.sim import load as ld
 from panogoz.sim import thermal as th
@@ -98,7 +98,8 @@ TVOC_AMBIENT_LIMIT_LUX = 3000
 TVOC_MAX_DETECTORS = 30
 
 #: Li-SOCl2 primary cells.  No energy harvesting is claimed anywhere.
-BATTERY_LIFE_YEARS = (9.0, 16.0)
+# TC duty-cycle estimate only. IR/PD life is unknown until their duty cycle and
+# complete current budget are established; no fabricated percentage for them.
 BATTERY_NOMINAL_V = 3.65
 BATTERY_KNEE_PCT = 12.0
 
@@ -185,6 +186,7 @@ class PanelSim:
         has_arc_relay: bool = True,
         arc_detectors: int = 20,
         weather_key: str | None = None,
+        ideal_ir: bool = False,
     ) -> None:
         self.panel_key = panel_key
         self.panel_index = int(panel_index)
@@ -198,6 +200,7 @@ class PanelSim:
         self.has_analyser = bool(has_analyser)
         self.has_arc_relay = bool(has_arc_relay)
         self.arc_detectors = max(0, min(TVOC_MAX_DETECTORS, int(arc_detectors)))
+        self.ideal_ir = bool(ideal_ir)  # explicit offline sensor experiment only
 
         s = self.seed
         base_a = 850.0 + 500.0 * ld._u01(s, _S_BASE, 1)
@@ -247,13 +250,12 @@ class PanelSim:
             for d in assets.DEVICES
         }
         self._install_ts: dict[str, float] = {
-            d.key: self.start_ts - 86400.0 * 365.0 * 3.0 * ld._u01(s, ld.tag(d.key), 11)
+            d.key: self.start_ts - 86400.0 * TC_LIFE_DAYS * 0.7 * ld._u01(s, ld.tag(d.key), 11)
             for d in assets.DEVICES
         }
         self._battery_life_y: dict[str, float] = {
-            d.key: BATTERY_LIFE_YEARS[0]
-            + (BATTERY_LIFE_YEARS[1] - BATTERY_LIFE_YEARS[0]) * ld._u01(s, _S_BAT, ld.tag(d.key))
-            for d in assets.DEVICES
+            d.key: TC_LIFE_DAYS / 365.25
+            for d in assets.DEVICES if d.kind == "TC"
         }
         self._arc: dict[str, Any] = {
             "trip_count": 0,
@@ -468,9 +470,10 @@ class PanelSim:
             out: dict[str, float] = {}
             stream = ld.tag(j.key) & 0xFFFFFF
 
-            # thermal array: every one of the forty lugs
+            # Per-lug IR requires validated optics, or an explicit ideal experiment.
             ir_dev = "TN-IR"
-            if not any(f.device_silent(ir_dev, ts) for f in live):
+            if (self.ideal_ir or j.key in IR_VALIDATED_JOINTS) and not any(
+                    f.device_silent(ir_dev, ts) for f in live):
                 v = th.mlx90640_read(t_true, self.seed, stream, ts)
                 v = self._apply_sensor(live, ir_dev, j.key, "ir.lug_temp_c", v, ts)
                 out["ir.lug_temp_c"] = channels.quantise("ir.lug_temp_c", v)
@@ -839,7 +842,10 @@ class PanelSim:
                     "dev.temp_mcu_c", t_air + 1.5
                     + 0.4 * ld.vnoise(self.seed, stream, ts, 3600.0)),
             }
-            if d.battery:
+            if d.battery and d.key not in self._battery_life_y:
+                # A simulated voltage is not an inferred remaining capacity.
+                rec["dev.battery_v"] = BATTERY_NOMINAL_V
+            if d.battery and d.key in self._battery_life_y:
                 age_y = max(0.0, (ts - self._install_ts[d.key]) / (365.25 * 86400.0))
                 life = self._battery_life_y[d.key]
                 pct = max(0.0, min(100.0, 100.0 * (1.0 - age_y / life)))
@@ -868,7 +874,9 @@ class PanelSim:
             "has_analyser": self.has_analyser,
             "has_arc_relay": self.has_arc_relay,
             "arc_detectors": self.arc_detectors,
-            "monitored_joints": len(self.joints),
+            "monitored_joints": len(self.joints) if self.ideal_ir else coverage()["resolved_joint_count"],
+            "measurement_profile": "ideal-ir-experiment" if self.ideal_ir else "B1",
+            "coverage": coverage(),
             "devices": assets.DEVICES_PER_PANEL,
             "clip_joints": sorted(self.clip_of.values()),
             "base_current_a": round(self.load.base_a, 1),
@@ -935,11 +943,10 @@ if __name__ == "__main__":  # pragma: no cover
     for k in sorted(o.panel):
         print(f"  {k:<26} {o.panel[k]:>12.3f}  {channels.get(k).unit}")
 
-    print("\nA clip joint and an IR-only joint")
+    print("\nA clip joint and a point without validated B1 measurement")
     for jk in ("C07-L2-PABUC", "C02-L1-PABUC"):
         print(f"  {jk:<16} {o.joints.get(jk)}")
-    print("  (34 joints have a temperature and no current of their own; we do")
-    print("   not invent one - the detector normalises them on the panel load factor)")
+    print("  B1: six TC joints report; the other 34 have no calibrated IR ROI.")
 
     print("\nno analyser / no arc relay")
     s2 = mk(has_analyser=False, has_arc_relay=False, seed=15)
@@ -1106,11 +1113,11 @@ if __name__ == "__main__":  # pragma: no cover
           f"  ok={o.panel['tvoc.detectors_ok']:.0f}/{o.panel['tvoc.detectors_total']:.0f}"
           f"  ambient_warn={o.panel['tvoc.ambient_warn']:.0f}")
 
-    print("\nSensor faults must be attributed to the sensor, not the joint")
+    print("\nOffline IDEAL-OPTICS experiment (not B1 coverage): sensor comparison")
     for scen, kw in (("sensor_kaydi", {"device_key": "TC-05", "k_per_day": 0.35}),
                      ("sensor_takildi", {"device_key": "TC-05", "at_s": 0.0})):
-        clean = mk(seed=14)
-        dirty = mk(seed=14)
+        clean = mk(seed=14, ideal_ir=True)
+        dirty = mk(seed=14, ideal_ir=True)
         dirty.inject(scen, at_ts=T0, **kw)
         for i in range(int(6 * 86400 / 1800)):
             t = T0 + i * 1800

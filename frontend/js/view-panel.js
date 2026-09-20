@@ -1,6 +1,6 @@
 // PANO GÖZ · S2 Pano detayı - dijital ikiz. Amiral gemisi ekran.
 //
-// Solda EK-II/14 ön görünüşü (twin.js), üstünde 40 izlenen bağlantı ve 9 cihaz.
+// Solda EK-II/14 ön görünüşü (twin.js), B1 için 6 TC ölçüm noktası ve 9 cihaz.
 // Sağda panonun özeti, "Koruma Bütünlüğü" kartı ve cihaz sağlığı.
 //
 // Bu ekranın dürüstlük yükü şudur: bara bölmesindeki 36 ve çatıdaki 4 bağlantı
@@ -150,7 +150,7 @@ export function create(ctx) {
       h('header',
         h('h2', { text: 'Dijital ikiz · EK-II/14 ön görünüş' }),
         h('span.sp'),
-        h('span.tag', { text: `${joints.filter((j) => j.zone === 'bottom').length} izlenen bağlantı` }),
+        h('span.tag', { text: `${joints.filter((j) => j.measurement_supported === true).length} TC ölçüm noktası` }),
         h('span.tag', { text: `${joints.length} civatalı bağlantı` }),
         h('span.tag', { text: `${devices.length} cihaz` }),
         h('span.sp.grow'),
@@ -158,6 +158,9 @@ export function create(ctx) {
       h('div.twin-stage', svg),
       twinLegend(devices),
       h('div.pad',
+        h('div.note.honest', {
+          text: twin?.hardware_profile?.note_tr || 'B1: 6 TC ölçüm noktası. Pabuç bazlı IR ölçümü doğrulanmadı.',
+        }),
         h('div.note.honest', {
           text: `Bara bölmesindeki ${joints.filter((j) => j.zone === 'busbar').length} ve `
               + `çatıdaki ${joints.filter((j) => j.zone === 'roof').length} bağlantı içi boş `
@@ -189,12 +192,12 @@ export function create(ctx) {
   }
 
   function renderJointTable(p, selected) {
-    const joints = (p.joints || []).filter((j) => j.zone === 'bottom');
-    const rows = joints.slice().sort((a, b) => (b.theta_k || -99) - (a.theta_k || -99)).slice(0, 12);
+    const joints = (p.joints || []).filter((j) => j.zone === 'bottom' && Number.isFinite(j.theta_k));
+    const rows = joints.slice().sort((a, b) => b.theta_k - a.theta_k).slice(0, 12);
     if (!rows.length) return h('div.card', h('header', h('h3', { text: 'Bağlantılar' })),
       h('div.body', empty('Bağlantı verisi yok')));
     return h('div.card',
-      h('header', h('h3', { text: 'En yüksek θ · ilk 12 bağlantı' }),
+      h('header', h('h3', { text: `En yüksek θ · ${rows.length} ölçülen bağlantı` }),
         h('span.sp'),
         h('span.tiny.muted', { text: 'satıra tıkla → kanıt ekranı' })),
       h('div.body.flush', h('div.joint-list',
@@ -289,13 +292,13 @@ export function create(ctx) {
                   ? h('span.tag.ok', { text: 'çevrimiçi' })
                   : h('span.tag.bad', { text: 'çevrimdışı' })),
                 h('td.n', { text: d.battery_pct === null || d.battery_pct === undefined
-                  ? 'şebeke' : fmt.pct(d.battery_pct, 0) }),
+                  ? (d.key === 'GW-01' ? 'şebeke' : 'belirsiz') : fmt.pct(d.battery_pct, 0) }),
                 h('td.n', { text: d.rssi_dbm === null || d.rssi_dbm === undefined
                   ? '—' : fmt.num(d.rssi_dbm, 0) + ' dBm' })))))
           : empty('Cihaz verisi yok')),
       h('div.body',
         h('div.tiny.muted', {
-          text: 'Enerji hasadı iddia edilmez: birincil Li-SOCl₂ hücre, 9-16 yıl tasarım ömrü.',
+          text: 'B1 TC pil ömrü: görev çevrimi varsayımıyla yaklaşık 2 yıl; ölçülmedi. IR/PD ömrü henüz doğrulanmadı. Pil yüzdeleri simülasyondur.',
         })));
   }
 

@@ -1,0 +1,46 @@
+{
+  "date": "2026-09-20",
+  "branch": "k1-b1-tasarim-firmware",
+  "base": "74490f50a9def25faceb0655f27244f911683e74",
+  "full_suite": {
+    "passed": 188,
+    "failed": 4,
+    "warnings": 1,
+    "seconds": 141.97,
+    "before_two_additional_regression_tests": true
+  },
+  "focused_suite": {
+    "passed": 74,
+    "failed": 0,
+    "seconds": 27.33
+  },
+  "unchanged_baseline_reproduction": {
+    "test": "tests/test_negative_pipeline.py::test_negative_control_opens_no_incident_or_horizon[trafo_devreye_alma]",
+    "result": "failed",
+    "joint": "C07-L3-PABUC",
+    "target": "IZLE",
+    "days": 90
+  },
+  "live_api_coverage": {
+    "revision": "B1",
+    "candidate_joint_count": 40,
+    "resolved_joint_count": 6,
+    "tc_joint_keys": [
+      "C06-L1-PABUC",
+      "C06-L2-PABUC",
+      "C06-L3-PABUC",
+      "C07-L1-PABUC",
+      "C07-L2-PABUC",
+      "C07-L3-PABUC"
+    ],
+    "ir_validated_joint_keys": [],
+    "ir_pixel_mm": 37.63,
+    "lug_pitch_mm": 20,
+    "note_tr": "B1: 6 TC ölçüm noktası. IR pabuç ayrımı doğrulanmadı; diğer 34 bağlantı için bağımsız sıcaklık üretilmez."
+  },
+  "bom_known_subtotal_usd": 260.09,
+  "unpriced_lines": 195,
+  "target_bin_sha256": "062e30f6ef25898f7da70bbd35729fca541bacb9206c0981c4147a222f7b2484",
+  "contracts_changed": false,
+  "hardware_tested": false
+}

@@ -1,13 +1,13 @@
 # B1 mühendislik BOM ve fiyat kaydı
 
-20.09.2026. Doğrulanmış fiyatı bulunan satırların kit ara toplamı **162.68 USD**. Bu, tam kit fiyatı değildir. Vergi, nakliye, üretim ve fiyatı bulunmayan satırlar hariçtir. Boş fiyat sıfır maliyet anlamına gelmez.
+20.09.2026. Doğrulanmış fiyatı bulunan satırların kit ara toplamı **260.09 USD**. Bu, tam kit fiyatı değildir. Vergi, nakliye, üretim ve fiyatı bulunmayan satırlar hariçtir. Boş fiyat sıfır maliyet anlamına gelmez.
 
-Toplam 214 satın alma satırı; 206 satır için teklif gerekiyor. Kesin maliyet/geri dönüş süresi ilan edilemez. Parça bazında kaynak, alternatif ve termin için `bom.json` esas alınır.
+Toplam 214 satın alma satırı; 195 satır için teklif gerekiyor. Kesin maliyet/geri dönüş süresi ilan edilemez. Parça bazında kaynak, alternatif ve termin için `bom.json` esas alınır.
 
 | Kart / ref | Parça veya mühendislik tanımı | Kit adet | Birim USD | Durum / kaynak |
 |---|---|---:|---:|---|
 | TC / J1 | CELL + HLC | 6 | teklif | DigiKey / Mouser RFQ |
-| TC / U1 | TPS7A0230PDBVR | 6 | teklif | DigiKey / Mouser RFQ |
+| TC / U1 | TPS7A0230PDBVR | 6 | 0.84 | [DigiKey](https://www.digikey.com/en/products/detail/texas-instruments/TPS7A0230PDBVR/12165118) |
 | TC / C1,C2,C13,C28,C30 | 1uF | 30 | teklif | DigiKey / Mouser RFQ |
 | TC / Q1 | AO3401A | 6 | teklif | DigiKey / Mouser RFQ |
 | TC / Q2,Q3 | 2N7002 | 12 | teklif | DigiKey / Mouser RFQ |
@@ -15,7 +15,7 @@ Toplam 214 satın alma satırı; 206 satır için teklif gerekiyor. Kesin maliye
 | TC / R3,R4,R6,R9,R11,R16 | 100k | 36 | teklif | DigiKey / Mouser RFQ |
 | TC / C3 | 10nF | 6 | teklif | DigiKey / Mouser RFQ |
 | TC / R5 | 68R 0.5W | 6 | teklif | DigiKey / Mouser RFQ |
-| TC / U10 | STM32WLE5CCU6 | 6 | 9.26 | [DigiKey](https://www.digikey.com/es/products/detail/stmicroelectronics/STM32WLE5CCU6/13557445) |
+| TC / U10 | STM32WLE5CCU6 | 6 | 9.26 | [DigiKey](https://www.digikey.com/en/products/detail/stmicroelectronics/STM32WLE5CCU6/13557445) |
 | TC / R7,R8 | 10k | 12 | teklif | DigiKey / Mouser RFQ |
 | TC / C4,C5,C6,C7,C8,C11,C12,C16,C27,C31 | 100nF | 60 | teklif | DigiKey / Mouser RFQ |
 | TC / J2 | SWD TC2030 | 6 | teklif | DigiKey / Mouser RFQ |
@@ -46,11 +46,11 @@ Toplam 214 satın alma satırı; 206 satır için teklif gerekiyor. Kesin maliye
 | TC / J5 | CT 3000:1 | 6 | teklif | DigiKey / Mouser RFQ |
 | TC / R14 | 5.1R 0.1% 0.5W | 6 | teklif | DigiKey / Mouser RFQ |
 | TC / R17 | 1k | 6 | teklif | DigiKey / Mouser RFQ |
-| TC / U5 | OPA333AIDBVR | 6 | teklif | DigiKey / Mouser RFQ |
+| TC / U5 | OPA333AIDBVR | 6 | 2.60 | [DigiKey](https://www.digikey.com/en/products/detail/texas-instruments/OPA333AIDBVR/1572431) |
 | TC / U6 | BAT54S | 6 | teklif | DigiKey / Mouser RFQ |
-| TC / U7 | TLV3691IDCKR | 6 | teklif | DigiKey / Mouser RFQ |
+| TC / U7 | TLV3691IDCKR | 6 | 1.28 | [DigiKey](https://www.digikey.com/en/products/detail/texas-instruments/TLV3691IDCKR/4555468) |
 | IR / J1 | CELL + HLC | 1 | teklif | DigiKey / Mouser RFQ |
-| IR / U1 | TPS63900DSKR | 1 | teklif | DigiKey / Mouser RFQ |
+| IR / U1 | TPS63900DSKR | 1 | 2.74 | [DigiKey](https://www.digikey.com/en/products/detail/texas-instruments/TPS63900DSKR/13535479) |
 | IR / L1 | 2.2uH Isat>=1A | 1 | teklif | DigiKey / Mouser RFQ |
 | IR / R1 | 36.5k | 1 | teklif | DigiKey / Mouser RFQ |
 | IR / R2 | 16.2k | 1 | teklif | DigiKey / Mouser RFQ |
@@ -62,7 +62,7 @@ Toplam 214 satın alma satırı; 206 satır için teklif gerekiyor. Kesin maliye
 | IR / R5,R6,R8,R11,R13,R16,R17 | 100k | 7 | teklif | DigiKey / Mouser RFQ |
 | IR / C3 | 10nF | 1 | teklif | DigiKey / Mouser RFQ |
 | IR / R7 | 68R 0.5W | 1 | teklif | DigiKey / Mouser RFQ |
-| IR / U10 | STM32WLE5CCU6 | 1 | 9.26 | [DigiKey](https://www.digikey.com/es/products/detail/stmicroelectronics/STM32WLE5CCU6/13557445) |
+| IR / U10 | STM32WLE5CCU6 | 1 | 9.26 | [DigiKey](https://www.digikey.com/en/products/detail/stmicroelectronics/STM32WLE5CCU6/13557445) |
 | IR / R9,R10 | 10k | 2 | teklif | DigiKey / Mouser RFQ |
 | IR / C4,C5,C6,C7,C8,C11,C12,C16,C27,C29 | 100nF | 10 | teklif | DigiKey / Mouser RFQ |
 | IR / J2 | SWD TC2030 | 1 | teklif | DigiKey / Mouser RFQ |
@@ -90,11 +90,11 @@ Toplam 214 satın alma satırı; 206 satır için teklif gerekiyor. Kesin maliye
 | IR / C25 | 2.7pF | 1 | teklif | DigiKey / Mouser RFQ |
 | IR / U3 | PE4259 | 1 | teklif | DigiKey / Mouser RFQ |
 | IR / J4 | 868 MHz u.FL | 1 | teklif | DigiKey / Mouser RFQ |
-| IR / U4 | MLX90640ESF-BAA-000-TU | 1 | 38.15 | [DigiKey](https://www.digikey.in/en/products/detail/melexis-technologies-nv/MLX90640ESF-BAA-000-TU/8638463) |
+| IR / U4 | MLX90640ESF-BAA-000-TU | 1 | 38.52 | [DigiKey](https://www.digikey.com/en/products/detail/melexis-technologies-nv/MLX90640ESF-BAA-000-TU/8638463) |
 | IR / U5 | SHT41-AD1B-R2 | 1 | 2.95 | [DigiKey](https://www.digikey.com/en/products/detail/sensirion-ag/SHT41-AD1B-R2/15296591) |
 | IR / J5 | PHASE optional | 1 | teklif | DigiKey / Mouser RFQ |
 | PD / J1 | CELL + HLC | 1 | teklif | DigiKey / Mouser RFQ |
-| PD / U1 | TPS63900DSKR | 1 | teklif | DigiKey / Mouser RFQ |
+| PD / U1 | TPS63900DSKR | 1 | 2.74 | [DigiKey](https://www.digikey.com/en/products/detail/texas-instruments/TPS63900DSKR/13535479) |
 | PD / L1 | 2.2uH Isat>=1A | 1 | teklif | DigiKey / Mouser RFQ |
 | PD / R1 | 36.5k | 1 | teklif | DigiKey / Mouser RFQ |
 | PD / R2 | 16.2k | 1 | teklif | DigiKey / Mouser RFQ |
@@ -106,7 +106,7 @@ Toplam 214 satın alma satırı; 206 satır için teklif gerekiyor. Kesin maliye
 | PD / R5,R6,R8,R11,R13,R17,R18,R23,R24,R25,R26,R27,R28,R29 | 100k | 14 | teklif | DigiKey / Mouser RFQ |
 | PD / C3,C29,C30,C38,C42 | 10nF | 5 | teklif | DigiKey / Mouser RFQ |
 | PD / R7 | 68R 0.5W | 1 | teklif | DigiKey / Mouser RFQ |
-| PD / U10 | STM32WLE5CCU6 | 1 | 9.26 | [DigiKey](https://www.digikey.com/es/products/detail/stmicroelectronics/STM32WLE5CCU6/13557445) |
+| PD / U10 | STM32WLE5CCU6 | 1 | 9.26 | [DigiKey](https://www.digikey.com/en/products/detail/stmicroelectronics/STM32WLE5CCU6/13557445) |
 | PD / R9,R10,R30 | 10k | 3 | teklif | DigiKey / Mouser RFQ |
 | PD / C4,C5,C6,C7,C8,C11,C12,C16,C31,C33,C37,C40,C41,C44 | 100nF | 14 | teklif | DigiKey / Mouser RFQ |
 | PD / J2 | SWD TC2030 | 1 | teklif | DigiKey / Mouser RFQ |
@@ -134,7 +134,7 @@ Toplam 214 satın alma satırı; 206 satır için teklif gerekiyor. Kesin maliye
 | PD / C25 | 2.7pF | 1 | teklif | DigiKey / Mouser RFQ |
 | PD / U3,U5 | PE4259 | 2 | teklif | DigiKey / Mouser RFQ |
 | PD / J4 | 868 MHz u.FL | 1 | teklif | DigiKey / Mouser RFQ |
-| PD / U4 | TPS61023DRLR | 1 | teklif | DigiKey / Mouser RFQ |
+| PD / U4 | TPS61023DRLR | 1 | 1.22 | [DigiKey](https://www.digikey.com/en/products/detail/texas-instruments/tps61023drlr/11310629) |
 | PD / L7 | 1uH Isat>=4A | 1 | teklif | DigiKey / Mouser RFQ |
 | PD / R16 | 732k | 1 | teklif | DigiKey / Mouser RFQ |
 | PD / J5 | HFCT50 | 1 | teklif | DigiKey / Mouser RFQ |
@@ -145,20 +145,20 @@ Toplam 214 satın alma satırı; 206 satır için teklif gerekiyor. Kesin maliye
 | PD / U6 | PGA-103+ | 1 | teklif | DigiKey / Mouser RFQ |
 | PD / L9 | 1uH | 1 | teklif | DigiKey / Mouser RFQ |
 | PD / C34,C35,C39 | 1nF | 3 | teklif | DigiKey / Mouser RFQ |
-| PD / U7 | AD8318ACPZ | 1 | teklif | DigiKey / Mouser RFQ |
+| PD / U7 | AD8318ACPZ | 1 | 18.85 | [DigiKey](https://www.digikey.com/en/products/detail/analog-devices-inc/AD8318ACPZ-REEL7/996044) |
 | PD / C36 | 220pF | 1 | teklif | DigiKey / Mouser RFQ |
 | PD / R21 | 499R | 1 | teklif | DigiKey / Mouser RFQ |
 | PD / R22 | 1k | 1 | teklif | DigiKey / Mouser RFQ |
-| PD / U8 | TLV3201AIDBVR | 1 | teklif | DigiKey / Mouser RFQ |
+| PD / U8 | TLV3201AIDBVR | 1 | 1.41 | [DigiKey](https://www.digikey.com/en/products/detail/texas-instruments/TLV3201AIDBVR/3188691) |
 | PD / U9 | SHT41-AD1B-R2 | 1 | 2.95 | [DigiKey](https://www.digikey.com/en/products/detail/sensirion-ag/SHT41-AD1B-R2/15296591) |
 | PD / J7 | MA40S4R receiver | 1 | teklif | DigiKey / Mouser RFQ |
-| PD / U11 | OPA320AIDBVR | 1 | teklif | DigiKey / Mouser RFQ |
+| PD / U11 | OPA320AIDBVR | 1 | 3.06 | [DigiKey](https://www.digikey.com/en/products/detail/texas-instruments/OPA320AIDBVR/2747429) |
 | PD / J8 | ISOLATED 50Hz PHASE | 1 | teklif | DigiKey / Mouser RFQ |
 | GW / J1 | 5V SELV 4A | 1 | teklif | DigiKey / Mouser RFQ |
 | GW / F1 | 3.15A slow | 1 | teklif | DigiKey / Mouser RFQ |
 | GW / Q1 | AO3401A | 1 | teklif | DigiKey / Mouser RFQ |
 | GW / C1 | 100uF | 1 | teklif | DigiKey / Mouser RFQ |
-| GW / U1,U2 | TPS62130RGTR | 2 | teklif | DigiKey / Mouser RFQ |
+| GW / U1,U2 | TPS62130RGTR | 2 | 1.99 | [DigiKey](https://www.digikey.com/en/products/detail/texas-instruments/TPS62130RGTR/2833429) |
 | GW / L1,L2 | 2.2uH Isat>=4A | 2 | teklif | DigiKey / Mouser RFQ |
 | GW / R1,R3 | 316k | 2 | teklif | DigiKey / Mouser RFQ |
 | GW / R2,R4,R29,R30,R34,R35 | 100k | 6 | teklif | DigiKey / Mouser RFQ |
@@ -188,7 +188,7 @@ Toplam 214 satın alma satırı; 206 satır için teklif gerekiyor. Kesin maliye
 | GW / J4 | HR911105A | 1 | teklif | DigiKey / Mouser RFQ |
 | GW / R20 | 1M | 1 | teklif | DigiKey / Mouser RFQ |
 | GW / C41 | 1nF 2kV | 1 | teklif | DigiKey / Mouser RFQ |
-| GW / U8,U10 | ADM2587EBRWZ | 2 | teklif | DigiKey / Mouser RFQ |
+| GW / U8,U10 | ADM2587EBRWZ | 2 | 17.36 | [DigiKey](https://www.digikey.com/en/products/detail/analog-devices-inc/ADM2587EBRWZ/2261070) |
 | GW / J5 | MPR | 1 | teklif | DigiKey / Mouser RFQ |
 | GW / U9,U11 | SM712 | 2 | teklif | DigiKey / Mouser RFQ |
 | GW / R23,R26 | 120R | 2 | teklif | DigiKey / Mouser RFQ |

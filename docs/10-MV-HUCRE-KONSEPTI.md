@@ -160,7 +160,7 @@ AG düğümlerinden en önemli farkı: **şebekeden beslenir.**
 
 | Özellik | AG düğümü | OG düğümü |
 |---|---|---|
-| Besleme | Birincil Li-SOCl₂ hücre, 9–16 yıl | Hücrenin **mevcut yardımcı beslemesi** (230 V AC ya da 48 V DC) |
+| Besleme | B1 TC: Li-SOCl₂, yaklaşık 2 yıl hesap; IR/PD ömrü açık | Hücrenin **mevcut yardımcı beslemesi** (230 V AC ya da 48 V DC) |
 | PD kayıt kadansı | Günde 1 × 60 s (pil bütçesi) | **Sürekli**, ya da dakikada bir 10 s |
 | Analog zincir | Yalnız kayıt sırasında enerjili | Sürekli enerjili |
 | Haberleşme | 868 MHz sub-GHz | RS-485 ya da Ethernet (hücre panosunda zaten kablo yolu var) |
@@ -245,7 +245,7 @@ kesinti koordinasyonu. **Kesintinin kendisi maliyet kalemidir ve dağıtım şir
 planına biner** — bu yüzden OG montajı, **zaten planlanmış bir bakım penceresine**
 eklenmelidir. Ayrı bir kesinti talep eden bir izleme projesi kabul görmez.
 
-Karşılaştırma: AG modülü €470.59 (1000 adet). OG hücresi özel HFCT ile benzer mertebede,
+Karşılaştırma: B1 AG modülünün tam fiyatı henüz yok; güncel docs/07 kullanılmalı. OG hücresi özel HFCT ile benzer mertebede,
 katalog HFCT50 ile beş katıdır. **Kalibre, izlenebilir bir HFCT'nin gerekip gerekmediği,
 bu konseptin tek büyük maliyet sorusudur** ve cevabı §6 M1'e bağlıdır: dağıtım şirketi
 sonucu bir **eğilim** olarak mı kullanacak (özel HFCT yeter), yoksa mutlak pC değeri

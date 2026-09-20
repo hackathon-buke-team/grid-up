@@ -34,6 +34,6 @@ envelope = decode(packet_bytes, site='AYDIN', panel='SOKE-14', received_at=unix_
 topic, payload = envelope.topic, envelope.to_json()
 ```
 
-K2 alıcısı bu zarfı kendi kalıcı outbox/QoS1 yoluna devretmelidir. Mevcut `Gateway.publish` yeniden seq ve kadans ürettiğinden bu fonksiyonun içine körlemesine sokulmamalıdır. Node seq/boot, 900/60/10 s kadansı ve kanal adları korunur. Bu dosya gerçek SPI gateway veya MQTT servisi başlatmaz.
+`forward(packet_bytes, gateway, received_at=unix_seconds)` artık `Gateway.ingest_node_envelope` üzerinden mevcut kalıcı outbox/QoS1 yoluna bağlıdır. `gateway`, disk üzerindeki `Store` ile kurulmalıdır; kalıcı kuyruk yoksa, doluysa veya yazılamazsa hata verilir. Radyo alıcısı yalnız `forward` başarıyla döndüğünde teslim alma ACK'i gönderebilir. Node seq/boot, 900/60/10 s kadansı ve kanal adları korunur; tekrarlar sunucu tarafından aynı kimlikle ayıklanır. Yeniden başlama ve PUBACK bekleme testlidir. Gerçek SPI/UART alıcı sürücüsü ve fiziksel radyo ACK üretimi henüz yoktur.
 
 Testler: `python -m pytest -q firmware/tests`; C `node/tests/k1_regression.c`; `panogoz_node --selftest`; `--scenario energy`. Enerji sonucu B1 tahminidir: 50 µA bekleme bütçesi, görev karmasında yaklaşık 2 yıl; gerçek akım ölçümü yoktur.

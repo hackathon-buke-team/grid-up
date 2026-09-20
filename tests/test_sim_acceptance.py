@@ -473,7 +473,8 @@ def test_panel_geometry_comes_from_the_asset_model():
     sim.step(DEMO_TS)
     o = sim.step(DEMO_TS + 60)
     assert set(o.joints) <= {j.key for j in assets.monitored_joints()}
-    assert len(o.joints) == 40
+    assert len(o.joints) == 6  # B1 has six resolved TC points, no calibrated IR ROI
+    assert len(o.truth['joints']) == 40  # physical model still includes blind spots
     assert set(o.devices) == {d.key for d in assets.DEVICES}
     assert len(o.devices) == assets.DEVICES_PER_PANEL == 9
 
@@ -486,7 +487,7 @@ def test_only_the_six_clip_conductors_report_a_current():
     with_current = {k for k, v in o.joints.items() if "tc.current_a" in v}
     assert len(with_current) == 6
     assert with_current == set(sim.clip_of.values())
-    assert all("ir.lug_temp_c" in v for v in o.joints.values())
+    assert all("ir.lug_temp_c" not in v for v in o.joints.values())
 
 
 def test_no_analyser_emits_no_mpr_channels_at_all():
@@ -726,7 +727,8 @@ def test_grid_event_raises_thd_v_on_all_three_phases_equally():
 
 
 def test_sensor_drift_moves_the_clip_and_not_the_array():
-    clean, dirty = _panel(), _panel()
+    # Sensor-independence experiment, explicitly beyond B1 optical capability.
+    clean, dirty = _panel(ideal_ir=True), _panel(ideal_ir=True)
     dirty.inject("sensor_kaydi", at_ts=DEMO_TS, device_key="TC-05", k_per_day=0.35)
     for i in range(int(6 * 86400 / 1800)):
         t = DEMO_TS + i * 1800
@@ -758,8 +760,7 @@ def test_silent_node_stops_reporting_entirely():
     sim.inject("dugum_sessiz", at_ts=DEMO_TS, device_key="TC-03", at_s=300.0)
     o = sim.step(DEMO_TS + 600)
     assert "TC-03" not in o.devices
-    assert "tc.temp_c" not in o.joints["C06-L3-PABUC"]
-    assert "ir.lug_temp_c" in o.joints["C06-L3-PABUC"], "the array still sees the lug"
+    assert "C06-L3-PABUC" not in o.joints, "B1 must not replace a silent TC with invented IR"
     assert any(e["type"] == "node_silent" for e in o.events)
 
 

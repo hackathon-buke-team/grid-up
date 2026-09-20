@@ -1,8 +1,8 @@
 """Strict K1 v1 radio -> existing PanoGoz Envelope adapter.
 
-This is a codec, not a radio driver or MQTT publisher. Pass the returned Envelope
-to a durable K2 outbox; acknowledge the node only after durable storage. Never
-pass it through Gateway.publish(), which allocates a different sequence stream.
+This is a codec and durable gateway handoff, not a physical radio driver.
+A receiver may acknowledge custody only after forward() returns. Never pass
+the frame through Gateway.publish(), which allocates a new sequence stream.
 """
 from __future__ import annotations
 import argparse, binascii, json, struct
@@ -51,6 +51,18 @@ def decode(raw: bytes, *, site: str, panel: str, received_at: float | None=None)
     return Envelope(kind=kind,site=site,panel=panel,device=dev,ts=ts,
                     seq=int.from_bytes(raw[4:8],'little'),boot=raw[8],
                     values=values,joints=joints,event=metadata,metrics=metrics,fw='tc-b1')
+
+def forward(raw: bytes, gateway, *, received_at: float | None = None) -> Envelope:
+    """Validate, persist and queue a node frame on the existing QoS1 path.
+
+    Storage/full-queue errors propagate to the receiver, which must withhold
+    its radio ACK. Retransmissions retain the node identity for server dedup.
+    """
+    envelope = decode(raw, site=gateway.site, panel=gateway.panel_key,
+                      received_at=received_at)
+    gateway.ingest_node_envelope(envelope)
+    return envelope
+
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('hex');p.add_argument('--site',required=True);p.add_argument('--panel',required=True)

@@ -356,7 +356,7 @@ aynı dürüstlük kuralına tabidirler.
 
 | # | Doğrulanacak | Şimdiki durum | Etki |
 |---:|---|---|---|
-| D1 | Pil akımlarının tezgâhta ölçülmesi | Veri sayfası akımlarından hesaplandı | 9–16 yıl ömür iddiası buna dayanıyor |
+| D1 | Pil akımlarının tezgâhta ölçülmesi | Veri sayfası akımlarından hesaplandı | B1 TC 721 gün hesabı ölçülmedi; IR/PD toplam görev bütçesi açık |
 | D2 | Split-core CT'nin komşu faz kaçak akısı altındaki hatası | ±%1.5 tahmin | θ'nın paydası |
 | D3 | HFCT analog zincirinin kazanç, gürültü ve 50 Hz bastırma ölçümü | Hesaplandı | RF kanalının anlamlılığı |
 | D4 | MLX90640 geniş açı lensin sahada 10 çıkışı kapsaması | Optik hesap | 34 IR pabucunun kapsamı |

@@ -4,7 +4,13 @@ import subprocess,json,hashlib,zipfile
 ROOT=Path(__file__).resolve().parents[2]
 OUT=ROOT.parent/'K1_TESLIM_Repo_B1.zip'
 prefixes=('firmware/','hardware/')
-extras={'.gitignore','.gitattributes','README.md','CLAUDE_CODE_DEVIR.md','docs/02-DONANIM-TASARIMI.md','docs/03-ELEKTRONIK-DOKUMANTASYON.md','docs/07-MALIYET-FAYDA.md'}
+extras={'.gitignore','.gitattributes','README.md','CLAUDE_CODE_DEVIR.md',
+        'docs/02-DONANIM-TASARIMI.md','docs/03-ELEKTRONIK-DOKUMANTASYON.md',
+        'docs/07-MALIYET-FAYDA.md','docs/10-MV-HUCRE-KONSEPTI.md',
+        'docs/11-ACIK-SORULAR.md','panogoz/hardware_profile.py',
+        'panogoz/sim/panel.py','panogoz/api/app.py','panogoz/detector/engine.py',
+        'panogoz/gateway/gateway.py','frontend/js/view-panel.js','frontend/js/twin.js',
+        'tests/test_sim_acceptance.py'}
 files=subprocess.check_output(['git','ls-files','-z'],cwd=ROOT).decode('utf8').split('\0')
 chosen=[n for n in files if n and (n.startswith(prefixes) or n in extras)]
 inventory={n:hashlib.sha256((ROOT/n).read_bytes()).hexdigest() for n in chosen}
@@ -20,11 +26,15 @@ KiCad 10: grid-up/hardware/B1/{TC,IR,PD,GW}/PANOGOZ-*-B1.kicad_pro
 STEP: grid-up/hardware/B1/mechanical/*/assembly.step
 Derleme kaniti: grid-up/hardware/B1/evidence/target/
 
-187 pytest basarili; host oz testi 0 hata; dort ERC temiz. PCB yerlesimdir,
+Uyum dogrulamasi: grid-up/hardware/B1/UYUM-DOGRULAMA.md
+K1 odakli 74 test basarili. Tam repo kosusu 188 basarili / 4 basarisiz;
+negatif kontrol ufuk hatalarindan biri degismemis ana surumde de tekrarlandi.
+Host oz testi 0 hata; dort ERC temiz. PCB yerlesimdir,
 bakir routing ve fiziksel test yoktur. Firmware hedef portu TC icindir.
 BOM fiyat/MPN/termin teyitleri kismi (K1 1.6 acik). IR/PD/GW uygulama portlari,
-gercek GW-MQTT zinciri ve imzali OTA sonraki gelistirmelerdir.
-GitHub'a push yapilmadi; onceki ESP32 RevA paketi bu teslim degildir.
+fiziksel radyo alicisi ve imzali OTA sonraki gelistirmelerdir. Yazilim radyo
+zarfi -> kalici gateway kuyrugu -> QoS1/PUBACK devri test edildi.
+Git dali: k1-b1-tasarim-firmware. Onceki ESP32 RevA paketi bu teslim degildir.
 
 SHA256SUMS.json, arsiv icindeki grid-up/ altindaki her dosyanin SHA256 ozetidir.
 '''

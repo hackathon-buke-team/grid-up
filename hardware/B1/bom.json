@@ -2,9 +2,9 @@
   "currency": "USD",
   "date": "2026-09-20",
   "price_basis": "quantity-one list price; not a quote; taxes, shipping, assembly excluded",
-  "known_subtotal_usd": 162.68,
+  "known_subtotal_usd": 260.09,
   "complete_kit_cost_usd": null,
-  "unpriced_line_count": 206,
+  "unpriced_line_count": 195,
   "rows": [
     {
       "board": "TC",
@@ -22,7 +22,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=CELL%20%2B%20HLC"
+      "url": "https://www.digikey.com/en/products?keywords=CELL%20%2B%20HLC",
+      "line_id": "TC:J1",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "TC",
@@ -34,13 +39,18 @@
       "footprint": "Package_TO_SOT_SMD:SOT-23-5",
       "per_board": 1,
       "per_kit": 6,
-      "supplier": "DigiKey / Mouser RFQ",
-      "unit_usd": null,
-      "price_status": "QUOTE_REQUIRED",
+      "supplier": "DigiKey",
+      "unit_usd": 0.84,
+      "price_status": "OBSERVED_QTY1_USD",
       "checked": "2026-09-20",
-      "lead_time": "Unconfirmed",
-      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=TPS7A0230PDBVR"
+      "lead_time": "3398 in stock observed; delivery unconfirmed",
+      "alternative": "Same MPN from another authorized distributor",
+      "url": "https://www.digikey.com/en/products/detail/texas-instruments/TPS7A0230PDBVR/12165118",
+      "line_id": "TC:U1",
+      "order_mpn": "TPS7A0230PDBVR",
+      "lead_time_confirmed": false,
+      "price_quantity": 1,
+      "procurement_status": "PRICE_OBSERVED_DELIVERY_UNCONFIRMED"
     },
     {
       "board": "TC",
@@ -62,7 +72,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "MLCC with verified effective capacitance at bias; exact vendor MPN pending",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%201uF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%201uF",
+      "line_id": "TC:C1,C2,C13,C28,C30",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "TC",
@@ -80,7 +95,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=AO3401A"
+      "url": "https://www.digikey.com/en/products?keywords=AO3401A",
+      "line_id": "TC:Q1",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "TC",
@@ -99,7 +119,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=2N7002"
+      "url": "https://www.digikey.com/en/products?keywords=2N7002",
+      "line_id": "TC:Q2,Q3",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "TC",
@@ -120,7 +145,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%201M"
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%201M",
+      "line_id": "TC:R1,R2,R18,R19",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "TC",
@@ -143,7 +173,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%20100k"
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%20100k",
+      "line_id": "TC:R3,R4,R6,R9,R11,R16",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "TC",
@@ -161,7 +196,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2010nF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2010nF",
+      "line_id": "TC:C3",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "TC",
@@ -179,7 +219,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%2068R%200.5W"
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%2068R%200.5W",
+      "line_id": "TC:R5",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "TC",
@@ -195,9 +240,14 @@
       "unit_usd": 9.26,
       "price_status": "OBSERVED_QTY1_USD",
       "checked": "2026-09-20",
-      "lead_time": "Stock shown 4540; shipping/lead time reconfirm",
+      "lead_time": "4486 in stock observed; delivery unconfirmed",
       "alternative": "Same device, alternate authorized distributor",
-      "url": "https://www.digikey.com/es/products/detail/stmicroelectronics/STM32WLE5CCU6/13557445"
+      "url": "https://www.digikey.com/en/products/detail/stmicroelectronics/STM32WLE5CCU6/13557445",
+      "line_id": "TC:U10",
+      "order_mpn": "STM32WLE5CCU6",
+      "lead_time_confirmed": false,
+      "price_quantity": 1,
+      "procurement_status": "PRICE_OBSERVED_DELIVERY_UNCONFIRMED"
     },
     {
       "board": "TC",
@@ -216,7 +266,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%2010k"
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%2010k",
+      "line_id": "TC:R7,R8",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "TC",
@@ -243,7 +298,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%20100nF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%20100nF",
+      "line_id": "TC:C4,C5,C6,C7,C8,C11,C12,C16,C27,C31",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "TC",
@@ -261,7 +321,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=SWD%20TC2030"
+      "url": "https://www.digikey.com/en/products?keywords=SWD%20TC2030",
+      "line_id": "TC:J2",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "TC",
@@ -279,7 +344,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=MOUNT%20switch"
+      "url": "https://www.digikey.com/en/products?keywords=MOUNT%20switch",
+      "line_id": "TC:J3",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "TC",
@@ -298,7 +368,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%204.7uF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%204.7uF",
+      "line_id": "TC:C9,C10",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "TC",
@@ -317,7 +392,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%200R"
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%200R",
+      "line_id": "TC:R10,R15",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "TC",
@@ -335,7 +415,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=32MHz%20CL%3D10pF"
+      "url": "https://www.digikey.com/en/products?keywords=32MHz%20CL%3D10pF",
+      "line_id": "TC:Y1",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "TC",
@@ -353,7 +438,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=32.768kHz%20CL%3D6pF"
+      "url": "https://www.digikey.com/en/products?keywords=32.768kHz%20CL%3D6pF",
+      "line_id": "TC:Y2",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "TC",
@@ -372,7 +462,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%206pF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%206pF",
+      "line_id": "TC:C14,C15",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "TC",
@@ -390,7 +485,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=MB85RS64V"
+      "url": "https://www.digikey.com/en/products?keywords=MB85RS64V",
+      "line_id": "TC:U2",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "TC",
@@ -409,7 +509,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%204.7k"
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%204.7k",
+      "line_id": "TC:R12,R13",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "TC",
@@ -427,7 +532,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=47nH"
+      "url": "https://www.digikey.com/en/products?keywords=47nH",
+      "line_id": "TC:L1",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "TC",
@@ -446,7 +556,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2047nF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2047nF",
+      "line_id": "TC:C17,C29",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "TC",
@@ -466,7 +581,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2068pF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2068pF",
+      "line_id": "TC:C18,C22,C26",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "TC",
@@ -484,7 +604,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=4.4nH"
+      "url": "https://www.digikey.com/en/products?keywords=4.4nH",
+      "line_id": "TC:L2",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "TC",
@@ -502,7 +627,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%205.5pF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%205.5pF",
+      "line_id": "TC:C19",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "TC",
@@ -520,7 +650,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%202.5pF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%202.5pF",
+      "line_id": "TC:C20",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "TC",
@@ -538,7 +673,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=3.4nH"
+      "url": "https://www.digikey.com/en/products?keywords=3.4nH",
+      "line_id": "TC:L3",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "TC",
@@ -556,7 +696,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%204.3pF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%204.3pF",
+      "line_id": "TC:C21",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "TC",
@@ -574,7 +719,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=9.2nH"
+      "url": "https://www.digikey.com/en/products?keywords=9.2nH",
+      "line_id": "TC:L4",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "TC",
@@ -592,7 +742,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%203.5pF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%203.5pF",
+      "line_id": "TC:C23",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "TC",
@@ -610,7 +765,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%204.5pF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%204.5pF",
+      "line_id": "TC:C24",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "TC",
@@ -628,7 +788,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=12nH"
+      "url": "https://www.digikey.com/en/products?keywords=12nH",
+      "line_id": "TC:L5",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "TC",
@@ -646,7 +811,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%202.7pF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%202.7pF",
+      "line_id": "TC:C25",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "TC",
@@ -664,7 +834,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=PE4259"
+      "url": "https://www.digikey.com/en/products?keywords=PE4259",
+      "line_id": "TC:U3",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "TC",
@@ -682,7 +857,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=868%20MHz%20u.FL"
+      "url": "https://www.digikey.com/en/products?keywords=868%20MHz%20u.FL",
+      "line_id": "TC:J4",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "TC",
@@ -700,7 +880,12 @@
       "checked": "2026-09-20",
       "lead_time": "9 weeks standard; incoming 20 Oct 2026 shown",
       "alternative": "TMP117AIDRVT (same industrial die/package; reel size)",
-      "url": "https://www.digikey.com/en/products/detail/texas-instruments/TMP117AIDRVR/9685284"
+      "url": "https://www.digikey.com/en/products/detail/texas-instruments/TMP117AIDRVR/9685284",
+      "line_id": "TC:U4",
+      "order_mpn": "TMP117AIDRVR",
+      "lead_time_confirmed": false,
+      "price_quantity": 1,
+      "procurement_status": "PRICE_OBSERVED_DELIVERY_UNCONFIRMED"
     },
     {
       "board": "TC",
@@ -718,7 +903,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=CT%203000%3A1"
+      "url": "https://www.digikey.com/en/products?keywords=CT%203000%3A1",
+      "line_id": "TC:J5",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "TC",
@@ -736,7 +926,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%205.1R%200.1%25%200.5W"
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%205.1R%200.1%25%200.5W",
+      "line_id": "TC:R14",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "TC",
@@ -754,7 +949,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%201k"
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%201k",
+      "line_id": "TC:R17",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "TC",
@@ -766,13 +966,18 @@
       "footprint": "Package_TO_SOT_SMD:SOT-23-5",
       "per_board": 1,
       "per_kit": 6,
-      "supplier": "DigiKey / Mouser RFQ",
-      "unit_usd": null,
-      "price_status": "QUOTE_REQUIRED",
+      "supplier": "DigiKey",
+      "unit_usd": 2.6,
+      "price_status": "OBSERVED_QTY1_USD",
       "checked": "2026-09-20",
-      "lead_time": "Unconfirmed",
-      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=OPA333AIDBVR"
+      "lead_time": "9715 in stock observed; delivery unconfirmed",
+      "alternative": "OPA333AIDBVT packaging candidate; electrical review required",
+      "url": "https://www.digikey.com/en/products/detail/texas-instruments/OPA333AIDBVR/1572431",
+      "line_id": "TC:U5",
+      "order_mpn": "OPA333AIDBVR",
+      "lead_time_confirmed": false,
+      "price_quantity": 1,
+      "procurement_status": "PRICE_OBSERVED_DELIVERY_UNCONFIRMED"
     },
     {
       "board": "TC",
@@ -790,7 +995,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=BAT54S"
+      "url": "https://www.digikey.com/en/products?keywords=BAT54S",
+      "line_id": "TC:U6",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "TC",
@@ -802,13 +1012,18 @@
       "footprint": "Package_TO_SOT_SMD:SOT-353_SC-70-5",
       "per_board": 1,
       "per_kit": 6,
-      "supplier": "DigiKey / Mouser RFQ",
-      "unit_usd": null,
-      "price_status": "QUOTE_REQUIRED",
+      "supplier": "DigiKey",
+      "unit_usd": 1.28,
+      "price_status": "OBSERVED_QTY1_USD",
       "checked": "2026-09-20",
-      "lead_time": "Unconfirmed",
-      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=TLV3691IDCKR"
+      "lead_time": "Only 3 in stock observed: insufficient for 6 TC; quote required",
+      "alternative": "TLV3691IDCKT packaging candidate; supplier lists parametric equivalent",
+      "url": "https://www.digikey.com/en/products/detail/texas-instruments/TLV3691IDCKR/4555468",
+      "line_id": "TC:U7",
+      "order_mpn": "TLV3691IDCKR",
+      "lead_time_confirmed": false,
+      "price_quantity": 1,
+      "procurement_status": "PRICE_OBSERVED_DELIVERY_UNCONFIRMED"
     },
     {
       "board": "IR",
@@ -826,7 +1041,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=CELL%20%2B%20HLC"
+      "url": "https://www.digikey.com/en/products?keywords=CELL%20%2B%20HLC",
+      "line_id": "IR:J1",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "IR",
@@ -838,13 +1058,18 @@
       "footprint": "Package_SON:WSON-10-1EP_2.5x2.5mm_P0.5mm_EP1.2x2mm_ThermalVias",
       "per_board": 1,
       "per_kit": 1,
-      "supplier": "DigiKey / Mouser RFQ",
-      "unit_usd": null,
-      "price_status": "QUOTE_REQUIRED",
+      "supplier": "DigiKey",
+      "unit_usd": 2.74,
+      "price_status": "OBSERVED_QTY1_USD",
       "checked": "2026-09-20",
-      "lead_time": "Unconfirmed",
-      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=TPS63900DSKR"
+      "lead_time": "17077 in stock observed; delivery unconfirmed",
+      "alternative": "Same MPN from another authorized distributor",
+      "url": "https://www.digikey.com/en/products/detail/texas-instruments/TPS63900DSKR/13535479",
+      "line_id": "IR:U1",
+      "order_mpn": "TPS63900DSKR",
+      "lead_time_confirmed": false,
+      "price_quantity": 1,
+      "procurement_status": "PRICE_OBSERVED_DELIVERY_UNCONFIRMED"
     },
     {
       "board": "IR",
@@ -862,7 +1087,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=2.2uH%20Isat%3E%3D1A"
+      "url": "https://www.digikey.com/en/products?keywords=2.2uH%20Isat%3E%3D1A",
+      "line_id": "IR:L1",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "IR",
@@ -880,7 +1110,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%2036.5k"
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%2036.5k",
+      "line_id": "IR:R1",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "IR",
@@ -898,7 +1133,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%2016.2k"
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%2016.2k",
+      "line_id": "IR:R2",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "IR",
@@ -917,7 +1157,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "MLCC with verified effective capacitance at bias; exact vendor MPN pending",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2010uF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2010uF",
+      "line_id": "IR:C1,C28",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "IR",
@@ -935,7 +1180,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "MLCC with verified effective capacitance at bias; exact vendor MPN pending",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2022uF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2022uF",
+      "line_id": "IR:C2",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "IR",
@@ -954,7 +1204,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=AO3401A"
+      "url": "https://www.digikey.com/en/products?keywords=AO3401A",
+      "line_id": "IR:Q1,Q4",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "IR",
@@ -974,7 +1229,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=2N7002"
+      "url": "https://www.digikey.com/en/products?keywords=2N7002",
+      "line_id": "IR:Q2,Q3,Q5",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "IR",
@@ -993,7 +1253,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%201M"
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%201M",
+      "line_id": "IR:R3,R4",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "IR",
@@ -1017,7 +1282,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%20100k"
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%20100k",
+      "line_id": "IR:R5,R6,R8,R11,R13,R16,R17",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "IR",
@@ -1035,7 +1305,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2010nF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2010nF",
+      "line_id": "IR:C3",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "IR",
@@ -1053,7 +1328,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%2068R%200.5W"
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%2068R%200.5W",
+      "line_id": "IR:R7",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "IR",
@@ -1069,9 +1349,14 @@
       "unit_usd": 9.26,
       "price_status": "OBSERVED_QTY1_USD",
       "checked": "2026-09-20",
-      "lead_time": "Stock shown 4540; shipping/lead time reconfirm",
+      "lead_time": "4486 in stock observed; delivery unconfirmed",
       "alternative": "Same device, alternate authorized distributor",
-      "url": "https://www.digikey.com/es/products/detail/stmicroelectronics/STM32WLE5CCU6/13557445"
+      "url": "https://www.digikey.com/en/products/detail/stmicroelectronics/STM32WLE5CCU6/13557445",
+      "line_id": "IR:U10",
+      "order_mpn": "STM32WLE5CCU6",
+      "lead_time_confirmed": false,
+      "price_quantity": 1,
+      "procurement_status": "PRICE_OBSERVED_DELIVERY_UNCONFIRMED"
     },
     {
       "board": "IR",
@@ -1090,7 +1375,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%2010k"
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%2010k",
+      "line_id": "IR:R9,R10",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "IR",
@@ -1117,7 +1407,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%20100nF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%20100nF",
+      "line_id": "IR:C4,C5,C6,C7,C8,C11,C12,C16,C27,C29",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "IR",
@@ -1135,7 +1430,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=SWD%20TC2030"
+      "url": "https://www.digikey.com/en/products?keywords=SWD%20TC2030",
+      "line_id": "IR:J2",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "IR",
@@ -1153,7 +1453,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=MOUNT%20switch"
+      "url": "https://www.digikey.com/en/products?keywords=MOUNT%20switch",
+      "line_id": "IR:J3",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "IR",
@@ -1172,7 +1477,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%204.7uF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%204.7uF",
+      "line_id": "IR:C9,C10",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "IR",
@@ -1190,7 +1500,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%200R"
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%200R",
+      "line_id": "IR:R12",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "IR",
@@ -1208,7 +1523,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "MLCC with verified effective capacitance at bias; exact vendor MPN pending",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%201uF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%201uF",
+      "line_id": "IR:C13",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "IR",
@@ -1226,7 +1546,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=32MHz%20CL%3D10pF"
+      "url": "https://www.digikey.com/en/products?keywords=32MHz%20CL%3D10pF",
+      "line_id": "IR:Y1",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "IR",
@@ -1244,7 +1569,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=32.768kHz%20CL%3D6pF"
+      "url": "https://www.digikey.com/en/products?keywords=32.768kHz%20CL%3D6pF",
+      "line_id": "IR:Y2",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "IR",
@@ -1263,7 +1593,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%206pF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%206pF",
+      "line_id": "IR:C14,C15",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "IR",
@@ -1281,7 +1616,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=MB85RS64V"
+      "url": "https://www.digikey.com/en/products?keywords=MB85RS64V",
+      "line_id": "IR:U2",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "IR",
@@ -1300,7 +1640,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%204.7k"
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%204.7k",
+      "line_id": "IR:R14,R15",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "IR",
@@ -1318,7 +1663,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=47nH"
+      "url": "https://www.digikey.com/en/products?keywords=47nH",
+      "line_id": "IR:L2",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "IR",
@@ -1336,7 +1686,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2047nF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2047nF",
+      "line_id": "IR:C17",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "IR",
@@ -1356,7 +1711,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2068pF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2068pF",
+      "line_id": "IR:C18,C22,C26",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "IR",
@@ -1374,7 +1734,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=4.4nH"
+      "url": "https://www.digikey.com/en/products?keywords=4.4nH",
+      "line_id": "IR:L3",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "IR",
@@ -1392,7 +1757,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%205.5pF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%205.5pF",
+      "line_id": "IR:C19",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "IR",
@@ -1410,7 +1780,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%202.5pF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%202.5pF",
+      "line_id": "IR:C20",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "IR",
@@ -1428,7 +1803,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=3.4nH"
+      "url": "https://www.digikey.com/en/products?keywords=3.4nH",
+      "line_id": "IR:L4",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "IR",
@@ -1446,7 +1826,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%204.3pF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%204.3pF",
+      "line_id": "IR:C21",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "IR",
@@ -1464,7 +1849,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=9.2nH"
+      "url": "https://www.digikey.com/en/products?keywords=9.2nH",
+      "line_id": "IR:L5",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "IR",
@@ -1482,7 +1872,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%203.5pF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%203.5pF",
+      "line_id": "IR:C23",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "IR",
@@ -1500,7 +1895,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%204.5pF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%204.5pF",
+      "line_id": "IR:C24",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "IR",
@@ -1518,7 +1918,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=12nH"
+      "url": "https://www.digikey.com/en/products?keywords=12nH",
+      "line_id": "IR:L6",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "IR",
@@ -1536,7 +1941,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%202.7pF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%202.7pF",
+      "line_id": "IR:C25",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "IR",
@@ -1554,7 +1964,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=PE4259"
+      "url": "https://www.digikey.com/en/products?keywords=PE4259",
+      "line_id": "IR:U3",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "IR",
@@ -1572,7 +1987,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=868%20MHz%20u.FL"
+      "url": "https://www.digikey.com/en/products?keywords=868%20MHz%20u.FL",
+      "line_id": "IR:J4",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "IR",
@@ -1585,12 +2005,17 @@
       "per_board": 1,
       "per_kit": 1,
       "supplier": "DigiKey",
-      "unit_usd": 38.15,
+      "unit_usd": 38.52,
       "price_status": "OBSERVED_QTY1_USD",
       "checked": "2026-09-20",
-      "lead_time": "Stock shown 174; lead time unconfirmed",
+      "lead_time": "68 in stock observed; Turkey delivery unconfirmed",
       "alternative": "MLX90640ESF-BAA-000-SP; packaging only, NOT BAB",
-      "url": "https://www.digikey.in/en/products/detail/melexis-technologies-nv/MLX90640ESF-BAA-000-TU/8638463"
+      "url": "https://www.digikey.com/en/products/detail/melexis-technologies-nv/MLX90640ESF-BAA-000-TU/8638463",
+      "line_id": "IR:U4",
+      "order_mpn": "MLX90640ESF-BAA-000-TU",
+      "lead_time_confirmed": false,
+      "price_quantity": 1,
+      "procurement_status": "PRICE_OBSERVED_DELIVERY_UNCONFIRMED"
     },
     {
       "board": "IR",
@@ -1608,7 +2033,12 @@
       "checked": "2026-09-20",
       "lead_time": "8 weeks standard; stock shown",
       "alternative": "SHT41-AD1B-R3; manufacturer/distributor lists direct substitute",
-      "url": "https://www.digikey.com/en/products/detail/sensirion-ag/SHT41-AD1B-R2/15296591"
+      "url": "https://www.digikey.com/en/products/detail/sensirion-ag/SHT41-AD1B-R2/15296591",
+      "line_id": "IR:U5",
+      "order_mpn": "SHT41-AD1B-R2",
+      "lead_time_confirmed": false,
+      "price_quantity": 1,
+      "procurement_status": "PRICE_OBSERVED_DELIVERY_UNCONFIRMED"
     },
     {
       "board": "IR",
@@ -1626,7 +2056,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=PHASE%20optional"
+      "url": "https://www.digikey.com/en/products?keywords=PHASE%20optional",
+      "line_id": "IR:J5",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -1644,7 +2079,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=CELL%20%2B%20HLC"
+      "url": "https://www.digikey.com/en/products?keywords=CELL%20%2B%20HLC",
+      "line_id": "PD:J1",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -1656,13 +2096,18 @@
       "footprint": "Package_SON:WSON-10-1EP_2.5x2.5mm_P0.5mm_EP1.2x2mm_ThermalVias",
       "per_board": 1,
       "per_kit": 1,
-      "supplier": "DigiKey / Mouser RFQ",
-      "unit_usd": null,
-      "price_status": "QUOTE_REQUIRED",
+      "supplier": "DigiKey",
+      "unit_usd": 2.74,
+      "price_status": "OBSERVED_QTY1_USD",
       "checked": "2026-09-20",
-      "lead_time": "Unconfirmed",
-      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=TPS63900DSKR"
+      "lead_time": "17077 in stock observed; delivery unconfirmed",
+      "alternative": "Same MPN from another authorized distributor",
+      "url": "https://www.digikey.com/en/products/detail/texas-instruments/TPS63900DSKR/13535479",
+      "line_id": "PD:U1",
+      "order_mpn": "TPS63900DSKR",
+      "lead_time_confirmed": false,
+      "price_quantity": 1,
+      "procurement_status": "PRICE_OBSERVED_DELIVERY_UNCONFIRMED"
     },
     {
       "board": "PD",
@@ -1680,7 +2125,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=2.2uH%20Isat%3E%3D1A"
+      "url": "https://www.digikey.com/en/products?keywords=2.2uH%20Isat%3E%3D1A",
+      "line_id": "PD:L1",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -1698,7 +2148,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%2036.5k"
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%2036.5k",
+      "line_id": "PD:R1",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -1716,7 +2171,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%2016.2k"
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%2016.2k",
+      "line_id": "PD:R2",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -1735,7 +2195,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "MLCC with verified effective capacitance at bias; exact vendor MPN pending",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2010uF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2010uF",
+      "line_id": "PD:C1,C27",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -1754,7 +2219,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "MLCC with verified effective capacitance at bias; exact vendor MPN pending",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2022uF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2022uF",
+      "line_id": "PD:C2,C28",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -1773,7 +2243,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=AO3401A"
+      "url": "https://www.digikey.com/en/products?keywords=AO3401A",
+      "line_id": "PD:Q1,Q4",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -1793,7 +2268,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=2N7002"
+      "url": "https://www.digikey.com/en/products?keywords=2N7002",
+      "line_id": "PD:Q2,Q3,Q5",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -1812,7 +2292,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%201M"
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%201M",
+      "line_id": "PD:R3,R4",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -1843,7 +2328,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%20100k"
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%20100k",
+      "line_id": "PD:R5,R6,R8,R11,R13,R17,R18,R23,R24,R25,R26,R27,R28,R29",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -1865,7 +2355,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2010nF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2010nF",
+      "line_id": "PD:C3,C29,C30,C38,C42",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -1883,7 +2378,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%2068R%200.5W"
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%2068R%200.5W",
+      "line_id": "PD:R7",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -1899,9 +2399,14 @@
       "unit_usd": 9.26,
       "price_status": "OBSERVED_QTY1_USD",
       "checked": "2026-09-20",
-      "lead_time": "Stock shown 4540; shipping/lead time reconfirm",
+      "lead_time": "4486 in stock observed; delivery unconfirmed",
       "alternative": "Same device, alternate authorized distributor",
-      "url": "https://www.digikey.com/es/products/detail/stmicroelectronics/STM32WLE5CCU6/13557445"
+      "url": "https://www.digikey.com/en/products/detail/stmicroelectronics/STM32WLE5CCU6/13557445",
+      "line_id": "PD:U10",
+      "order_mpn": "STM32WLE5CCU6",
+      "lead_time_confirmed": false,
+      "price_quantity": 1,
+      "procurement_status": "PRICE_OBSERVED_DELIVERY_UNCONFIRMED"
     },
     {
       "board": "PD",
@@ -1921,7 +2426,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%2010k"
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%2010k",
+      "line_id": "PD:R9,R10,R30",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -1952,7 +2462,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%20100nF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%20100nF",
+      "line_id": "PD:C4,C5,C6,C7,C8,C11,C12,C16,C31,C33,C37,C40,C41,C44",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -1970,7 +2485,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=SWD%20TC2030"
+      "url": "https://www.digikey.com/en/products?keywords=SWD%20TC2030",
+      "line_id": "PD:J2",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -1988,7 +2508,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=MOUNT%20switch"
+      "url": "https://www.digikey.com/en/products?keywords=MOUNT%20switch",
+      "line_id": "PD:J3",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -2007,7 +2532,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%204.7uF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%204.7uF",
+      "line_id": "PD:C9,C10",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -2025,7 +2555,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%200R"
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%200R",
+      "line_id": "PD:R12",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -2044,7 +2579,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "MLCC with verified effective capacitance at bias; exact vendor MPN pending",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%201uF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%201uF",
+      "line_id": "PD:C13,C43",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -2062,7 +2602,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=32MHz%20CL%3D10pF"
+      "url": "https://www.digikey.com/en/products?keywords=32MHz%20CL%3D10pF",
+      "line_id": "PD:Y1",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -2080,7 +2625,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=32.768kHz%20CL%3D6pF"
+      "url": "https://www.digikey.com/en/products?keywords=32.768kHz%20CL%3D6pF",
+      "line_id": "PD:Y2",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -2099,7 +2649,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%206pF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%206pF",
+      "line_id": "PD:C14,C15",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -2117,7 +2672,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=MB85RS64V"
+      "url": "https://www.digikey.com/en/products?keywords=MB85RS64V",
+      "line_id": "PD:U2",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -2136,7 +2696,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%204.7k"
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%204.7k",
+      "line_id": "PD:R14,R15",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -2154,7 +2719,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=47nH"
+      "url": "https://www.digikey.com/en/products?keywords=47nH",
+      "line_id": "PD:L2",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -2172,7 +2742,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2047nF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2047nF",
+      "line_id": "PD:C17",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -2192,7 +2767,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2068pF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2068pF",
+      "line_id": "PD:C18,C22,C26",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -2210,7 +2790,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=4.4nH"
+      "url": "https://www.digikey.com/en/products?keywords=4.4nH",
+      "line_id": "PD:L3",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -2228,7 +2813,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%205.5pF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%205.5pF",
+      "line_id": "PD:C19",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -2246,7 +2836,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%202.5pF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%202.5pF",
+      "line_id": "PD:C20",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -2264,7 +2859,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=3.4nH"
+      "url": "https://www.digikey.com/en/products?keywords=3.4nH",
+      "line_id": "PD:L4",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -2282,7 +2882,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%204.3pF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%204.3pF",
+      "line_id": "PD:C21",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -2300,7 +2905,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=9.2nH"
+      "url": "https://www.digikey.com/en/products?keywords=9.2nH",
+      "line_id": "PD:L5",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -2318,7 +2928,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%203.5pF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%203.5pF",
+      "line_id": "PD:C23",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -2336,7 +2951,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%204.5pF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%204.5pF",
+      "line_id": "PD:C24",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -2354,7 +2974,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=12nH"
+      "url": "https://www.digikey.com/en/products?keywords=12nH",
+      "line_id": "PD:L6",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -2372,7 +2997,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%202.7pF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%202.7pF",
+      "line_id": "PD:C25",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -2391,7 +3021,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=PE4259"
+      "url": "https://www.digikey.com/en/products?keywords=PE4259",
+      "line_id": "PD:U3,U5",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -2409,7 +3044,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=868%20MHz%20u.FL"
+      "url": "https://www.digikey.com/en/products?keywords=868%20MHz%20u.FL",
+      "line_id": "PD:J4",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -2421,13 +3061,18 @@
       "footprint": "Package_TO_SOT_SMD:SOT-563",
       "per_board": 1,
       "per_kit": 1,
-      "supplier": "DigiKey / Mouser RFQ",
-      "unit_usd": null,
-      "price_status": "QUOTE_REQUIRED",
+      "supplier": "DigiKey",
+      "unit_usd": 1.22,
+      "price_status": "OBSERVED_QTY1_USD",
       "checked": "2026-09-20",
-      "lead_time": "Unconfirmed",
-      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=TPS61023DRLR"
+      "lead_time": "Delivery unconfirmed; price observation only",
+      "alternative": "Same MPN from another authorized distributor",
+      "url": "https://www.digikey.com/en/products/detail/texas-instruments/tps61023drlr/11310629",
+      "line_id": "PD:U4",
+      "order_mpn": "TPS61023DRLR",
+      "lead_time_confirmed": false,
+      "price_quantity": 1,
+      "procurement_status": "PRICE_OBSERVED_DELIVERY_UNCONFIRMED"
     },
     {
       "board": "PD",
@@ -2445,7 +3090,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=1uH%20Isat%3E%3D4A"
+      "url": "https://www.digikey.com/en/products?keywords=1uH%20Isat%3E%3D4A",
+      "line_id": "PD:L7",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -2463,7 +3113,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%20732k"
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%20732k",
+      "line_id": "PD:R16",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -2481,7 +3136,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=HFCT50"
+      "url": "https://www.digikey.com/en/products?keywords=HFCT50",
+      "line_id": "PD:J5",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -2500,7 +3160,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%2049.9R"
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%2049.9R",
+      "line_id": "PD:R19,R20",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -2518,7 +3183,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=TEV%20plate"
+      "url": "https://www.digikey.com/en/products?keywords=TEV%20plate",
+      "line_id": "PD:J6",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -2536,7 +3206,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%20100pF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%20100pF",
+      "line_id": "PD:C32",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -2554,7 +3229,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=1uH"
+      "url": "https://www.digikey.com/en/products?keywords=1uH",
+      "line_id": "PD:L8",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -2572,7 +3252,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=PGA-103%2B"
+      "url": "https://www.digikey.com/en/products?keywords=PGA-103%2B",
+      "line_id": "PD:U6",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -2590,7 +3275,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=1uH"
+      "url": "https://www.digikey.com/en/products?keywords=1uH",
+      "line_id": "PD:L9",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -2610,7 +3300,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%201nF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%201nF",
+      "line_id": "PD:C34,C35,C39",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -2622,13 +3317,18 @@
       "footprint": "Package_CSP:Analog_LFCSP-16-1EP_4x4mm_P0.65mm_EP2.35x2.35mm",
       "per_board": 1,
       "per_kit": 1,
-      "supplier": "DigiKey / Mouser RFQ",
-      "unit_usd": null,
-      "price_status": "QUOTE_REQUIRED",
+      "supplier": "DigiKey",
+      "unit_usd": 18.85,
+      "price_status": "OBSERVED_QTY1_USD",
       "checked": "2026-09-20",
-      "lead_time": "Unconfirmed",
-      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=AD8318ACPZ"
+      "lead_time": "No stock; 1500 incoming 24-Dec-2026 shown, not guaranteed",
+      "alternative": "AD8318ACPZ-REEL7 ordered packaging; same LFCSP family",
+      "url": "https://www.digikey.com/en/products/detail/analog-devices-inc/AD8318ACPZ-REEL7/996044",
+      "line_id": "PD:U7",
+      "order_mpn": "AD8318ACPZ-REEL7",
+      "lead_time_confirmed": false,
+      "price_quantity": 1,
+      "procurement_status": "PRICE_OBSERVED_DELIVERY_UNCONFIRMED"
     },
     {
       "board": "PD",
@@ -2646,7 +3346,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%20220pF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%20220pF",
+      "line_id": "PD:C36",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -2664,7 +3369,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%20499R"
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%20499R",
+      "line_id": "PD:R21",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -2682,7 +3392,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%201k"
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%201k",
+      "line_id": "PD:R22",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -2694,13 +3409,18 @@
       "footprint": "Package_TO_SOT_SMD:SOT-23-5",
       "per_board": 1,
       "per_kit": 1,
-      "supplier": "DigiKey / Mouser RFQ",
-      "unit_usd": null,
-      "price_status": "QUOTE_REQUIRED",
+      "supplier": "DigiKey",
+      "unit_usd": 1.41,
+      "price_status": "OBSERVED_QTY1_USD",
       "checked": "2026-09-20",
-      "lead_time": "Unconfirmed",
-      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=TLV3201AIDBVR"
+      "lead_time": "No stock; incoming 29-Oct/02-Nov-2026; standard 16 weeks shown",
+      "alternative": "Same MPN elsewhere; suggested TS30xx devices are not approved substitutes",
+      "url": "https://www.digikey.com/en/products/detail/texas-instruments/TLV3201AIDBVR/3188691",
+      "line_id": "PD:U8",
+      "order_mpn": "TLV3201AIDBVR",
+      "lead_time_confirmed": false,
+      "price_quantity": 1,
+      "procurement_status": "PRICE_OBSERVED_DELIVERY_UNCONFIRMED"
     },
     {
       "board": "PD",
@@ -2718,7 +3438,12 @@
       "checked": "2026-09-20",
       "lead_time": "8 weeks standard; stock shown",
       "alternative": "SHT41-AD1B-R3; manufacturer/distributor lists direct substitute",
-      "url": "https://www.digikey.com/en/products/detail/sensirion-ag/SHT41-AD1B-R2/15296591"
+      "url": "https://www.digikey.com/en/products/detail/sensirion-ag/SHT41-AD1B-R2/15296591",
+      "line_id": "PD:U9",
+      "order_mpn": "SHT41-AD1B-R2",
+      "lead_time_confirmed": false,
+      "price_quantity": 1,
+      "procurement_status": "PRICE_OBSERVED_DELIVERY_UNCONFIRMED"
     },
     {
       "board": "PD",
@@ -2736,7 +3461,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=MA40S4R%20receiver"
+      "url": "https://www.digikey.com/en/products?keywords=MA40S4R%20receiver",
+      "line_id": "PD:J7",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "PD",
@@ -2748,13 +3478,18 @@
       "footprint": "Package_TO_SOT_SMD:SOT-23-5",
       "per_board": 1,
       "per_kit": 1,
-      "supplier": "DigiKey / Mouser RFQ",
-      "unit_usd": null,
-      "price_status": "QUOTE_REQUIRED",
+      "supplier": "DigiKey",
+      "unit_usd": 3.06,
+      "price_status": "OBSERVED_QTY1_USD",
       "checked": "2026-09-20",
-      "lead_time": "Unconfirmed",
-      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=OPA320AIDBVR"
+      "lead_time": "Manufacturer standard 16 weeks shown; delivery unconfirmed",
+      "alternative": "OPA320AIDBVT packaging candidate; check ordering table",
+      "url": "https://www.digikey.com/en/products/detail/texas-instruments/OPA320AIDBVR/2747429",
+      "line_id": "PD:U11",
+      "order_mpn": "OPA320AIDBVR",
+      "lead_time_confirmed": false,
+      "price_quantity": 1,
+      "procurement_status": "PRICE_OBSERVED_DELIVERY_UNCONFIRMED"
     },
     {
       "board": "PD",
@@ -2772,7 +3507,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=ISOLATED%2050Hz%20PHASE"
+      "url": "https://www.digikey.com/en/products?keywords=ISOLATED%2050Hz%20PHASE",
+      "line_id": "PD:J8",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -2790,7 +3530,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=5V%20SELV%204A"
+      "url": "https://www.digikey.com/en/products?keywords=5V%20SELV%204A",
+      "line_id": "GW:J1",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -2808,7 +3553,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=3.15A%20slow"
+      "url": "https://www.digikey.com/en/products?keywords=3.15A%20slow",
+      "line_id": "GW:F1",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -2826,7 +3576,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=AO3401A"
+      "url": "https://www.digikey.com/en/products?keywords=AO3401A",
+      "line_id": "GW:Q1",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -2844,7 +3599,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "MLCC with verified effective capacitance at bias; exact vendor MPN pending",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%20100uF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%20100uF",
+      "line_id": "GW:C1",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -2857,13 +3617,18 @@
       "footprint": "Package_DFN_QFN:VQFN-16-1EP_3x3mm_P0.5mm_EP1.68x1.68mm_ThermalVias",
       "per_board": 2,
       "per_kit": 2,
-      "supplier": "DigiKey / Mouser RFQ",
-      "unit_usd": null,
-      "price_status": "QUOTE_REQUIRED",
+      "supplier": "DigiKey",
+      "unit_usd": 1.99,
+      "price_status": "OBSERVED_QTY1_USD",
       "checked": "2026-09-20",
-      "lead_time": "Unconfirmed",
-      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=TPS62130RGTR"
+      "lead_time": "No stock; incoming 22/26-Oct-2026; manufacturer standard 16 weeks shown",
+      "alternative": "TPS62130RGTT packaging candidate; TPS62130A requires electrical review",
+      "url": "https://www.digikey.com/en/products/detail/texas-instruments/TPS62130RGTR/2833429",
+      "line_id": "GW:U1,U2",
+      "order_mpn": "TPS62130RGTR",
+      "lead_time_confirmed": false,
+      "price_quantity": 1,
+      "procurement_status": "PRICE_OBSERVED_DELIVERY_UNCONFIRMED"
     },
     {
       "board": "GW",
@@ -2882,7 +3647,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=2.2uH%20Isat%3E%3D4A"
+      "url": "https://www.digikey.com/en/products?keywords=2.2uH%20Isat%3E%3D4A",
+      "line_id": "GW:L1,L2",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -2901,7 +3671,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%20316k"
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%20316k",
+      "line_id": "GW:R1,R3",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -2924,7 +3699,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%20100k"
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%20100k",
+      "line_id": "GW:R2,R4,R29,R30,R34,R35",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -2944,7 +3724,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2010nF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2010nF",
+      "line_id": "GW:C2,C5,C57",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -2964,7 +3749,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "MLCC with verified effective capacitance at bias; exact vendor MPN pending",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2022uF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2022uF",
+      "line_id": "GW:C3,C6,C56",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -2983,7 +3773,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "MLCC with verified effective capacitance at bias; exact vendor MPN pending",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2047uF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2047uF",
+      "line_id": "GW:C4,C7",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -3001,7 +3796,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%20470uF%20low%20ESR"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%20470uF%20low%20ESR",
+      "line_id": "GW:C8",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -3019,7 +3819,12 @@
       "checked": "2026-09-20",
       "lead_time": "No stock; incoming date varies Nov 2026",
       "alternative": "STM32H563ZIT6TR; packaging only, verify quote",
-      "url": "https://www.digikey.com/en/products/detail/stmicroelectronics/STM32H563ZIT6/18110508"
+      "url": "https://www.digikey.com/en/products/detail/stmicroelectronics/STM32H563ZIT6/18110508",
+      "line_id": "GW:U20",
+      "order_mpn": "STM32H563ZIT6",
+      "lead_time_confirmed": false,
+      "price_quantity": 1,
+      "procurement_status": "PRICE_OBSERVED_DELIVERY_UNCONFIRMED"
     },
     {
       "board": "GW",
@@ -3038,7 +3843,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%202.2uF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%202.2uF",
+      "line_id": "GW:C9,C10",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -3088,7 +3898,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%20100nF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%20100nF",
+      "line_id": "GW:C11,C12,C13,C14,C15,C16,C17,C18,C19,C20,C21,C22,C23,C24,C26,C31,C32,C33,C34,C36,C37,C38,C39,C40,C42,C43,C45,C46,C48,C49,C51,C52,C54",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -3111,7 +3926,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "MLCC with verified effective capacitance at bias; exact vendor MPN pending",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2010uF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2010uF",
+      "line_id": "GW:C25,C44,C47,C50,C53,C55",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -3148,7 +3968,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%2010k"
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%2010k",
+      "line_id": "GW:R5,R6,R7,R8,R11,R12,R13,R14,R15,R16,R17,R18,R21,R22,R24,R25,R27,R28,R32,R33",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -3166,7 +3991,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=25MHz%20CL%3D12pF"
+      "url": "https://www.digikey.com/en/products?keywords=25MHz%20CL%3D12pF",
+      "line_id": "GW:Y1",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -3185,7 +4015,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2018pF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2018pF",
+      "line_id": "GW:C27,C28",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -3203,7 +4038,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=32.768kHz"
+      "url": "https://www.digikey.com/en/products?keywords=32.768kHz",
+      "line_id": "GW:Y2",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -3222,7 +4062,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%206pF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%206pF",
+      "line_id": "GW:C29,C30",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -3240,7 +4085,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=SWD%20TC2030"
+      "url": "https://www.digikey.com/en/products?keywords=SWD%20TC2030",
+      "line_id": "GW:J2",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -3258,7 +4108,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=W25Q64JVSSIQ"
+      "url": "https://www.digikey.com/en/products?keywords=W25Q64JVSSIQ",
+      "line_id": "GW:U3",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -3276,7 +4131,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=APS6404L-3SQR-SN"
+      "url": "https://www.digikey.com/en/products?keywords=APS6404L-3SQR-SN",
+      "line_id": "GW:U4",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -3294,7 +4154,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=RV-3028-C7"
+      "url": "https://www.digikey.com/en/products?keywords=RV-3028-C7",
+      "line_id": "GW:U5",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -3312,7 +4177,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=RTC%20primary%20cell"
+      "url": "https://www.digikey.com/en/products?keywords=RTC%20primary%20cell",
+      "line_id": "GW:J3",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -3331,7 +4201,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%204.7k"
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%204.7k",
+      "line_id": "GW:R9,R10",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -3349,7 +4224,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=LAN8742A-CZ-TR"
+      "url": "https://www.digikey.com/en/products?keywords=LAN8742A-CZ-TR",
+      "line_id": "GW:U6",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -3367,7 +4247,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=50MHz%203V3%20OSC"
+      "url": "https://www.digikey.com/en/products?keywords=50MHz%203V3%20OSC",
+      "line_id": "GW:U7",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -3385,7 +4270,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%2012.1k%201%25"
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%2012.1k%201%25",
+      "line_id": "GW:R19",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -3403,7 +4293,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "MLCC with verified effective capacitance at bias; exact vendor MPN pending",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%201uF"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%201uF",
+      "line_id": "GW:C35",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -3421,7 +4316,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=HR911105A"
+      "url": "https://www.digikey.com/en/products?keywords=HR911105A",
+      "line_id": "GW:J4",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -3439,7 +4339,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%201M"
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%201M",
+      "line_id": "GW:R20",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -3457,7 +4362,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%201nF%202kV"
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%201nF%202kV",
+      "line_id": "GW:C41",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -3470,13 +4380,18 @@
       "footprint": "Package_SO:SOIC-20W_7.5x12.8mm_P1.27mm",
       "per_board": 2,
       "per_kit": 2,
-      "supplier": "DigiKey / Mouser RFQ",
-      "unit_usd": null,
-      "price_status": "QUOTE_REQUIRED",
+      "supplier": "DigiKey",
+      "unit_usd": 17.36,
+      "price_status": "OBSERVED_QTY1_USD",
       "checked": "2026-09-20",
-      "lead_time": "Unconfirmed",
-      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=ADM2587EBRWZ"
+      "lead_time": "10206 in stock observed; delivery unconfirmed",
+      "alternative": "ADM2587EBRWZ-REEL7 packaging candidate",
+      "url": "https://www.digikey.com/en/products/detail/analog-devices-inc/ADM2587EBRWZ/2261070",
+      "line_id": "GW:U8,U10",
+      "order_mpn": "ADM2587EBRWZ",
+      "lead_time_confirmed": false,
+      "price_quantity": 1,
+      "procurement_status": "PRICE_OBSERVED_DELIVERY_UNCONFIRMED"
     },
     {
       "board": "GW",
@@ -3494,7 +4409,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=MPR"
+      "url": "https://www.digikey.com/en/products?keywords=MPR",
+      "line_id": "GW:J5",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -3513,7 +4433,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=SM712"
+      "url": "https://www.digikey.com/en/products?keywords=SM712",
+      "line_id": "GW:U9,U11",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -3532,7 +4457,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%20120R"
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%20120R",
+      "line_id": "GW:R23,R26",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -3551,7 +4481,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=TERM%20OPEN"
+      "url": "https://www.digikey.com/en/products?keywords=TERM%20OPEN",
+      "line_id": "GW:J6,J8",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -3569,7 +4504,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=TVOC"
+      "url": "https://www.digikey.com/en/products?keywords=TVOC",
+      "line_id": "GW:J7",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -3587,7 +4527,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=E22-900MM22S"
+      "url": "https://www.digikey.com/en/products?keywords=E22-900MM22S",
+      "line_id": "GW:U12",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -3605,7 +4550,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=868MHz%20antenna"
+      "url": "https://www.digikey.com/en/products?keywords=868MHz%20antenna",
+      "line_id": "GW:J9",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -3623,7 +4573,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=2041119-1"
+      "url": "https://www.digikey.com/en/products?keywords=2041119-1",
+      "line_id": "GW:U13",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -3641,7 +4596,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=SIM%20connector"
+      "url": "https://www.digikey.com/en/products?keywords=SIM%20connector",
+      "line_id": "GW:J10",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -3660,7 +4620,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=SS34"
+      "url": "https://www.digikey.com/en/products?keywords=SS34",
+      "line_id": "GW:D1,D2",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -3678,7 +4643,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=BAT54"
+      "url": "https://www.digikey.com/en/products?keywords=BAT54",
+      "line_id": "GW:D3",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -3696,7 +4666,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%20100R%201W"
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%20100R%201W",
+      "line_id": "GW:R31",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "GW",
@@ -3714,7 +4689,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Same specification/package from authorized source; no unreviewed substitution",
-      "url": "https://www.digikey.com/en/products?keywords=2x10F%202.7V%20EDLC%20pack"
+      "url": "https://www.digikey.com/en/products?keywords=2x10F%202.7V%20EDLC%20pack",
+      "line_id": "GW:J11",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "MPN_AND_QUOTE_REVIEW"
     },
     {
       "board": "TC",
@@ -3732,7 +4712,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Must satisfy mechanical, thermal and electrical design envelope",
-      "url": null
+      "url": null,
+      "line_id": "TC:CT 400 A / 3000:1 / split core / aperture >=32 mm",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "CUSTOM_OR_EXTERNAL_RFQ"
     },
     {
       "board": "TC",
@@ -3750,7 +4735,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Must satisfy mechanical, thermal and electrical design envelope",
-      "url": null
+      "url": null,
+      "line_id": "TC:ER14250 3.6 V primary cell, 1.2 Ah envelope",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "CUSTOM_OR_EXTERNAL_RFQ"
     },
     {
       "board": "TC+PD",
@@ -3768,7 +4758,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Must satisfy mechanical, thermal and electrical design envelope",
-      "url": null
+      "url": null,
+      "line_id": "TC+PD:HLC pulse buffer <=16.5 x55 mm, compatible with Li-SOCl2",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "CUSTOM_OR_EXTERNAL_RFQ"
     },
     {
       "board": "IR",
@@ -3786,7 +4781,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Must satisfy mechanical, thermal and electrical design envelope",
-      "url": null
+      "url": null,
+      "line_id": "IR:ER14505 3.6 V 2.6 Ah, pulse-rated assembled pack",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "CUSTOM_OR_EXTERNAL_RFQ"
     },
     {
       "board": "PD",
@@ -3804,7 +4804,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Must satisfy mechanical, thermal and electrical design envelope",
-      "url": null
+      "url": null,
+      "line_id": "PD:ER26500 3.6 V 8.5 Ah",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "CUSTOM_OR_EXTERNAL_RFQ"
     },
     {
       "board": "PD",
@@ -3822,7 +4827,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Must satisfy mechanical, thermal and electrical design envelope",
-      "url": null
+      "url": null,
+      "line_id": "PD:HFCT50",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "CUSTOM_OR_EXTERNAL_RFQ"
     },
     {
       "board": "PD",
@@ -3840,7 +4850,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Must satisfy mechanical, thermal and electrical design envelope",
-      "url": null
+      "url": null,
+      "line_id": "PD:Insulated TEV capacitive plate assembly",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "CUSTOM_OR_EXTERNAL_RFQ"
     },
     {
       "board": "PD",
@@ -3858,7 +4873,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Must satisfy mechanical, thermal and electrical design envelope",
-      "url": null
+      "url": null,
+      "line_id": "PD:MA40S4R 40 kHz receiver",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "CUSTOM_OR_EXTERNAL_RFQ"
     },
     {
       "board": "PD",
@@ -3876,7 +4896,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Must satisfy mechanical, thermal and electrical design envelope",
-      "url": null
+      "url": null,
+      "line_id": "PD:Isolated 50 Hz voltage-phase reference, SELV 0..3.3 V output",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "CUSTOM_OR_EXTERNAL_RFQ"
     },
     {
       "board": "GW",
@@ -3894,7 +4919,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Must satisfy mechanical, thermal and electrical design envelope",
-      "url": null
+      "url": null,
+      "line_id": "GW:EC21-E MiniPCIe LTE modem (not bare LCC EC21)",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "CUSTOM_OR_EXTERNAL_RFQ"
     },
     {
       "board": "GW",
@@ -3912,7 +4942,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Must satisfy mechanical, thermal and electrical design envelope",
-      "url": null
+      "url": null,
+      "line_id": "GW:5 V SELV 4 A isolated DIN power supply",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "CUSTOM_OR_EXTERNAL_RFQ"
     },
     {
       "board": "GW",
@@ -3930,7 +4965,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Must satisfy mechanical, thermal and electrical design envelope",
-      "url": null
+      "url": null,
+      "line_id": "GW:10 F / 2.7 V EDLC in enclosed series pack",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "CUSTOM_OR_EXTERNAL_RFQ"
     },
     {
       "board": "GW",
@@ -3948,7 +4988,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Must satisfy mechanical, thermal and electrical design envelope",
-      "url": null
+      "url": null,
+      "line_id": "GW:Primary 3 V RTC backup cell, enclosed",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "CUSTOM_OR_EXTERNAL_RFQ"
     },
     {
       "board": "ALL",
@@ -3966,7 +5011,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Must satisfy mechanical, thermal and electrical design envelope",
-      "url": null
+      "url": null,
+      "line_id": "ALL:Insulated 868 MHz antenna and captive coax",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "CUSTOM_OR_EXTERNAL_RFQ"
     },
     {
       "board": "GW",
@@ -3984,7 +5034,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Must satisfy mechanical, thermal and electrical design envelope",
-      "url": null
+      "url": null,
+      "line_id": "GW:LTE antenna + SIM holder + short USB/SIM harness",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "CUSTOM_OR_EXTERNAL_RFQ"
     },
     {
       "board": "ALL",
@@ -4002,7 +5057,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Must satisfy mechanical, thermal and electrical design envelope",
-      "url": null
+      "url": null,
+      "line_id": "ALL:6 TC +1 IR +1 PD +1 GW enclosure/mount/gasket set",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "CUSTOM_OR_EXTERNAL_RFQ"
     },
     {
       "board": "ALL",
@@ -4020,7 +5080,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Must satisfy mechanical, thermal and electrical design envelope",
-      "url": null
+      "url": null,
+      "line_id": "ALL:4-layer PCB: 6 TC +1 IR +1 PD +1 GW; assembly",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "CUSTOM_OR_EXTERNAL_RFQ"
     },
     {
       "board": "ALL",
@@ -4038,7 +5103,12 @@
       "checked": "2026-09-20",
       "lead_time": "Unconfirmed",
       "alternative": "Must satisfy mechanical, thermal and electrical design envelope",
-      "url": null
+      "url": null,
+      "line_id": "ALL:Low-voltage cables, clamps, strain relief and labels",
+      "order_mpn": null,
+      "lead_time_confirmed": false,
+      "price_quantity": null,
+      "procurement_status": "CUSTOM_OR_EXTERNAL_RFQ"
     }
   ]
 }

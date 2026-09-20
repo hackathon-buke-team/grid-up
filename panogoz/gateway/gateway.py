@@ -418,6 +418,23 @@ class Gateway:
 
     # ------------------------------------------------- store and forward ----
 
+    def ingest_node_envelope(self, env: Envelope) -> None:
+        """Take custody of a decoded node frame without changing seq/boot/cadence.
+
+        Return only after durable storage (or completed delivery). The radio
+        receiver may then ACK custody. A full/failed outbox raises: do not ACK.
+        This is not an RF driver and does not synthesize gateway timestamps.
+        """
+        if self.outbox_store is None:
+            raise RuntimeError("Node ingress requires a persistent outbox")
+        if env.site != self.site or env.panel != self.panel_key:
+            raise ValueError("Node frame belongs to another site/panel")
+        if env.device not in assets.DEVICES_BY_KEY or env.device == "GW-01":
+            raise ValueError("Unknown node")
+        if env.kind not in ("data", "event", "birth", "state"):
+            raise ValueError("Unsupported node frame kind")
+        self._emit(env, retain=env.kind == "birth")
+
     def _emit(self, env: Envelope, retain: bool = False) -> None:
         """Ring first, transport second.  Ordering survives an outage."""
         with self._buffer_lock:
