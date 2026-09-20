@@ -94,7 +94,7 @@ function alarmCard(d) {
     try { await post(`/api/fleet/alarms/${encodeURIComponent(a.id)}/ack`, { token: token.value, by: by.value }); lastSig = ""; await refresh(); }
     catch (e) { err.textContent = e.message; }
   } }, "Onayla");
-  const canAck = a.state === "open" && a.family !== "system" && a.severity !== "WARNING";
+  const canAck = a.state === "open" && a.family !== "system" && a.peak !== "WARNING" && a.peak !== "NORMAL";
   const toggle = h("button", { class: "btn", type: "button", onclick: () => {
     woBox.hidden = !woBox.hidden;
     if (woBox.hidden) open.delete(a.id); else open.add(a.id);

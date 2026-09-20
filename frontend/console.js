@@ -244,7 +244,13 @@ async function refreshDetail() {
   const id = state.selectedAlarm;
   if (!id) return;
   let d;
-  try { d = await api(`/api/fleet/alarms/${encodeURIComponent(id)}`); } catch (e) { $("#detail-body").hidden = true; $("#detail-empty").hidden = false; $("#detail-empty").textContent = e.message; return; }
+  try { d = await api(`/api/fleet/alarms/${encodeURIComponent(id)}`); } catch (e) {
+    // alarm artık yok (ör. demo sıfırlandı): seçimi bırak, ayrıntıyı temizle -- hata metni kalıcı olmasın
+    if (e.status === 404) { state.selectedAlarm = null; state.json.detail = undefined; }
+    $("#detail-body").hidden = true; $("#detail-empty").hidden = false;
+    $("#detail-empty").textContent = e.status === 404 ? "Ayrıntı için soldan bir alarm seçin." : e.message;
+    return;
+  }
   $("#detail-empty").hidden = true;
   $("#detail-body").hidden = false;
   if (!changed("detail", [d.alarm.state, d.alarm.severity, d.alarm.acked_by, d.messages.length, d.evidence.t_s.length, d.alarm.closed_t_s])) return;
@@ -290,7 +296,8 @@ async function refreshDetail() {
   $("#d-ack-info").textContent = done ? `Bu alarm kapalı (${CLOSE_TR[a.close_reason] || a.close_reason}).`
     : a.state === "acked" ? `${a.acked_by} üstlendi. Şiddet yükselirse onay geçersiz olur ve yeniden sevk edilir.`
       : a.family === "sistem" ? "Sistem uyarısı: nöbetçi aranmaz; bakım biletidir." : a.severity === "WARNING" ? "UYARI seviyesi: yalnız konsol, mesaj gönderilmez." : "Onay için bildirim mesajındaki 4 haneli belirteç gerekir (Bildirimler sekmesindeki telefonda).";
-  for (const id2 of ["#ack-btn", "#ack-token", "#ack-by"]) $(id2).disabled = done || a.state === "acked";
+  const ackable = a.peak !== "WARNING" && a.peak !== "NORMAL" && a.family !== "system"; // sevk edilmemiş alarmda belirteç YOK
+  for (const id2 of ["#ack-btn", "#ack-token", "#ack-by"]) $(id2).disabled = done || a.state === "acked" || !ackable;
   $("#close-btn").disabled = done;
   $("#mute-btn").disabled = done;
 

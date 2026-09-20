@@ -1,0 +1,17 @@
+# P01 (Örnek TM-1 · Pano 1) — 2.0.0 — konsolun SCADA sekmesiyle aynı an
+
+[Modbus TCP :5030] FC04 adres 0..31 (pymodbus istemcisi)
+  SEVERITY_CODE          ham=     2  değer=2
+  ALARMS_OPEN            ham=     2  değer=2
+  FLAGS                  ham=    64  değer=64 ['ALARM_PAGED']
+  THETA_MAX_X10          ham=   451  değer=45.1
+  CURRENT_L2_X10         ham=  1252  değer=125.2
+  JOINT_TEMP_L2_X10      ham=   680  değer=68.0
+  HUMIDITY_X10           ham=   327  değer=32.7
+  ICD_VERSION            ham=   200  değer=200
+  yazma denemesi (FC06) -> REDDEDİLDİ: ExceptionResponse(dev_id=1, function_code=134, exception_code=1)
+
+[IEC 60870-5-104 :2414] genel tarama (c104 master) -> ACT_CON alındı
+  IOA 1     SEVERITY_CODE          değer=2
+  IOA 5     THETA_MAX_X10          değer=451
+  IOA 11    JOINT_TEMP_L2_X10      değer=680
