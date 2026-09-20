@@ -180,6 +180,66 @@ tabanında duran bir pano hiçbir zaman olay açamıyordu. Sentinel `None` olara
 
 ---
 
+## Tur 3 (K4 · bildirim) — üç gerçek kanal, tek merdiven
+
+Tarih: 20 Eylül 2026 · Dal: `k4-bildirim-sunum` · Ayrıntı: [docs/12](docs/12-BILDIRIM-KANALLARI.md)
+
+**Ne eklendi.** Şartname madde 7'nin gerçek karşılığı: SMS + Telegram + saha uygulaması,
+aynı eskalasyon merdiveninde. Her kanal ayrı `notification` satırı ve ayrı gönderim hattıdır;
+bir kanaldan onay hepsinde tekrarı durdurur ve her Telegram kopyasının düğmesini kaldırır.
+
+| Yeni | Dosya |
+|---|---|
+| Telegram taşıması (yalnız `urllib`, token sızmaz, çıkış yönlü uzun yoklama, `minimal` gizlilik) | `panogoz/notify/telegram.py` |
+| Gerçek GSM modem (PDU/UCS2, birleşik SMS, port kilidi, önbellekli durum) | `panogoz/notify/gsm_serial.py` |
+| Saha uygulaması sunucusu (`/api/saha`, `/api/notify`, `/saha/`) | `panogoz/notify/saha.py` |
+| Yapılandırma ve fabrika (sırlar dosyada/ortamda; gerçek kanal yalnız başlatıcıdan) | `panogoz/notify/config.py`, `factory.py`, `notify.example.json` |
+| Saha uygulaması (PWA, sıfır bağımlılık) | `saha/` |
+| Merdiven: `TELEGRAM` + `MOBIL` kanalları, asenkron gönderim, çok kanallı onay, `/start` `/durum` | `panogoz/notify/escalation.py` |
+| Testler (+113) | `tests/test_notify_*.py`, `test_gsm_serial.py`, `test_saha_api.py`, `fake_telegram.py` |
+
+**Yolda bulunan ve düzeltilen gerçek hatalar** (her biri önce kırmızı testle):
+
+| Hata | Sonucu | Şimdi |
+|---|---|---|
+| `Notifier._send_one` `compose(incident)`'i `live` vermeden çağırıyordu | Son commit'in "eşiğe kalan gün" satırı testlerde vardı, **gerçek SMS'te asla** | `live` merdivenden geçiyor |
+| `ark_olayi` varsayılanı `at_s=3600`; konsol düğmesi yalnız `{panel_key}` gönderiyor | Düğmeye basınca ark **1 saat sonra** oluyordu; docs/08 §5 sunumcuya 4–13 s gecikmeyi anlatmasını söylüyor | `api/app.py` `LIVE_DEMO_AT_S`: gecikme verilmemişse 3 s |
+| `requirements.txt`'te `pytest` yoktu | `python -m pytest -q` (README'deki komut) temiz kurulumda çalışmıyordu | Eklendi |
+
+**Bulundu, DÜZELTİLMEDİ (karar takımın).** Canlı demoda ark dışındaki senaryolar telefonu
+çaldırmaz: KRİTİK, `alarms._maybe_dispatch`'in 24 saatlik bekleme + iki bağımsız ölçüm ailesi
+kapılarından geçer (ACİL muaf). Ölçülen gerekçe: *"Tek kanal teyidi (TC)"* ve *"24 saat bekleme
+süresi dolmadı"*. Güvenlik özelliği olduğu için gevşetilmedi; ayrıntı ve sunum önerisi docs/12 §6.1.
+
+**Başkasının dosyasına dokunulan yerler** (K3'e/K2'ye haber verilecek; hepsi küçük ve yorumlu):
+`panogoz/api/app.py` (+`saha.install(app, rt)`, +`LIVE_DEMO_AT_S`), `panogoz/api/runtime.py`
+(notifier'ı fabrikadan kurar; `stop()` bildirim hatlarını kapatır), `panogoz/run_local.py`
+(`PANOGOZ_NOTIFY_LIVE=1`, açılış özeti), `baslat.ps1` (`-Telefon`), `requirements.txt`, `.gitignore`.
+`frontend/`, `panogoz/contracts/`, `store/schema.sql` **değişmedi**; iş emri durumu şema
+değişikliği olmadan `audit` zincirine yazılır.
+
+**Doğrulandı.** `python -m pytest -q` → **279 geçti, 6 düştü** (172 taban + 113 yeni = 285). Düşen
+6 test `tests/test_negative_pipeline.py::test_negative_control_opens_no_incident_or_horizon[*]`'tir ve
+**bu turun değişikliğinden bağımsızdır**: değişmemiş `origin/main`'in izole bir kopyasında (git
+worktree) aynı testler aynı biçimde düştü ve aynı gün iki tam koşumda (14:5x, 15:5x) geçmişti.
+Sağlıklı bir pabuç için ufuk özelliği, testin sözleşmesinin (90 günlük tavanın **altında** gün
+yok) tersine 68–87 günlük bir "IZLE'ye kalan gün" üretiyor; sonuç saate göre değişiyor gibi
+görünüyor (kök neden **araştırılmadı**, test gevşetilmedi). Bu, görev 4.4'ün "yanlış alarm
+bütçesi" konusudur ve `main`'in bazı saatlerde yeşil olmadığı anlamına gelir. Bilerek sabotajla
+(`_after_ack` devre dışı) uçtan uca ve merdiven testleri beklenen yerde düştü, dosya bit bit
+geri yüklendi. Gerçek `Runtime` + sahte Bot API + Chrome'da (400 px çerçeve) elle: ark senaryosu →
+iki kişiye Telegram → tam ekran alarm → uygulamadan onay → iki Telegram mesajı "Onaylandı" oldu →
+iş emri adımları → zaman çizgisi; 400 px'te yatay kaydırma yok.
+
+**Doğrulanmadı.** Gerçek Telegram botu (anahtar yok), gerçek GSM modem, gerçek Android/iOS
+telefonda uygulama (siren/titreşim/bildirim/ekran kilidi), HTTPS altında service worker
+bildirimi. Ayrıntı: docs/12 §9.
+
+**Açık (görev 4.2).** "Sessize alma" ve "nöbet devri" yok; `/sessiz`, `/devral` komutları ve
+rota değişikliği eklenmedi.
+
+---
+
 ## Doğrulama sonuçları (Tur 2 sonunda, hepsi bu turda koşturuldu)
 
 ```text
