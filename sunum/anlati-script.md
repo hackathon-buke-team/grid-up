@@ -110,9 +110,11 @@ Gerçek (kanıtı olan) entegrasyonlar:
   sekmeleri boştu. Onlar fizik modelimizden; dedektörleri **o modele** karşı sınadık. "%100 tespit" ve
   "0 yanlış alarm" bu yüzden kanıt değil, öz-tutarlılık (`docs/09` §0). Anlamlı olanlar: sabit eşiklerle
   kıyas, kör bölge ölçümü, parametre dayanıklılığı, test sırasında bulunan gerçek hatalar.
-- **Gerçek bildirim kanalından mesaj:** Telegram ve on-prem GSM modem kanalları kodlu ve testli
-  (sahte HTTP / sahte seri port ile). Bu kodla **gerçek bir Telegram/SMS gönderimi henüz yapılmadı**
-  (K4 4.1 açık; `docs/12` §0). Arayüzdeki telefonlar bellek içi gösterimdir.
+- **Gerçek bildirim:** Telegram Bot API'ye gerçek bir "DEMO-" alarm mesajı gönderildi (2026-09-20,
+  `sendMessage` HTTP 2xx). **Doğrulanmayanlar:** iki yönlü `ONAY` yanıtı gerçek Telegram'da denendi
+  ama 120 sn içinde yanıt gelmedi (yalnız sahte-HTTP testiyle doğrulanmış); on-prem GSM modem kanalı
+  yalnız sahte seri portla testli, gerçek modemle denenmedi (`docs/12` §0). Arayüzdeki telefonlar
+  bellek içi gösterimdir.
 - **Mosquitto yerine `amqtt`:** bu makinede Windows UAC/admin kısıtı yüzünden Eclipse Mosquitto
   çalıştırılamadı (iki gerçek denemeyle doğrulandı); gerçek MQTT 3.1.1 protokolü konuşan ayrı-süreç
   `amqtt` kullanıldı. Ayrıca `bus/store` çalışan konsol boru hattına henüz **bağlı değil** (bileşen

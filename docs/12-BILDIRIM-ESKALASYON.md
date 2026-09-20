@@ -10,9 +10,10 @@
 | --- | --- | --- |
 | Alarm yaşam döngüsü (aç/yükselt/temizle/onayla/7 gün otomatik kapan/sessize al) | **Bitti, testli** | `panogoz/rules/alarms.py`, `tests/test_alarm_lifecycle.py` (21 test) |
 | Eskalasyon (rota, belirteç, tekrar, fırtına sınırı, sessize alma, nöbet devri, teslimat hatası) | **Bitti, testli** | `panogoz/notify/escalation.py`, `tests/test_escalation.py` (19 test) |
-| Telegram kanalı (tek yönlü gönderim + `ONAY` yanıtı okuma) | Kod + sahte-HTTP testi hazır; **bu oturumda GERÇEK gönderim yapılmadı** (ortamda `TELEGRAM_BOT_TOKEN`/`TELEGRAM_CHAT_ID` yok) | `panogoz/notify/telegram_channel.py`, `TelegramAckPoller` |
+| Telegram kanalı, tek yönlü gönderim | **GERÇEK gönderim yapıldı (2026-09-20):** `send_real_alarm_demo --send` ile fizik senaryosundan açılan ilk ALARM için tek "DEMO-" önekli mesaj gerçek Telegram Bot API'ye gönderildi; `sendMessage` HTTP 2xx döndü (`raise_for_status` geçti, `[SENT]` kaydı düştü). Telefonda alındığı bu betikle ölçülmez. | `panogoz/notify/telegram_channel.py`, `tools/send_real_alarm_demo.py` |
+| Telegram `ONAY <alarm> <belirteç>` yanıtını okuma (iki yönlü) | Kod + sahte-HTTP testi hazır. Gerçek koşuda 120 sn beklendi, **yanıt gelmedi** (alarm açık kaldı): iki yönlü yol gerçek Telegram'da **doğrulanmadı** | `TelegramAckPoller`, `tests/test_escalation.py` |
 | On-prem GSM modem SMS kanalı | Kod + AT-protokol testi **sahte seri portla**; **gerçek modemle denenmedi** | `panogoz/notify/gsm_modem.py`, `tests/test_gsm_modem.py` (11 test) |
-| "Gerçek kanaldan tek mesaj" (CLAUDE.md §8 P1) | **AÇIK** — kimlik bilgisi gerekiyor | Aşağıdaki komut |
+| "Gerçek kanaldan tek mesaj" (CLAUDE.md §8 P1) | **Tamam (tek yönlü), 2026-09-20** | Yukarıdaki satır; komut aşağıda |
 
 Gerçek mesajı göndermek için (tek satır, kimlik bilgileri ortam değişkeninde):
 

@@ -27,7 +27,7 @@ Sunumdan **önce** (canlı demo başlamadan):
 | Adım 8 (PD füzyonu) | 12 sa/sn ile fazla ilerledi | **Sıfırla** → *Gün 52'ye atla* → ~5 sn → Duraklat; yedek `08-pd-fuzyon.png`. |
 | Adım 10 (SCADA) canlı Modbus/IEC 104 istemcisi | Port/ağ, ikinci terminal | Konsolun SCADA sekmesi (ekran) + `scada-okuma.txt` (aynı anın gerçek okuması). Register haritası: `docs/PANOGOZ-ICD-v2.0.md`. |
 | Adım 7 mobil/QR | Telefon aynı ağda değil | Dar tarayıcı penceresinde `saha.html?panel=P01`; yedek `07-mobil-saha.png`. |
-| Gerçek Telegram/SMS gönderimi (yapılırsa) | Token/ağ, gecikme; **jüri önünde dış kanala mesaj öngörülemez** | Canlı gönderim yalnız açıkça planlandıysa; yoksa Bildirimler sekmesi (bellek içi gösterim) ve anlatıda "gerçek kanal henüz gönderilmedi" denir. Doğaçlama gönderim yapılmaz. |
+| Gerçek Telegram/SMS gönderimi (yapılırsa) | Token/ağ, gecikme; **jüri önünde dış kanala mesaj öngörülemez** | Gerçek gönderim 2026-09-20'de yapıldı (tek yönlü, `sendMessage` HTTP 2xx); yedek kanıt olarak Telegram sohbetinin telefon ekran görüntüsü `docs/ekran-goruntuleri/`'ne konmalı. Canlı gönderim yalnız açıkça planlandıysa; yoksa Bildirimler sekmesi (bellek içi gösterim) ve anlatıda "iki yönlü ONAY gerçek Telegram'da doğrulanmadı" denir. Doğaçlama gönderim yapılmaz. |
 | Gerçek MQTT E2E'yi canlı çalıştırma | ~13 sn, süreç/port çakışması | Önceden alınmış `pytest -v` çıktısı (`docs/01-MIMARI.md` §5'te ham çıktı var). |
 | KiCad 3B render canlı açma | Jüri makinesinde KiCad yok | Statik PNG/PDF/SVG'ler (`hardware/kicad/*/export/`). |
 

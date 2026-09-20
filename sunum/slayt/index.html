@@ -401,6 +401,7 @@
         <li>Alarm yaşam döngüsü, eskalasyon, fırtına sınırı; konsol + mobil, gerçek tarayıcıda testli</li>
         <li>Modbus TCP ve IEC 104, bağımsız istemcilerle</li>
         <li>MQTT bus/outbox, ayrı süreçteki broker'a karşı</li>
+        <li>Gerçek Telegram Bot API'ye tek "DEMO-" alarm mesajı gönderildi (2026-09-20, HTTP 2xx)</li>
         <li>STM32 hedef derlemesi, 3 kart ERC/DRC temiz</li>
         <li>291 test yeşil (2026-09-20)</li>
       </ul>
@@ -409,7 +410,7 @@
       <h3><span class="pill warn">AÇIK / ÖLÇÜLMEDİ</span></h3>
       <ul class="list open">
         <li><b>Veri sentetik;</b> sonuçlar öz-tutarlılık, saha doğrulaması değil</li>
-        <li><b>Gerçek Telegram/SMS gönderimi bu kodla henüz yapılmadı</b> (kanallar kodlu, sahte HTTP/seri portla testli)</li>
+        <li><b>İki yönlü ONAY yanıtı gerçek Telegram'da doğrulanmadı</b> (120 sn içinde yanıt gelmedi); GSM modem yalnız sahte seri portla testli</li>
         <li><b>Docker Compose çalıştırılmadı</b> (mTLS/ACL yapılandırması ve gerçek el sıkışması doğrulandı)</li>
         <li>1000 panoluk çok kanallı yük testi yok; dedektörlerin artımlı sürümü yok</li>
         <li>Mosquitto yerine amqtt; bus/store canlı boru hattına bağlı değil</li>

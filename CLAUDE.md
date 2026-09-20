@@ -267,15 +267,17 @@ SCADA protokolü.
 ### K4 · Bildirim, Doğrulama ve Sunum
 **Teslimat:** telefonun gerçekten çalması + sistemin doğruluğunun sayıyla savunulması.
 
-- [ ] **4.1** Gerçek bildirim kanalı: WhatsApp Business API veya on-prem'e uygun
+- [x] **4.1** Gerçek bildirim kanalı: WhatsApp Business API veya on-prem'e uygun
       alternatif (GSM modem/SMS). Seçim gerekçesi + veri mahremiyeti notu yazılı olsun.
-      **KISMİ (2026-09-19):** seçim gerekçesi + veri mahremiyeti notu yazıldı
+      **TAMAM, tek yönlü (2026-09-20):** seçim gerekçesi + veri mahremiyeti notu yazıldı
       (`docs/12-BILDIRIM-ESKALASYON.md`: üretimde on-prem GSM modem SMS, demoda
-      Telegram); iki kanal da kodlu ve testli (Telegram sahte-HTTP, GSM modem sahte
-      seri port). **GERÇEK kanaldan tek mesaj HENÜZ GÖNDERİLMEDİ** — ortamda
-      `TELEGRAM_BOT_TOKEN`/`TELEGRAM_CHAT_ID` yok, gerçek GSM modem yok. Komut:
-      `python -m tools.send_real_alarm_demo --send --wait-ack 120`. Bu satır gerçek
-      mesaj gidince `[x]` olur.
+      Telegram); iki kanal kodlu ve testli (Telegram sahte-HTTP, GSM modem sahte seri
+      port). **GERÇEK Telegram Bot API'ye tek "DEMO-" önekli alarm mesajı gönderildi**
+      (`python -m tools.send_real_alarm_demo --send --wait-ack 120`, kullanıcı onayıyla,
+      yalnız `TELEGRAM_CHAT_ID` sohbetine; `sendMessage` HTTP 2xx, `[SENT]` kaydı).
+      **Doğrulanmayan:** telefonda alındığı betikle ölçülmez; iki yönlü `ONAY` yanıtı
+      120 sn içinde gelmedi (alarm açık kaldı) → bu yol yalnız sahte-HTTP testiyle
+      doğrulanmış; gerçek GSM modemle hiç denenmedi.
 - [x] **4.2** Eskalasyon: rota, onay token'ı, tekrar aralığı, fırtına sınırı, sessize
       alma, nöbet devri. *Bitti sayılır:* gerçek senaryodan uçtan uca testli;
       alarm yaşam döngüsü (aç/yükselt/temizle/onayla/7 gün otomatik kapan/sessize al)

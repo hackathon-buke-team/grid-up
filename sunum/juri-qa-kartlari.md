@@ -62,9 +62,12 @@
 > olanlar: sıcaklık/nem/PD/ark kanalları (fizik modelimiz) ve arızalar.
 
 **S: Gerçek bir SMS/Telegram mesajı gönderdiniz mi?**
-> Bu kodla henüz **hayır**. Telegram kanalı (tek yönlü + `ONAY` yanıtı) ve on-prem GSM modem SMS
-> kanalı kodlu ve testli (sahte HTTP / sahte seri port); arayüzdeki telefonlar bellek içi gösterim.
-> Gönderim komutu hazır: `python -m tools.send_real_alarm_demo --send --wait-ack 120`. (`docs/12` §0)
+> **Telegram'a evet, SMS'e hayır.** 2026-09-20'de gerçek Telegram Bot API'ye fizik senaryosundan
+> açılan ilk ALARM için tek bir "DEMO-" mesajı gönderdik (`sendMessage` HTTP 2xx). Dürüst sınırlar:
+> (1) iki yönlü `ONAY` yanıtı gerçek Telegram'da denendi ama 120 sn içinde yanıt gelmedi; bu yol yalnız
+> sahte-HTTP testiyle doğrulanmış. (2) On-prem GSM modem SMS kanalı kodlu ve testli ama yalnız sahte seri
+> portla; gerçek modemle denenmedi. (3) Arayüzdeki telefonlar bellek içi gösterim. Komut:
+> `python -m tools.send_real_alarm_demo --send --wait-ack 120`. (`docs/12` §0)
 
 **S: Neden üretimde SMS/GSM modem, Telegram değil?**
 > On-prem zorunluluğu ve veri mahremiyeti: GSM modem yerel, üçüncü taraf bulut yok. Mesaj yalnız
