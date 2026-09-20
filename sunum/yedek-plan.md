@@ -9,7 +9,8 @@
 Sunumdan **önce** (canlı demo başlamadan):
 0. **Slayt çevrimdışı:** `sunum/slayt/index.html` (tarayıcıda aç; görseller `sunum/slayt/img/`, yazı tipi
    yoksa sistem yazı tipine düşer). Çevrimiçi sürüm: bağlantı `anlati-script.md` §8'de.
-1. `docs/ekran-goruntuleri/panogoz-demo-walkthrough.gif` ve `01…12-*.png` açık bir görüntüleyicide
+1. `docs/ekran-goruntuleri/panogoz-demo-video.webm` (88 sn gerçek ekran kaydı; tarayıcıda/VLC'de açılır),
+   `panogoz-demo-walkthrough.gif` ve `01…12-*.png` açık bir görüntüleyicide
    hazır dursun. Hepsi çalışan sistemden `tools/record_demo.py` ile çekildi (elle çekim yok).
 2. `docs/ekran-goruntuleri/scada-okuma.txt` (Modbus + IEC 104 okuması) hazır dursun.
 3. Sunucu önceden başlatılıp ısıtılsın (≈15 sn): `python -m panogoz.run_local --port 8080
@@ -21,7 +22,7 @@ Sunumdan **önce** (canlı demo başlamadan):
 
 | Canlı adım | Risk | Yedek |
 | --- | --- | --- |
-| Konsol (`run_local`) açılmıyor | Port çakışması, firewall, ısınma bitmedi | `--port` değiştir (8090); olmazsa GIF + PNG'ler (adım ↔ görüntü tablosu: `docs/08` §2). |
+| Konsol (`run_local`) açılmıyor | Port çakışması, firewall, ısınma bitmedi | `--port` değiştir (8090); olmazsa `panogoz-demo-video.webm`, GIF + PNG'ler (adım ↔ görüntü tablosu: `docs/08` §2). |
 | Saat/demo düğmeleri tepki vermiyor | Sunucu takıldı | **Sıfırla**; olmazsa sunucuyu yeniden başlat (Windows'ta `pkill` yok: PowerShell `Get-CimInstance`+`Stop-Process`). Yedek: ilgili PNG. |
 | Adım 2 (sıcak yaz) | Doğru güne atlanmadı | *Gün 34'e atla*, P14'e tıkla; yedek `02-sicak-yaz-normal.png`. |
 | Adım 8 (PD füzyonu) | 12 sa/sn ile fazla ilerledi | **Sıfırla** → *Gün 52'ye atla* → ~5 sn → Duraklat; yedek `08-pd-fuzyon.png`. |

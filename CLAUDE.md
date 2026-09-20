@@ -313,7 +313,9 @@ SCADA protokolü.
       kaydedilmiş demo + Q&A kartları + yedek plan. → `sunum/anlati-script.md`,
       `sunum/juri-qa-kartlari.md`, `sunum/yedek-plan.md`, gerçek Chrome kaydından
       üretilen `docs/ekran-goruntuleri/panogoz-demo-walkthrough.gif`, görsel slayt
-      artifact'i (linki `sunum/anlati-script.md`'de) (2026-09-16).
+      artifact'i (linki `sunum/anlati-script.md`'de) (2026-09-16). **2026-09-20:** anlatı/QA/yedek plan
+      güncel duruma çekildi, slayt gerçek verilerle yeniden kuruldu (`sunum/slayt/`), 88 sn GERÇEK ekran kaydı
+      eklendi (`docs/ekran-goruntuleri/panogoz-demo-video.webm`, `tools/record_video.py`, yalnız arayüz düğmeleriyle).
 
 **Dosyalar:** `panogoz/notify/`, `panogoz/rules/`,
 `panogoz/detector/engine.py` (yalnız bayrak bölümü), `tests/`,

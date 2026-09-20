@@ -43,6 +43,11 @@ Telegram/SMS yalnız `PANOGOZ_LIVE_NOTIFY=1` + kanal kimlik bilgileriyle açıl�
 
 `panogoz-demo-walkthrough.gif`: 9 kare (adım 3–8 ve 10–12), sunumda yedek olarak hazır.
 
+**Ekran kaydı:** `panogoz-demo-video.webm` (≈88 sn, 1280×720, `python -m tools.record_video`). Adım 1–6 ve 8–12'yi
+yalnız arayüzün kendi düğmeleriyle yürütür (Sıfırla, *Güne atla*, Başlat/Duraklat, hız, sekmeler, filtre, *Onay için
+doldur*, *Onayla*, *Fırtına başlat*); ekrana adım başlığı ve imleç noktası bindirilir. Adım 7 (mobil/QR) ayrı bir
+cihaz olduğundan videoda yok, `07-mobil-saha.png`'ye bakın.
+
 ## 2. Ekran görüntüsü ↔ adım ↔ ne kanıtlıyor
 
 | Görüntü | Adım | Sistemde ne gerçek | Nereden bakılır |
@@ -68,7 +73,8 @@ python -m panogoz.run_local --port 8090 --modbus-port 5030 --iec104-port 2414
 python -m tools.record_demo --base http://127.0.0.1:8090 --modbus-port 5030 --iec104-port 2414
 ```
 
-Önkoşul: `pip install playwright pillow`, Edge kurulu (`--browser chromium` alternatif).
+Önkoşul: `pip install playwright pillow`, Edge kurulu (`--browser chromium` alternatif). Video için ayrıca
+`python -m playwright install ffmpeg` (kullanıcı dizinine iner, yönetici izni gerekmez) ve `python -m tools.record_video`.
 Betik hata verirse **sessizce geçmez**: 07'de P01'de gerçek alarm yoksa, 12'de [ÖZET] yoksa,
 mobilde yatay kaydırma varsa veya SCADA okuması (Modbus/IEC 104) başarısızsa çöker.
 
@@ -80,6 +86,8 @@ mobilde yatay kaydırma varsa veya SCADA okuması (Modbus/IEC 104) başarısızs
   12 sa/sn ~5 sn; Sıfırla → Fırtına başlat → Başlat 1 sa/sn) ayrıca denendi: P01-0001 ALARM,
   P09 ALARM + P12 UYARI ve 8 panolu fırtına + [ÖZET] aynı şekilde oluştu. Belirteç ve
   [ÖZET] içindeki bastırılan sayısı çalıştırmaya/saate göre değişir (kayıtta belirteç 6276, N=10).
+- **Fare yolu uçtan uca sınandı:** `panogoz-demo-video.webm` API'ye hiç dokunmadan yalnız arayüz düğmeleriyle
+  adım 1–6 ve 8–12'yi yürüttü (betik `wait_for_*` koşullarıyla doğrular, koşul sağlanmazsa çöker).
 - **Bildirimler bellek içi gösterimdir**; telefon kartları gerçek bir kanaldan gelmiyor.
 - **Sabit eşik kıyası (adım 2)** model içi öz-tutarlılıktır (docs/09 §0): rakip eşik ve
   sağlıklı davranış aynı simülatörde. "Yanlış alarm" savı buna göre okunmalı.

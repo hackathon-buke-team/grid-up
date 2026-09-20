@@ -14,7 +14,8 @@
   altında (§8). Anlatı o destenin konuşma metnidir.
 - **Canlı demo:** `python -m panogoz.run_local --port 8080 --modbus-port 5020 --iec104-port 2404`
   (≈15 sn ısınır). Adımlar ve fare yolları: `docs/08-DEMO-SENARYOSU.md`.
-- **Yedek:** `docs/ekran-goruntuleri/01…12-*.png` + `panogoz-demo-walkthrough.gif` +
+- **Yedek:** `docs/ekran-goruntuleri/panogoz-demo-video.webm` (88 sn gerçek ekran kaydı) +
+  `01…12-*.png` + `panogoz-demo-walkthrough.gif` +
   `scada-okuma.txt` (hepsi gerçek çalışmadan çekildi; bkz. [`yedek-plan.md`](yedek-plan.md)).
 - Donanım gösterimi: `hardware/kicad/*/export/*.pdf` (şematik), `*-3d.png`, `*-top.svg`;
   mekanik: `hardware/mekanik/kabin-ici-yerlesim.svg`.
