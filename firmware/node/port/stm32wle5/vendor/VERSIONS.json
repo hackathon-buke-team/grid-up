@@ -1,0 +1,14 @@
+[
+  {
+    "source": "cmsis-device-wl",
+    "commit": "71a0b7860e700f7ca11afe4c4afd6cef684ad9bb"
+  },
+  {
+    "source": "CMSIS_5",
+    "commit": "2b7495b8535bdcb306dac29b9ded4cfb679d7e5c"
+  },
+  {
+    "source": "stm32wlxx-hal-driver",
+    "commit": "5c87cf00992c6e4ecf56c7c129b8dcfc6aa6f88e"
+  }
+]

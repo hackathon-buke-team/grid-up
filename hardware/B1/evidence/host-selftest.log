@@ -1,0 +1,53 @@
+PANO GOZ - pano/hucre ici anomali erken uyari sistemi
+Ureti yazilimi: panogoz-node 1.0.0   hedef STM32WLE5CC (Cortex-M4 + 868 MHz radyo)
+Kayan nokta yok, libm yok, ilk kurulumdan sonra dinamik ayirma yok.
+
+================================================================
+ BIRIM OZ TESTI - sabit noktali cekirdek
+================================================================
+  theta = dt / f^2   (dt LSB, f Q16)
+   theta(1024 LSB, f=1.000)                       got=1024       want=1024       OK
+   theta(1024 LSB, f=0.500)                       got=4096       want=4096       OK
+   theta(1024 LSB, f=0.250)                       got=16384      want=16384      OK
+  theta_min(f) = 3 sigma / f^2, sigma_TC = 26 LSB (0.20 K)
+   f=0.85 -> 0.84 K   (beklenen 0.83-0.85)
+   f=0.60 -> 1.69 K   (beklenen 1.67-1.70)
+   f=0.40 -> 3.80 K   (beklenen 3.75-3.81)
+   f=0.20 -> 15.23 K   (beklenen 15.0-15.3)  <- SENSITIVITY_LOW
+
+  Fazla temas direnci ARALIK olarak (R_th 2.0-4.0 K/W):
+   theta=32.00 K @ 400 A  ->  50.0 .. 100.0 uohm
+      alt sinir (R_th=4.0)                        got=50000      want=50000      OK
+      ust sinir (R_th=2.0)                        got=100000     want=100000     OK
+   theta=16.00 K @ 400 A  ->  25.0 .. 50.0 uohm   (brief: 50 uohm -> 8.0 W -> 16-32 K)
+
+  Tamsayi karekok ve RMS:
+   isqrt64(1e12)                                  got=1000000    want=1000000    OK
+   isqrt64(2)                                     got=1          want=1          OK
+
+  Cerceve kodlama/cozme (35 bayt, CRC-16/CCITT):
+   kodlanmis uzunluk 35 bayt, hava suresi 78 ms (LoRa SF7 BW125 CR4/5)
+      cozme donus degeri                          got=35         want=35         OK
+      seq round-trip                              got=123456     want=123456     OK
+      theta round-trip                            got=812        want=812        OK
+      i_rms round-trip                            got=287345     want=287345     OK
+      bozulmus cerceve reddedildi                 got=-4         want=-4         OK
+
+  PRPD binleme (logaritma yok):
+      genlik: 640 ADC LSB (25 dB) -> bin          got=10         want=10         OK
+      faz: 0 tick -> bin                          got=0          want=0          OK
+      faz: yarim cevrim -> bin                    got=32         want=32         OK
+      faz: cevrim sonu -> bin                     got=63         want=63         OK
+      ham kart: 745 ADC LSB (25 dB) -> bin        got=10         want=10         OK
+
+  Kadans histerezisi (2 yukari / 4 asagi):
+      1 nitelikli cevrim sonrasi periyot          got=900        want=900        OK
+      2 nitelikli cevrim sonrasi periyot          got=60         want=60         OK
+      3 sessiz cevrim sonrasi periyot (hala 60)   got=60         want=60         OK
+      4 sessiz cevrim sonrasi periyot             got=900        want=900        OK
+      sert olay: dogrudan patlama                 got=10         want=10         OK
+
+  Kristal sicaklik telafisi (parabolik, k=0.034 ppm/C^2):
+   25 C -> 0.00 ppm, 60 C -> -41.65 ppm (telafi edilmezse)
+
+  ozet: 0 hata

@@ -1,0 +1,9 @@
+{
+  "components": 73,
+  "nets": 46,
+  "tracks": 0,
+  "routing_complete": false,
+  "courtyard_overlaps": 0,
+  "outside_board": 0,
+  "physical_test": false
+}

@@ -6,17 +6,13 @@
 #   make test      build and run the fixed-point unit self-test
 #   make all-demo  build and run every scenario
 #   make target    build panogoz_node.elf for STM32WLE5CC (needs
-#                  arm-none-eabi-gcc; SKIPPED WITH A MESSAGE if absent)
+#                  arm-none-eabi-gcc; fails if absent)
 #   make clean
 #
 # The SAME .c files build both ways.  The only difference is which
 # implementation of the hal_* layer is linked:
 #   host   -> host_sim.c            (a small deterministic virtual panel)
-#   target -> port/stm32wle5/*.c    (CubeWL LL drivers; not in this tree,
-#                                    see ../README.md - there is no ARM
-#                                    toolchain in the judging environment
-#                                    and we do not ship a port we cannot
-#                                    compile here)
+#   target -> port/stm32wle5/*.c    (vendored ST HAL/CMSIS, real peripherals)
 #
 # On Windows the MinGW make is called mingw32-make; everything below is
 # plain POSIX make syntax and works with either.
@@ -63,32 +59,13 @@ all-demo: $(BIN)
 	./$(BIN) --scenario all
 
 # --------------------------------------------------------------------------
-# Target build.  Documented and correct, but it needs a toolchain that is not
-# present in the judging environment, so it announces the fact rather than
-# failing with a confusing "command not found".
+# Reproducible target build on Windows or POSIX. ARM_GCC_BIN may name the
+# directory containing the toolchain when it is not already on PATH.
 # --------------------------------------------------------------------------
-ARMCC      := arm-none-eabi-gcc
-ARMFLAGS   := -std=c99 -Wall -Wextra -Werror -Os -g3 \
-              -mcpu=cortex-m4 -mthumb -mfloat-abi=soft \
-              -ffunction-sections -fdata-sections -ffreestanding \
-              -fno-builtin -fstack-usage \
-              -DSTM32WLE5xx -DPG_TARGET=1
-ARMLDFLAGS := -T port/stm32wle5/STM32WLE5CCUX_FLASH.ld \
-              -Wl,--gc-sections -Wl,-Map=$(BIN).map \
-              -nostartfiles -nodefaultlibs -nostdlib -lgcc \
-              -specs=nano.specs
+PYTHON ?= python
 
 target:
-	@if command -v $(ARMCC) >/dev/null 2>&1; then \
-	  $(ARMCC) $(ARMFLAGS) $(ARMLDFLAGS) -o $(BIN).elf \
-	      $(CORE) port/stm32wle5/*.c ; \
-	  arm-none-eabi-size $(BIN).elf ; \
-	else \
-	  echo "arm-none-eabi-gcc bulunamadi - hedef derleme atlandi." ; \
-	  echo "Hedef port firmware/README.md icinde tarif edilmistir;" ; \
-	  echo "ayni .c dosyalari degismeden derlenir, yalnizca hal_* katmani" ; \
-	  echo "host_sim.c yerine port/stm32wle5/ altindan gelir." ; \
-	fi
+	$(PYTHON) build_target.py
 
 clean:
 	rm -f $(BIN) $(BIN).exe $(BIN).elf $(BIN).map *.o *.su

@@ -1,0 +1,46 @@
+PANO GOZ - pano/hucre ici anomali erken uyari sistemi
+Ureti yazilimi: panogoz-node 1.0.0   hedef STM32WLE5CC (Cortex-M4 + 868 MHz radyo)
+Kayan nokta yok, libm yok, ilk kurulumdan sonra dinamik ayirma yok.
+
+================================================================
+ PRPD biriktirme ve paketleme
+================================================================
+ AD8318 cikisi ZATEN dB cinsinden dogrusal (24 mV/dB), bu yuzden
+ dugum HICBIR YERDE logaritma hesaplamaz. Genlik binleme bir
+ CIKARMA ve bir KAYDIRMA; faz binleme MAINS CEVRIMI BASINA bir
+ bolme (darbe basina degil), onceden hesaplanmis ters carpanla.
+----------------------------------------------------------------
+ biriktirme : 3000 cevrim (60 s @ 50 Hz), 8976 darbe binlendi, 0 esik alti
+ izgara     : 64 faz bin x 5.625 derece, 32 genlik bin x 2.5 dB
+ bellek     : 4096 bayt (uint16 hucre, doyumlu, asla sarmaz)
+ dolu hucre : 70 / 2048
+ paketlenmis: 136 bayt (seyrek RLE + LEB128 varint, kayipsiz)
+              -> 1 adet 192 baytlik PG_MSG_PRPD parcasi,
+                 toplam 318 ms hava suresi (saatte bir kayit)
+              ilk baytlar: 50 47 01 40 20  ('P' 'G' v1 64 32)
+
+ faz cozunurlu desen (satir = genlik bin, sutun = 8 faz bin):
+      0     45    90   135   180   225   270   315 derece
+    37 dB |#...#...|
+    32 dB |#...#...|
+    27 dB |#...#...|
+    22 dB |#...#...|
+    17 dB |........|
+    12 dB |........|
+     7 dB |........|
+     2 dB |........|
+
+ Darbeler 18 ve 198 derece civarinda kumeleniyor: cos phi = 0.95
+ gecikmeli bir yukun AKIM SIFIR GECISLERI. Seri mikro-ark akimla
+ suruluyor - akim TEPELERINI izlemez.
+ DURUSTLUK: Bu host senaryosu mikro-ark oruntusunu BENZETIR.
+ Nominal gerilim tek basina kismi desarji dislamaz. Gosterilen
+ goreli dB degeri kalibre edilmis pC olcumu degildir.
+ IEC 60270 izlenebilirligi yoktur ve
+ AG'da tek basina asla is emri acmaz - yalnizca isil bulguyu
+ destekler.
+
+DURUSTLUK: PANO GOZ KORUMA DEGILDIR. ABB TVOC-2 ayni panoda arki
+~1 ms'de, SIL-2 donanimda, yazilim devrede olmadan keser. Bu dugum
+gozler, konumlandirir, zaman damgalar ve yukseltir. Bildirim
+gecikmesi 4-13 saniyelik bir ARALIKTIR, tek bir temiz sayi degil.

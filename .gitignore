@@ -19,6 +19,12 @@ firmware/node/*.bin
 firmware/node/*.map
 firmware/node/panogoz_node
 firmware/node/panogoz_node.exe
+firmware/node/build/
+hardware/B1/**/qa/
+hardware/B1/qa/
+pytest-cache-files-*/
+*.kicad_prl
+*.lck
 
 # --- Yarışma girdilerinin zip kopyası ---
 # Açılmış klasör depoda duruyor; 8 MB'lık zip sürümü gereksiz ikizdir.

@@ -1,0 +1,4352 @@
+{
+  "name": "PANOGOZ-IR-B1",
+  "width_mm": 45,
+  "height_mm": 35,
+  "layers": 4,
+  "components": [
+    {
+      "ref": "J1",
+      "value": "CELL + HLC",
+      "spec": "Connector_Generic:Conn_01x02",
+      "pins": [
+        [
+          "1",
+          "Pin_1",
+          "passive"
+        ],
+        [
+          "2",
+          "Pin_2",
+          "passive"
+        ]
+      ],
+      "fp": "Connector_JST:JST_SH_SM02B-SRSS-TB_1x02-1MP_P1.00mm_Horizontal",
+      "nets": {
+        "1": "VBAT",
+        "2": "GND"
+      },
+      "group": "POWER",
+      "mpn": "CELL + HLC",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        52.07,
+        46.99
+      ],
+      "page": 1,
+      "uuid": "6cc0dea6-4a1c-59fe-96ef-7925d01b2f76",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "ef5cee4e-30b4-5561-8618-0635618c430b",
+        "6cc0dea6-4a1c-59fe-96ef-7925d01b2f76"
+      ],
+      "thru": false,
+      "placement": [
+        3.425,
+        3.805,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        0.5,
+        0.5,
+        6.35,
+        7.11
+      ]
+    },
+    {
+      "ref": "U1",
+      "value": "TPS63900DSKR",
+      "spec": "Regulator_Switching:TPS63900",
+      "pins": [
+        [
+          "1",
+          "EN",
+          "input"
+        ],
+        [
+          "2",
+          "SEL",
+          "input"
+        ],
+        [
+          "3",
+          "CFG1",
+          "input"
+        ],
+        [
+          "4",
+          "CFG2",
+          "input"
+        ],
+        [
+          "5",
+          "CFG3",
+          "input"
+        ],
+        [
+          "6",
+          "VOUT",
+          "power_out"
+        ],
+        [
+          "7",
+          "LX2",
+          "input"
+        ],
+        [
+          "8",
+          "GND",
+          "power_in"
+        ],
+        [
+          "9",
+          "LX1",
+          "input"
+        ],
+        [
+          "10",
+          "VIN",
+          "power_in"
+        ],
+        [
+          "11",
+          "GND",
+          "passive"
+        ]
+      ],
+      "fp": "Package_SON:WSON-10-1EP_2.5x2.5mm_P0.5mm_EP1.2x2mm_ThermalVias",
+      "nets": {
+        "1": "VBAT",
+        "2": "GND",
+        "3": "CFG1",
+        "4": "GND",
+        "5": "CFG3",
+        "6": "V3V3",
+        "7": "LX2",
+        "8": "GND",
+        "9": "LX1",
+        "10": "VBAT",
+        "11": "GND"
+      },
+      "group": "POWER",
+      "mpn": "TPS63900DSKR",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 8.89,
+      "xy": [
+        52.07,
+        85.08999999999999
+      ],
+      "page": 1,
+      "uuid": "aa6abc83-58be-5b3b-a2aa-07e7bf66f52e",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "ef5cee4e-30b4-5561-8618-0635618c430b",
+        "aa6abc83-58be-5b3b-a2aa-07e7bf66f52e"
+      ],
+      "thru": true,
+      "placement": [
+        2.4050000000000002,
+        12.525,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        0.5000000000000002,
+        11.0,
+        4.3100000000000005,
+        14.05
+      ]
+    },
+    {
+      "ref": "L1",
+      "value": "2.2uH Isat>=1A",
+      "spec": "Device:L",
+      "pins": [
+        [
+          "1",
+          "1",
+          "passive"
+        ],
+        [
+          "2",
+          "2",
+          "passive"
+        ]
+      ],
+      "fp": "Inductor_SMD:L_0805_2012Metric",
+      "nets": {
+        "1": "LX1",
+        "2": "LX2"
+      },
+      "group": "POWER",
+      "mpn": "2.2uH Isat>=1A",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        52.07,
+        123.19
+      ],
+      "page": 1,
+      "uuid": "6e8ae0aa-fc20-5923-91e4-eec606452122",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "ef5cee4e-30b4-5561-8618-0635618c430b",
+        "6e8ae0aa-fc20-5923-91e4-eec606452122"
+      ],
+      "thru": false,
+      "placement": [
+        26.775,
+        11.875,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        25.0,
+        11.0,
+        28.549999999999997,
+        12.75
+      ]
+    },
+    {
+      "ref": "R1",
+      "value": "36.5k",
+      "spec": "Device:R",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Resistor_SMD:R_0402_1005Metric",
+      "nets": {
+        "1": "CFG1",
+        "2": "GND"
+      },
+      "group": "POWER",
+      "mpn": "1% thick film 36.5k",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        52.07,
+        156.20999999999998
+      ],
+      "page": 1,
+      "uuid": "ed33d796-114e-5907-8c6d-0a566aabb4bd",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "ef5cee4e-30b4-5561-8618-0635618c430b",
+        "ed33d796-114e-5907-8c6d-0a566aabb4bd"
+      ],
+      "thru": false,
+      "placement": [
+        15.455,
+        0.995,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        14.5,
+        0.5,
+        16.41,
+        1.49
+      ]
+    },
+    {
+      "ref": "R2",
+      "value": "16.2k",
+      "spec": "Device:R",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Resistor_SMD:R_0402_1005Metric",
+      "nets": {
+        "1": "CFG3",
+        "2": "GND"
+      },
+      "group": "POWER",
+      "mpn": "1% thick film 16.2k",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        52.07,
+        189.22999999999996
+      ],
+      "page": 1,
+      "uuid": "9ea9223a-872f-586e-b10a-4cbcceca43d6",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "ef5cee4e-30b4-5561-8618-0635618c430b",
+        "9ea9223a-872f-586e-b10a-4cbcceca43d6"
+      ],
+      "thru": false,
+      "placement": [
+        37.955,
+        0.995,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        37.0,
+        0.5,
+        38.91,
+        1.49
+      ]
+    },
+    {
+      "ref": "C1",
+      "value": "10uF",
+      "spec": "Device:C",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Capacitor_SMD:C_0805_2012Metric",
+      "nets": {
+        "1": "VBAT",
+        "2": "GND"
+      },
+      "group": "POWER",
+      "mpn": "X7R 16V 10uF",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        52.07,
+        222.24999999999994
+      ],
+      "page": 1,
+      "uuid": "16d39643-6efa-51b0-ac71-4d54f4f00074",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "ef5cee4e-30b4-5561-8618-0635618c430b",
+        "16d39643-6efa-51b0-ac71-4d54f4f00074"
+      ],
+      "thru": false,
+      "placement": [
+        12.725,
+        1.505,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        11.0,
+        0.5,
+        14.45,
+        2.51
+      ]
+    },
+    {
+      "ref": "C2",
+      "value": "22uF",
+      "spec": "Device:C",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Capacitor_SMD:C_0805_2012Metric",
+      "nets": {
+        "1": "V3V3",
+        "2": "GND"
+      },
+      "group": "POWER",
+      "mpn": "X7R 16V 22uF",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        151.13,
+        46.99
+      ],
+      "page": 1,
+      "uuid": "25f349d3-b70d-50aa-976d-dcf8d652b67e",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "ef5cee4e-30b4-5561-8618-0635618c430b",
+        "25f349d3-b70d-50aa-976d-dcf8d652b67e"
+      ],
+      "thru": false,
+      "placement": [
+        18.725,
+        11.504999999999999,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        17.0,
+        10.5,
+        20.450000000000003,
+        12.509999999999998
+      ]
+    },
+    {
+      "ref": "Q1",
+      "value": "AO3401A",
+      "spec": "Transistor_FET:AO3401A",
+      "pins": [
+        [
+          "1",
+          "G",
+          "input"
+        ],
+        [
+          "2",
+          "S",
+          "passive"
+        ],
+        [
+          "3",
+          "D",
+          "passive"
+        ]
+      ],
+      "fp": "Package_TO_SOT_SMD:SOT-23",
+      "nets": {
+        "1": "DIV_GATE",
+        "2": "VBAT",
+        "3": "DIV_SUPPLY"
+      },
+      "group": "POWER",
+      "mpn": "AO3401A",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        151.13,
+        80.00999999999999
+      ],
+      "page": 1,
+      "uuid": "7bf11e7d-cc38-5b33-98a7-0f9d6a9576df",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "ef5cee4e-30b4-5561-8618-0635618c430b",
+        "7bf11e7d-cc38-5b33-98a7-0f9d6a9576df"
+      ],
+      "thru": false,
+      "placement": [
+        26.455,
+        9.225,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        24.5,
+        7.5,
+        28.409999999999997,
+        10.95
+      ]
+    },
+    {
+      "ref": "Q2",
+      "value": "2N7002",
+      "spec": "Transistor_FET:2N7002",
+      "pins": [
+        [
+          "1",
+          "G",
+          "input"
+        ],
+        [
+          "2",
+          "S",
+          "passive"
+        ],
+        [
+          "3",
+          "D",
+          "passive"
+        ]
+      ],
+      "fp": "Package_TO_SOT_SMD:SOT-23",
+      "nets": {
+        "1": "DIV_EN",
+        "2": "GND",
+        "3": "DIV_GATE"
+      },
+      "group": "POWER",
+      "mpn": "2N7002",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        151.13,
+        113.02999999999999
+      ],
+      "page": 1,
+      "uuid": "da1184cb-3721-5412-91d1-882b979d3455",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "ef5cee4e-30b4-5561-8618-0635618c430b",
+        "da1184cb-3721-5412-91d1-882b979d3455"
+      ],
+      "thru": false,
+      "placement": [
+        30.455,
+        9.225,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        28.5,
+        7.5,
+        32.41,
+        10.95
+      ]
+    },
+    {
+      "ref": "R3",
+      "value": "1M",
+      "spec": "Device:R",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Resistor_SMD:R_0402_1005Metric",
+      "nets": {
+        "1": "DIV_GATE",
+        "2": "VBAT"
+      },
+      "group": "POWER",
+      "mpn": "1% thick film 1M",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        151.13,
+        146.04999999999998
+      ],
+      "page": 1,
+      "uuid": "b7516e9c-12f8-5309-b237-925f02b27cd4",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "ef5cee4e-30b4-5561-8618-0635618c430b",
+        "b7516e9c-12f8-5309-b237-925f02b27cd4"
+      ],
+      "thru": false,
+      "placement": [
+        15.455,
+        2.495,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        14.5,
+        2.0,
+        16.41,
+        2.99
+      ]
+    },
+    {
+      "ref": "R4",
+      "value": "1M",
+      "spec": "Device:R",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Resistor_SMD:R_0402_1005Metric",
+      "nets": {
+        "1": "DIV_EN",
+        "2": "GND"
+      },
+      "group": "POWER",
+      "mpn": "1% thick film 1M",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        151.13,
+        179.07
+      ],
+      "page": 1,
+      "uuid": "6a74b4fb-ebce-54a2-a931-9abcab78b7fb",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "ef5cee4e-30b4-5561-8618-0635618c430b",
+        "6a74b4fb-ebce-54a2-a931-9abcab78b7fb"
+      ],
+      "thru": false,
+      "placement": [
+        37.955,
+        2.495,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        37.0,
+        2.0,
+        38.91,
+        2.99
+      ]
+    },
+    {
+      "ref": "R5",
+      "value": "100k",
+      "spec": "Device:R",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Resistor_SMD:R_0402_1005Metric",
+      "nets": {
+        "1": "DIV_SUPPLY",
+        "2": "BAT_ADC"
+      },
+      "group": "POWER",
+      "mpn": "1% thick film 100k",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        151.13,
+        212.08999999999997
+      ],
+      "page": 1,
+      "uuid": "411bb2e6-fa93-5b28-b1e2-c39cd6bdfeae",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "ef5cee4e-30b4-5561-8618-0635618c430b",
+        "411bb2e6-fa93-5b28-b1e2-c39cd6bdfeae"
+      ],
+      "thru": false,
+      "placement": [
+        37.955,
+        3.995,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        37.0,
+        3.5,
+        38.91,
+        4.49
+      ]
+    },
+    {
+      "ref": "R6",
+      "value": "100k",
+      "spec": "Device:R",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Resistor_SMD:R_0402_1005Metric",
+      "nets": {
+        "1": "BAT_ADC",
+        "2": "GND"
+      },
+      "group": "POWER",
+      "mpn": "1% thick film 100k",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        250.19,
+        46.99
+      ],
+      "page": 1,
+      "uuid": "9325cca8-d710-5001-adb6-409366e025ae",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "ef5cee4e-30b4-5561-8618-0635618c430b",
+        "9325cca8-d710-5001-adb6-409366e025ae"
+      ],
+      "thru": false,
+      "placement": [
+        37.955,
+        5.495,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        37.0,
+        5.0,
+        38.91,
+        5.99
+      ]
+    },
+    {
+      "ref": "C3",
+      "value": "10nF",
+      "spec": "Device:C",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Capacitor_SMD:C_0402_1005Metric",
+      "nets": {
+        "1": "BAT_ADC",
+        "2": "GND"
+      },
+      "group": "POWER",
+      "mpn": "X7R 16V 10nF",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        250.19,
+        80.00999999999999
+      ],
+      "page": 1,
+      "uuid": "7a695b17-5d31-5bcd-82bb-1fac7f8d3723",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "ef5cee4e-30b4-5561-8618-0635618c430b",
+        "7a695b17-5d31-5bcd-82bb-1fac7f8d3723"
+      ],
+      "thru": false,
+      "placement": [
+        5.4350000000000005,
+        14.485,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        4.5,
+        14.0,
+        6.370000000000001,
+        14.969999999999999
+      ]
+    },
+    {
+      "ref": "R7",
+      "value": "68R 0.5W",
+      "spec": "Device:R",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Resistor_SMD:R_1210_3225Metric",
+      "nets": {
+        "1": "VBAT",
+        "2": "LOAD_D"
+      },
+      "group": "POWER",
+      "mpn": "1% thick film 68R 0.5W",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        250.19,
+        113.02999999999999
+      ],
+      "page": 1,
+      "uuid": "7c999d78-2147-5669-8ac8-cebbf9e419a4",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "ef5cee4e-30b4-5561-8618-0635618c430b",
+        "7c999d78-2147-5669-8ac8-cebbf9e419a4"
+      ],
+      "thru": false,
+      "placement": [
+        2.805,
+        9.105,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        0.5,
+        7.5,
+        5.11,
+        10.71
+      ]
+    },
+    {
+      "ref": "Q3",
+      "value": "2N7002",
+      "spec": "Transistor_FET:2N7002",
+      "pins": [
+        [
+          "1",
+          "G",
+          "input"
+        ],
+        [
+          "2",
+          "S",
+          "passive"
+        ],
+        [
+          "3",
+          "D",
+          "passive"
+        ]
+      ],
+      "fp": "Package_TO_SOT_SMD:SOT-23",
+      "nets": {
+        "1": "LOAD_EN",
+        "2": "GND",
+        "3": "LOAD_D"
+      },
+      "group": "POWER",
+      "mpn": "2N7002",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        250.19,
+        146.04999999999998
+      ],
+      "page": 1,
+      "uuid": "60435df5-cbcb-5f23-bd1d-466977e6e6fc",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "ef5cee4e-30b4-5561-8618-0635618c430b",
+        "60435df5-cbcb-5f23-bd1d-466977e6e6fc"
+      ],
+      "thru": false,
+      "placement": [
+        34.455,
+        9.225,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        32.5,
+        7.5,
+        36.41,
+        10.95
+      ]
+    },
+    {
+      "ref": "R8",
+      "value": "100k",
+      "spec": "Device:R",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Resistor_SMD:R_0402_1005Metric",
+      "nets": {
+        "1": "LOAD_EN",
+        "2": "GND"
+      },
+      "group": "POWER",
+      "mpn": "1% thick film 100k",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        250.19,
+        179.07
+      ],
+      "page": 1,
+      "uuid": "09c3ae17-cee9-5c44-a915-08f9e4a4590e",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "ef5cee4e-30b4-5561-8618-0635618c430b",
+        "09c3ae17-cee9-5c44-a915-08f9e4a4590e"
+      ],
+      "thru": false,
+      "placement": [
+        42.455,
+        9.495,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        41.5,
+        9.0,
+        43.41,
+        9.989999999999998
+      ]
+    },
+    {
+      "ref": "U10",
+      "value": "STM32WLE5CCU6",
+      "spec": "MCU_ST_STM32WL:STM32WLE5CCUx",
+      "pins": [
+        [
+          "1",
+          "PB3",
+          "bidirectional"
+        ],
+        [
+          "2",
+          "PB4",
+          "bidirectional"
+        ],
+        [
+          "3",
+          "PB5",
+          "bidirectional"
+        ],
+        [
+          "4",
+          "PB6",
+          "bidirectional"
+        ],
+        [
+          "5",
+          "PB7",
+          "bidirectional"
+        ],
+        [
+          "6",
+          "PB8",
+          "bidirectional"
+        ],
+        [
+          "7",
+          "PA0",
+          "bidirectional"
+        ],
+        [
+          "8",
+          "PA1",
+          "bidirectional"
+        ],
+        [
+          "9",
+          "PA2",
+          "bidirectional"
+        ],
+        [
+          "10",
+          "PA3",
+          "bidirectional"
+        ],
+        [
+          "11",
+          "VDD",
+          "power_in"
+        ],
+        [
+          "12",
+          "PA4",
+          "bidirectional"
+        ],
+        [
+          "13",
+          "PA5",
+          "bidirectional"
+        ],
+        [
+          "14",
+          "PA6",
+          "bidirectional"
+        ],
+        [
+          "15",
+          "PA7",
+          "bidirectional"
+        ],
+        [
+          "16",
+          "PA8",
+          "bidirectional"
+        ],
+        [
+          "17",
+          "PA9",
+          "bidirectional"
+        ],
+        [
+          "18",
+          "NRST",
+          "input"
+        ],
+        [
+          "19",
+          "PH3",
+          "bidirectional"
+        ],
+        [
+          "20",
+          "RFI_P",
+          "bidirectional"
+        ],
+        [
+          "21",
+          "RFI_N",
+          "bidirectional"
+        ],
+        [
+          "22",
+          "RFO_LP",
+          "bidirectional"
+        ],
+        [
+          "23",
+          "RFO_HP",
+          "bidirectional"
+        ],
+        [
+          "24",
+          "VR_PA",
+          "power_in"
+        ],
+        [
+          "25",
+          "VDDPA",
+          "power_in"
+        ],
+        [
+          "26",
+          "OSC_IN",
+          "input"
+        ],
+        [
+          "27",
+          "OSC_OUT",
+          "input"
+        ],
+        [
+          "28",
+          "VDDRF",
+          "power_in"
+        ],
+        [
+          "29",
+          "VDDRF1V55",
+          "power_in"
+        ],
+        [
+          "30",
+          "PB0",
+          "bidirectional"
+        ],
+        [
+          "31",
+          "PB2",
+          "bidirectional"
+        ],
+        [
+          "32",
+          "PB12",
+          "bidirectional"
+        ],
+        [
+          "33",
+          "PA10",
+          "bidirectional"
+        ],
+        [
+          "34",
+          "PA11",
+          "bidirectional"
+        ],
+        [
+          "35",
+          "PA12",
+          "bidirectional"
+        ],
+        [
+          "36",
+          "PA13",
+          "bidirectional"
+        ],
+        [
+          "37",
+          "VBAT",
+          "power_in"
+        ],
+        [
+          "38",
+          "PC13",
+          "bidirectional"
+        ],
+        [
+          "39",
+          "PC14",
+          "bidirectional"
+        ],
+        [
+          "40",
+          "PC15",
+          "bidirectional"
+        ],
+        [
+          "41",
+          "VDDA",
+          "power_in"
+        ],
+        [
+          "42",
+          "PA14",
+          "bidirectional"
+        ],
+        [
+          "43",
+          "PA15",
+          "bidirectional"
+        ],
+        [
+          "44",
+          "VDD",
+          "power_in"
+        ],
+        [
+          "45",
+          "VFBSMPS",
+          "input"
+        ],
+        [
+          "46",
+          "VDDSMPS",
+          "power_in"
+        ],
+        [
+          "47",
+          "VLXSMPS",
+          "power_in"
+        ],
+        [
+          "48",
+          "VSSSMPS",
+          "power_in"
+        ],
+        [
+          "49",
+          "VSS",
+          "power_in"
+        ]
+      ],
+      "fp": "Package_DFN_QFN:QFN-48-1EP_7x7mm_P0.5mm_EP5.6x5.6mm",
+      "nets": {
+        "1": "MOUNT_N",
+        "2": "DIV_EN",
+        "3": "LOAD_EN",
+        "4": "I2C_SCL",
+        "5": "I2C_SDA",
+        "7": null,
+        "9": "BAT_ADC",
+        "11": "V3V3",
+        "12": "FRAM_CS",
+        "13": "SPI_SCK",
+        "14": "SPI_MISO",
+        "15": "SPI_MOSI",
+        "16": "PHASE",
+        "17": null,
+        "18": "NRST",
+        "19": "BOOT0",
+        "20": "RFI_P",
+        "21": "RFI_N",
+        "22": "RFO_LP",
+        "24": "VR_PA",
+        "25": "V1V55",
+        "26": "HSE_IN",
+        "27": "HSE_OUT",
+        "28": "V3V3",
+        "29": "V1V55",
+        "30": "RF_CTRL",
+        "32": "RF_CTRL_N",
+        "36": "SWDIO",
+        "37": "V3V3",
+        "39": "LSE_IN",
+        "40": "LSE_OUT",
+        "41": "VDDA",
+        "42": "SWCLK",
+        "44": "V3V3",
+        "45": "V1V55",
+        "46": "V3V3",
+        "48": "GND",
+        "49": "GND",
+        "8": "SENS_EN"
+      },
+      "group": "MCU",
+      "mpn": "STM32WLE5CCU6",
+      "note": "",
+      "place": [
+        21.599999999999998,
+        17.15
+      ],
+      "side": "F",
+      "sym_h": 33.02,
+      "xy": [
+        52.07,
+        76.2
+      ],
+      "page": 2,
+      "uuid": "0c6aba47-18d1-51ea-9b45-86bb0ca50acd",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "80edb93e-d0af-50e5-bfdf-28ca16772785",
+        "0c6aba47-18d1-51ea-9b45-86bb0ca50acd"
+      ],
+      "thru": false,
+      "placement": [
+        21.599999999999998,
+        17.15,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        17.444999999999997,
+        12.994999999999997,
+        25.755,
+        21.305
+      ]
+    },
+    {
+      "ref": "R9",
+      "value": "10k",
+      "spec": "Device:R",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Resistor_SMD:R_0402_1005Metric",
+      "nets": {
+        "1": "BOOT0",
+        "2": "GND"
+      },
+      "group": "MCU",
+      "mpn": "1% thick film 10k",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        52.07,
+        138.43
+      ],
+      "page": 2,
+      "uuid": "56dc83f2-727e-58c2-9c4b-da8a037fabb1",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "80edb93e-d0af-50e5-bfdf-28ca16772785",
+        "56dc83f2-727e-58c2-9c4b-da8a037fabb1"
+      ],
+      "thru": false,
+      "placement": [
+        5.455,
+        11.495,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        4.5,
+        11.0,
+        6.41,
+        11.989999999999998
+      ]
+    },
+    {
+      "ref": "R10",
+      "value": "10k",
+      "spec": "Device:R",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Resistor_SMD:R_0402_1005Metric",
+      "nets": {
+        "1": "NRST",
+        "2": "V3V3"
+      },
+      "group": "MCU",
+      "mpn": "1% thick film 10k",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        52.07,
+        171.45
+      ],
+      "page": 2,
+      "uuid": "a38ddc1b-ebbe-5cf4-bf80-4ba7a5a5ab32",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "80edb93e-d0af-50e5-bfdf-28ca16772785",
+        "a38ddc1b-ebbe-5cf4-bf80-4ba7a5a5ab32"
+      ],
+      "thru": false,
+      "placement": [
+        29.955,
+        11.495,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        29.0,
+        11.0,
+        30.909999999999997,
+        11.989999999999998
+      ]
+    },
+    {
+      "ref": "C4",
+      "value": "100nF",
+      "spec": "Device:C",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Capacitor_SMD:C_0402_1005Metric",
+      "nets": {
+        "1": "NRST",
+        "2": "GND"
+      },
+      "group": "MCU",
+      "mpn": "X7R 16V 100nF",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        52.07,
+        204.46999999999997
+      ],
+      "page": 2,
+      "uuid": "4b77c5aa-aeef-5ca9-a2c5-f57c3e6d0505",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "80edb93e-d0af-50e5-bfdf-28ca16772785",
+        "4b77c5aa-aeef-5ca9-a2c5-f57c3e6d0505"
+      ],
+      "thru": false,
+      "placement": [
+        28.935,
+        14.485,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        28.0,
+        14.0,
+        29.869999999999997,
+        14.969999999999999
+      ]
+    },
+    {
+      "ref": "J2",
+      "value": "SWD TC2030",
+      "spec": "Connector_Generic:Conn_01x06",
+      "pins": [
+        [
+          "1",
+          "Pin_1",
+          "passive"
+        ],
+        [
+          "2",
+          "Pin_2",
+          "passive"
+        ],
+        [
+          "3",
+          "Pin_3",
+          "passive"
+        ],
+        [
+          "4",
+          "Pin_4",
+          "passive"
+        ],
+        [
+          "5",
+          "Pin_5",
+          "passive"
+        ],
+        [
+          "6",
+          "Pin_6",
+          "passive"
+        ]
+      ],
+      "fp": "Connector:Tag-Connect_TC2030-IDC-NL_2x03_P1.27mm_Vertical",
+      "nets": {
+        "1": "V3V3",
+        "2": "SWDIO",
+        "3": "GND",
+        "4": "SWCLK",
+        "5": "NRST",
+        "6": null
+      },
+      "group": "MCU",
+      "mpn": "SWD TC2030",
+      "note": "",
+      "place": null,
+      "side": "B",
+      "sym_h": 5.08,
+      "xy": [
+        151.13,
+        48.26
+      ],
+      "page": 2,
+      "uuid": "0f20fbf8-f957-56d4-8882-fc59c8854269",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "80edb93e-d0af-50e5-bfdf-28ca16772785",
+        "0f20fbf8-f957-56d4-8882-fc59c8854269"
+      ],
+      "thru": true,
+      "placement": [
+        20.525,
+        8.025,
+        0,
+        "B"
+      ],
+      "courtyard": [
+        17.0,
+        6.0,
+        24.049999999999997,
+        10.05
+      ]
+    },
+    {
+      "ref": "J3",
+      "value": "MOUNT switch",
+      "spec": "Connector_Generic:Conn_01x02",
+      "pins": [
+        [
+          "1",
+          "Pin_1",
+          "passive"
+        ],
+        [
+          "2",
+          "Pin_2",
+          "passive"
+        ]
+      ],
+      "fp": "Connector_JST:JST_SH_SM02B-SRSS-TB_1x02-1MP_P1.00mm_Horizontal",
+      "nets": {
+        "1": "MOUNT_N",
+        "2": "GND"
+      },
+      "group": "MCU",
+      "mpn": "MOUNT switch",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        151.13,
+        82.55000000000001
+      ],
+      "page": 2,
+      "uuid": "bf25f4b0-49bc-57f9-973d-be916004967f",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "80edb93e-d0af-50e5-bfdf-28ca16772785",
+        "bf25f4b0-49bc-57f9-973d-be916004967f"
+      ],
+      "thru": false,
+      "placement": [
+        27.925,
+        3.805,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        25.0,
+        0.5,
+        30.85,
+        7.11
+      ]
+    },
+    {
+      "ref": "R11",
+      "value": "100k",
+      "spec": "Device:R",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Resistor_SMD:R_0402_1005Metric",
+      "nets": {
+        "1": "MOUNT_N",
+        "2": "V3V3"
+      },
+      "group": "MCU",
+      "mpn": "1% thick film 100k",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        151.13,
+        115.57000000000001
+      ],
+      "page": 2,
+      "uuid": "2cb00339-f68e-53ef-8a1c-8f0f9ddc686e",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "80edb93e-d0af-50e5-bfdf-28ca16772785",
+        "2cb00339-f68e-53ef-8a1c-8f0f9ddc686e"
+      ],
+      "thru": false,
+      "placement": [
+        31.955,
+        11.495,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        31.0,
+        11.0,
+        32.91,
+        11.989999999999998
+      ]
+    },
+    {
+      "ref": "C5",
+      "value": "100nF",
+      "spec": "Device:C",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Capacitor_SMD:C_0402_1005Metric",
+      "nets": {
+        "1": "V3V3",
+        "2": "GND"
+      },
+      "group": "MCU",
+      "mpn": "X7R 16V 100nF",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        151.13,
+        148.59
+      ],
+      "page": 2,
+      "uuid": "da7813b4-9b4e-51b9-bd31-7e553546efd9",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "80edb93e-d0af-50e5-bfdf-28ca16772785",
+        "da7813b4-9b4e-51b9-bd31-7e553546efd9"
+      ],
+      "thru": false,
+      "placement": [
+        30.935,
+        14.485,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        30.0,
+        14.0,
+        31.869999999999997,
+        14.969999999999999
+      ]
+    },
+    {
+      "ref": "C6",
+      "value": "100nF",
+      "spec": "Device:C",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Capacitor_SMD:C_0402_1005Metric",
+      "nets": {
+        "1": "V3V3",
+        "2": "GND"
+      },
+      "group": "MCU",
+      "mpn": "X7R 16V 100nF",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        151.13,
+        181.61
+      ],
+      "page": 2,
+      "uuid": "a7cb01f8-21ed-546b-a93b-2337f5ddd970",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "80edb93e-d0af-50e5-bfdf-28ca16772785",
+        "a7cb01f8-21ed-546b-a93b-2337f5ddd970"
+      ],
+      "thru": false,
+      "placement": [
+        32.935,
+        14.485,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        32.0,
+        14.0,
+        33.870000000000005,
+        14.969999999999999
+      ]
+    },
+    {
+      "ref": "C7",
+      "value": "100nF",
+      "spec": "Device:C",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Capacitor_SMD:C_0402_1005Metric",
+      "nets": {
+        "1": "V3V3",
+        "2": "GND"
+      },
+      "group": "MCU",
+      "mpn": "X7R 16V 100nF",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        151.13,
+        214.63
+      ],
+      "page": 2,
+      "uuid": "364258ba-b0df-52ca-a4b2-b7c63d5763c5",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "80edb93e-d0af-50e5-bfdf-28ca16772785",
+        "364258ba-b0df-52ca-a4b2-b7c63d5763c5"
+      ],
+      "thru": false,
+      "placement": [
+        34.935,
+        14.485,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        34.0,
+        14.0,
+        35.870000000000005,
+        14.969999999999999
+      ]
+    },
+    {
+      "ref": "C8",
+      "value": "100nF",
+      "spec": "Device:C",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Capacitor_SMD:C_0402_1005Metric",
+      "nets": {
+        "1": "V3V3",
+        "2": "GND"
+      },
+      "group": "MCU",
+      "mpn": "X7R 16V 100nF",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        250.19,
+        46.99
+      ],
+      "page": 2,
+      "uuid": "c361d4da-2eaf-5051-b5a2-0c6bf13f2359",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "80edb93e-d0af-50e5-bfdf-28ca16772785",
+        "c361d4da-2eaf-5051-b5a2-0c6bf13f2359"
+      ],
+      "thru": false,
+      "placement": [
+        36.935,
+        14.485,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        36.0,
+        14.0,
+        37.870000000000005,
+        14.969999999999999
+      ]
+    },
+    {
+      "ref": "C9",
+      "value": "4.7uF",
+      "spec": "Device:C",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Capacitor_SMD:C_0402_1005Metric",
+      "nets": {
+        "1": "V3V3",
+        "2": "GND"
+      },
+      "group": "MCU",
+      "mpn": "X7R 16V 4.7uF",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        250.19,
+        80.00999999999999
+      ],
+      "page": 2,
+      "uuid": "5d80dbf9-db3a-5634-b758-fbffa01bd031",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "80edb93e-d0af-50e5-bfdf-28ca16772785",
+        "5d80dbf9-db3a-5634-b758-fbffa01bd031"
+      ],
+      "thru": false,
+      "placement": [
+        38.935,
+        14.485,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        38.0,
+        14.0,
+        39.870000000000005,
+        14.969999999999999
+      ]
+    },
+    {
+      "ref": "C10",
+      "value": "4.7uF",
+      "spec": "Device:C",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Capacitor_SMD:C_0402_1005Metric",
+      "nets": {
+        "1": "V1V55",
+        "2": "GND"
+      },
+      "group": "MCU",
+      "mpn": "X7R 16V 4.7uF",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        250.19,
+        113.02999999999999
+      ],
+      "page": 2,
+      "uuid": "24c38d4a-780f-512b-a890-cbc2e0cbc8fc",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "80edb93e-d0af-50e5-bfdf-28ca16772785",
+        "24c38d4a-780f-512b-a890-cbc2e0cbc8fc"
+      ],
+      "thru": false,
+      "placement": [
+        40.935,
+        14.485,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        40.0,
+        14.0,
+        41.870000000000005,
+        14.969999999999999
+      ]
+    },
+    {
+      "ref": "C11",
+      "value": "100nF",
+      "spec": "Device:C",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Capacitor_SMD:C_0402_1005Metric",
+      "nets": {
+        "1": "V1V55",
+        "2": "GND"
+      },
+      "group": "MCU",
+      "mpn": "X7R 16V 100nF",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        250.19,
+        146.04999999999998
+      ],
+      "page": 2,
+      "uuid": "2fdac73d-629c-531a-8085-0fb2b78da60b",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "80edb93e-d0af-50e5-bfdf-28ca16772785",
+        "2fdac73d-629c-531a-8085-0fb2b78da60b"
+      ],
+      "thru": false,
+      "placement": [
+        42.935,
+        14.485,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        42.0,
+        14.0,
+        43.870000000000005,
+        14.969999999999999
+      ]
+    },
+    {
+      "ref": "R12",
+      "value": "0R",
+      "spec": "Device:R",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Resistor_SMD:R_0402_1005Metric",
+      "nets": {
+        "1": "VDDA",
+        "2": "V3V3"
+      },
+      "group": "MCU",
+      "mpn": "1% thick film 0R",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        250.19,
+        179.07
+      ],
+      "page": 2,
+      "uuid": "ceca5516-a323-5616-9e96-17a9f55309ae",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "80edb93e-d0af-50e5-bfdf-28ca16772785",
+        "ceca5516-a323-5616-9e96-17a9f55309ae"
+      ],
+      "thru": false,
+      "placement": [
+        33.955,
+        11.495,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        33.0,
+        11.0,
+        34.91,
+        11.989999999999998
+      ]
+    },
+    {
+      "ref": "C12",
+      "value": "100nF",
+      "spec": "Device:C",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Capacitor_SMD:C_0402_1005Metric",
+      "nets": {
+        "1": "VDDA",
+        "2": "GND"
+      },
+      "group": "MCU",
+      "mpn": "X7R 16V 100nF",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        250.19,
+        212.08999999999997
+      ],
+      "page": 2,
+      "uuid": "9d6693a4-c7e6-5396-ba0e-f1e5eb592ec1",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "80edb93e-d0af-50e5-bfdf-28ca16772785",
+        "9d6693a4-c7e6-5396-ba0e-f1e5eb592ec1"
+      ],
+      "thru": false,
+      "placement": [
+        1.435,
+        14.985,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        0.5,
+        14.5,
+        2.37,
+        15.469999999999999
+      ]
+    },
+    {
+      "ref": "C13",
+      "value": "1uF",
+      "spec": "Device:C",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Capacitor_SMD:C_0402_1005Metric",
+      "nets": {
+        "1": "VDDA",
+        "2": "GND"
+      },
+      "group": "MCU",
+      "mpn": "X7R 16V 1uF",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        349.25,
+        46.99
+      ],
+      "page": 2,
+      "uuid": "48663196-1188-55d2-b3c3-c79e56cb2819",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "80edb93e-d0af-50e5-bfdf-28ca16772785",
+        "48663196-1188-55d2-b3c3-c79e56cb2819"
+      ],
+      "thru": false,
+      "placement": [
+        3.435,
+        14.985,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        2.5,
+        14.5,
+        4.37,
+        15.469999999999999
+      ]
+    },
+    {
+      "ref": "Y1",
+      "value": "32MHz CL=10pF",
+      "spec": "Device:Crystal_GND24",
+      "pins": [
+        [
+          "1",
+          "1",
+          "passive"
+        ],
+        [
+          "2",
+          "G",
+          "passive"
+        ],
+        [
+          "3",
+          "3",
+          "passive"
+        ],
+        [
+          "4",
+          "G",
+          "passive"
+        ]
+      ],
+      "fp": "Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm",
+      "nets": {
+        "1": "HSE_IN",
+        "2": "GND",
+        "3": "HSE_OUT",
+        "4": "GND"
+      },
+      "group": "MCU",
+      "mpn": "32MHz CL=10pF",
+      "note": "Internal HSE tuning capacitors; trim before RF qualification",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        349.25,
+        80.00999999999999
+      ],
+      "page": 2,
+      "uuid": "e49b9aa2-0387-550f-8d81-6dd7fa27a36b",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "80edb93e-d0af-50e5-bfdf-28ca16772785",
+        "e49b9aa2-0387-550f-8d81-6dd7fa27a36b"
+      ],
+      "thru": false,
+      "placement": [
+        39.125,
+        8.275,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        37.0,
+        6.5,
+        41.25,
+        10.05
+      ]
+    },
+    {
+      "ref": "Y2",
+      "value": "32.768kHz CL=6pF",
+      "spec": "Device:Crystal",
+      "pins": [
+        [
+          "1",
+          "1",
+          "passive"
+        ],
+        [
+          "2",
+          "2",
+          "passive"
+        ]
+      ],
+      "fp": "Crystal:Crystal_SMD_3215-2Pin_3.2x1.5mm",
+      "nets": {
+        "1": "LSE_IN",
+        "2": "LSE_OUT"
+      },
+      "group": "MCU",
+      "mpn": "32.768kHz CL=6pF",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        349.25,
+        113.02999999999999
+      ],
+      "page": 2,
+      "uuid": "007d7bf8-b716-5ead-a68a-708def860635",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "80edb93e-d0af-50e5-bfdf-28ca16772785",
+        "007d7bf8-b716-5ead-a68a-708def860635"
+      ],
+      "thru": false,
+      "placement": [
+        8.525,
+        1.675,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        6.5,
+        0.5,
+        10.55,
+        2.85
+      ]
+    },
+    {
+      "ref": "C14",
+      "value": "6pF",
+      "spec": "Device:C",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Capacitor_SMD:C_0402_1005Metric",
+      "nets": {
+        "1": "LSE_IN",
+        "2": "GND"
+      },
+      "group": "MCU",
+      "mpn": "X7R 16V 6pF",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        349.25,
+        146.04999999999998
+      ],
+      "page": 2,
+      "uuid": "5468ebff-0293-547f-8942-90979016e339",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "80edb93e-d0af-50e5-bfdf-28ca16772785",
+        "5468ebff-0293-547f-8942-90979016e339"
+      ],
+      "thru": false,
+      "placement": [
+        26.935,
+        14.985,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        26.0,
+        14.5,
+        27.869999999999997,
+        15.469999999999999
+      ]
+    },
+    {
+      "ref": "C15",
+      "value": "6pF",
+      "spec": "Device:C",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Capacitor_SMD:C_0402_1005Metric",
+      "nets": {
+        "1": "LSE_OUT",
+        "2": "GND"
+      },
+      "group": "MCU",
+      "mpn": "X7R 16V 6pF",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        349.25,
+        179.07
+      ],
+      "page": 2,
+      "uuid": "0c2f6192-f7b0-5ba4-8069-bf624383abec",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "80edb93e-d0af-50e5-bfdf-28ca16772785",
+        "0c2f6192-f7b0-5ba4-8069-bf624383abec"
+      ],
+      "thru": false,
+      "placement": [
+        7.4350000000000005,
+        15.485,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        6.5,
+        15.0,
+        8.370000000000001,
+        15.969999999999999
+      ]
+    },
+    {
+      "ref": "U2",
+      "value": "MB85RS64V",
+      "spec": "Memory_NVRAM:MB85RS64",
+      "pins": [
+        [
+          "1",
+          "~{CS}",
+          "input"
+        ],
+        [
+          "2",
+          "SO",
+          "output"
+        ],
+        [
+          "3",
+          "~{WP}",
+          "input"
+        ],
+        [
+          "4",
+          "GND",
+          "power_in"
+        ],
+        [
+          "5",
+          "SI",
+          "input"
+        ],
+        [
+          "6",
+          "SCK",
+          "input"
+        ],
+        [
+          "7",
+          "~{HOLD}",
+          "input"
+        ],
+        [
+          "8",
+          "VDD",
+          "power_in"
+        ]
+      ],
+      "fp": "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm",
+      "nets": {
+        "1": "FRAM_CS",
+        "2": "SPI_MISO",
+        "3": "V3V3",
+        "4": "GND",
+        "5": "SPI_MOSI",
+        "6": "SPI_SCK",
+        "7": "V3V3",
+        "8": "V3V3"
+      },
+      "group": "MCU",
+      "mpn": "MB85RS64V",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 6.35,
+      "xy": [
+        349.25,
+        214.62999999999997
+      ],
+      "page": 2,
+      "uuid": "3f9676a9-b455-594b-b3d4-cbf7b74cb01b",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "80edb93e-d0af-50e5-bfdf-28ca16772785",
+        "3f9676a9-b455-594b-b3d4-cbf7b74cb01b"
+      ],
+      "thru": false,
+      "placement": [
+        20.725,
+        3.225,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        17.0,
+        0.5,
+        24.450000000000003,
+        5.95
+      ]
+    },
+    {
+      "ref": "R13",
+      "value": "100k",
+      "spec": "Device:R",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Resistor_SMD:R_0402_1005Metric",
+      "nets": {
+        "1": "FRAM_CS",
+        "2": "V3V3"
+      },
+      "group": "MCU",
+      "mpn": "1% thick film 100k",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        52.07,
+        46.99
+      ],
+      "page": 3,
+      "uuid": "92f273c1-b7fa-5a20-9344-e73ae4f64ca7",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "b03d283b-a5a5-51f1-ad2b-aa9e18146f39",
+        "92f273c1-b7fa-5a20-9344-e73ae4f64ca7"
+      ],
+      "thru": false,
+      "placement": [
+        5.455,
+        12.995,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        4.5,
+        12.5,
+        6.41,
+        13.489999999999998
+      ]
+    },
+    {
+      "ref": "C16",
+      "value": "100nF",
+      "spec": "Device:C",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Capacitor_SMD:C_0402_1005Metric",
+      "nets": {
+        "1": "V3V3",
+        "2": "GND"
+      },
+      "group": "MCU",
+      "mpn": "X7R 16V 100nF",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        52.07,
+        80.00999999999999
+      ],
+      "page": 3,
+      "uuid": "023841ae-6814-5edd-a90a-c6b4a404879b",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "b03d283b-a5a5-51f1-ad2b-aa9e18146f39",
+        "023841ae-6814-5edd-a90a-c6b4a404879b"
+      ],
+      "thru": false,
+      "placement": [
+        9.435,
+        15.485,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        8.5,
+        15.0,
+        10.370000000000001,
+        15.969999999999999
+      ]
+    },
+    {
+      "ref": "R14",
+      "value": "4.7k",
+      "spec": "Device:R",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Resistor_SMD:R_0402_1005Metric",
+      "nets": {
+        "1": "I2C_SCL",
+        "2": "SENS_3V3"
+      },
+      "group": "MCU",
+      "mpn": "1% thick film 4.7k",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        52.07,
+        113.02999999999999
+      ],
+      "page": 3,
+      "uuid": "ade7ccfb-237f-5a06-a052-640965e84630",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "b03d283b-a5a5-51f1-ad2b-aa9e18146f39",
+        "ade7ccfb-237f-5a06-a052-640965e84630"
+      ],
+      "thru": false,
+      "placement": [
+        29.955,
+        12.995,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        29.0,
+        12.5,
+        30.909999999999997,
+        13.489999999999998
+      ]
+    },
+    {
+      "ref": "R15",
+      "value": "4.7k",
+      "spec": "Device:R",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Resistor_SMD:R_0402_1005Metric",
+      "nets": {
+        "1": "I2C_SDA",
+        "2": "SENS_3V3"
+      },
+      "group": "MCU",
+      "mpn": "1% thick film 4.7k",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        52.07,
+        146.04999999999998
+      ],
+      "page": 3,
+      "uuid": "afd1dcc7-e77f-5692-876f-6ed03b5336cc",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "b03d283b-a5a5-51f1-ad2b-aa9e18146f39",
+        "afd1dcc7-e77f-5692-876f-6ed03b5336cc"
+      ],
+      "thru": false,
+      "placement": [
+        31.955,
+        12.995,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        31.0,
+        12.5,
+        32.91,
+        13.489999999999998
+      ]
+    },
+    {
+      "ref": "L2",
+      "value": "47nH",
+      "spec": "Device:L",
+      "pins": [
+        [
+          "1",
+          "1",
+          "passive"
+        ],
+        [
+          "2",
+          "2",
+          "passive"
+        ]
+      ],
+      "fp": "Inductor_SMD:L_0402_1005Metric",
+      "nets": {
+        "1": "VR_PA",
+        "2": "RFO_LP"
+      },
+      "group": "RADIO",
+      "mpn": "47nH",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        52.07,
+        46.99
+      ],
+      "page": 4,
+      "uuid": "36fe6e4f-7dc1-568f-9305-62561d3d6785",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "427a368c-b6f2-5007-8dce-3af39d1cd68b",
+        "36fe6e4f-7dc1-568f-9305-62561d3d6785"
+      ],
+      "thru": false,
+      "placement": [
+        33.955,
+        12.995,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        33.0,
+        12.5,
+        34.91,
+        13.489999999999998
+      ]
+    },
+    {
+      "ref": "C17",
+      "value": "47nF",
+      "spec": "Device:C",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Capacitor_SMD:C_0402_1005Metric",
+      "nets": {
+        "1": "VR_PA",
+        "2": "GND"
+      },
+      "group": "RADIO",
+      "mpn": "X7R 16V 47nF",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        52.07,
+        80.00999999999999
+      ],
+      "page": 4,
+      "uuid": "cd2b86f8-c45e-546e-ae9a-f37835991517",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "427a368c-b6f2-5007-8dce-3af39d1cd68b",
+        "cd2b86f8-c45e-546e-ae9a-f37835991517"
+      ],
+      "thru": false,
+      "placement": [
+        11.435,
+        15.485,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        10.5,
+        15.0,
+        12.370000000000001,
+        15.969999999999999
+      ]
+    },
+    {
+      "ref": "C18",
+      "value": "68pF",
+      "spec": "Device:C",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Capacitor_SMD:C_0402_1005Metric",
+      "nets": {
+        "1": "VR_PA",
+        "2": "GND"
+      },
+      "group": "RADIO",
+      "mpn": "X7R 16V 68pF",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        52.07,
+        113.02999999999999
+      ],
+      "page": 4,
+      "uuid": "49f1a241-6a27-5e87-9a8c-627f9d9db290",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "427a368c-b6f2-5007-8dce-3af39d1cd68b",
+        "49f1a241-6a27-5e87-9a8c-627f9d9db290"
+      ],
+      "thru": false,
+      "placement": [
+        13.435,
+        15.485,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        12.5,
+        15.0,
+        14.370000000000001,
+        15.969999999999999
+      ]
+    },
+    {
+      "ref": "L3",
+      "value": "4.4nH",
+      "spec": "Device:L",
+      "pins": [
+        [
+          "1",
+          "1",
+          "passive"
+        ],
+        [
+          "2",
+          "2",
+          "passive"
+        ]
+      ],
+      "fp": "Inductor_SMD:L_0402_1005Metric",
+      "nets": {
+        "1": "RFO_LP",
+        "2": "TX_1"
+      },
+      "group": "RADIO",
+      "mpn": "4.4nH",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        52.07,
+        146.04999999999998
+      ],
+      "page": 4,
+      "uuid": "474befdb-8d04-5e50-ac81-bee04644c240",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "427a368c-b6f2-5007-8dce-3af39d1cd68b",
+        "474befdb-8d04-5e50-ac81-bee04644c240"
+      ],
+      "thru": false,
+      "placement": [
+        26.955,
+        13.495,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        26.0,
+        13.0,
+        27.909999999999997,
+        13.989999999999998
+      ]
+    },
+    {
+      "ref": "C19",
+      "value": "5.5pF",
+      "spec": "Device:C",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Capacitor_SMD:C_0402_1005Metric",
+      "nets": {
+        "1": "RFO_LP",
+        "2": "GND"
+      },
+      "group": "RADIO",
+      "mpn": "X7R 16V 5.5pF",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        52.07,
+        179.07
+      ],
+      "page": 4,
+      "uuid": "53796cd9-d0e9-5943-a1ed-bbf0a25cd34b",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "427a368c-b6f2-5007-8dce-3af39d1cd68b",
+        "53796cd9-d0e9-5943-a1ed-bbf0a25cd34b"
+      ],
+      "thru": false,
+      "placement": [
+        15.435,
+        15.485,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        14.5,
+        15.0,
+        16.37,
+        15.969999999999999
+      ]
+    },
+    {
+      "ref": "C20",
+      "value": "2.5pF",
+      "spec": "Device:C",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Capacitor_SMD:C_0402_1005Metric",
+      "nets": {
+        "1": "TX_1",
+        "2": "GND"
+      },
+      "group": "RADIO",
+      "mpn": "X7R 16V 2.5pF",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        52.07,
+        212.08999999999997
+      ],
+      "page": 4,
+      "uuid": "20680f87-9f39-5c4f-aa1e-68151c2a7989",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "427a368c-b6f2-5007-8dce-3af39d1cd68b",
+        "20680f87-9f39-5c4f-aa1e-68151c2a7989"
+      ],
+      "thru": false,
+      "placement": [
+        5.4350000000000005,
+        15.985,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        4.5,
+        15.5,
+        6.370000000000001,
+        16.47
+      ]
+    },
+    {
+      "ref": "L4",
+      "value": "3.4nH",
+      "spec": "Device:L",
+      "pins": [
+        [
+          "1",
+          "1",
+          "passive"
+        ],
+        [
+          "2",
+          "2",
+          "passive"
+        ]
+      ],
+      "fp": "Inductor_SMD:L_0402_1005Metric",
+      "nets": {
+        "1": "TX_1",
+        "2": "TX_2"
+      },
+      "group": "RADIO",
+      "mpn": "3.4nH",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        151.13,
+        46.99
+      ],
+      "page": 4,
+      "uuid": "91d05525-bbdf-5f15-80b0-594836593a9f",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "427a368c-b6f2-5007-8dce-3af39d1cd68b",
+        "91d05525-bbdf-5f15-80b0-594836593a9f"
+      ],
+      "thru": false,
+      "placement": [
+        7.455,
+        13.995,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        6.5,
+        13.5,
+        8.41,
+        14.489999999999998
+      ]
+    },
+    {
+      "ref": "C21",
+      "value": "4.3pF",
+      "spec": "Device:C",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Capacitor_SMD:C_0402_1005Metric",
+      "nets": {
+        "1": "TX_2",
+        "2": "GND"
+      },
+      "group": "RADIO",
+      "mpn": "X7R 16V 4.3pF",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        151.13,
+        80.00999999999999
+      ],
+      "page": 4,
+      "uuid": "ac93bb9b-7d07-5ef6-8a3c-c0ca84b28fd6",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "427a368c-b6f2-5007-8dce-3af39d1cd68b",
+        "ac93bb9b-7d07-5ef6-8a3c-c0ca84b28fd6"
+      ],
+      "thru": false,
+      "placement": [
+        28.935,
+        15.985,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        28.0,
+        15.5,
+        29.869999999999997,
+        16.47
+      ]
+    },
+    {
+      "ref": "C22",
+      "value": "68pF",
+      "spec": "Device:C",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Capacitor_SMD:C_0402_1005Metric",
+      "nets": {
+        "1": "TX_2",
+        "2": "TX_3"
+      },
+      "group": "RADIO",
+      "mpn": "X7R 16V 68pF",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        151.13,
+        113.02999999999999
+      ],
+      "page": 4,
+      "uuid": "b48d5cb0-0a87-5d42-9c33-f35ee2e0dbe1",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "427a368c-b6f2-5007-8dce-3af39d1cd68b",
+        "b48d5cb0-0a87-5d42-9c33-f35ee2e0dbe1"
+      ],
+      "thru": false,
+      "placement": [
+        30.935,
+        15.985,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        30.0,
+        15.5,
+        31.869999999999997,
+        16.47
+      ]
+    },
+    {
+      "ref": "L5",
+      "value": "9.2nH",
+      "spec": "Device:L",
+      "pins": [
+        [
+          "1",
+          "1",
+          "passive"
+        ],
+        [
+          "2",
+          "2",
+          "passive"
+        ]
+      ],
+      "fp": "Inductor_SMD:L_0402_1005Metric",
+      "nets": {
+        "1": "TX_3",
+        "2": "TX_RF"
+      },
+      "group": "RADIO",
+      "mpn": "9.2nH",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        151.13,
+        146.04999999999998
+      ],
+      "page": 4,
+      "uuid": "ebc32081-78c7-5a67-a30e-cc85ce0bb412",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "427a368c-b6f2-5007-8dce-3af39d1cd68b",
+        "ebc32081-78c7-5a67-a30e-cc85ce0bb412"
+      ],
+      "thru": false,
+      "placement": [
+        9.455,
+        13.995,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        8.5,
+        13.5,
+        10.41,
+        14.489999999999998
+      ]
+    },
+    {
+      "ref": "C23",
+      "value": "3.5pF",
+      "spec": "Device:C",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Capacitor_SMD:C_0402_1005Metric",
+      "nets": {
+        "1": "TX_RF",
+        "2": "GND"
+      },
+      "group": "RADIO",
+      "mpn": "X7R 16V 3.5pF",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        151.13,
+        179.07
+      ],
+      "page": 4,
+      "uuid": "3dca3685-3ccb-58d5-b39c-906d23543039",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "427a368c-b6f2-5007-8dce-3af39d1cd68b",
+        "3dca3685-3ccb-58d5-b39c-906d23543039"
+      ],
+      "thru": false,
+      "placement": [
+        32.935,
+        15.985,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        32.0,
+        15.5,
+        33.870000000000005,
+        16.47
+      ]
+    },
+    {
+      "ref": "C24",
+      "value": "4.5pF",
+      "spec": "Device:C",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Capacitor_SMD:C_0402_1005Metric",
+      "nets": {
+        "1": "RX_RF",
+        "2": "RFI_P"
+      },
+      "group": "RADIO",
+      "mpn": "X7R 16V 4.5pF",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        151.13,
+        212.08999999999997
+      ],
+      "page": 4,
+      "uuid": "98ef5b43-abec-5163-b6f0-2fa45410672a",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "427a368c-b6f2-5007-8dce-3af39d1cd68b",
+        "98ef5b43-abec-5163-b6f0-2fa45410672a"
+      ],
+      "thru": false,
+      "placement": [
+        34.935,
+        15.985,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        34.0,
+        15.5,
+        35.870000000000005,
+        16.47
+      ]
+    },
+    {
+      "ref": "L6",
+      "value": "12nH",
+      "spec": "Device:L",
+      "pins": [
+        [
+          "1",
+          "1",
+          "passive"
+        ],
+        [
+          "2",
+          "2",
+          "passive"
+        ]
+      ],
+      "fp": "Inductor_SMD:L_0402_1005Metric",
+      "nets": {
+        "1": "RFI_P",
+        "2": "RFI_N"
+      },
+      "group": "RADIO",
+      "mpn": "12nH",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        250.19,
+        46.99
+      ],
+      "page": 4,
+      "uuid": "a5f066cb-c62f-585e-9589-4f5df177b78f",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "427a368c-b6f2-5007-8dce-3af39d1cd68b",
+        "a5f066cb-c62f-585e-9589-4f5df177b78f"
+      ],
+      "thru": false,
+      "placement": [
+        11.455,
+        13.995,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        10.5,
+        13.5,
+        12.41,
+        14.489999999999998
+      ]
+    },
+    {
+      "ref": "C25",
+      "value": "2.7pF",
+      "spec": "Device:C",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Capacitor_SMD:C_0402_1005Metric",
+      "nets": {
+        "1": "RFI_N",
+        "2": "GND"
+      },
+      "group": "RADIO",
+      "mpn": "X7R 16V 2.7pF",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        250.19,
+        80.00999999999999
+      ],
+      "page": 4,
+      "uuid": "7fe1eb98-add8-5c38-8102-b39b17dd1637",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "427a368c-b6f2-5007-8dce-3af39d1cd68b",
+        "7fe1eb98-add8-5c38-8102-b39b17dd1637"
+      ],
+      "thru": false,
+      "placement": [
+        36.935,
+        15.985,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        36.0,
+        15.5,
+        37.870000000000005,
+        16.47
+      ]
+    },
+    {
+      "ref": "U3",
+      "value": "PE4259",
+      "spec": "B1:PE4259",
+      "pins": [
+        [
+          "1",
+          "RF1",
+          "passive"
+        ],
+        [
+          "2",
+          "GND",
+          "power_in"
+        ],
+        [
+          "3",
+          "RF2",
+          "passive"
+        ],
+        [
+          "4",
+          "CTRL",
+          "input"
+        ],
+        [
+          "5",
+          "RFC",
+          "passive"
+        ],
+        [
+          "6",
+          "CTRL_N",
+          "input"
+        ]
+      ],
+      "fp": "Package_TO_SOT_SMD:SOT-363_SC-70-6",
+      "nets": {
+        "1": "TX_RF",
+        "2": "GND",
+        "3": "RX_RF",
+        "4": "RF_CTRL",
+        "5": "RF_COMMON",
+        "6": "RF_CTRL_N"
+      },
+      "group": "RADIO",
+      "mpn": "PE4259",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 5.08,
+      "xy": [
+        250.19,
+        114.29999999999998
+      ],
+      "page": 4,
+      "uuid": "1dd6c5cf-6747-53ce-b0ee-1ec10601b057",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "427a368c-b6f2-5007-8dce-3af39d1cd68b",
+        "1dd6c5cf-6747-53ce-b0ee-1ec10601b057"
+      ],
+      "thru": false,
+      "placement": [
+        42.975,
+        7.625,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        41.5,
+        6.5,
+        44.45,
+        8.75
+      ]
+    },
+    {
+      "ref": "C26",
+      "value": "68pF",
+      "spec": "Device:C",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Capacitor_SMD:C_0402_1005Metric",
+      "nets": {
+        "1": "RF_COMMON",
+        "2": "ANT"
+      },
+      "group": "RADIO",
+      "mpn": "X7R 16V 68pF",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        250.19,
+        148.58999999999997
+      ],
+      "page": 4,
+      "uuid": "e4191b3e-a624-5554-8e31-5aae0b49d872",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "427a368c-b6f2-5007-8dce-3af39d1cd68b",
+        "e4191b3e-a624-5554-8e31-5aae0b49d872"
+      ],
+      "thru": false,
+      "placement": [
+        38.935,
+        15.985,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        38.0,
+        15.5,
+        39.870000000000005,
+        16.47
+      ]
+    },
+    {
+      "ref": "J4",
+      "value": "868 MHz u.FL",
+      "spec": "Connector:Conn_Coaxial",
+      "pins": [
+        [
+          "1",
+          "In",
+          "passive"
+        ],
+        [
+          "2",
+          "Ext",
+          "passive"
+        ]
+      ],
+      "fp": "Connector_Coaxial:U.FL_Hirose_U.FL-R-SMT-1_Vertical",
+      "nets": {
+        "1": "ANT",
+        "2": "GND"
+      },
+      "group": "RADIO",
+      "mpn": "868 MHz u.FL",
+      "note": "Insulated 868 MHz antenna in enclosure; 50 ohm feed, no mains contact",
+      "place": [
+        42,
+        3
+      ],
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        250.19,
+        181.60999999999996
+      ],
+      "page": 4,
+      "uuid": "521584c1-c2b0-5428-b225-5db17f9b0ad9",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "427a368c-b6f2-5007-8dce-3af39d1cd68b",
+        "521584c1-c2b0-5428-b225-5db17f9b0ad9"
+      ],
+      "thru": false,
+      "placement": [
+        42,
+        3,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        39.425,
+        0.4750000000000001,
+        43.825,
+        5.525
+      ]
+    },
+    {
+      "ref": "Q4",
+      "value": "AO3401A",
+      "spec": "Transistor_FET:AO3401A",
+      "pins": [
+        [
+          "1",
+          "G",
+          "input"
+        ],
+        [
+          "2",
+          "S",
+          "passive"
+        ],
+        [
+          "3",
+          "D",
+          "passive"
+        ]
+      ],
+      "fp": "Package_TO_SOT_SMD:SOT-23",
+      "nets": {
+        "1": "SENS_GATE",
+        "2": "V3V3",
+        "3": "SENS_3V3"
+      },
+      "group": "SENSORS",
+      "mpn": "AO3401A",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        52.07,
+        46.99
+      ],
+      "page": 5,
+      "uuid": "b634ae0c-8104-5e0d-bb84-9d29936c4c80",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "aca2e70d-0707-5f10-866d-2127387d3ea7",
+        "b634ae0c-8104-5e0d-bb84-9d29936c4c80"
+      ],
+      "thru": false,
+      "placement": [
+        38.455,
+        12.225,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        36.5,
+        10.5,
+        40.41,
+        13.95
+      ]
+    },
+    {
+      "ref": "Q5",
+      "value": "2N7002",
+      "spec": "Transistor_FET:2N7002",
+      "pins": [
+        [
+          "1",
+          "G",
+          "input"
+        ],
+        [
+          "2",
+          "S",
+          "passive"
+        ],
+        [
+          "3",
+          "D",
+          "passive"
+        ]
+      ],
+      "fp": "Package_TO_SOT_SMD:SOT-23",
+      "nets": {
+        "1": "SENS_EN",
+        "2": "GND",
+        "3": "SENS_GATE"
+      },
+      "group": "SENSORS",
+      "mpn": "2N7002",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        52.07,
+        80.00999999999999
+      ],
+      "page": 5,
+      "uuid": "1ef3d2b0-cb5b-57f4-a734-ed504b4fcd24",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "aca2e70d-0707-5f10-866d-2127387d3ea7",
+        "1ef3d2b0-cb5b-57f4-a734-ed504b4fcd24"
+      ],
+      "thru": false,
+      "placement": [
+        42.455,
+        12.225,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        40.5,
+        10.5,
+        44.41,
+        13.95
+      ]
+    },
+    {
+      "ref": "R16",
+      "value": "100k",
+      "spec": "Device:R",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Resistor_SMD:R_0402_1005Metric",
+      "nets": {
+        "1": "SENS_GATE",
+        "2": "V3V3"
+      },
+      "group": "SENSORS",
+      "mpn": "1% thick film 100k",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        52.07,
+        113.02999999999999
+      ],
+      "page": 5,
+      "uuid": "2607465c-84ec-5b1b-a1f9-a4863223e812",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "aca2e70d-0707-5f10-866d-2127387d3ea7",
+        "2607465c-84ec-5b1b-a1f9-a4863223e812"
+      ],
+      "thru": false,
+      "placement": [
+        13.455,
+        13.995,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        12.5,
+        13.5,
+        14.41,
+        14.489999999999998
+      ]
+    },
+    {
+      "ref": "R17",
+      "value": "100k",
+      "spec": "Device:R",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Resistor_SMD:R_0402_1005Metric",
+      "nets": {
+        "1": "SENS_EN",
+        "2": "GND"
+      },
+      "group": "SENSORS",
+      "mpn": "1% thick film 100k",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        52.07,
+        146.04999999999998
+      ],
+      "page": 5,
+      "uuid": "cf62ca0a-f15a-5994-94f1-784e3698d861",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "aca2e70d-0707-5f10-866d-2127387d3ea7",
+        "cf62ca0a-f15a-5994-94f1-784e3698d861"
+      ],
+      "thru": false,
+      "placement": [
+        15.455,
+        13.995,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        14.5,
+        13.5,
+        16.41,
+        14.489999999999998
+      ]
+    },
+    {
+      "ref": "U4",
+      "value": "MLX90640ESF-BAA-000-TU",
+      "spec": "B1:MLX90640ESF-BAA-000-TU",
+      "pins": [
+        [
+          "1",
+          "SDA",
+          "bidirectional"
+        ],
+        [
+          "2",
+          "VDD",
+          "power_in"
+        ],
+        [
+          "3",
+          "VSS",
+          "power_in"
+        ],
+        [
+          "4",
+          "SCL",
+          "input"
+        ]
+      ],
+      "fp": "Package_TO_SOT_THT:TO-39-4_Window",
+      "nets": {
+        "1": "I2C_SDA",
+        "2": "SENS_3V3",
+        "3": "GND",
+        "4": "I2C_SCL"
+      },
+      "group": "SENSORS",
+      "mpn": "MLX90640ESF-BAA-000-TU",
+      "note": "110x75 degree FoV, PCB top towards lugs; optical opening must transmit LWIR",
+      "place": [
+        9,
+        8
+      ],
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        52.07,
+        179.07
+      ],
+      "page": 5,
+      "uuid": "52c41da9-470f-59b4-a486-f6b842337a5c",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "aca2e70d-0707-5f10-866d-2127387d3ea7",
+        "52c41da9-470f-59b4-a486-f6b842337a5c"
+      ],
+      "thru": true,
+      "placement": [
+        9,
+        8,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        6.5649999999999995,
+        3.0250000000000004,
+        16.515,
+        12.975
+      ]
+    },
+    {
+      "ref": "C27",
+      "value": "100nF",
+      "spec": "Device:C",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Capacitor_SMD:C_0402_1005Metric",
+      "nets": {
+        "1": "SENS_3V3",
+        "2": "GND"
+      },
+      "group": "SENSORS",
+      "mpn": "X7R 16V 100nF",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        52.07,
+        212.08999999999997
+      ],
+      "page": 5,
+      "uuid": "acc45dcd-daf3-51b0-a8a6-6c9ebdc65239",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "aca2e70d-0707-5f10-866d-2127387d3ea7",
+        "acc45dcd-daf3-51b0-a8a6-6c9ebdc65239"
+      ],
+      "thru": false,
+      "placement": [
+        40.935,
+        15.985,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        40.0,
+        15.5,
+        41.870000000000005,
+        16.47
+      ]
+    },
+    {
+      "ref": "C28",
+      "value": "10uF",
+      "spec": "Device:C",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Capacitor_SMD:C_0805_2012Metric",
+      "nets": {
+        "1": "SENS_3V3",
+        "2": "GND"
+      },
+      "group": "SENSORS",
+      "mpn": "X7R 16V 10uF",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        151.13,
+        46.99
+      ],
+      "page": 5,
+      "uuid": "2534de7e-6dc3-53d0-b649-7e971289c6e5",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "aca2e70d-0707-5f10-866d-2127387d3ea7",
+        "2534de7e-6dc3-53d0-b649-7e971289c6e5"
+      ],
+      "thru": false,
+      "placement": [
+        22.725,
+        11.504999999999999,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        21.0,
+        10.5,
+        24.450000000000003,
+        12.509999999999998
+      ]
+    },
+    {
+      "ref": "U5",
+      "value": "SHT41-AD1B-R2",
+      "spec": "Sensor_Humidity:SHT4x",
+      "pins": [
+        [
+          "1",
+          "SDA",
+          "bidirectional"
+        ],
+        [
+          "2",
+          "SCL",
+          "input"
+        ],
+        [
+          "3",
+          "VDD",
+          "power_in"
+        ],
+        [
+          "4",
+          "VSS",
+          "power_in"
+        ]
+      ],
+      "fp": "Sensor_Humidity:Sensirion_DFN-4_1.5x1.5mm_P0.8mm_SHT4x_NoCentralPad",
+      "nets": {
+        "1": "I2C_SDA",
+        "2": "I2C_SCL",
+        "3": "SENS_3V3",
+        "4": "GND"
+      },
+      "group": "SENSORS",
+      "mpn": "SHT41-AD1B-R2",
+      "note": "Vent membrane; no conformal coat over aperture",
+      "place": [
+        3,
+        29
+      ],
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        151.13,
+        80.00999999999999
+      ],
+      "page": 5,
+      "uuid": "65573d9f-fcc1-520d-bb55-78566843a17f",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "aca2e70d-0707-5f10-866d-2127387d3ea7",
+        "65573d9f-fcc1-520d-bb55-78566843a17f"
+      ],
+      "thru": false,
+      "placement": [
+        3,
+        29,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        1.775,
+        27.975,
+        4.225,
+        30.025
+      ]
+    },
+    {
+      "ref": "C29",
+      "value": "100nF",
+      "spec": "Device:C",
+      "pins": [
+        [
+          "1",
+          "",
+          "passive"
+        ],
+        [
+          "2",
+          "",
+          "passive"
+        ]
+      ],
+      "fp": "Capacitor_SMD:C_0402_1005Metric",
+      "nets": {
+        "1": "SENS_3V3",
+        "2": "GND"
+      },
+      "group": "SENSORS",
+      "mpn": "X7R 16V 100nF",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        151.13,
+        113.02999999999999
+      ],
+      "page": 5,
+      "uuid": "1551b7ea-4bc2-570e-8cad-1c46b3dbf243",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "aca2e70d-0707-5f10-866d-2127387d3ea7",
+        "1551b7ea-4bc2-570e-8cad-1c46b3dbf243"
+      ],
+      "thru": false,
+      "placement": [
+        42.935,
+        15.985,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        42.0,
+        15.5,
+        43.870000000000005,
+        16.47
+      ]
+    },
+    {
+      "ref": "J5",
+      "value": "PHASE optional",
+      "spec": "Connector_Generic:Conn_01x02",
+      "pins": [
+        [
+          "1",
+          "Pin_1",
+          "passive"
+        ],
+        [
+          "2",
+          "Pin_2",
+          "passive"
+        ]
+      ],
+      "fp": "Connector_JST:JST_SH_SM02B-SRSS-TB_1x02-1MP_P1.00mm_Horizontal",
+      "nets": {
+        "1": "PHASE",
+        "2": "GND"
+      },
+      "group": "SENSORS",
+      "mpn": "PHASE optional",
+      "note": "",
+      "place": null,
+      "side": "F",
+      "sym_h": 3.81,
+      "xy": [
+        151.13,
+        146.04999999999998
+      ],
+      "page": 5,
+      "uuid": "02a1a71f-2abe-5e71-af20-d72460fa4a75",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "aca2e70d-0707-5f10-866d-2127387d3ea7",
+        "02a1a71f-2abe-5e71-af20-d72460fa4a75"
+      ],
+      "thru": false,
+      "placement": [
+        33.925,
+        3.805,
+        0,
+        "F"
+      ],
+      "courtyard": [
+        30.999999999999996,
+        0.5,
+        36.849999999999994,
+        7.11
+      ]
+    },
+    {
+      "ref": "#FLG1",
+      "value": "SOURCE VBAT",
+      "spec": "B1:PWR_FLAG",
+      "pins": [
+        [
+          "1",
+          "pwr",
+          "power_out"
+        ]
+      ],
+      "fp": "",
+      "nets": {
+        "1": "VBAT"
+      },
+      "group": "SUPPLY_REFERENCES",
+      "mpn": "",
+      "note": "Power source declaration; not a fitted component",
+      "place": null,
+      "side": "F",
+      "virtual": true,
+      "sym_h": 3.81,
+      "xy": [
+        52.07,
+        46.99
+      ],
+      "page": 6,
+      "uuid": "789afc52-651a-5bfc-ad06-ede10011beb8",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "1223c5b7-a813-50e2-a5b1-be423a057db7",
+        "789afc52-651a-5bfc-ad06-ede10011beb8"
+      ]
+    },
+    {
+      "ref": "#FLG2",
+      "value": "SOURCE GND",
+      "spec": "B1:PWR_FLAG",
+      "pins": [
+        [
+          "1",
+          "pwr",
+          "power_out"
+        ]
+      ],
+      "fp": "",
+      "nets": {
+        "1": "GND"
+      },
+      "group": "SUPPLY_REFERENCES",
+      "mpn": "",
+      "note": "Power source declaration; not a fitted component",
+      "place": null,
+      "side": "F",
+      "virtual": true,
+      "sym_h": 3.81,
+      "xy": [
+        52.07,
+        80.00999999999999
+      ],
+      "page": 6,
+      "uuid": "7f428355-7f4a-5354-b888-54931159e214",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "1223c5b7-a813-50e2-a5b1-be423a057db7",
+        "7f428355-7f4a-5354-b888-54931159e214"
+      ]
+    },
+    {
+      "ref": "#FLG3",
+      "value": "SOURCE V1V55",
+      "spec": "B1:PWR_FLAG",
+      "pins": [
+        [
+          "1",
+          "pwr",
+          "power_out"
+        ]
+      ],
+      "fp": "",
+      "nets": {
+        "1": "V1V55"
+      },
+      "group": "SUPPLY_REFERENCES",
+      "mpn": "",
+      "note": "Power source declaration; not a fitted component",
+      "place": null,
+      "side": "F",
+      "virtual": true,
+      "sym_h": 3.81,
+      "xy": [
+        52.07,
+        113.02999999999999
+      ],
+      "page": 6,
+      "uuid": "e7b9feca-30f2-57f8-8050-27b390abf21b",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "1223c5b7-a813-50e2-a5b1-be423a057db7",
+        "e7b9feca-30f2-57f8-8050-27b390abf21b"
+      ]
+    },
+    {
+      "ref": "#FLG4",
+      "value": "SOURCE VR_PA",
+      "spec": "B1:PWR_FLAG",
+      "pins": [
+        [
+          "1",
+          "pwr",
+          "power_out"
+        ]
+      ],
+      "fp": "",
+      "nets": {
+        "1": "VR_PA"
+      },
+      "group": "SUPPLY_REFERENCES",
+      "mpn": "",
+      "note": "Power source declaration; not a fitted component",
+      "place": null,
+      "side": "F",
+      "virtual": true,
+      "sym_h": 3.81,
+      "xy": [
+        52.07,
+        146.04999999999998
+      ],
+      "page": 6,
+      "uuid": "901156e5-0ec8-5f2b-b03b-b875e50d3d70",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "1223c5b7-a813-50e2-a5b1-be423a057db7",
+        "901156e5-0ec8-5f2b-b03b-b875e50d3d70"
+      ]
+    },
+    {
+      "ref": "#FLG5",
+      "value": "SOURCE VDDA",
+      "spec": "B1:PWR_FLAG",
+      "pins": [
+        [
+          "1",
+          "pwr",
+          "power_out"
+        ]
+      ],
+      "fp": "",
+      "nets": {
+        "1": "VDDA"
+      },
+      "group": "SUPPLY_REFERENCES",
+      "mpn": "",
+      "note": "Power source declaration; not a fitted component",
+      "place": null,
+      "side": "F",
+      "virtual": true,
+      "sym_h": 3.81,
+      "xy": [
+        52.07,
+        179.07
+      ],
+      "page": 6,
+      "uuid": "b9177f28-986c-553b-a82d-eba06092549b",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "1223c5b7-a813-50e2-a5b1-be423a057db7",
+        "b9177f28-986c-553b-a82d-eba06092549b"
+      ]
+    },
+    {
+      "ref": "#FLG6",
+      "value": "SOURCE SENS_3V3",
+      "spec": "B1:PWR_FLAG",
+      "pins": [
+        [
+          "1",
+          "pwr",
+          "power_out"
+        ]
+      ],
+      "fp": "",
+      "nets": {
+        "1": "SENS_3V3"
+      },
+      "group": "SUPPLY_REFERENCES",
+      "mpn": "",
+      "note": "Power source declaration; not a fitted component",
+      "place": null,
+      "side": "F",
+      "virtual": true,
+      "sym_h": 3.81,
+      "xy": [
+        52.07,
+        212.08999999999997
+      ],
+      "page": 6,
+      "uuid": "bbdf149a-1c26-5c24-b470-2991cb4f8c1f",
+      "path": [
+        "112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+        "1223c5b7-a813-50e2-a5b1-be423a057db7",
+        "bbdf149a-1c26-5c24-b470-2991cb4f8c1f"
+      ]
+    }
+  ],
+  "keepouts": [
+    [
+      "ANTENNA_EXIT",
+      [
+        39,
+        0,
+        45,
+        6
+      ]
+    ]
+  ],
+  "notes": []
+}

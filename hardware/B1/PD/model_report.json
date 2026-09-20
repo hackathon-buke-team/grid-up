@@ -1,0 +1,542 @@
+[
+  {
+    "ref": "J1",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "U1",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "L1",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "R1",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "R2",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "C1",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "C2",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "Q1",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "Q2",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "R3",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "R4",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "R5",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "R6",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "C3",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "R7",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "Q3",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "R8",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "U10",
+    "available": true,
+    "generic_body": true
+  },
+  {
+    "ref": "R9",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "R10",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "C4",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "J3",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "R11",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "C5",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "C6",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "C7",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "C8",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "C9",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "C10",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "C11",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "R12",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "C12",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "C13",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "Y1",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "Y2",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "C14",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "C15",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "U2",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "R13",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "C16",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "R14",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "R15",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "L2",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "C17",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "C18",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "L3",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "C19",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "C20",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "L4",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "C21",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "C22",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "L5",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "C23",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "C24",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "L6",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "C25",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "U3",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "C26",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "J4",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "U4",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "L7",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "R16",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "R17",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "R18",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "C27",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "C28",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "J5",
+    "available": false,
+    "generic_body": false
+  },
+  {
+    "ref": "R19",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "C29",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "J6",
+    "available": false,
+    "generic_body": false
+  },
+  {
+    "ref": "R20",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "C30",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "U5",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "C31",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "C32",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "L8",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "U6",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "L9",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "C33",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "C34",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "U7",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "C35",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "C36",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "R21",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "C37",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "C38",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "R22",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "C39",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "U8",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "R23",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "R24",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "C40",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "U9",
+    "available": false,
+    "generic_body": false
+  },
+  {
+    "ref": "C41",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "J7",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "C42",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "R25",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "R26",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "R27",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "C43",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "Q4",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "Q5",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "R28",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "U11",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "R29",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "R30",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "C44",
+    "available": true,
+    "generic_body": false
+  },
+  {
+    "ref": "J8",
+    "available": true,
+    "generic_body": false
+  }
+]

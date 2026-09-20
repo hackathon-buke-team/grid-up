@@ -1,0 +1,26 @@
+{
+  "TC": {
+    "erc": {},
+    "drc": {},
+    "unconnected": 167,
+    "schematic_parity": 0
+  },
+  "IR": {
+    "erc": {},
+    "drc": {},
+    "unconnected": 162,
+    "schematic_parity": 0
+  },
+  "PD": {
+    "erc": {},
+    "drc": {},
+    "unconnected": 253,
+    "schematic_parity": 0
+  },
+  "GW": {
+    "erc": {},
+    "drc": {},
+    "unconnected": 396,
+    "schematic_parity": 0
+  }
+}

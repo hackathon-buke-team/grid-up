@@ -1,0 +1,35 @@
+PANO GOZ - pano/hucre ici anomali erken uyari sistemi
+Ureti yazilimi: panogoz-node 1.0.0   hedef STM32WLE5CC (Cortex-M4 + 868 MHz radyo)
+Kayan nokta yok, libm yok, ilk kurulumdan sonra dinamik ayirma yok.
+
+================================================================
+ Sadece enerji butcesi tablosu
+================================================================
+
+  ENERJI BUTCESI  (ER14250 Li-SOCl2, 1.2 Ah nominal, 3.6 V)
+  ----------------------------------------------------------------
+  durum      akim uA     sure ms      yuk nAs       enerji mJ
+  WAKE           5000      120.00       600000          2.160
+  SENSE          5000       20.00       100000          0.360
+  CT             5000       22.00       110000          0.396
+  COMPUTE        5000        3.00        15000          0.054
+  FRAM           6000        1.20         7200          0.025
+  TX            30000       77.00      2310000          8.316
+  RX            11000       60.00       660000          2.376
+  SLEEP          50.0   (B1 analog + FRAM standby + STOP2/RTC/IWDG payi)
+  toplam/cevrim: 303.2 ms uyanik, 3802.2 uAs, 13687 uJ
+
+  kadans      periyot   ort. akim   +oz desarj    omur
+  IDLE         900 s     54.21 uA    55.58 uA     764 gun (2.1 yil)
+  WATCH         60 s    113.12 uA   114.49 uA     371 gun (1.0 yil)
+  BURST         10 s    428.70 uA   430.07 uA      98 gun (0.3 yil)
+  GOREV KARMASI (%97.0 idle / %2.5 watch / %0.5 burst):
+     ortalama 58.92 uA  ->  721 gun = 2.0 YIL  (B1 TAHMIN; fiziksel olcum yok)
+  Enerji hasadi YOK. Birincil Li-SOCl2 hucre, sarj devresi yok.
+  HAL girdisi (hostta simule): OCV 3.610 V, 50 mA yuk altinda 3.410 V, harcanan 0.0 uAs, kalan %100
+  ----------------------------------------------------------------
+
+DURUSTLUK: PANO GOZ KORUMA DEGILDIR. ABB TVOC-2 ayni panoda arki
+~1 ms'de, SIL-2 donanimda, yazilim devrede olmadan keser. Bu dugum
+gozler, konumlandirir, zaman damgalar ve yukseltir. Bildirim
+gecikmesi 4-13 saniyelik bir ARALIKTIR, tek bir temiz sayi degil.

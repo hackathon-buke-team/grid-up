@@ -1,0 +1,86 @@
+{
+    "$schema": "https://schemas.kicad.org/erc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-09-20T13:27:38",
+    "ignored_checks": [
+        {
+            "description": "Global label only appears once in the schematic",
+            "key": "single_global_label"
+        },
+        {
+            "description": "Four connection points are joined together",
+            "key": "four_way_junction"
+        },
+        {
+            "description": "SPICE model issue",
+            "key": "simulation_model_issue"
+        },
+        {
+            "description": "Assigned footprint doesn't match footprint filters",
+            "key": "footprint_filter"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning"
+    ],
+    "kicad_version": "10.0.6",
+    "sheets": [
+        {
+            "path": "/",
+            "uuid_path": "/f96c2f85-d8dd-599a-88e1-42784ba39471",
+            "violations": []
+        },
+        {
+            "path": "/01 / POWER/",
+            "uuid_path": "/f96c2f85-d8dd-599a-88e1-42784ba39471/7c20d621-93ac-5c6a-94d5-2fcd38e4fb35",
+            "violations": []
+        },
+        {
+            "path": "/02 / MCU_MEMORY/",
+            "uuid_path": "/f96c2f85-d8dd-599a-88e1-42784ba39471/13826b48-42c9-5e4b-b406-358d807bc4eb",
+            "violations": []
+        },
+        {
+            "path": "/03 / MCU_MEMORY/",
+            "uuid_path": "/f96c2f85-d8dd-599a-88e1-42784ba39471/0d12d439-7bd1-551d-8718-8fd2a9f9bde2",
+            "violations": []
+        },
+        {
+            "path": "/04 / ETHERNET/",
+            "uuid_path": "/f96c2f85-d8dd-599a-88e1-42784ba39471/d2126d15-2cc6-5f47-b6ac-f5de3a00db0d",
+            "violations": []
+        },
+        {
+            "path": "/05 / RS485/",
+            "uuid_path": "/f96c2f85-d8dd-599a-88e1-42784ba39471/0d50d896-0746-5724-b181-411ed9eaf996",
+            "violations": []
+        },
+        {
+            "path": "/06 / RS485/",
+            "uuid_path": "/f96c2f85-d8dd-599a-88e1-42784ba39471/b99f55dd-c886-5fc9-b719-bca8a67cf5af",
+            "violations": []
+        },
+        {
+            "path": "/07 / LORA/",
+            "uuid_path": "/f96c2f85-d8dd-599a-88e1-42784ba39471/4e053cdb-09bc-5906-82c2-64abbf1caa11",
+            "violations": []
+        },
+        {
+            "path": "/08 / LTE/",
+            "uuid_path": "/f96c2f85-d8dd-599a-88e1-42784ba39471/08312f84-4916-5176-aa07-f1f58faa4559",
+            "violations": []
+        },
+        {
+            "path": "/09 / HOLDUP/",
+            "uuid_path": "/f96c2f85-d8dd-599a-88e1-42784ba39471/7a760774-4014-5573-8f65-4756168cb88b",
+            "violations": []
+        },
+        {
+            "path": "/10 / SUPPLY_REFERENCES/",
+            "uuid_path": "/f96c2f85-d8dd-599a-88e1-42784ba39471/08a72f03-a2e2-5435-a358-2863f3c76902",
+            "violations": []
+        }
+    ],
+    "source": "PANOGOZ-GW-B1.kicad_sch"
+}

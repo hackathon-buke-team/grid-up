@@ -1,3 +1,5 @@
+> **K1 B1 / 20.09.2026:** K1 alanında gerçek KiCad/STEP ve STM32WLE5 TC hedef derlemesi eklendi; giriş `hardware/README.md`. Aşağıdaki geçmiş enerji sonuçları B1 için güncel değildir: görev karması artık 58,92 µA / 721 gün varsayımıdır. contracts ve K2/K3/K4 uygulama kodu değişmedi. Gerçek kart/RF testi, IR/PD/GW hedef sürücüleri ve eksiksiz tedarik fiyatı açık kalır.
+
 # Claude Code devir notu
 
 Tarih: 11 Eylül 2026

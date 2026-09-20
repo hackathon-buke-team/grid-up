@@ -44,7 +44,7 @@ static const char *const s_state_names[PG_ST_COUNT] = {
 
 const char *pg_state_name(pg_state_t s)
 {
-    if ((int)s < 0 || (int)s >= PG_ST_COUNT) return "?";
+    if ((unsigned)s >= PG_ST_COUNT) return "?";
     return s_state_names[s];
 }
 
@@ -304,7 +304,7 @@ static const char *const s_ota_names[PG_OTA_COUNT] = {
 
 const char *pg_ota_state_name(pg_ota_state_t s)
 {
-    if ((int)s < 0 || (int)s >= PG_OTA_COUNT) return "?";
+    if ((unsigned)s >= PG_OTA_COUNT) return "?";
     return s_ota_names[s];
 }
 
@@ -489,6 +489,8 @@ static void str_copy(char *dst, int cap, const char *src)
 void pg_node_init(pg_node_t *n, uint16_t node_id, uint16_t i_ref_a)
 {
     int i;
+    static const char *const devices[]={"TC-01","TC-02","TC-03","TC-04","TC-05","TC-06"};
+    static const char *const joints[]={"C06-L1-PABUC","C06-L2-PABUC","C06-L3-PABUC","C07-L1-PABUC","C07-L2-PABUC","C07-L3-PABUC"};
     for (i = 0; i < (int)sizeof *n; i++) ((uint8_t *)n)[i] = 0;
     n->node_id = node_id;
     n->i_ref_a = i_ref_a;
@@ -497,8 +499,8 @@ void pg_node_init(pg_node_t *n, uint16_t node_id, uint16_t i_ref_a)
     n->prpd = 0;
     n->has_ct = 1;
     str_copy(n->panel, sizeof n->panel, "SOKE-14");
-    str_copy(n->device, sizeof n->device, "TC-04");
-    str_copy(n->joint, sizeof n->joint, "C06-L1-PABUC");
+    str_copy(n->device, sizeof n->device, node_id>=0x101 && node_id<=0x106 ? devices[node_id-0x101] : "UNASSIGNED");
+    str_copy(n->joint, sizeof n->joint, node_id>=0x101 && node_id<=0x106 ? joints[node_id-0x101] : "UNASSIGNED");
     pg_edge_init(&n->edge);
     pg_time_init(&n->clock);
     pg_power_init(&n->power);
@@ -528,7 +530,7 @@ static int node_sample(pg_node_t *n, pg_sample_t *s)
     s->i_ma    = i_ma;
     s->vbat_mv = hal_vbat_mv();
     s->mcu_c   = hal_mcu_temp_c();
-    s->ok      = (t != PG_T_FAULT) ? 1u : 0u;
+    s->ok      = (t != PG_T_FAULT && (!n->has_ct || i_ma >= 0)) ? 1u : 0u;
     (void)t0;
     return s->ok;
 }
@@ -623,6 +625,8 @@ pg_state_t pg_node_step(pg_node_t *n)
 
         pg_power_charge(&n->power, PG_PWR_WAKE, pg_pwr_table[PG_PWR_WAKE].typ_us);
         node_sample(n, &s);
+        if (s.ok) n->flags &= ~PG_F_SENSOR_FAULT;
+        else      n->flags |= PG_F_SENSOR_FAULT;
 
         period_us = hal_mains_period_us();
         if (period_us) pg_time_zero_cross(&n->clock, period_us);
@@ -632,7 +636,7 @@ pg_state_t pg_node_step(pg_node_t *n)
          * dead panel and vice versa; when only one is missing we say
          * MOUNT_LOST or SENSOR_FAULT instead, because "the panel is off" and
          * "our sensor came adrift" are different work orders. */
-        if (period_us == 0 && (s.i_ma <= 0 || s.i_ma < 500)) {
+        if (n->has_ct && s.ok && period_us == 0 && s.i_ma >= 0 && s.i_ma < 500) {
             n->state = PG_ST_DE_ENERGISED;
             break;
         }
@@ -642,7 +646,6 @@ pg_state_t pg_node_step(pg_node_t *n)
         else                 n->flags &= ~PG_F_MOUNT_LOST;
 
         if (s.ok) pg_edge_push(&n->edge, &s);
-        else      n->flags |= PG_F_SENSOR_FAULT;
 
         pg_power_update_cell(&n->power, s.vbat_mv, n->power.vloaded_mv);
         if (n->power.low)      n->flags |= PG_F_CELL_LOW;
@@ -1072,7 +1075,10 @@ static pg_prpd_t g_prpd;
 
 int main(void)
 {
-    pg_node_init(&g_node, 0x0104, PG_FEEDER_400_A);
+    #ifndef PG_NODE_ID
+    #define PG_NODE_ID 0x0104
+    #endif
+    pg_node_init(&g_node, PG_NODE_ID, PG_FEEDER_400_A);
     g_node.prpd = &g_prpd;
     pg_prpd_init(&g_prpd, PG_PRPD_FE_DIVIDER, 0);
     for (;;) pg_node_step(&g_node);

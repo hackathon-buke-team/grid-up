@@ -1,0 +1,18 @@
+{
+  "target": "STM32WLE5CCU6",
+  "board": "PANOGOZ-TC-B1",
+  "device": "TC-04",
+  "toolchain": "arm-none-eabi-gcc.exe (Arm GNU Toolchain 14.3.Rel1 (Build arm-14.174)) 14.3.1 20250623",
+  "flash_bytes": 26592,
+  "sram_reserved_bytes": 9856,
+  "stack_reserved_bytes": 4096,
+  "flash_device_bytes": 262144,
+  "sram_device_bytes": 65536,
+  "slot_budget_bytes": 90112,
+  "warnings": 0,
+  "undefined_symbols": 0,
+  "physical_execution_tested": false,
+  "ota_enabled": false,
+  "flash_address": "0x08000000",
+  "source_count": 29
+}

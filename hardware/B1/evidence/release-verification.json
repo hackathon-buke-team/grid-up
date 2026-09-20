@@ -1,0 +1,69 @@
+{
+  "date": "2026-09-20",
+  "baseline_commit": "74490f50a9def25faceb0655f27244f911683e74",
+  "branch": "k1-donanim-firmware",
+  "pytest": {
+    "passed": 187,
+    "failed": 0,
+    "warnings": 1,
+    "seconds": 179.83,
+    "earlier_flaky_run_retained": true
+  },
+  "host_selftest_errors": 0,
+  "c_regression": "PASS: identity, invalid CT, valid recovery, fitted sleep load",
+  "cad": {
+    "TC": {
+      "erc": {},
+      "drc": {},
+      "unconnected": 167,
+      "schematic_parity": 0
+    },
+    "IR": {
+      "erc": {},
+      "drc": {},
+      "unconnected": 162,
+      "schematic_parity": 0
+    },
+    "PD": {
+      "erc": {},
+      "drc": {},
+      "unconnected": 253,
+      "schematic_parity": 0
+    },
+    "GW": {
+      "erc": {},
+      "drc": {},
+      "unconnected": 396,
+      "schematic_parity": 0
+    }
+  },
+  "target": {
+    "target": "STM32WLE5CCU6",
+    "board": "PANOGOZ-TC-B1",
+    "device": "TC-04",
+    "toolchain": "arm-none-eabi-gcc.exe (Arm GNU Toolchain 14.3.Rel1 (Build arm-14.174)) 14.3.1 20250623",
+    "flash_bytes": 26592,
+    "sram_reserved_bytes": 9856,
+    "stack_reserved_bytes": 4096,
+    "flash_device_bytes": 262144,
+    "sram_device_bytes": 65536,
+    "slot_budget_bytes": 90112,
+    "warnings": 0,
+    "undefined_symbols": 0,
+    "physical_execution_tested": false,
+    "ota_enabled": false,
+    "flash_address": "0x08000000",
+    "source_count": 29
+  },
+  "contracts_changed": false,
+  "target_bin_sha256": "062e30f6ef25898f7da70bbd35729fca541bacb9206c0981c4147a222f7b2484",
+  "release_type": "design-and-placement; not fabrication or tested hardware",
+  "open": [
+    "complete procurement prices/MPNs/lead times",
+    "RF tune and PCB routing",
+    "physical calibration, environmental/fit tests",
+    "IR/PD sensor and GW MCU application ports",
+    "real hardware radio-to-MQTT ingest",
+    "signed OTA bootloader"
+  ]
+}

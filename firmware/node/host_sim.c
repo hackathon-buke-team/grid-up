@@ -115,6 +115,7 @@ typedef struct {
     int32_t    ambient_lsb;
 
     uint8_t    mains_ok;
+    uint8_t    ct_fault;       /* deterministic negative-control injection */
     uint8_t    mount_ok;
     uint8_t    gw_up;
     uint16_t   vbat_mv;
@@ -307,6 +308,7 @@ int32_t hal_ct_rms_ma(void)
      * mains cycle and reduced to a true RMS in the ADC DMA callback.  This
      * CT is the reason the clip can normalise theta at all: the panel's
      * 2500/5 measures the INCOMER only and no outgoing way has a utility CT. */
+    if (VP.ct_fault) return -1;
     if (!VP.mains_ok) return 0;
     return VP.i_ma[0] + rnd_sym(VP.i_ma[0] / 200 + 1);
 }
@@ -523,7 +525,7 @@ static void run_scenario(scenario_t sc, uint32_t seed, uint32_t hours, int verbo
     banner(sc_tr[sc]);
     printf(" senaryo=%s  seed=%lu  sure=%lu saat  fw=%s\n",
            sc_names[sc], (unsigned long)seed, (unsigned long)hours, PG_FW_STRING);
-    printf(" dugum: SOKE-14 / TC-04 / C06-L1-PABUC, 400 A DSYA cikisi\n");
+    printf(" dugum: SOKE-14 / TC-04 / C07-L1-PABUC, 400 A DSYA cikisi\n");
     printf("----------------------------------------------------------------\n");
 
     pg_node_init(&node, 0x0104, VP_I_REF_A);
@@ -537,7 +539,7 @@ static void run_scenario(scenario_t sc, uint32_t seed, uint32_t hours, int verbo
         prov[1] = (uint8_t)(VP_I_REF_A & 0xFF);
         prov[2] = (uint8_t)(VP_I_REF_A >> 8);
         prov[3] = 1;                                  /* has its own CT */
-        strcpy((char *)&prov[4], "C06-L1-PABUC");
+        strcpy((char *)&prov[4], "C07-L1-PABUC");
         hal_fram_write(PG_FRAM_PROV, prov, sizeof prov);
     }
 
@@ -788,9 +790,10 @@ static void run_prpd(uint32_t seed, int dump_hex)
     printf("\n Darbeler 18 ve 198 derece civarinda kumeleniyor: cos phi = 0.95\n"
            " gecikmeli bir yukun AKIM SIFIR GECISLERI. Seri mikro-ark akimla\n"
            " suruluyor - akim TEPELERINI izlemez.\n");
-    printf(" DURUSTLUK: 400 V'ta klasik kismi desarj OLMAZ (Paschen minimumu\n"
-           " 327 V). Bu kanal gevsek baglanti mikro-arkini olcer, pC-ESDEGERI\n"
-           " olarak dB cinsinden raporlanir, IEC 60270 izlenebilir DEGILDIR ve\n"
+    printf(" DURUSTLUK: Bu host senaryosu mikro-ark oruntusunu BENZETIR.\n"
+           " Nominal gerilim tek basina kismi desarji dislamaz. Gosterilen\n"
+           " goreli dB degeri kalibre edilmis pC olcumu degildir.\n"
+           " IEC 60270 izlenebilirligi yoktur ve\n"
            " AG'da tek basina asla is emri acmaz - yalnizca isil bulguyu\n"
            " destekler.\n");
 }

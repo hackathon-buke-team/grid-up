@@ -1,0 +1,4044 @@
+{
+  "currency": "USD",
+  "date": "2026-09-20",
+  "price_basis": "quantity-one list price; not a quote; taxes, shipping, assembly excluded",
+  "known_subtotal_usd": 162.68,
+  "complete_kit_cost_usd": null,
+  "unpriced_line_count": 206,
+  "rows": [
+    {
+      "board": "TC",
+      "refs": [
+        "J1"
+      ],
+      "value": "CELL + HLC",
+      "mpn_or_engineering_spec": "CELL + HLC",
+      "footprint": "Connector_JST:JST_SH_SM02B-SRSS-TB_1x02-1MP_P1.00mm_Horizontal",
+      "per_board": 1,
+      "per_kit": 6,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=CELL%20%2B%20HLC"
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "U1"
+      ],
+      "value": "TPS7A0230PDBVR",
+      "mpn_or_engineering_spec": "TPS7A0230PDBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-5",
+      "per_board": 1,
+      "per_kit": 6,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=TPS7A0230PDBVR"
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "C1",
+        "C2",
+        "C13",
+        "C28",
+        "C30"
+      ],
+      "value": "1uF",
+      "mpn_or_engineering_spec": "X7R 16V 1uF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 5,
+      "per_kit": 30,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "MLCC with verified effective capacitance at bias; exact vendor MPN pending",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%201uF"
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "Q1"
+      ],
+      "value": "AO3401A",
+      "mpn_or_engineering_spec": "AO3401A",
+      "footprint": "Package_TO_SOT_SMD:SOT-23",
+      "per_board": 1,
+      "per_kit": 6,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=AO3401A"
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "Q2",
+        "Q3"
+      ],
+      "value": "2N7002",
+      "mpn_or_engineering_spec": "2N7002",
+      "footprint": "Package_TO_SOT_SMD:SOT-23",
+      "per_board": 2,
+      "per_kit": 12,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=2N7002"
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "R1",
+        "R2",
+        "R18",
+        "R19"
+      ],
+      "value": "1M",
+      "mpn_or_engineering_spec": "1% thick film 1M",
+      "footprint": "Resistor_SMD:R_0402_1005Metric",
+      "per_board": 4,
+      "per_kit": 24,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%201M"
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "R3",
+        "R4",
+        "R6",
+        "R9",
+        "R11",
+        "R16"
+      ],
+      "value": "100k",
+      "mpn_or_engineering_spec": "1% thick film 100k",
+      "footprint": "Resistor_SMD:R_0402_1005Metric",
+      "per_board": 6,
+      "per_kit": 36,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%20100k"
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "C3"
+      ],
+      "value": "10nF",
+      "mpn_or_engineering_spec": "X7R 16V 10nF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 6,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2010nF"
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "R5"
+      ],
+      "value": "68R 0.5W",
+      "mpn_or_engineering_spec": "1% thick film 68R 0.5W",
+      "footprint": "Resistor_SMD:R_1210_3225Metric",
+      "per_board": 1,
+      "per_kit": 6,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%2068R%200.5W"
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "U10"
+      ],
+      "value": "STM32WLE5CCU6",
+      "mpn_or_engineering_spec": "STM32WLE5CCU6",
+      "footprint": "Package_DFN_QFN:QFN-48-1EP_7x7mm_P0.5mm_EP5.6x5.6mm",
+      "per_board": 1,
+      "per_kit": 6,
+      "supplier": "DigiKey",
+      "unit_usd": 9.26,
+      "price_status": "OBSERVED_QTY1_USD",
+      "checked": "2026-09-20",
+      "lead_time": "Stock shown 4540; shipping/lead time reconfirm",
+      "alternative": "Same device, alternate authorized distributor",
+      "url": "https://www.digikey.com/es/products/detail/stmicroelectronics/STM32WLE5CCU6/13557445"
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "R7",
+        "R8"
+      ],
+      "value": "10k",
+      "mpn_or_engineering_spec": "1% thick film 10k",
+      "footprint": "Resistor_SMD:R_0402_1005Metric",
+      "per_board": 2,
+      "per_kit": 12,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%2010k"
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "C4",
+        "C5",
+        "C6",
+        "C7",
+        "C8",
+        "C11",
+        "C12",
+        "C16",
+        "C27",
+        "C31"
+      ],
+      "value": "100nF",
+      "mpn_or_engineering_spec": "X7R 16V 100nF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 10,
+      "per_kit": 60,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%20100nF"
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "J2"
+      ],
+      "value": "SWD TC2030",
+      "mpn_or_engineering_spec": "SWD TC2030",
+      "footprint": "Connector:Tag-Connect_TC2030-IDC-NL_2x03_P1.27mm_Vertical",
+      "per_board": 1,
+      "per_kit": 6,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=SWD%20TC2030"
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "J3"
+      ],
+      "value": "MOUNT switch",
+      "mpn_or_engineering_spec": "MOUNT switch",
+      "footprint": "Connector_JST:JST_SH_SM02B-SRSS-TB_1x02-1MP_P1.00mm_Horizontal",
+      "per_board": 1,
+      "per_kit": 6,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=MOUNT%20switch"
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "C9",
+        "C10"
+      ],
+      "value": "4.7uF",
+      "mpn_or_engineering_spec": "X7R 16V 4.7uF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 2,
+      "per_kit": 12,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%204.7uF"
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "R10",
+        "R15"
+      ],
+      "value": "0R",
+      "mpn_or_engineering_spec": "1% thick film 0R",
+      "footprint": "Resistor_SMD:R_0402_1005Metric",
+      "per_board": 2,
+      "per_kit": 12,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%200R"
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "Y1"
+      ],
+      "value": "32MHz CL=10pF",
+      "mpn_or_engineering_spec": "32MHz CL=10pF",
+      "footprint": "Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm",
+      "per_board": 1,
+      "per_kit": 6,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=32MHz%20CL%3D10pF"
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "Y2"
+      ],
+      "value": "32.768kHz CL=6pF",
+      "mpn_or_engineering_spec": "32.768kHz CL=6pF",
+      "footprint": "Crystal:Crystal_SMD_3215-2Pin_3.2x1.5mm",
+      "per_board": 1,
+      "per_kit": 6,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=32.768kHz%20CL%3D6pF"
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "C14",
+        "C15"
+      ],
+      "value": "6pF",
+      "mpn_or_engineering_spec": "X7R 16V 6pF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 2,
+      "per_kit": 12,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%206pF"
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "U2"
+      ],
+      "value": "MB85RS64V",
+      "mpn_or_engineering_spec": "MB85RS64V",
+      "footprint": "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm",
+      "per_board": 1,
+      "per_kit": 6,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=MB85RS64V"
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "R12",
+        "R13"
+      ],
+      "value": "4.7k",
+      "mpn_or_engineering_spec": "1% thick film 4.7k",
+      "footprint": "Resistor_SMD:R_0402_1005Metric",
+      "per_board": 2,
+      "per_kit": 12,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%204.7k"
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "L1"
+      ],
+      "value": "47nH",
+      "mpn_or_engineering_spec": "47nH",
+      "footprint": "Inductor_SMD:L_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 6,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=47nH"
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "C17",
+        "C29"
+      ],
+      "value": "47nF",
+      "mpn_or_engineering_spec": "X7R 16V 47nF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 2,
+      "per_kit": 12,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2047nF"
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "C18",
+        "C22",
+        "C26"
+      ],
+      "value": "68pF",
+      "mpn_or_engineering_spec": "X7R 16V 68pF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 3,
+      "per_kit": 18,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2068pF"
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "L2"
+      ],
+      "value": "4.4nH",
+      "mpn_or_engineering_spec": "4.4nH",
+      "footprint": "Inductor_SMD:L_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 6,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=4.4nH"
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "C19"
+      ],
+      "value": "5.5pF",
+      "mpn_or_engineering_spec": "X7R 16V 5.5pF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 6,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%205.5pF"
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "C20"
+      ],
+      "value": "2.5pF",
+      "mpn_or_engineering_spec": "X7R 16V 2.5pF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 6,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%202.5pF"
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "L3"
+      ],
+      "value": "3.4nH",
+      "mpn_or_engineering_spec": "3.4nH",
+      "footprint": "Inductor_SMD:L_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 6,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=3.4nH"
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "C21"
+      ],
+      "value": "4.3pF",
+      "mpn_or_engineering_spec": "X7R 16V 4.3pF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 6,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%204.3pF"
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "L4"
+      ],
+      "value": "9.2nH",
+      "mpn_or_engineering_spec": "9.2nH",
+      "footprint": "Inductor_SMD:L_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 6,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=9.2nH"
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "C23"
+      ],
+      "value": "3.5pF",
+      "mpn_or_engineering_spec": "X7R 16V 3.5pF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 6,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%203.5pF"
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "C24"
+      ],
+      "value": "4.5pF",
+      "mpn_or_engineering_spec": "X7R 16V 4.5pF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 6,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%204.5pF"
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "L5"
+      ],
+      "value": "12nH",
+      "mpn_or_engineering_spec": "12nH",
+      "footprint": "Inductor_SMD:L_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 6,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=12nH"
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "C25"
+      ],
+      "value": "2.7pF",
+      "mpn_or_engineering_spec": "X7R 16V 2.7pF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 6,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%202.7pF"
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "U3"
+      ],
+      "value": "PE4259",
+      "mpn_or_engineering_spec": "PE4259",
+      "footprint": "Package_TO_SOT_SMD:SOT-363_SC-70-6",
+      "per_board": 1,
+      "per_kit": 6,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=PE4259"
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "J4"
+      ],
+      "value": "868 MHz u.FL",
+      "mpn_or_engineering_spec": "868 MHz u.FL",
+      "footprint": "Connector_Coaxial:U.FL_Hirose_U.FL-R-SMT-1_Vertical",
+      "per_board": 1,
+      "per_kit": 6,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=868%20MHz%20u.FL"
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "U4"
+      ],
+      "value": "TMP117AIDRVR",
+      "mpn_or_engineering_spec": "TMP117AIDRVR",
+      "footprint": "Package_SON:WSON-6-1EP_2x2mm_P0.65mm_EP1x1.6mm",
+      "per_board": 1,
+      "per_kit": 6,
+      "supplier": "DigiKey",
+      "unit_usd": 5.56,
+      "price_status": "OBSERVED_QTY1_USD",
+      "checked": "2026-09-20",
+      "lead_time": "9 weeks standard; incoming 20 Oct 2026 shown",
+      "alternative": "TMP117AIDRVT (same industrial die/package; reel size)",
+      "url": "https://www.digikey.com/en/products/detail/texas-instruments/TMP117AIDRVR/9685284"
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "J5"
+      ],
+      "value": "CT 3000:1",
+      "mpn_or_engineering_spec": "CT 3000:1",
+      "footprint": "Connector_JST:JST_SH_SM02B-SRSS-TB_1x02-1MP_P1.00mm_Horizontal",
+      "per_board": 1,
+      "per_kit": 6,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=CT%203000%3A1"
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "R14"
+      ],
+      "value": "5.1R 0.1% 0.5W",
+      "mpn_or_engineering_spec": "5.1R 0.1% 0.5W precision thin film; NOT generic 1%",
+      "footprint": "Resistor_SMD:R_1210_3225Metric",
+      "per_board": 1,
+      "per_kit": 6,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%205.1R%200.1%25%200.5W"
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "R17"
+      ],
+      "value": "1k",
+      "mpn_or_engineering_spec": "1% thick film 1k",
+      "footprint": "Resistor_SMD:R_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 6,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%201k"
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "U5"
+      ],
+      "value": "OPA333AIDBVR",
+      "mpn_or_engineering_spec": "OPA333AIDBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-5",
+      "per_board": 1,
+      "per_kit": 6,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=OPA333AIDBVR"
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "U6"
+      ],
+      "value": "BAT54S",
+      "mpn_or_engineering_spec": "BAT54S",
+      "footprint": "Package_TO_SOT_SMD:SOT-23",
+      "per_board": 1,
+      "per_kit": 6,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=BAT54S"
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "U7"
+      ],
+      "value": "TLV3691IDCKR",
+      "mpn_or_engineering_spec": "TLV3691IDCKR",
+      "footprint": "Package_TO_SOT_SMD:SOT-353_SC-70-5",
+      "per_board": 1,
+      "per_kit": 6,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=TLV3691IDCKR"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "J1"
+      ],
+      "value": "CELL + HLC",
+      "mpn_or_engineering_spec": "CELL + HLC",
+      "footprint": "Connector_JST:JST_SH_SM02B-SRSS-TB_1x02-1MP_P1.00mm_Horizontal",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=CELL%20%2B%20HLC"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "U1"
+      ],
+      "value": "TPS63900DSKR",
+      "mpn_or_engineering_spec": "TPS63900DSKR",
+      "footprint": "Package_SON:WSON-10-1EP_2.5x2.5mm_P0.5mm_EP1.2x2mm_ThermalVias",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=TPS63900DSKR"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "L1"
+      ],
+      "value": "2.2uH Isat>=1A",
+      "mpn_or_engineering_spec": "2.2uH Isat>=1A",
+      "footprint": "Inductor_SMD:L_0805_2012Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=2.2uH%20Isat%3E%3D1A"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "R1"
+      ],
+      "value": "36.5k",
+      "mpn_or_engineering_spec": "1% thick film 36.5k",
+      "footprint": "Resistor_SMD:R_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%2036.5k"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "R2"
+      ],
+      "value": "16.2k",
+      "mpn_or_engineering_spec": "1% thick film 16.2k",
+      "footprint": "Resistor_SMD:R_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%2016.2k"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "C1",
+        "C28"
+      ],
+      "value": "10uF",
+      "mpn_or_engineering_spec": "X7R 16V 10uF",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "per_board": 2,
+      "per_kit": 2,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "MLCC with verified effective capacitance at bias; exact vendor MPN pending",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2010uF"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "C2"
+      ],
+      "value": "22uF",
+      "mpn_or_engineering_spec": "X7R 16V 22uF",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "MLCC with verified effective capacitance at bias; exact vendor MPN pending",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2022uF"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "Q1",
+        "Q4"
+      ],
+      "value": "AO3401A",
+      "mpn_or_engineering_spec": "AO3401A",
+      "footprint": "Package_TO_SOT_SMD:SOT-23",
+      "per_board": 2,
+      "per_kit": 2,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=AO3401A"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "Q2",
+        "Q3",
+        "Q5"
+      ],
+      "value": "2N7002",
+      "mpn_or_engineering_spec": "2N7002",
+      "footprint": "Package_TO_SOT_SMD:SOT-23",
+      "per_board": 3,
+      "per_kit": 3,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=2N7002"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "R3",
+        "R4"
+      ],
+      "value": "1M",
+      "mpn_or_engineering_spec": "1% thick film 1M",
+      "footprint": "Resistor_SMD:R_0402_1005Metric",
+      "per_board": 2,
+      "per_kit": 2,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%201M"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "R5",
+        "R6",
+        "R8",
+        "R11",
+        "R13",
+        "R16",
+        "R17"
+      ],
+      "value": "100k",
+      "mpn_or_engineering_spec": "1% thick film 100k",
+      "footprint": "Resistor_SMD:R_0402_1005Metric",
+      "per_board": 7,
+      "per_kit": 7,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%20100k"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "C3"
+      ],
+      "value": "10nF",
+      "mpn_or_engineering_spec": "X7R 16V 10nF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2010nF"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "R7"
+      ],
+      "value": "68R 0.5W",
+      "mpn_or_engineering_spec": "1% thick film 68R 0.5W",
+      "footprint": "Resistor_SMD:R_1210_3225Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%2068R%200.5W"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "U10"
+      ],
+      "value": "STM32WLE5CCU6",
+      "mpn_or_engineering_spec": "STM32WLE5CCU6",
+      "footprint": "Package_DFN_QFN:QFN-48-1EP_7x7mm_P0.5mm_EP5.6x5.6mm",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey",
+      "unit_usd": 9.26,
+      "price_status": "OBSERVED_QTY1_USD",
+      "checked": "2026-09-20",
+      "lead_time": "Stock shown 4540; shipping/lead time reconfirm",
+      "alternative": "Same device, alternate authorized distributor",
+      "url": "https://www.digikey.com/es/products/detail/stmicroelectronics/STM32WLE5CCU6/13557445"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "R9",
+        "R10"
+      ],
+      "value": "10k",
+      "mpn_or_engineering_spec": "1% thick film 10k",
+      "footprint": "Resistor_SMD:R_0402_1005Metric",
+      "per_board": 2,
+      "per_kit": 2,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%2010k"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "C4",
+        "C5",
+        "C6",
+        "C7",
+        "C8",
+        "C11",
+        "C12",
+        "C16",
+        "C27",
+        "C29"
+      ],
+      "value": "100nF",
+      "mpn_or_engineering_spec": "X7R 16V 100nF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 10,
+      "per_kit": 10,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%20100nF"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "J2"
+      ],
+      "value": "SWD TC2030",
+      "mpn_or_engineering_spec": "SWD TC2030",
+      "footprint": "Connector:Tag-Connect_TC2030-IDC-NL_2x03_P1.27mm_Vertical",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=SWD%20TC2030"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "J3"
+      ],
+      "value": "MOUNT switch",
+      "mpn_or_engineering_spec": "MOUNT switch",
+      "footprint": "Connector_JST:JST_SH_SM02B-SRSS-TB_1x02-1MP_P1.00mm_Horizontal",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=MOUNT%20switch"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "C9",
+        "C10"
+      ],
+      "value": "4.7uF",
+      "mpn_or_engineering_spec": "X7R 16V 4.7uF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 2,
+      "per_kit": 2,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%204.7uF"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "R12"
+      ],
+      "value": "0R",
+      "mpn_or_engineering_spec": "1% thick film 0R",
+      "footprint": "Resistor_SMD:R_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%200R"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "C13"
+      ],
+      "value": "1uF",
+      "mpn_or_engineering_spec": "X7R 16V 1uF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "MLCC with verified effective capacitance at bias; exact vendor MPN pending",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%201uF"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "Y1"
+      ],
+      "value": "32MHz CL=10pF",
+      "mpn_or_engineering_spec": "32MHz CL=10pF",
+      "footprint": "Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=32MHz%20CL%3D10pF"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "Y2"
+      ],
+      "value": "32.768kHz CL=6pF",
+      "mpn_or_engineering_spec": "32.768kHz CL=6pF",
+      "footprint": "Crystal:Crystal_SMD_3215-2Pin_3.2x1.5mm",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=32.768kHz%20CL%3D6pF"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "C14",
+        "C15"
+      ],
+      "value": "6pF",
+      "mpn_or_engineering_spec": "X7R 16V 6pF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 2,
+      "per_kit": 2,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%206pF"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "U2"
+      ],
+      "value": "MB85RS64V",
+      "mpn_or_engineering_spec": "MB85RS64V",
+      "footprint": "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=MB85RS64V"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "R14",
+        "R15"
+      ],
+      "value": "4.7k",
+      "mpn_or_engineering_spec": "1% thick film 4.7k",
+      "footprint": "Resistor_SMD:R_0402_1005Metric",
+      "per_board": 2,
+      "per_kit": 2,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%204.7k"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "L2"
+      ],
+      "value": "47nH",
+      "mpn_or_engineering_spec": "47nH",
+      "footprint": "Inductor_SMD:L_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=47nH"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "C17"
+      ],
+      "value": "47nF",
+      "mpn_or_engineering_spec": "X7R 16V 47nF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2047nF"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "C18",
+        "C22",
+        "C26"
+      ],
+      "value": "68pF",
+      "mpn_or_engineering_spec": "X7R 16V 68pF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 3,
+      "per_kit": 3,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2068pF"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "L3"
+      ],
+      "value": "4.4nH",
+      "mpn_or_engineering_spec": "4.4nH",
+      "footprint": "Inductor_SMD:L_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=4.4nH"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "C19"
+      ],
+      "value": "5.5pF",
+      "mpn_or_engineering_spec": "X7R 16V 5.5pF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%205.5pF"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "C20"
+      ],
+      "value": "2.5pF",
+      "mpn_or_engineering_spec": "X7R 16V 2.5pF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%202.5pF"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "L4"
+      ],
+      "value": "3.4nH",
+      "mpn_or_engineering_spec": "3.4nH",
+      "footprint": "Inductor_SMD:L_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=3.4nH"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "C21"
+      ],
+      "value": "4.3pF",
+      "mpn_or_engineering_spec": "X7R 16V 4.3pF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%204.3pF"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "L5"
+      ],
+      "value": "9.2nH",
+      "mpn_or_engineering_spec": "9.2nH",
+      "footprint": "Inductor_SMD:L_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=9.2nH"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "C23"
+      ],
+      "value": "3.5pF",
+      "mpn_or_engineering_spec": "X7R 16V 3.5pF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%203.5pF"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "C24"
+      ],
+      "value": "4.5pF",
+      "mpn_or_engineering_spec": "X7R 16V 4.5pF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%204.5pF"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "L6"
+      ],
+      "value": "12nH",
+      "mpn_or_engineering_spec": "12nH",
+      "footprint": "Inductor_SMD:L_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=12nH"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "C25"
+      ],
+      "value": "2.7pF",
+      "mpn_or_engineering_spec": "X7R 16V 2.7pF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%202.7pF"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "U3"
+      ],
+      "value": "PE4259",
+      "mpn_or_engineering_spec": "PE4259",
+      "footprint": "Package_TO_SOT_SMD:SOT-363_SC-70-6",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=PE4259"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "J4"
+      ],
+      "value": "868 MHz u.FL",
+      "mpn_or_engineering_spec": "868 MHz u.FL",
+      "footprint": "Connector_Coaxial:U.FL_Hirose_U.FL-R-SMT-1_Vertical",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=868%20MHz%20u.FL"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "U4"
+      ],
+      "value": "MLX90640ESF-BAA-000-TU",
+      "mpn_or_engineering_spec": "MLX90640ESF-BAA-000-TU",
+      "footprint": "Package_TO_SOT_THT:TO-39-4_Window",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey",
+      "unit_usd": 38.15,
+      "price_status": "OBSERVED_QTY1_USD",
+      "checked": "2026-09-20",
+      "lead_time": "Stock shown 174; lead time unconfirmed",
+      "alternative": "MLX90640ESF-BAA-000-SP; packaging only, NOT BAB",
+      "url": "https://www.digikey.in/en/products/detail/melexis-technologies-nv/MLX90640ESF-BAA-000-TU/8638463"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "U5"
+      ],
+      "value": "SHT41-AD1B-R2",
+      "mpn_or_engineering_spec": "SHT41-AD1B-R2",
+      "footprint": "Sensor_Humidity:Sensirion_DFN-4_1.5x1.5mm_P0.8mm_SHT4x_NoCentralPad",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey",
+      "unit_usd": 2.95,
+      "price_status": "OBSERVED_QTY1_USD",
+      "checked": "2026-09-20",
+      "lead_time": "8 weeks standard; stock shown",
+      "alternative": "SHT41-AD1B-R3; manufacturer/distributor lists direct substitute",
+      "url": "https://www.digikey.com/en/products/detail/sensirion-ag/SHT41-AD1B-R2/15296591"
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "J5"
+      ],
+      "value": "PHASE optional",
+      "mpn_or_engineering_spec": "PHASE optional",
+      "footprint": "Connector_JST:JST_SH_SM02B-SRSS-TB_1x02-1MP_P1.00mm_Horizontal",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=PHASE%20optional"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "J1"
+      ],
+      "value": "CELL + HLC",
+      "mpn_or_engineering_spec": "CELL + HLC",
+      "footprint": "Connector_JST:JST_SH_SM02B-SRSS-TB_1x02-1MP_P1.00mm_Horizontal",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=CELL%20%2B%20HLC"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "U1"
+      ],
+      "value": "TPS63900DSKR",
+      "mpn_or_engineering_spec": "TPS63900DSKR",
+      "footprint": "Package_SON:WSON-10-1EP_2.5x2.5mm_P0.5mm_EP1.2x2mm_ThermalVias",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=TPS63900DSKR"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "L1"
+      ],
+      "value": "2.2uH Isat>=1A",
+      "mpn_or_engineering_spec": "2.2uH Isat>=1A",
+      "footprint": "Inductor_SMD:L_0805_2012Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=2.2uH%20Isat%3E%3D1A"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "R1"
+      ],
+      "value": "36.5k",
+      "mpn_or_engineering_spec": "1% thick film 36.5k",
+      "footprint": "Resistor_SMD:R_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%2036.5k"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "R2"
+      ],
+      "value": "16.2k",
+      "mpn_or_engineering_spec": "1% thick film 16.2k",
+      "footprint": "Resistor_SMD:R_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%2016.2k"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "C1",
+        "C27"
+      ],
+      "value": "10uF",
+      "mpn_or_engineering_spec": "X7R 16V 10uF",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "per_board": 2,
+      "per_kit": 2,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "MLCC with verified effective capacitance at bias; exact vendor MPN pending",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2010uF"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "C2",
+        "C28"
+      ],
+      "value": "22uF",
+      "mpn_or_engineering_spec": "X7R 16V 22uF",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "per_board": 2,
+      "per_kit": 2,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "MLCC with verified effective capacitance at bias; exact vendor MPN pending",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2022uF"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "Q1",
+        "Q4"
+      ],
+      "value": "AO3401A",
+      "mpn_or_engineering_spec": "AO3401A",
+      "footprint": "Package_TO_SOT_SMD:SOT-23",
+      "per_board": 2,
+      "per_kit": 2,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=AO3401A"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "Q2",
+        "Q3",
+        "Q5"
+      ],
+      "value": "2N7002",
+      "mpn_or_engineering_spec": "2N7002",
+      "footprint": "Package_TO_SOT_SMD:SOT-23",
+      "per_board": 3,
+      "per_kit": 3,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=2N7002"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "R3",
+        "R4"
+      ],
+      "value": "1M",
+      "mpn_or_engineering_spec": "1% thick film 1M",
+      "footprint": "Resistor_SMD:R_0402_1005Metric",
+      "per_board": 2,
+      "per_kit": 2,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%201M"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "R5",
+        "R6",
+        "R8",
+        "R11",
+        "R13",
+        "R17",
+        "R18",
+        "R23",
+        "R24",
+        "R25",
+        "R26",
+        "R27",
+        "R28",
+        "R29"
+      ],
+      "value": "100k",
+      "mpn_or_engineering_spec": "1% thick film 100k",
+      "footprint": "Resistor_SMD:R_0402_1005Metric",
+      "per_board": 14,
+      "per_kit": 14,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%20100k"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "C3",
+        "C29",
+        "C30",
+        "C38",
+        "C42"
+      ],
+      "value": "10nF",
+      "mpn_or_engineering_spec": "X7R 16V 10nF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 5,
+      "per_kit": 5,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2010nF"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "R7"
+      ],
+      "value": "68R 0.5W",
+      "mpn_or_engineering_spec": "1% thick film 68R 0.5W",
+      "footprint": "Resistor_SMD:R_1210_3225Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%2068R%200.5W"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "U10"
+      ],
+      "value": "STM32WLE5CCU6",
+      "mpn_or_engineering_spec": "STM32WLE5CCU6",
+      "footprint": "Package_DFN_QFN:QFN-48-1EP_7x7mm_P0.5mm_EP5.6x5.6mm",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey",
+      "unit_usd": 9.26,
+      "price_status": "OBSERVED_QTY1_USD",
+      "checked": "2026-09-20",
+      "lead_time": "Stock shown 4540; shipping/lead time reconfirm",
+      "alternative": "Same device, alternate authorized distributor",
+      "url": "https://www.digikey.com/es/products/detail/stmicroelectronics/STM32WLE5CCU6/13557445"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "R9",
+        "R10",
+        "R30"
+      ],
+      "value": "10k",
+      "mpn_or_engineering_spec": "1% thick film 10k",
+      "footprint": "Resistor_SMD:R_0402_1005Metric",
+      "per_board": 3,
+      "per_kit": 3,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%2010k"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "C4",
+        "C5",
+        "C6",
+        "C7",
+        "C8",
+        "C11",
+        "C12",
+        "C16",
+        "C31",
+        "C33",
+        "C37",
+        "C40",
+        "C41",
+        "C44"
+      ],
+      "value": "100nF",
+      "mpn_or_engineering_spec": "X7R 16V 100nF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 14,
+      "per_kit": 14,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%20100nF"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "J2"
+      ],
+      "value": "SWD TC2030",
+      "mpn_or_engineering_spec": "SWD TC2030",
+      "footprint": "Connector:Tag-Connect_TC2030-IDC-NL_2x03_P1.27mm_Vertical",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=SWD%20TC2030"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "J3"
+      ],
+      "value": "MOUNT switch",
+      "mpn_or_engineering_spec": "MOUNT switch",
+      "footprint": "Connector_JST:JST_SH_SM02B-SRSS-TB_1x02-1MP_P1.00mm_Horizontal",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=MOUNT%20switch"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "C9",
+        "C10"
+      ],
+      "value": "4.7uF",
+      "mpn_or_engineering_spec": "X7R 16V 4.7uF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 2,
+      "per_kit": 2,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%204.7uF"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "R12"
+      ],
+      "value": "0R",
+      "mpn_or_engineering_spec": "1% thick film 0R",
+      "footprint": "Resistor_SMD:R_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%200R"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "C13",
+        "C43"
+      ],
+      "value": "1uF",
+      "mpn_or_engineering_spec": "X7R 16V 1uF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 2,
+      "per_kit": 2,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "MLCC with verified effective capacitance at bias; exact vendor MPN pending",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%201uF"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "Y1"
+      ],
+      "value": "32MHz CL=10pF",
+      "mpn_or_engineering_spec": "32MHz CL=10pF",
+      "footprint": "Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=32MHz%20CL%3D10pF"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "Y2"
+      ],
+      "value": "32.768kHz CL=6pF",
+      "mpn_or_engineering_spec": "32.768kHz CL=6pF",
+      "footprint": "Crystal:Crystal_SMD_3215-2Pin_3.2x1.5mm",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=32.768kHz%20CL%3D6pF"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "C14",
+        "C15"
+      ],
+      "value": "6pF",
+      "mpn_or_engineering_spec": "X7R 16V 6pF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 2,
+      "per_kit": 2,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%206pF"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "U2"
+      ],
+      "value": "MB85RS64V",
+      "mpn_or_engineering_spec": "MB85RS64V",
+      "footprint": "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=MB85RS64V"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "R14",
+        "R15"
+      ],
+      "value": "4.7k",
+      "mpn_or_engineering_spec": "1% thick film 4.7k",
+      "footprint": "Resistor_SMD:R_0402_1005Metric",
+      "per_board": 2,
+      "per_kit": 2,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%204.7k"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "L2"
+      ],
+      "value": "47nH",
+      "mpn_or_engineering_spec": "47nH",
+      "footprint": "Inductor_SMD:L_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=47nH"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "C17"
+      ],
+      "value": "47nF",
+      "mpn_or_engineering_spec": "X7R 16V 47nF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2047nF"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "C18",
+        "C22",
+        "C26"
+      ],
+      "value": "68pF",
+      "mpn_or_engineering_spec": "X7R 16V 68pF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 3,
+      "per_kit": 3,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2068pF"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "L3"
+      ],
+      "value": "4.4nH",
+      "mpn_or_engineering_spec": "4.4nH",
+      "footprint": "Inductor_SMD:L_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=4.4nH"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "C19"
+      ],
+      "value": "5.5pF",
+      "mpn_or_engineering_spec": "X7R 16V 5.5pF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%205.5pF"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "C20"
+      ],
+      "value": "2.5pF",
+      "mpn_or_engineering_spec": "X7R 16V 2.5pF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%202.5pF"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "L4"
+      ],
+      "value": "3.4nH",
+      "mpn_or_engineering_spec": "3.4nH",
+      "footprint": "Inductor_SMD:L_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=3.4nH"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "C21"
+      ],
+      "value": "4.3pF",
+      "mpn_or_engineering_spec": "X7R 16V 4.3pF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%204.3pF"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "L5"
+      ],
+      "value": "9.2nH",
+      "mpn_or_engineering_spec": "9.2nH",
+      "footprint": "Inductor_SMD:L_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=9.2nH"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "C23"
+      ],
+      "value": "3.5pF",
+      "mpn_or_engineering_spec": "X7R 16V 3.5pF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%203.5pF"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "C24"
+      ],
+      "value": "4.5pF",
+      "mpn_or_engineering_spec": "X7R 16V 4.5pF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%204.5pF"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "L6"
+      ],
+      "value": "12nH",
+      "mpn_or_engineering_spec": "12nH",
+      "footprint": "Inductor_SMD:L_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=12nH"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "C25"
+      ],
+      "value": "2.7pF",
+      "mpn_or_engineering_spec": "X7R 16V 2.7pF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%202.7pF"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "U3",
+        "U5"
+      ],
+      "value": "PE4259",
+      "mpn_or_engineering_spec": "PE4259",
+      "footprint": "Package_TO_SOT_SMD:SOT-363_SC-70-6",
+      "per_board": 2,
+      "per_kit": 2,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=PE4259"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "J4"
+      ],
+      "value": "868 MHz u.FL",
+      "mpn_or_engineering_spec": "868 MHz u.FL",
+      "footprint": "Connector_Coaxial:U.FL_Hirose_U.FL-R-SMT-1_Vertical",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=868%20MHz%20u.FL"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "U4"
+      ],
+      "value": "TPS61023DRLR",
+      "mpn_or_engineering_spec": "TPS61023DRLR",
+      "footprint": "Package_TO_SOT_SMD:SOT-563",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=TPS61023DRLR"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "L7"
+      ],
+      "value": "1uH Isat>=4A",
+      "mpn_or_engineering_spec": "1uH Isat>=4A",
+      "footprint": "Inductor_SMD:L_1210_3225Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=1uH%20Isat%3E%3D4A"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "R16"
+      ],
+      "value": "732k",
+      "mpn_or_engineering_spec": "1% thick film 732k",
+      "footprint": "Resistor_SMD:R_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%20732k"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "J5"
+      ],
+      "value": "HFCT50",
+      "mpn_or_engineering_spec": "HFCT50",
+      "footprint": "Connector_Coaxial:SMA_Amphenol_132134_Vertical",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=HFCT50"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "R19",
+        "R20"
+      ],
+      "value": "49.9R",
+      "mpn_or_engineering_spec": "1% thick film 49.9R",
+      "footprint": "Resistor_SMD:R_0402_1005Metric",
+      "per_board": 2,
+      "per_kit": 2,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%2049.9R"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "J6"
+      ],
+      "value": "TEV plate",
+      "mpn_or_engineering_spec": "TEV plate",
+      "footprint": "Connector_Coaxial:SMA_Amphenol_132134_Vertical",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=TEV%20plate"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "C32"
+      ],
+      "value": "100pF",
+      "mpn_or_engineering_spec": "X7R 16V 100pF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%20100pF"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "L8"
+      ],
+      "value": "1uH",
+      "mpn_or_engineering_spec": "1uH",
+      "footprint": "Inductor_SMD:L_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=1uH"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "U6"
+      ],
+      "value": "PGA-103+",
+      "mpn_or_engineering_spec": "PGA-103+",
+      "footprint": "Package_TO_SOT_SMD:SOT-89-3",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=PGA-103%2B"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "L9"
+      ],
+      "value": "1uH",
+      "mpn_or_engineering_spec": "1uH",
+      "footprint": "Inductor_SMD:L_0805_2012Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=1uH"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "C34",
+        "C35",
+        "C39"
+      ],
+      "value": "1nF",
+      "mpn_or_engineering_spec": "X7R 16V 1nF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 3,
+      "per_kit": 3,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%201nF"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "U7"
+      ],
+      "value": "AD8318ACPZ",
+      "mpn_or_engineering_spec": "AD8318ACPZ",
+      "footprint": "Package_CSP:Analog_LFCSP-16-1EP_4x4mm_P0.65mm_EP2.35x2.35mm",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=AD8318ACPZ"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "C36"
+      ],
+      "value": "220pF",
+      "mpn_or_engineering_spec": "X7R 16V 220pF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "RF C0G high-Q capacitor / RF high-Q inductor; exact Q/SRF and tuned value pending",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%20220pF"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "R21"
+      ],
+      "value": "499R",
+      "mpn_or_engineering_spec": "1% thick film 499R",
+      "footprint": "Resistor_SMD:R_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%20499R"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "R22"
+      ],
+      "value": "1k",
+      "mpn_or_engineering_spec": "1% thick film 1k",
+      "footprint": "Resistor_SMD:R_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%201k"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "U8"
+      ],
+      "value": "TLV3201AIDBVR",
+      "mpn_or_engineering_spec": "TLV3201AIDBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-5",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=TLV3201AIDBVR"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "U9"
+      ],
+      "value": "SHT41-AD1B-R2",
+      "mpn_or_engineering_spec": "SHT41-AD1B-R2",
+      "footprint": "Sensor_Humidity:Sensirion_DFN-4_1.5x1.5mm_P0.8mm_SHT4x_NoCentralPad",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey",
+      "unit_usd": 2.95,
+      "price_status": "OBSERVED_QTY1_USD",
+      "checked": "2026-09-20",
+      "lead_time": "8 weeks standard; stock shown",
+      "alternative": "SHT41-AD1B-R3; manufacturer/distributor lists direct substitute",
+      "url": "https://www.digikey.com/en/products/detail/sensirion-ag/SHT41-AD1B-R2/15296591"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "J7"
+      ],
+      "value": "MA40S4R receiver",
+      "mpn_or_engineering_spec": "MA40S4R receiver",
+      "footprint": "Connector_JST:JST_SH_SM02B-SRSS-TB_1x02-1MP_P1.00mm_Horizontal",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=MA40S4R%20receiver"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "U11"
+      ],
+      "value": "OPA320AIDBVR",
+      "mpn_or_engineering_spec": "OPA320AIDBVR",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-5",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=OPA320AIDBVR"
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "J8"
+      ],
+      "value": "ISOLATED 50Hz PHASE",
+      "mpn_or_engineering_spec": "ISOLATED 50Hz PHASE",
+      "footprint": "Connector_JST:JST_SH_SM02B-SRSS-TB_1x02-1MP_P1.00mm_Horizontal",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=ISOLATED%2050Hz%20PHASE"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "J1"
+      ],
+      "value": "5V SELV 4A",
+      "mpn_or_engineering_spec": "5V SELV 4A",
+      "footprint": "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=5V%20SELV%204A"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "F1"
+      ],
+      "value": "3.15A slow",
+      "mpn_or_engineering_spec": "3.15A slow",
+      "footprint": "Fuse:Fuse_1206_3216Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=3.15A%20slow"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "Q1"
+      ],
+      "value": "AO3401A",
+      "mpn_or_engineering_spec": "AO3401A",
+      "footprint": "Package_TO_SOT_SMD:SOT-23",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=AO3401A"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "C1"
+      ],
+      "value": "100uF",
+      "mpn_or_engineering_spec": "X7R 16V 100uF",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "MLCC with verified effective capacitance at bias; exact vendor MPN pending",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%20100uF"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "U1",
+        "U2"
+      ],
+      "value": "TPS62130RGTR",
+      "mpn_or_engineering_spec": "TPS62130RGTR",
+      "footprint": "Package_DFN_QFN:VQFN-16-1EP_3x3mm_P0.5mm_EP1.68x1.68mm_ThermalVias",
+      "per_board": 2,
+      "per_kit": 2,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=TPS62130RGTR"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "L1",
+        "L2"
+      ],
+      "value": "2.2uH Isat>=4A",
+      "mpn_or_engineering_spec": "2.2uH Isat>=4A",
+      "footprint": "Inductor_SMD:L_1210_3225Metric",
+      "per_board": 2,
+      "per_kit": 2,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=2.2uH%20Isat%3E%3D4A"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "R1",
+        "R3"
+      ],
+      "value": "316k",
+      "mpn_or_engineering_spec": "1% thick film 316k",
+      "footprint": "Resistor_SMD:R_0402_1005Metric",
+      "per_board": 2,
+      "per_kit": 2,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%20316k"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "R2",
+        "R4",
+        "R29",
+        "R30",
+        "R34",
+        "R35"
+      ],
+      "value": "100k",
+      "mpn_or_engineering_spec": "1% thick film 100k",
+      "footprint": "Resistor_SMD:R_0402_1005Metric",
+      "per_board": 6,
+      "per_kit": 6,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%20100k"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "C2",
+        "C5",
+        "C57"
+      ],
+      "value": "10nF",
+      "mpn_or_engineering_spec": "X7R 16V 10nF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 3,
+      "per_kit": 3,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2010nF"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "C3",
+        "C6",
+        "C56"
+      ],
+      "value": "22uF",
+      "mpn_or_engineering_spec": "X7R 16V 22uF",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "per_board": 3,
+      "per_kit": 3,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "MLCC with verified effective capacitance at bias; exact vendor MPN pending",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2022uF"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "C4",
+        "C7"
+      ],
+      "value": "47uF",
+      "mpn_or_engineering_spec": "X7R 16V 47uF",
+      "footprint": "Capacitor_SMD:C_1210_3225Metric",
+      "per_board": 2,
+      "per_kit": 2,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "MLCC with verified effective capacitance at bias; exact vendor MPN pending",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2047uF"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "C8"
+      ],
+      "value": "470uF low ESR",
+      "mpn_or_engineering_spec": "X7R 16V 470uF low ESR",
+      "footprint": "Capacitor_SMD:CP_Elec_8x10",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%20470uF%20low%20ESR"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "U20"
+      ],
+      "value": "STM32H563ZIT6",
+      "mpn_or_engineering_spec": "STM32H563ZIT6",
+      "footprint": "Package_QFP:LQFP-144_20x20mm_P0.5mm",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey",
+      "unit_usd": 11.19,
+      "price_status": "OBSERVED_QTY1_USD",
+      "checked": "2026-09-20",
+      "lead_time": "No stock; incoming date varies Nov 2026",
+      "alternative": "STM32H563ZIT6TR; packaging only, verify quote",
+      "url": "https://www.digikey.com/en/products/detail/stmicroelectronics/STM32H563ZIT6/18110508"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "C9",
+        "C10"
+      ],
+      "value": "2.2uF",
+      "mpn_or_engineering_spec": "X7R 16V 2.2uF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 2,
+      "per_kit": 2,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%202.2uF"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "C11",
+        "C12",
+        "C13",
+        "C14",
+        "C15",
+        "C16",
+        "C17",
+        "C18",
+        "C19",
+        "C20",
+        "C21",
+        "C22",
+        "C23",
+        "C24",
+        "C26",
+        "C31",
+        "C32",
+        "C33",
+        "C34",
+        "C36",
+        "C37",
+        "C38",
+        "C39",
+        "C40",
+        "C42",
+        "C43",
+        "C45",
+        "C46",
+        "C48",
+        "C49",
+        "C51",
+        "C52",
+        "C54"
+      ],
+      "value": "100nF",
+      "mpn_or_engineering_spec": "X7R 16V 100nF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 33,
+      "per_kit": 33,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%20100nF"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "C25",
+        "C44",
+        "C47",
+        "C50",
+        "C53",
+        "C55"
+      ],
+      "value": "10uF",
+      "mpn_or_engineering_spec": "X7R 16V 10uF",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "per_board": 6,
+      "per_kit": 6,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "MLCC with verified effective capacitance at bias; exact vendor MPN pending",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2010uF"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "R5",
+        "R6",
+        "R7",
+        "R8",
+        "R11",
+        "R12",
+        "R13",
+        "R14",
+        "R15",
+        "R16",
+        "R17",
+        "R18",
+        "R21",
+        "R22",
+        "R24",
+        "R25",
+        "R27",
+        "R28",
+        "R32",
+        "R33"
+      ],
+      "value": "10k",
+      "mpn_or_engineering_spec": "1% thick film 10k",
+      "footprint": "Resistor_SMD:R_0402_1005Metric",
+      "per_board": 20,
+      "per_kit": 20,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%2010k"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "Y1"
+      ],
+      "value": "25MHz CL=12pF",
+      "mpn_or_engineering_spec": "25MHz CL=12pF",
+      "footprint": "Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=25MHz%20CL%3D12pF"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "C27",
+        "C28"
+      ],
+      "value": "18pF",
+      "mpn_or_engineering_spec": "X7R 16V 18pF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 2,
+      "per_kit": 2,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%2018pF"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "Y2"
+      ],
+      "value": "32.768kHz",
+      "mpn_or_engineering_spec": "32.768kHz",
+      "footprint": "Crystal:Crystal_SMD_3215-2Pin_3.2x1.5mm",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=32.768kHz"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "C29",
+        "C30"
+      ],
+      "value": "6pF",
+      "mpn_or_engineering_spec": "X7R 16V 6pF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 2,
+      "per_kit": 2,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%206pF"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "J2"
+      ],
+      "value": "SWD TC2030",
+      "mpn_or_engineering_spec": "SWD TC2030",
+      "footprint": "Connector:Tag-Connect_TC2030-IDC-NL_2x03_P1.27mm_Vertical",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=SWD%20TC2030"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "U3"
+      ],
+      "value": "W25Q64JVSSIQ",
+      "mpn_or_engineering_spec": "W25Q64JVSSIQ",
+      "footprint": "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=W25Q64JVSSIQ"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "U4"
+      ],
+      "value": "APS6404L-3SQR-SN",
+      "mpn_or_engineering_spec": "APS6404L-3SQR-SN",
+      "footprint": "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=APS6404L-3SQR-SN"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "U5"
+      ],
+      "value": "RV-3028-C7",
+      "mpn_or_engineering_spec": "RV-3028-C7",
+      "footprint": "Package_SON:MicroCrystal_C7_SON-8_1.5x3.2mm_P0.9mm",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=RV-3028-C7"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "J3"
+      ],
+      "value": "RTC primary cell",
+      "mpn_or_engineering_spec": "RTC primary cell",
+      "footprint": "Connector_JST:JST_SH_SM02B-SRSS-TB_1x02-1MP_P1.00mm_Horizontal",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=RTC%20primary%20cell"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "R9",
+        "R10"
+      ],
+      "value": "4.7k",
+      "mpn_or_engineering_spec": "1% thick film 4.7k",
+      "footprint": "Resistor_SMD:R_0402_1005Metric",
+      "per_board": 2,
+      "per_kit": 2,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%204.7k"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "U6"
+      ],
+      "value": "LAN8742A-CZ-TR",
+      "mpn_or_engineering_spec": "LAN8742A-CZ-TR",
+      "footprint": "Package_DFN_QFN:VQFN-24-1EP_4x4mm_P0.5mm_EP2.5x2.5mm_ThermalVias",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=LAN8742A-CZ-TR"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "U7"
+      ],
+      "value": "50MHz 3V3 OSC",
+      "mpn_or_engineering_spec": "50MHz 3V3 OSC",
+      "footprint": "Oscillator:Oscillator_SMD_Abracon_ASE-4Pin_3.2x2.5mm",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=50MHz%203V3%20OSC"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "R19"
+      ],
+      "value": "12.1k 1%",
+      "mpn_or_engineering_spec": "1% thick film 12.1k 1%",
+      "footprint": "Resistor_SMD:R_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%2012.1k%201%25"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "C35"
+      ],
+      "value": "1uF",
+      "mpn_or_engineering_spec": "X7R 16V 1uF",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "MLCC with verified effective capacitance at bias; exact vendor MPN pending",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%201uF"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "J4"
+      ],
+      "value": "HR911105A",
+      "mpn_or_engineering_spec": "HR911105A",
+      "footprint": "Connector_RJ:RJ45_Hanrun_HR911105A_Horizontal",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=HR911105A"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "R20"
+      ],
+      "value": "1M",
+      "mpn_or_engineering_spec": "1% thick film 1M",
+      "footprint": "Resistor_SMD:R_0402_1005Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%201M"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "C41"
+      ],
+      "value": "1nF 2kV",
+      "mpn_or_engineering_spec": "X7R 16V 1nF 2kV",
+      "footprint": "Capacitor_SMD:C_1206_3216Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=X7R%2016V%201nF%202kV"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "U8",
+        "U10"
+      ],
+      "value": "ADM2587EBRWZ",
+      "mpn_or_engineering_spec": "ADM2587EBRWZ",
+      "footprint": "Package_SO:SOIC-20W_7.5x12.8mm_P1.27mm",
+      "per_board": 2,
+      "per_kit": 2,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=ADM2587EBRWZ"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "J5"
+      ],
+      "value": "MPR",
+      "mpn_or_engineering_spec": "MPR",
+      "footprint": "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-3-5.08_1x03_P5.08mm_Horizontal",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=MPR"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "U9",
+        "U11"
+      ],
+      "value": "SM712",
+      "mpn_or_engineering_spec": "SM712",
+      "footprint": "Package_TO_SOT_SMD:SOT-23",
+      "per_board": 2,
+      "per_kit": 2,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=SM712"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "R23",
+        "R26"
+      ],
+      "value": "120R",
+      "mpn_or_engineering_spec": "1% thick film 120R",
+      "footprint": "Resistor_SMD:R_0805_2012Metric",
+      "per_board": 2,
+      "per_kit": 2,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%20120R"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "J6",
+        "J8"
+      ],
+      "value": "TERM OPEN",
+      "mpn_or_engineering_spec": "TERM OPEN",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
+      "per_board": 2,
+      "per_kit": 2,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=TERM%20OPEN"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "J7"
+      ],
+      "value": "TVOC",
+      "mpn_or_engineering_spec": "TVOC",
+      "footprint": "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-3-5.08_1x03_P5.08mm_Horizontal",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=TVOC"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "U12"
+      ],
+      "value": "E22-900MM22S SX1262",
+      "mpn_or_engineering_spec": "E22-900MM22S",
+      "footprint": "B1:E22-900MM22S",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=E22-900MM22S"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "J9"
+      ],
+      "value": "868MHz antenna",
+      "mpn_or_engineering_spec": "868MHz antenna",
+      "footprint": "Connector_Coaxial:U.FL_Hirose_U.FL-R-SMT-1_Vertical",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=868MHz%20antenna"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "U13"
+      ],
+      "value": "EC21-E MiniPCIe SOCKET",
+      "mpn_or_engineering_spec": "2041119-1",
+      "footprint": "B1:TE_2041119_1",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=2041119-1"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "J10"
+      ],
+      "value": "SIM connector",
+      "mpn_or_engineering_spec": "SIM connector",
+      "footprint": "Connector_PinHeader_2.00mm:PinHeader_1x06_P2.00mm_Vertical",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=SIM%20connector"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "D1",
+        "D2"
+      ],
+      "value": "SS34",
+      "mpn_or_engineering_spec": "SS34",
+      "footprint": "Diode_SMD:D_SMA",
+      "per_board": 2,
+      "per_kit": 2,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=SS34"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "D3"
+      ],
+      "value": "BAT54",
+      "mpn_or_engineering_spec": "BAT54",
+      "footprint": "Diode_SMD:D_SOD-123",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=BAT54"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "R31"
+      ],
+      "value": "100R 1W",
+      "mpn_or_engineering_spec": "1% thick film 100R 1W",
+      "footprint": "Resistor_SMD:R_2512_6332Metric",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=1%25%20thick%20film%20100R%201W"
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "J11"
+      ],
+      "value": "2x10F 2.7V EDLC pack",
+      "mpn_or_engineering_spec": "2x10F 2.7V EDLC pack",
+      "footprint": "Connector_JST:JST_SH_SM03B-SRSS-TB_1x03-1MP_P1.00mm_Horizontal",
+      "per_board": 1,
+      "per_kit": 1,
+      "supplier": "DigiKey / Mouser RFQ",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Same specification/package from authorized source; no unreviewed substitution",
+      "url": "https://www.digikey.com/en/products?keywords=2x10F%202.7V%20EDLC%20pack"
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "EXTERNAL"
+      ],
+      "value": "CT 400 A / 3000:1 / split core / aperture >=32 mm",
+      "mpn_or_engineering_spec": "CT 400 A / 3000:1 / split core / aperture >=32 mm",
+      "footprint": "external",
+      "per_board": null,
+      "per_kit": 6,
+      "supplier": "Custom CT supplier quote; captive secondary clamp 5.6 V and burden connector",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Must satisfy mechanical, thermal and electrical design envelope",
+      "url": null
+    },
+    {
+      "board": "TC",
+      "refs": [
+        "EXTERNAL"
+      ],
+      "value": "ER14250 3.6 V primary cell, 1.2 Ah envelope",
+      "mpn_or_engineering_spec": "ER14250 3.6 V primary cell, 1.2 Ah envelope",
+      "footprint": "external",
+      "per_board": null,
+      "per_kit": 6,
+      "supplier": "EVE / Saft qualified equivalent; compare discharge limits",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Must satisfy mechanical, thermal and electrical design envelope",
+      "url": null
+    },
+    {
+      "board": "TC+PD",
+      "refs": [
+        "EXTERNAL"
+      ],
+      "value": "HLC pulse buffer <=16.5 x55 mm, compatible with Li-SOCl2",
+      "mpn_or_engineering_spec": "HLC pulse buffer <=16.5 x55 mm, compatible with Li-SOCl2",
+      "footprint": "external",
+      "per_board": null,
+      "per_kit": 7,
+      "supplier": "Tadiran hybrid battery supplier; selection and pack qualification pending",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Must satisfy mechanical, thermal and electrical design envelope",
+      "url": null
+    },
+    {
+      "board": "IR",
+      "refs": [
+        "EXTERNAL"
+      ],
+      "value": "ER14505 3.6 V 2.6 Ah, pulse-rated assembled pack",
+      "mpn_or_engineering_spec": "ER14505 3.6 V 2.6 Ah, pulse-rated assembled pack",
+      "footprint": "external",
+      "per_board": null,
+      "per_kit": 1,
+      "supplier": "EVE / Tadiran; IR inrush <= selected pack rating",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Must satisfy mechanical, thermal and electrical design envelope",
+      "url": null
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "EXTERNAL"
+      ],
+      "value": "ER26500 3.6 V 8.5 Ah",
+      "mpn_or_engineering_spec": "ER26500 3.6 V 8.5 Ah",
+      "footprint": "external",
+      "per_board": null,
+      "per_kit": 1,
+      "supplier": "EVE / Tadiran; buffer mandatory for RF front-end peaks",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Must satisfy mechanical, thermal and electrical design envelope",
+      "url": null
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "EXTERNAL"
+      ],
+      "value": "HFCT50",
+      "mpn_or_engineering_spec": "HFCT50",
+      "footprint": "external",
+      "per_board": null,
+      "per_kit": 1,
+      "supplier": "Power Diagnostix / authorized supplier; supplied DS_HFCT50_eng.pdf",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Must satisfy mechanical, thermal and electrical design envelope",
+      "url": null
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "EXTERNAL"
+      ],
+      "value": "Insulated TEV capacitive plate assembly",
+      "mpn_or_engineering_spec": "Insulated TEV capacitive plate assembly",
+      "footprint": "external",
+      "per_board": null,
+      "per_kit": 1,
+      "supplier": "Custom mechanical supplier; capacitance and transfer calibration pending",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Must satisfy mechanical, thermal and electrical design envelope",
+      "url": null
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "EXTERNAL"
+      ],
+      "value": "MA40S4R 40 kHz receiver",
+      "mpn_or_engineering_spec": "MA40S4R 40 kHz receiver",
+      "footprint": "external",
+      "per_board": null,
+      "per_kit": 1,
+      "supplier": "Murata / authorized distributor",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Must satisfy mechanical, thermal and electrical design envelope",
+      "url": null
+    },
+    {
+      "board": "PD",
+      "refs": [
+        "EXTERNAL"
+      ],
+      "value": "Isolated 50 Hz voltage-phase reference, SELV 0..3.3 V output",
+      "mpn_or_engineering_spec": "Isolated 50 Hz voltage-phase reference, SELV 0..3.3 V output",
+      "footprint": "external",
+      "per_board": null,
+      "per_kit": 1,
+      "supplier": "Qualified external sensing accessory; never line voltage on header",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Must satisfy mechanical, thermal and electrical design envelope",
+      "url": null
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "EXTERNAL"
+      ],
+      "value": "EC21-E MiniPCIe LTE modem (not bare LCC EC21)",
+      "mpn_or_engineering_spec": "EC21-E MiniPCIe LTE modem (not bare LCC EC21)",
+      "footprint": "external",
+      "per_board": null,
+      "per_kit": 1,
+      "supplier": "Quectel authorized distributor; local bands/carrier approval check",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Must satisfy mechanical, thermal and electrical design envelope",
+      "url": null
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "EXTERNAL"
+      ],
+      "value": "5 V SELV 4 A isolated DIN power supply",
+      "mpn_or_engineering_spec": "5 V SELV 4 A isolated DIN power supply",
+      "footprint": "external",
+      "per_board": null,
+      "per_kit": 1,
+      "supplier": "Industrial certified PSU RFQ; no mains design on carrier",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Must satisfy mechanical, thermal and electrical design envelope",
+      "url": null
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "EXTERNAL"
+      ],
+      "value": "10 F / 2.7 V EDLC in enclosed series pack",
+      "mpn_or_engineering_spec": "10 F / 2.7 V EDLC in enclosed series pack",
+      "footprint": "external",
+      "per_board": null,
+      "per_kit": 2,
+      "supplier": "Panasonic / Eaton; ESR/leakage/temperature data required",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Must satisfy mechanical, thermal and electrical design envelope",
+      "url": null
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "EXTERNAL"
+      ],
+      "value": "Primary 3 V RTC backup cell, enclosed",
+      "mpn_or_engineering_spec": "Primary 3 V RTC backup cell, enclosed",
+      "footprint": "external",
+      "per_board": null,
+      "per_kit": 1,
+      "supplier": "No charging enabled in RV3028 configuration",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Must satisfy mechanical, thermal and electrical design envelope",
+      "url": null
+    },
+    {
+      "board": "ALL",
+      "refs": [
+        "EXTERNAL"
+      ],
+      "value": "Insulated 868 MHz antenna and captive coax",
+      "mpn_or_engineering_spec": "Insulated 868 MHz antenna and captive coax",
+      "footprint": "external",
+      "per_board": null,
+      "per_kit": 9,
+      "supplier": "Antenna supplier; RF gain and mounting calibration",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Must satisfy mechanical, thermal and electrical design envelope",
+      "url": null
+    },
+    {
+      "board": "GW",
+      "refs": [
+        "EXTERNAL"
+      ],
+      "value": "LTE antenna + SIM holder + short USB/SIM harness",
+      "mpn_or_engineering_spec": "LTE antenna + SIM holder + short USB/SIM harness",
+      "footprint": "external",
+      "per_board": null,
+      "per_kit": 1,
+      "supplier": "Quectel-compatible matched accessories",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Must satisfy mechanical, thermal and electrical design envelope",
+      "url": null
+    },
+    {
+      "board": "ALL",
+      "refs": [
+        "EXTERNAL"
+      ],
+      "value": "6 TC +1 IR +1 PD +1 GW enclosure/mount/gasket set",
+      "mpn_or_engineering_spec": "6 TC +1 IR +1 PD +1 GW enclosure/mount/gasket set",
+      "footprint": "external",
+      "per_board": null,
+      "per_kit": 1,
+      "supplier": "Local prototype shop; STEP models, flame grade and tolerance quote",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Must satisfy mechanical, thermal and electrical design envelope",
+      "url": null
+    },
+    {
+      "board": "ALL",
+      "refs": [
+        "EXTERNAL"
+      ],
+      "value": "4-layer PCB: 6 TC +1 IR +1 PD +1 GW; assembly",
+      "mpn_or_engineering_spec": "4-layer PCB: 6 TC +1 IR +1 PD +1 GW; assembly",
+      "footprint": "external",
+      "per_board": null,
+      "per_kit": 1,
+      "supplier": "Board house RFQ AFTER routing, DRC and design release",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Must satisfy mechanical, thermal and electrical design envelope",
+      "url": null
+    },
+    {
+      "board": "ALL",
+      "refs": [
+        "EXTERNAL"
+      ],
+      "value": "Low-voltage cables, clamps, strain relief and labels",
+      "mpn_or_engineering_spec": "Low-voltage cables, clamps, strain relief and labels",
+      "footprint": "external",
+      "per_board": null,
+      "per_kit": 1,
+      "supplier": "Lengths in mechanical document; assembly quote",
+      "unit_usd": null,
+      "price_status": "QUOTE_REQUIRED",
+      "checked": "2026-09-20",
+      "lead_time": "Unconfirmed",
+      "alternative": "Must satisfy mechanical, thermal and electrical design envelope",
+      "url": null
+    }
+  ]
+}

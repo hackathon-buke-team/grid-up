@@ -1,0 +1,379 @@
+$ C:\Users\Mustafa Eren\Desktop\hekaton\.tools\k1\arm\bin\arm-none-eabi-gcc.exe --version
+arm-none-eabi-gcc.exe (Arm GNU Toolchain 14.3.Rel1 (Build arm-14.174)) 14.3.1 20250623
+Copyright (C) 2024 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+
+$ C:\Users\Mustafa Eren\Desktop\hekaton\.tools\k1\arm\bin\arm-none-eabi-gcc.exe -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -Os -g3 -ffunction-sections -fdata-sections -fno-common -DSTM32WLE5xx -DUSE_HAL_DRIVER -DPG_TARGET=1 -DPG_OTA_DISABLED=1 -DPG_NODE_ID=260 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\device\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\cmsis\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Inc -std=c99 -Wall -Wextra -Werror -Wdouble-promotion -ffreestanding -fno-builtin -fstack-usage -c C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\main.c -o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\main.o
+
+$ C:\Users\Mustafa Eren\Desktop\hekaton\.tools\k1\arm\bin\arm-none-eabi-gcc.exe -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -Os -g3 -ffunction-sections -fdata-sections -fno-common -DSTM32WLE5xx -DUSE_HAL_DRIVER -DPG_TARGET=1 -DPG_OTA_DISABLED=1 -DPG_NODE_ID=260 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\device\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\cmsis\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Inc -std=c99 -Wall -Wextra -Werror -Wdouble-promotion -ffreestanding -fno-builtin -fstack-usage -c C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\theta_edge.c -o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\theta_edge.o
+
+$ C:\Users\Mustafa Eren\Desktop\hekaton\.tools\k1\arm\bin\arm-none-eabi-gcc.exe -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -Os -g3 -ffunction-sections -fdata-sections -fno-common -DSTM32WLE5xx -DUSE_HAL_DRIVER -DPG_TARGET=1 -DPG_OTA_DISABLED=1 -DPG_NODE_ID=260 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\device\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\cmsis\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Inc -std=c99 -Wall -Wextra -Werror -Wdouble-promotion -ffreestanding -fno-builtin -fstack-usage -c C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\prpd_bin.c -o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\prpd_bin.o
+
+$ C:\Users\Mustafa Eren\Desktop\hekaton\.tools\k1\arm\bin\arm-none-eabi-gcc.exe -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -Os -g3 -ffunction-sections -fdata-sections -fno-common -DSTM32WLE5xx -DUSE_HAL_DRIVER -DPG_TARGET=1 -DPG_OTA_DISABLED=1 -DPG_NODE_ID=260 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\device\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\cmsis\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Inc -std=c99 -Wall -Wextra -Werror -Wdouble-promotion -ffreestanding -fno-builtin -fstack-usage -c C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\radio.c -o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\radio.o
+
+$ C:\Users\Mustafa Eren\Desktop\hekaton\.tools\k1\arm\bin\arm-none-eabi-gcc.exe -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -Os -g3 -ffunction-sections -fdata-sections -fno-common -DSTM32WLE5xx -DUSE_HAL_DRIVER -DPG_TARGET=1 -DPG_OTA_DISABLED=1 -DPG_NODE_ID=260 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\device\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\cmsis\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Inc -std=c99 -Wall -Wextra -Werror -Wdouble-promotion -ffreestanding -fno-builtin -fstack-usage -c C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\power.c -o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\power.o
+
+$ C:\Users\Mustafa Eren\Desktop\hekaton\.tools\k1\arm\bin\arm-none-eabi-gcc.exe -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -Os -g3 -ffunction-sections -fdata-sections -fno-common -DSTM32WLE5xx -DUSE_HAL_DRIVER -DPG_TARGET=1 -DPG_OTA_DISABLED=1 -DPG_NODE_ID=260 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\device\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\cmsis\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Inc -std=c99 -Wall -Wextra -Werror -Wdouble-promotion -ffreestanding -fno-builtin -fstack-usage -c C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\hal_stm32.c -o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\hal_stm32.o
+
+$ C:\Users\Mustafa Eren\Desktop\hekaton\.tools\k1\arm\bin\arm-none-eabi-gcc.exe -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -Os -g3 -ffunction-sections -fdata-sections -fno-common -DSTM32WLE5xx -DUSE_HAL_DRIVER -DPG_TARGET=1 -DPG_OTA_DISABLED=1 -DPG_NODE_ID=260 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\device\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\cmsis\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Inc -std=c99 -Wall -Wextra -Werror -Wdouble-promotion -ffreestanding -fno-builtin -fstack-usage -c C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\system_stm32wlxx.c -o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\system_stm32wlxx.o
+
+$ C:\Users\Mustafa Eren\Desktop\hekaton\.tools\k1\arm\bin\arm-none-eabi-gcc.exe -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -Os -g3 -ffunction-sections -fdata-sections -fno-common -DSTM32WLE5xx -DUSE_HAL_DRIVER -DPG_TARGET=1 -DPG_OTA_DISABLED=1 -DPG_NODE_ID=260 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\device\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\cmsis\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Inc -c C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\startup_stm32wle5xx.s -o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\startup_stm32wle5xx.o
+
+$ C:\Users\Mustafa Eren\Desktop\hekaton\.tools\k1\arm\bin\arm-none-eabi-gcc.exe -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -Os -g3 -ffunction-sections -fdata-sections -fno-common -DSTM32WLE5xx -DUSE_HAL_DRIVER -DPG_TARGET=1 -DPG_OTA_DISABLED=1 -DPG_NODE_ID=260 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\device\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\cmsis\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Inc -std=c99 -Wall -Wextra -Werror -Wdouble-promotion -ffreestanding -fno-builtin -fstack-usage -Wno-unused-parameter -c C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Src\stm32wlxx_hal.c -o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\stm32wlxx_hal.o
+
+$ C:\Users\Mustafa Eren\Desktop\hekaton\.tools\k1\arm\bin\arm-none-eabi-gcc.exe -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -Os -g3 -ffunction-sections -fdata-sections -fno-common -DSTM32WLE5xx -DUSE_HAL_DRIVER -DPG_TARGET=1 -DPG_OTA_DISABLED=1 -DPG_NODE_ID=260 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\device\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\cmsis\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Inc -std=c99 -Wall -Wextra -Werror -Wdouble-promotion -ffreestanding -fno-builtin -fstack-usage -Wno-unused-parameter -c C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Src\stm32wlxx_hal_cortex.c -o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\stm32wlxx_hal_cortex.o
+
+$ C:\Users\Mustafa Eren\Desktop\hekaton\.tools\k1\arm\bin\arm-none-eabi-gcc.exe -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -Os -g3 -ffunction-sections -fdata-sections -fno-common -DSTM32WLE5xx -DUSE_HAL_DRIVER -DPG_TARGET=1 -DPG_OTA_DISABLED=1 -DPG_NODE_ID=260 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\device\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\cmsis\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Inc -std=c99 -Wall -Wextra -Werror -Wdouble-promotion -ffreestanding -fno-builtin -fstack-usage -Wno-unused-parameter -c C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Src\stm32wlxx_hal_rcc.c -o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\stm32wlxx_hal_rcc.o
+
+$ C:\Users\Mustafa Eren\Desktop\hekaton\.tools\k1\arm\bin\arm-none-eabi-gcc.exe -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -Os -g3 -ffunction-sections -fdata-sections -fno-common -DSTM32WLE5xx -DUSE_HAL_DRIVER -DPG_TARGET=1 -DPG_OTA_DISABLED=1 -DPG_NODE_ID=260 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\device\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\cmsis\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Inc -std=c99 -Wall -Wextra -Werror -Wdouble-promotion -ffreestanding -fno-builtin -fstack-usage -Wno-unused-parameter -c C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Src\stm32wlxx_hal_rcc_ex.c -o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\stm32wlxx_hal_rcc_ex.o
+
+$ C:\Users\Mustafa Eren\Desktop\hekaton\.tools\k1\arm\bin\arm-none-eabi-gcc.exe -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -Os -g3 -ffunction-sections -fdata-sections -fno-common -DSTM32WLE5xx -DUSE_HAL_DRIVER -DPG_TARGET=1 -DPG_OTA_DISABLED=1 -DPG_NODE_ID=260 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\device\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\cmsis\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Inc -std=c99 -Wall -Wextra -Werror -Wdouble-promotion -ffreestanding -fno-builtin -fstack-usage -Wno-unused-parameter -c C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Src\stm32wlxx_hal_pwr.c -o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\stm32wlxx_hal_pwr.o
+
+$ C:\Users\Mustafa Eren\Desktop\hekaton\.tools\k1\arm\bin\arm-none-eabi-gcc.exe -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -Os -g3 -ffunction-sections -fdata-sections -fno-common -DSTM32WLE5xx -DUSE_HAL_DRIVER -DPG_TARGET=1 -DPG_OTA_DISABLED=1 -DPG_NODE_ID=260 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\device\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\cmsis\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Inc -std=c99 -Wall -Wextra -Werror -Wdouble-promotion -ffreestanding -fno-builtin -fstack-usage -Wno-unused-parameter -c C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Src\stm32wlxx_hal_pwr_ex.c -o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\stm32wlxx_hal_pwr_ex.o
+
+$ C:\Users\Mustafa Eren\Desktop\hekaton\.tools\k1\arm\bin\arm-none-eabi-gcc.exe -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -Os -g3 -ffunction-sections -fdata-sections -fno-common -DSTM32WLE5xx -DUSE_HAL_DRIVER -DPG_TARGET=1 -DPG_OTA_DISABLED=1 -DPG_NODE_ID=260 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\device\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\cmsis\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Inc -std=c99 -Wall -Wextra -Werror -Wdouble-promotion -ffreestanding -fno-builtin -fstack-usage -Wno-unused-parameter -c C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Src\stm32wlxx_hal_flash.c -o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\stm32wlxx_hal_flash.o
+
+$ C:\Users\Mustafa Eren\Desktop\hekaton\.tools\k1\arm\bin\arm-none-eabi-gcc.exe -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -Os -g3 -ffunction-sections -fdata-sections -fno-common -DSTM32WLE5xx -DUSE_HAL_DRIVER -DPG_TARGET=1 -DPG_OTA_DISABLED=1 -DPG_NODE_ID=260 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\device\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\cmsis\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Inc -std=c99 -Wall -Wextra -Werror -Wdouble-promotion -ffreestanding -fno-builtin -fstack-usage -Wno-unused-parameter -c C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Src\stm32wlxx_hal_flash_ex.c -o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\stm32wlxx_hal_flash_ex.o
+
+$ C:\Users\Mustafa Eren\Desktop\hekaton\.tools\k1\arm\bin\arm-none-eabi-gcc.exe -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -Os -g3 -ffunction-sections -fdata-sections -fno-common -DSTM32WLE5xx -DUSE_HAL_DRIVER -DPG_TARGET=1 -DPG_OTA_DISABLED=1 -DPG_NODE_ID=260 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\device\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\cmsis\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Inc -std=c99 -Wall -Wextra -Werror -Wdouble-promotion -ffreestanding -fno-builtin -fstack-usage -Wno-unused-parameter -c C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Src\stm32wlxx_hal_gpio.c -o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\stm32wlxx_hal_gpio.o
+
+$ C:\Users\Mustafa Eren\Desktop\hekaton\.tools\k1\arm\bin\arm-none-eabi-gcc.exe -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -Os -g3 -ffunction-sections -fdata-sections -fno-common -DSTM32WLE5xx -DUSE_HAL_DRIVER -DPG_TARGET=1 -DPG_OTA_DISABLED=1 -DPG_NODE_ID=260 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\device\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\cmsis\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Inc -std=c99 -Wall -Wextra -Werror -Wdouble-promotion -ffreestanding -fno-builtin -fstack-usage -Wno-unused-parameter -c C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Src\stm32wlxx_hal_dma.c -o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\stm32wlxx_hal_dma.o
+
+$ C:\Users\Mustafa Eren\Desktop\hekaton\.tools\k1\arm\bin\arm-none-eabi-gcc.exe -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -Os -g3 -ffunction-sections -fdata-sections -fno-common -DSTM32WLE5xx -DUSE_HAL_DRIVER -DPG_TARGET=1 -DPG_OTA_DISABLED=1 -DPG_NODE_ID=260 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\device\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\cmsis\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Inc -std=c99 -Wall -Wextra -Werror -Wdouble-promotion -ffreestanding -fno-builtin -fstack-usage -Wno-unused-parameter -c C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Src\stm32wlxx_hal_dma_ex.c -o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\stm32wlxx_hal_dma_ex.o
+
+$ C:\Users\Mustafa Eren\Desktop\hekaton\.tools\k1\arm\bin\arm-none-eabi-gcc.exe -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -Os -g3 -ffunction-sections -fdata-sections -fno-common -DSTM32WLE5xx -DUSE_HAL_DRIVER -DPG_TARGET=1 -DPG_OTA_DISABLED=1 -DPG_NODE_ID=260 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\device\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\cmsis\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Inc -std=c99 -Wall -Wextra -Werror -Wdouble-promotion -ffreestanding -fno-builtin -fstack-usage -Wno-unused-parameter -c C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Src\stm32wlxx_hal_exti.c -o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\stm32wlxx_hal_exti.o
+
+$ C:\Users\Mustafa Eren\Desktop\hekaton\.tools\k1\arm\bin\arm-none-eabi-gcc.exe -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -Os -g3 -ffunction-sections -fdata-sections -fno-common -DSTM32WLE5xx -DUSE_HAL_DRIVER -DPG_TARGET=1 -DPG_OTA_DISABLED=1 -DPG_NODE_ID=260 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\device\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\cmsis\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Inc -std=c99 -Wall -Wextra -Werror -Wdouble-promotion -ffreestanding -fno-builtin -fstack-usage -Wno-unused-parameter -c C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Src\stm32wlxx_hal_adc.c -o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\stm32wlxx_hal_adc.o
+
+$ C:\Users\Mustafa Eren\Desktop\hekaton\.tools\k1\arm\bin\arm-none-eabi-gcc.exe -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -Os -g3 -ffunction-sections -fdata-sections -fno-common -DSTM32WLE5xx -DUSE_HAL_DRIVER -DPG_TARGET=1 -DPG_OTA_DISABLED=1 -DPG_NODE_ID=260 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\device\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\cmsis\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Inc -std=c99 -Wall -Wextra -Werror -Wdouble-promotion -ffreestanding -fno-builtin -fstack-usage -Wno-unused-parameter -c C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Src\stm32wlxx_hal_adc_ex.c -o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\stm32wlxx_hal_adc_ex.o
+
+$ C:\Users\Mustafa Eren\Desktop\hekaton\.tools\k1\arm\bin\arm-none-eabi-gcc.exe -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -Os -g3 -ffunction-sections -fdata-sections -fno-common -DSTM32WLE5xx -DUSE_HAL_DRIVER -DPG_TARGET=1 -DPG_OTA_DISABLED=1 -DPG_NODE_ID=260 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\device\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\cmsis\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Inc -std=c99 -Wall -Wextra -Werror -Wdouble-promotion -ffreestanding -fno-builtin -fstack-usage -Wno-unused-parameter -c C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Src\stm32wlxx_hal_i2c.c -o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\stm32wlxx_hal_i2c.o
+
+$ C:\Users\Mustafa Eren\Desktop\hekaton\.tools\k1\arm\bin\arm-none-eabi-gcc.exe -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -Os -g3 -ffunction-sections -fdata-sections -fno-common -DSTM32WLE5xx -DUSE_HAL_DRIVER -DPG_TARGET=1 -DPG_OTA_DISABLED=1 -DPG_NODE_ID=260 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\device\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\cmsis\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Inc -std=c99 -Wall -Wextra -Werror -Wdouble-promotion -ffreestanding -fno-builtin -fstack-usage -Wno-unused-parameter -c C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Src\stm32wlxx_hal_i2c_ex.c -o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\stm32wlxx_hal_i2c_ex.o
+
+$ C:\Users\Mustafa Eren\Desktop\hekaton\.tools\k1\arm\bin\arm-none-eabi-gcc.exe -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -Os -g3 -ffunction-sections -fdata-sections -fno-common -DSTM32WLE5xx -DUSE_HAL_DRIVER -DPG_TARGET=1 -DPG_OTA_DISABLED=1 -DPG_NODE_ID=260 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\device\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\cmsis\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Inc -std=c99 -Wall -Wextra -Werror -Wdouble-promotion -ffreestanding -fno-builtin -fstack-usage -Wno-unused-parameter -c C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Src\stm32wlxx_hal_spi.c -o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\stm32wlxx_hal_spi.o
+
+$ C:\Users\Mustafa Eren\Desktop\hekaton\.tools\k1\arm\bin\arm-none-eabi-gcc.exe -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -Os -g3 -ffunction-sections -fdata-sections -fno-common -DSTM32WLE5xx -DUSE_HAL_DRIVER -DPG_TARGET=1 -DPG_OTA_DISABLED=1 -DPG_NODE_ID=260 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\device\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\cmsis\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Inc -std=c99 -Wall -Wextra -Werror -Wdouble-promotion -ffreestanding -fno-builtin -fstack-usage -Wno-unused-parameter -c C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Src\stm32wlxx_hal_rtc.c -o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\stm32wlxx_hal_rtc.o
+
+$ C:\Users\Mustafa Eren\Desktop\hekaton\.tools\k1\arm\bin\arm-none-eabi-gcc.exe -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -Os -g3 -ffunction-sections -fdata-sections -fno-common -DSTM32WLE5xx -DUSE_HAL_DRIVER -DPG_TARGET=1 -DPG_OTA_DISABLED=1 -DPG_NODE_ID=260 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\device\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\cmsis\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Inc -std=c99 -Wall -Wextra -Werror -Wdouble-promotion -ffreestanding -fno-builtin -fstack-usage -Wno-unused-parameter -c C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Src\stm32wlxx_hal_rtc_ex.c -o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\stm32wlxx_hal_rtc_ex.o
+
+$ C:\Users\Mustafa Eren\Desktop\hekaton\.tools\k1\arm\bin\arm-none-eabi-gcc.exe -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -Os -g3 -ffunction-sections -fdata-sections -fno-common -DSTM32WLE5xx -DUSE_HAL_DRIVER -DPG_TARGET=1 -DPG_OTA_DISABLED=1 -DPG_NODE_ID=260 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\device\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\cmsis\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Inc -std=c99 -Wall -Wextra -Werror -Wdouble-promotion -ffreestanding -fno-builtin -fstack-usage -Wno-unused-parameter -c C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Src\stm32wlxx_hal_iwdg.c -o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\stm32wlxx_hal_iwdg.o
+
+$ C:\Users\Mustafa Eren\Desktop\hekaton\.tools\k1\arm\bin\arm-none-eabi-gcc.exe -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -Os -g3 -ffunction-sections -fdata-sections -fno-common -DSTM32WLE5xx -DUSE_HAL_DRIVER -DPG_TARGET=1 -DPG_OTA_DISABLED=1 -DPG_NODE_ID=260 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\device\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\cmsis\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Inc -std=c99 -Wall -Wextra -Werror -Wdouble-promotion -ffreestanding -fno-builtin -fstack-usage -Wno-unused-parameter -c C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Src\stm32wlxx_hal_subghz.c -o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\stm32wlxx_hal_subghz.o
+
+$ C:\Users\Mustafa Eren\Desktop\hekaton\.tools\k1\arm\bin\arm-none-eabi-gcc.exe -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -Os -g3 -ffunction-sections -fdata-sections -fno-common -DSTM32WLE5xx -DUSE_HAL_DRIVER -DPG_TARGET=1 -DPG_OTA_DISABLED=1 -DPG_NODE_ID=260 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5 -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\device\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\cmsis\Include -IC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\vendor\hal\Inc C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\main.o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\theta_edge.o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\prpd_bin.o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\radio.o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\power.o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\hal_stm32.o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\system_stm32wlxx.o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\startup_stm32wle5xx.o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\stm32wlxx_hal.o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\stm32wlxx_hal_cortex.o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\stm32wlxx_hal_rcc.o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\stm32wlxx_hal_rcc_ex.o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\stm32wlxx_hal_pwr.o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\stm32wlxx_hal_pwr_ex.o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\stm32wlxx_hal_flash.o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\stm32wlxx_hal_flash_ex.o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\stm32wlxx_hal_gpio.o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\stm32wlxx_hal_dma.o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\stm32wlxx_hal_dma_ex.o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\stm32wlxx_hal_exti.o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\stm32wlxx_hal_adc.o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\stm32wlxx_hal_adc_ex.o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\stm32wlxx_hal_i2c.o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\stm32wlxx_hal_i2c_ex.o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\stm32wlxx_hal_spi.o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\stm32wlxx_hal_rtc.o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\stm32wlxx_hal_rtc_ex.o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\stm32wlxx_hal_iwdg.o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\stm32wlxx_hal_subghz.o -TC:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\port\stm32wle5\STM32WLE5CCUX_FLASH.ld -nostartfiles -nostdlib -Wl,--gc-sections -Wl,--fatal-warnings -Wl,-Map=C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\panogoz_tc.map -lgcc -o C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\panogoz_tc.elf
+
+$ C:\Users\Mustafa Eren\Desktop\hekaton\.tools\k1\arm\bin\arm-none-eabi-size.exe C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\panogoz_tc.elf
+   text	   data	    bss	    dec	    hex	filename
+  26576	     16	   9840	  36432	   8e50	C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\panogoz_tc.elf
+
+$ C:\Users\Mustafa Eren\Desktop\hekaton\.tools\k1\arm\bin\arm-none-eabi-nm.exe -u C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\panogoz_tc.elf
+
+$ C:\Users\Mustafa Eren\Desktop\hekaton\.tools\k1\arm\bin\arm-none-eabi-nm.exe C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\panogoz_tc.elf
+08005e64 W __aeabi_idiv0
+08005e64 W __aeabi_ldiv0
+08005a9c T __aeabi_ldivmod
+08005b3c T __aeabi_uldivmod
+080067d0 R __exidx_end
+080067c8 R __exidx_start
+08001e84 T __libc_init_array
+08005b6c T __udivmoddi4
+2000167c B _ebss
+20000010 D _edata
+20010000 R _estack
+00001000 A _Min_Stack_Size
+20000010 B _sbss
+20000000 D _sdata
+080067d0 A _sidata
+2000155c b adc
+08003de4 T ADC_ConversionStop
+08003f50 T ADC_Disable
+08003e40 T ADC_Enable
+08002a74 W ADC_IRQHandler
+20001503 b adc_ok
+08002a74 W AES_IRQHandler
+0800677c T AHBPrescTable
+0800675c T APBPrescTable
+08002a74 W BusFault_Handler
+08001d0c t clocks
+08001d8c t cmd
+08002a74 W COMP_IRQHandler
+08002a36 t CopyDataInit
+08002a74 W DAC_IRQHandler
+08002a74 W DebugMon_Handler
+08002a74 T Default_Handler
+08006644 t devices.2
+08002a74 W DMA1_Channel1_IRQHandler
+08002a74 W DMA1_Channel2_IRQHandler
+08002a74 W DMA1_Channel3_IRQHandler
+08002a74 W DMA1_Channel4_IRQHandler
+08002a74 W DMA1_Channel5_IRQHandler
+08002a74 W DMA1_Channel6_IRQHandler
+08002a74 W DMA1_Channel7_IRQHandler
+08002a74 W DMA2_Channel1_IRQHandler
+08002a74 W DMA2_Channel2_IRQHandler
+08002a74 W DMA2_Channel3_IRQHandler
+08002a74 W DMA2_Channel4_IRQHandler
+08002a74 W DMA2_Channel5_IRQHandler
+08002a74 W DMA2_Channel6_IRQHandler
+08002a74 W DMA2_Channel7_IRQHandler
+08002a74 W DMAMUX1_OVR_IRQHandler
+080017b8 t duty_age
+08002a74 W EXTI0_IRQHandler
+08002a74 W EXTI1_IRQHandler
+08002a74 W EXTI15_10_IRQHandler
+08002a74 W EXTI2_IRQHandler
+08002a74 W EXTI3_IRQHandler
+08002a74 W EXTI4_IRQHandler
+080022d8 T EXTI9_5_IRQHandler
+08002a4a t FillZerobss
+08002a74 W FLASH_IRQHandler
+20001028 b g_node
+08000000 R g_pfnVectors
+20000010 b g_prpd
+080017ac t get16
+08001d70 t gpio
+08003c34 T HAL_ADC_ConfigChannel
+08003c2c T HAL_ADC_GetValue
+08003978 T HAL_ADC_Init
+08003974 W HAL_ADC_MspInit
+08003b78 T HAL_ADC_PollForConversion
+08003ef4 T HAL_ADC_Start
+08003fb8 T HAL_ADC_Stop
+08003ffc T HAL_ADCEx_Calibration_Start
+0800239c T hal_air_temp_lsb
+080023a8 T hal_ct_rms_ma
+08002b14 W HAL_Delay
+0800256c T hal_fram_read
+080025d4 T hal_fram_write
+08002b08 W HAL_GetTick
+080022e0 T HAL_GPIO_EXTI_Callback
+08003954 T HAL_GPIO_EXTI_IRQHandler
+080037e4 T HAL_GPIO_Init
+0800393c T HAL_GPIO_ReadPin
+08003948 T HAL_GPIO_WritePin
+080043ca T HAL_I2C_Init
+08004628 T HAL_I2C_Mem_Read
+08004474 T HAL_I2C_Mem_Write
+080043c8 W HAL_I2C_MspInit
+08002af0 W HAL_IncTick
+08001e98 T hal_init
+08002ac4 T HAL_Init
+08002a78 W HAL_InitTick
+080055dc T HAL_IWDG_Init
+08005636 T HAL_IWDG_Refresh
+08002a1a T hal_logf
+08002544 T hal_mains_period_us
+0800244c T hal_mcu_temp_c
+0800252c T hal_mount_ok
+08002a76 W HAL_MspInit
+08002be0 T HAL_NVIC_EnableIRQ
+08002b7c T HAL_NVIC_SetPriority
+08002b58 T HAL_NVIC_SetPriorityGrouping
+08003724 T HAL_PWR_EnableBkUpAccess
+08003744 T HAL_PWREx_ControlVoltageScaling
+080037ac T HAL_PWREx_EnterSTOP2Mode
+08003734 T HAL_PWREx_GetVoltageRange
+080027b4 T hal_radio_rssi
+080026b0 T hal_radio_rx
+080028d8 T hal_radio_tx
+08003360 T HAL_RCC_ClockConfig
+08002e0c T HAL_RCC_GetHCLKFreq
+08003520 T HAL_RCC_GetPCLK1Freq
+08002d30 T HAL_RCC_GetSysClockFreq
+08002e2c T HAL_RCC_OscConfig
+08003588 T HAL_RCCEx_PeriphCLKConfig
+080029e8 T hal_reset_cause
+08002b4a W HAL_ResumeTick
+080053d4 T HAL_RTC_Init
+08005310 W HAL_RTC_MspInit
+08005314 T HAL_RTC_WaitForSynchro
+0800554c T HAL_RTCEx_DeactivateWakeUpTimer
+0800548c T HAL_RTCEx_SetWakeUpTimer_IT
+080022cc T HAL_RTCEx_WakeUpTimerEventCallback
+080055bc T HAL_RTCEx_WakeUpTimerIRQHandler
+080027d8 T hal_sleep_ms
+08004a36 T HAL_SPI_Init
+08004a34 W HAL_SPI_MspInit
+080050d0 T HAL_SPI_Receive
+08004b40 T HAL_SPI_Transmit
+08004cf6 T HAL_SPI_TransmitReceive
+08005964 T HAL_SUBGHZ_ExecGetCmd
+080058f0 T HAL_SUBGHZ_ExecSetCmd
+08005798 T HAL_SUBGHZ_Init
+08005794 W HAL_SUBGHZ_MspInit
+08005a30 T HAL_SUBGHZ_ReadBuffer
+080059cc T HAL_SUBGHZ_WriteBuffer
+080058da T HAL_SUBGHZ_WriteRegister
+0800586c T HAL_SUBGHZ_WriteRegisters
+08002b3c W HAL_SuspendTick
+08002bfc T HAL_SYSTICK_Config
+08002310 T hal_tmp117_oneshot
+080022a4 T hal_uptime_ms
+080022a8 T hal_uptime_us
+08002500 T hal_vbat_loaded_mv
+080024ac T hal_vbat_mv
+080027c0 T hal_wdt_kick
+08002984 T hal_wdt_start
+080029e4 T hal_wdt_stop
+08002a74 W HardFault_Handler
+08002a74 W HSEM_IRQHandler
+20001624 b i2c
+08004160 t I2C_Flush_TXDR
+080041a8 t I2C_IsErrorOccurred
+20001505 b i2c_ok
+0800417c t I2C_TransferConfig
+08004300 t I2C_WaitOnFlagUntilTimeout
+08004376 t I2C_WaitOnSTOPFlagUntilTimeout
+080042aa t I2C_WaitOnTXISFlagUntilTimeout
+08002a74 W I2C1_ER_IRQHandler
+08002a74 W I2C1_EV_IRQHandler
+08002a74 W I2C2_ER_IRQHandler
+08002a74 W I2C2_EV_IRQHandler
+08002a74 W I2C3_ER_IRQHandler
+08002a74 W I2C3_EV_IRQHandler
+08002a74 t Infinite_Loop
+0800662c t joints.1
+0800396c t LL_ADC_REG_IsConversionOngoing
+08001ca4 t LL_AHB2_GRP1_EnableClock
+08001cbc t LL_APB1_GRP1_EnableClock
+08005658 t LL_PWR_SelectSUBGHZSPI_NSS
+08005644 t LL_PWR_UnselectSUBGHZSPI_NSS
+08002c24 t LL_RCC_HSE_IsReady
+08003540 t LL_RCC_LSE_IsReady
+08002c30 t LL_RCC_MSI_IsReady
+08002c3c t LL_RCC_MSI_SetCalibTrimming
+08002c4e t LL_RCC_PLL_IsReady
+0800354e t LL_RCC_SetI2CClockSource
+0800356e t LL_RCC_SetLPTIMClockSource
+08002a3c t LoopCopyDataInit
+08002a4e t LoopFillZerobss
+08002a5a t LoopForever
+08002a74 W LPTIM1_IRQHandler
+08002a74 W LPTIM2_IRQHandler
+08002a74 W LPTIM3_IRQHandler
+08002a74 W LPUART1_IRQHandler
+08000e04 T main
+08000e34 t med_of
+08002a74 W MemManage_Handler
+08001e86 T memset
+0800671c T MSIRangeTable
+08002a74 W NMI_Handler
+080001b8 t node_sample.isra.0
+08001da8 t packet_params
+08002a74 W PendSV_Handler
+08001a38 T pg_airtime_ms
+08000278 T pg_cadence_update
+080017e8 T pg_crc16
+08000ef8 T pg_div_round
+08001a84 T pg_duty_allow
+08001a9c T pg_duty_charge
+08001a64 T pg_duty_used_ms
+080010c4 T pg_edge_aggregate
+08000f46 T pg_edge_init
+08000fec T pg_edge_last_t
+0800106a T pg_edge_peer
+08000fb4 T pg_edge_push
+08001010 T pg_edge_push_theta
+080015e4 T pg_edge_relayed_median
+080016d6 T pg_edge_trigger
+08001948 T pg_frame_decode
+08001818 T pg_frame_encode
+08000ea4 T pg_isqrt64
+080015b4 T pg_load_factor_q16
+08000514 T pg_node_init
+080005a4 T pg_node_step
+080004b8 T pg_ota_init
+080004a0 T pg_ota_state_name
+08000264 T pg_period_s
+08001c48 T pg_power_active_us
+08001c30 T pg_power_charge
+08001bec T pg_power_charge_ua
+08001bbc T pg_power_init
+08001c50 T pg_power_update_cell
+08001782 T pg_prpd_init
+080066ac T pg_pwr_table
+08000304 T pg_ring_commit
+08000338 T pg_ring_init
+0800042c T pg_ring_peek
+0800047a T pg_ring_pop
+08000394 T pg_ring_push
+080015ee T pg_sibling_excess_lsb
+0800024c T pg_state_name
+0800166e T pg_theta_lsb
+0800169e T pg_theta_min_lsb
+08001b0c T pg_time_beacon
+08001af4 T pg_time_init
+08001ba0 T pg_time_now
+08001b84 T pg_time_zero_cross
+200014f4 b phase_last
+200014f0 b phase_period
+08002a74 W PKA_IRQHandler
+08002a74 W PVD_PVM_IRQHandler
+20001508 b radio
+20001501 b radio_ok
+08002a74 W RCC_IRQHandler
+08002c5c t RCC_SetFlashLatencyFromMSIRange
+08001e00 t read_adc
+08002a24 W Reset_Handler
+08001cd4 t rf_switch
+08000150 t ring_load
+08002a74 W RNG_IRQHandler
+20000000 d rssi
+20001524 b rtc
+08002a74 W RTC_Alarm_IRQHandler
+08005344 T RTC_EnterInitMode
+08005390 T RTC_ExitInitMode
+20001502 b rtc_ok
+080022c0 T RTC_WKUP_IRQHandler
+2000148c b s_deenerg_seen
+20001488 b s_deenerg_since
+20001490 b s_duty_epoch
+200014c0 b s_duty_ms
+2000148d b s_hdr_slot
+0800665c t s_ota_names
+08006684 t s_state_names
+08001cfc t select_fram
+200014fc b slept_ms
+200015c0 b spi
+080049be t SPI_EndRxTransaction
+08004970 t SPI_EndRxTxTransaction
+20001504 b spi_ok
+0800489c t SPI_WaitFifoStateUntilTimeout
+080047e4 t SPI_WaitFlagStateUntilTimeout
+08002a74 W SPI1_IRQHandler
+08002a74 W SPI2_IRQHandler
+08000138 t str_copy
+080056a8 t SUBGHZ_CheckDeviceReady
+08002a74 W SUBGHZ_Radio_IRQHandler
+0800566c t SUBGHZ_WaitOnBusy
+08002a74 W SUBGHZSPI_IRQHandler
+080056c8 t SUBGHZSPI_Receive.isra.0
+08005730 t SUBGHZSPI_Transmit.isra.0
+08002a74 W SVC_Handler
+20000004 D SystemCoreClock
+08002a20 T SystemInit
+08001e80 T SysTick_Handler
+08002a74 W TAMP_STAMP_LSECSS_SSRU_IRQHandler
+08002a74 W TIM1_BRK_IRQHandler
+08002a74 W TIM1_CC_IRQHandler
+08002a74 W TIM1_TRG_COM_IRQHandler
+08002a74 W TIM1_UP_IRQHandler
+08002a74 W TIM16_IRQHandler
+08002a74 W TIM17_IRQHandler
+08002a74 W TIM2_IRQHandler
+08002a74 W UsageFault_Handler
+08002a74 W USART1_IRQHandler
+08002a74 W USART2_IRQHandler
+20001678 B uwTick
+20000008 D uwTickFreq
+2000000c D uwTickPrio
+08001e54 t vdda_mv
+200014f8 b wake
+20001514 b wdt
+20001500 b wdt_on
+08002a74 W WWDG_IRQHandler
+
+$ C:\Users\Mustafa Eren\Desktop\hekaton\.tools\k1\arm\bin\arm-none-eabi-objcopy.exe -O binary C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\panogoz_tc.elf C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\firmware\node\build\stm32wle5\panogoz_tc.bin

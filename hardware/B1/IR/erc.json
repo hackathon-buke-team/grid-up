@@ -1,0 +1,66 @@
+{
+    "$schema": "https://schemas.kicad.org/erc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-09-20T13:27:15",
+    "ignored_checks": [
+        {
+            "description": "Global label only appears once in the schematic",
+            "key": "single_global_label"
+        },
+        {
+            "description": "Four connection points are joined together",
+            "key": "four_way_junction"
+        },
+        {
+            "description": "SPICE model issue",
+            "key": "simulation_model_issue"
+        },
+        {
+            "description": "Assigned footprint doesn't match footprint filters",
+            "key": "footprint_filter"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning"
+    ],
+    "kicad_version": "10.0.6",
+    "sheets": [
+        {
+            "path": "/",
+            "uuid_path": "/112c2847-8ae3-535c-afd0-cb6dfcc4c377",
+            "violations": []
+        },
+        {
+            "path": "/01 / POWER/",
+            "uuid_path": "/112c2847-8ae3-535c-afd0-cb6dfcc4c377/ef5cee4e-30b4-5561-8618-0635618c430b",
+            "violations": []
+        },
+        {
+            "path": "/02 / MCU/",
+            "uuid_path": "/112c2847-8ae3-535c-afd0-cb6dfcc4c377/80edb93e-d0af-50e5-bfdf-28ca16772785",
+            "violations": []
+        },
+        {
+            "path": "/03 / MCU/",
+            "uuid_path": "/112c2847-8ae3-535c-afd0-cb6dfcc4c377/b03d283b-a5a5-51f1-ad2b-aa9e18146f39",
+            "violations": []
+        },
+        {
+            "path": "/04 / RADIO/",
+            "uuid_path": "/112c2847-8ae3-535c-afd0-cb6dfcc4c377/427a368c-b6f2-5007-8dce-3af39d1cd68b",
+            "violations": []
+        },
+        {
+            "path": "/05 / SENSORS/",
+            "uuid_path": "/112c2847-8ae3-535c-afd0-cb6dfcc4c377/aca2e70d-0707-5f10-866d-2127387d3ea7",
+            "violations": []
+        },
+        {
+            "path": "/06 / SUPPLY_REFERENCES/",
+            "uuid_path": "/112c2847-8ae3-535c-afd0-cb6dfcc4c377/1223c5b7-a813-50e2-a5b1-be423a057db7",
+            "violations": []
+        }
+    ],
+    "source": "PANOGOZ-IR-B1.kicad_sch"
+}

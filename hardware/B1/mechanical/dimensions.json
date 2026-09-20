@@ -1,0 +1,94 @@
+{
+  "TC": {
+    "outer_mm": [
+      34,
+      126,
+      19.5
+    ],
+    "pcb_mm": [
+      30,
+      22,
+      1.6
+    ],
+    "wall_mm": 1.2,
+    "board_origin_mm": [
+      2.0,
+      2.2,
+      6.2
+    ],
+    "mount": "Split clamp on insulated cable, nominal 32 mm; interchangeable insert, no drilling",
+    "parts_valid": true,
+    "environmental_qualification": false,
+    "fits_real_panel_verified": false,
+    "model_kind": "parametric enclosure and simplified component envelopes"
+  },
+  "IR": {
+    "outer_mm": [
+      54,
+      82,
+      26
+    ],
+    "pcb_mm": [
+      45,
+      35,
+      1.6
+    ],
+    "wall_mm": 1.5,
+    "board_origin_mm": [
+      4.5,
+      2.5,
+      6.5
+    ],
+    "mount": "Two encapsulated magnets on galvanized floor; lens points upward; LWIR window and vent membrane",
+    "parts_valid": true,
+    "environmental_qualification": false,
+    "fits_real_panel_verified": false,
+    "model_kind": "parametric enclosure and simplified component envelopes"
+  },
+  "PD": {
+    "outer_mm": [
+      80,
+      118,
+      45
+    ],
+    "pcb_mm": [
+      70,
+      50,
+      1.6
+    ],
+    "wall_mm": 2,
+    "board_origin_mm": [
+      5.0,
+      3,
+      7
+    ],
+    "mount": "Accessory bracket on existing M12 stud; existing PE lugs stay in place; HFCT clips around PE conductor",
+    "parts_valid": true,
+    "environmental_qualification": false,
+    "fits_real_panel_verified": false,
+    "model_kind": "parametric enclosure and simplified component envelopes"
+  },
+  "GW": {
+    "outer_mm": [
+      112,
+      112,
+      54
+    ],
+    "pcb_mm": [
+      100,
+      90,
+      1.6
+    ],
+    "wall_mm": 2,
+    "board_origin_mm": [
+      6.0,
+      3,
+      7
+    ],
+    "mount": "35 mm DIN rail in metering/auxiliary bay; external SELV PSU; external sealed antenna exit",
+    "parts_valid": true,
+    "environmental_qualification": false,
+    "fits_real_panel_verified": false,
+    "model_kind": "parametric enclosure and simplified component envelopes"
+  }
+}

@@ -1,0 +1,51 @@
+........................................................................ [ 38%]
+....................F................................................... [ 77%]
+...........................................                              [100%]
+================================== FAILURES ===================================
+______ test_negative_control_opens_no_incident_or_horizon[sebeke_olayi] _______
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000023302418680>
+name = 'sebeke_olayi'
+
+    @pytest.mark.parametrize("name", fx.NEGATIVE_CONTROLS)
+    def test_negative_control_opens_no_incident_or_horizon(monkeypatch, name):
+        spec = fx.SCENARIOS[name]
+        live = run_panel(monkeypatch, [{
+            "index": 14, "scenario": name,
+            "ago_days": ACTIVE_AGO_DAYS[name], "kw": {}, "why_tr": "negatif kontrol",
+        }])
+        forbidden = [a for a in live.alarms if a.mode in spec.get("forbid_modes", ())]
+        assert not forbidden, f"{name} yasak modda alarm açtı: {forbidden}"
+        assert not live.alarms, f"{name} pano alarmı açtı: {modes(live)}"
+    
+        # AYNI koşumun ikinci iddiası: ekip yola çıkaracak bir projeksiyon da yok.
+        # Ayrı bir test yazmak bu bootstrap'ı yedi kez daha kurardı; kanıt aynı,
+        # bedeli iki katı olurdu.
+        #
+        # Ölçülen davranış: sağlıklı bir pabuç, gürültü seviyesinde pozitif bir
+        # eğimle IZLE eşiğine 117-211 gün mesafede görünebilir. Bu bir alarm
+        # değildir ve öyle de sunulmaz - 90 gün tavanının üstünde olduğu için
+        # ekranda ">90 g" yazar, bir tarih yazmaz. §8'in merdiveninde IZLE zaten
+        # "haftalık özet listesine girer, ekip çıkmaz" demektir. Sözleşme bu yüzden
+        # "projeksiyon yok" değil, ikisi birden: ağır hedefe projeksiyon yok, VE
+        # tavanın altında (takvime yazılabilir) gün yok.
+        heavy = [(j.key, j.eta.target, j.eta.days) for j in live.joints
+                 if j.eta.days is not None
+                 and j.eta.target in ("UYARI", "KRITIK", "ACIL")]
+        assert not heavy, f"{name} ağır hedefe projeksiyon üretti: {heavy}"
+        soon = [(j.key, j.eta.target, j.eta.days) for j in live.joints
+                if j.eta.days is not None and not j.eta.capped]
+>       assert not soon, f"{name} takvime yazılabilir bir gün verdi: {soon}"
+E       AssertionError: sebeke_olayi takvime yazılabilir bir gün verdi: [('C06-L1-PABUC', 'IZLE', 84.0)]
+E       assert not [('C06-L1-PABUC', 'IZLE', 84.0)]
+
+tests\test_negative_pipeline.py:117: AssertionError
+============================== warnings summary ===============================
+tests/test_detector.py::test_8_end_to_end
+  C:\Users\Mustafa Eren\Desktop\hekaton\grid-up\tests\test_detector.py:681: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+    _dt.datetime.utcfromtimestamp(jv.changepoint_ts).strftime("%d %B %Y"))
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_negative_pipeline.py::test_negative_control_opens_no_incident_or_horizon[sebeke_olayi]
+1 failed, 186 passed, 1 warning in 157.52s (0:02:37)

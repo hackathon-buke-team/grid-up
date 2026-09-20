@@ -1,0 +1,7 @@
+# CAD/PDF exports must keep exact bytes on Windows (including ASCII-only PDFs).
+*.pdf binary
+*.png binary
+*.step binary
+*.stl binary
+*.bin binary
+*.elf binary

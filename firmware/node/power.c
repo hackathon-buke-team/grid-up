@@ -1,109 +1,29 @@
-/* ==========================================================================
- * PANO GOZ - energy budget, cell model and power gating
- *
- * NO ENERGY HARVESTING IS CLAIMED ANYWHERE IN THIS PROJECT.
- *
- * It would be easy to claim it.  There is a busbar carrying 2312 A a metre
- * away and a CT-harvesting pitch writes itself.  We do not make it, for
- * three reasons that a substation engineer will raise before we finish the
- * sentence:
- *   1. The node sits in the BOTTOM CABLE COMPARTMENT on an outgoing way that
- *      spends most of its life between 15 % and 60 % of rating.  A harvester
- *      sized for that produces nothing at 03:00 in February, which is
- *      exactly when a joint that has been cycling all winter finally lets go.
- *   2. Harvesting from a conductor adds a burden to a circuit whose thermal
- *      behaviour is the thing we are measuring.  Instrumenting a system by
- *      perturbing it is a bad idea when the perturbation is heat.
- *   3. A harvester plus a supercapacitor plus a supervisor is more parts, and
- *      every one of them is a part that can fail closed in a live panel with
- *      no LV incoming breaker to isolate it.
- *
- * So: a primary Li-SOCl2 cell, no charging circuit, no harvester, a design
- * life of 9-16 years, and the number is COMPUTED HERE from a per-state
- * current table rather than asserted in a slide.
- *
- * WHERE THE CURRENT FIGURES COME FROM
- * ------------------------------------
- * They are budget figures from the device datasheets plus a margin, not
- * measurements from a built board - we say so rather than implying a
- * laboratory that does not exist.  Each row names its source.
- * ========================================================================== */
-
+/* PANO GOZ B1 engineering energy estimate, NOT a measured battery lifetime.
+ * Whole-node TC budget at the primary cell. The fitted OPA333 (17 uA typ),
+ * divider (1.5 uA), comparator, FRAM in standby (no deep-sleep command),
+ * MCU/RTC/LSI/IWDG and 2-second watchdog wakeups invalidate the legacy 3 uA.
+ * 50 uA is an explicit design allowance including unmeasured wake/leakage.
+ * TX/RX include the polling MCU. WAKE charge includes a 68-ohm/10-ms
+ * battery load pulse; its duration is an accounting equivalent, not timing.
+ * Normal TC cycles only: fault retries, boot, radio loss and HLC leakage
+ * need measured characterization. IR/PD use different duty/power profiles.
+ * PD_PRPD: 5 V * 0.2 A / (3.6 V * 0.8 efficiency) ~= 0.35 A at battery.
+ * Sources and limitations: docs/02-DONANIM-TASARIMI.md.
+ * No harvesting, charging, physical measurement or 9-16 year claim.
+ */
 #include "node.h"
-
-/* --------------------------------------------------------------------------
- * THE ENERGY BUDGET TABLE
- *
- * All currents are the WHOLE NODE, not just the MCU, at 3.6 V.
- *
- *  state     uA        duration     charge     source of the current figure
- *  --------  --------  -----------  ---------  --------------------------------
- *  SLEEP        3.0    period-180ms  varies    STM32WLE5 STOP2 + RTC + 64 kB SRAM
- *                                              retained = 1.6 uA (DS13105 typ,
- *                                              3.0 V, 25 C) + MB85RS64V sleep
- *                                              0.9 uA + divider/LDO leak 0.5 uA
- *  WAKE      4500.0      1.5 ms       6.75 uAs MSI 48 MHz start + context
- *  SENSE     1335.0     15.5 ms      20.69 uAs TMP117 one-shot, 8 averages
- *                                              (135 uA for 15.5 ms) with the
- *                                              MCU in LPSLEEP at 1.2 mA
- *  CT        2000.0     22.0 ms      44.00 uAs ADC + burden buffer over one
- *                                              full 20 ms mains cycle + setup
- *  COMPUTE   4500.0      3.0 ms      13.50 uAs Cortex-M4 at 48 MHz, Range 1
- *  FRAM      4000.0      1.2 ms       4.80 uAs MB85RS64V write 3 mA + SPI
- *  TX       24000.0     77.0 ms    1848.00 uAs sub-GHz PA, +14 dBm RFO_LP.
- *                                              35 B at SF7 BW125 CR4/5 is
- *                                              77.06 ms - computed by
- *                                              pg_airtime_ms(), not guessed
- *  RX        5500.0     60.0 ms     330.00 uAs Rx boosted; ack + beacon + peer
- *                                              snoop in ONE window
- *  PRPD      1800.0     60.0 s         n/a     PD-01 only, once per hour:
- *                                              comparator + peak-hold + ADC
- *
- * Per wake cycle (thermal clip, PRPD excluded) - these three numbers are
- * printed at runtime by pg_power_report() and this comment is a copy of that
- * output, not an independent claim:
- *      active time    180.2 ms
- *      active charge  2267.7 uAs
- *      energy         8163 uJ   at 3.6 V
- *
- * Average current and life on an ER14250 (1.2 Ah nominal, 3.6 V), derated to
- * 85 % usable and charged 1.0 %/year (1.37 uA) of self-discharge:
- *
- *      cadence     period    avg draw    + self-dis    life
- *      IDLE          900 s     5.52 uA     6.89 uA     6171 days = 16.9 years
- *      WATCH          60 s    40.79 uA    42.15 uA     1008 days =  2.8 years
- *      BURST          10 s   229.72 uA   231.09 uA      183 days =  0.5 years
- *
- * A node does not sit at 900 s for ever, so the SHIPPED figure is the
- * mission-weighted one.  Weighting 97.0 % idle / 2.5 % watch / 0.5 % burst -
- * what a fleet of healthy panels with the occasional investigation actually
- * looks like - gives 7.52 uA of load, 8.89 uA with self-discharge, and
- *
- *      MISSION LIFE  =  4781 DAYS  =  13.1 YEARS
- *
- * That is the number in the README and it is inside the 9-16 year band.  The
- * band is wide on purpose: a node watching a joint that is genuinely failing
- * spends months in WATCH and burns down in under three years.  That is the
- * correct outcome - the node is replaced along with the joint - but it is not
- * a number to hide, so pg_power_report() prints every row.
- *
- * NOTE the self-discharge line.  Quoting "5.5 uA therefore 21 years" would be
- * wrong by a quarter: 1 %/year of 1.2 Ah is 1.37 uA that flows whether the
- * node is switched on or not, and at the idle cadence that is 20 % of the
- * whole budget.
- * -------------------------------------------------------------------------- */
 
 const pg_pwr_row_t pg_pwr_table[PG_PWR_STATE_COUNT] = {
     /* name        uA      typ_us   */
-    { "SLEEP",        3,        0 },   /* duration is period - active        */
-    { "WAKE",      4500,     1500 },
-    { "SENSE",     1335,    15500 },
-    { "CT",        2000,    22000 },
-    { "COMPUTE",   4500,     3000 },
-    { "FRAM",      4000,     1200 },
-    { "TX",       24000,    77000 },
-    { "RX",        5500,    60000 },
-    { "PRPD",      1800,        0 }    /* PD-01 only, accounted separately   */
+    { "SLEEP",       50,        0 },   /* analog + FRAM standby + RTC/WDG margin */
+    { "WAKE",      5000,   120000 },   /* equivalent charge includes 10 ms battery load */
+    { "SENSE",     5000,    20000 },
+    { "CT",        5000,    22000 },
+    { "COMPUTE",   5000,     3000 },
+    { "FRAM",      6000,     1200 },
+    { "TX",       30000,    77000 },
+    { "RX",       11000,    60000 },
+    { "PRPD",    350000,        0 }    /* PD 5 V front-end battery-side estimate */
 };
 
 #define PG_CELL_V_MV   3600u
@@ -129,7 +49,7 @@ void pg_power_init(pg_power_t *p)
 void pg_power_charge_ua(pg_power_t *p, pg_pwr_state_t st, uint32_t ua, uint32_t us)
 {
     uint64_t nas = ((uint64_t)ua * (uint64_t)us) / 1000ull;
-    if ((int)st < 0 || (int)st >= PG_PWR_STATE_COUNT) return;
+    if ((unsigned)st >= PG_PWR_STATE_COUNT) return;
     p->nas[st]  += nas;
     p->total_nas += nas;
 }
@@ -309,7 +229,7 @@ void pg_power_report(const pg_power_t *p)
                  pg_pwr_table[i].name, b1, b2, (unsigned long)nas, b3);
     }
     pg_fmt_scaled(b1, sizeof b1, (int32_t)pg_pwr_table[PG_PWR_SLEEP].ua, 1, 1);
-    hal_logf("  %-9s %9s   (uyanik olmayan tum sure; STOP2 + RTC + FRAM sleep)",
+    hal_logf("  %-9s %9s   (B1 analog + FRAM standby + STOP2/RTC/IWDG payi)",
              "SLEEP", b1);
 
     pg_fmt_scaled(b1, sizeof b1, (int32_t)pg_power_active_us(), 1000, 1);
@@ -339,7 +259,7 @@ void pg_power_report(const pg_power_t *p)
     pg_fmt_scaled(b1, sizeof b1, (int32_t)mis_na, 1000, 2);
     pg_fmt_scaled(b2, sizeof b2, (int32_t)pg_power_life_days(mis_na), 365, 1);
     hal_logf("  GOREV KARMASI (%%97.0 idle / %%2.5 watch / %%0.5 burst):");
-    hal_logf("     ortalama %s uA  ->  %lu gun = %s YIL  (tasarim omru 9-16 yil)",
+    hal_logf("     ortalama %s uA  ->  %lu gun = %s YIL  (B1 TAHMIN; fiziksel olcum yok)",
              b1, (unsigned long)pg_power_life_days(mis_na), b2);
     hal_log("  Enerji hasadi YOK. Birincil Li-SOCl2 hucre, sarj devresi yok.");
 
@@ -347,7 +267,7 @@ void pg_power_report(const pg_power_t *p)
         pg_fmt_scaled(b1, sizeof b1, (int32_t)p->vbat_mv, 1000, 3);
         pg_fmt_scaled(b2, sizeof b2, (int32_t)p->vloaded_mv, 1000, 3);
         pg_fmt_scaled(b3, sizeof b3, (int32_t)(uint32_t)(p->total_nas / 1000ull), 1000, 1);
-        hal_logf("  olculen: OCV %s V, 50 mA yuk altinda %s V, harcanan %s uAs,"
+        hal_logf("  HAL girdisi (hostta simule): OCV %s V, 50 mA yuk altinda %s V, harcanan %s uAs,"
                  " kalan %%%u%s", b1, b2, b3, (unsigned)pg_power_pct(p),
                  p->passivated ? "  [PASIVASYON]" : "");
     }

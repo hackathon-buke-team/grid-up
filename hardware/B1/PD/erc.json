@@ -1,0 +1,81 @@
+{
+    "$schema": "https://schemas.kicad.org/erc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-09-20T13:27:26",
+    "ignored_checks": [
+        {
+            "description": "Global label only appears once in the schematic",
+            "key": "single_global_label"
+        },
+        {
+            "description": "Four connection points are joined together",
+            "key": "four_way_junction"
+        },
+        {
+            "description": "SPICE model issue",
+            "key": "simulation_model_issue"
+        },
+        {
+            "description": "Assigned footprint doesn't match footprint filters",
+            "key": "footprint_filter"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning"
+    ],
+    "kicad_version": "10.0.6",
+    "sheets": [
+        {
+            "path": "/",
+            "uuid_path": "/3cd5675c-c198-5b84-985c-7d81a7968a44",
+            "violations": []
+        },
+        {
+            "path": "/01 / POWER/",
+            "uuid_path": "/3cd5675c-c198-5b84-985c-7d81a7968a44/1b7bbf3b-f798-51dc-8e90-b3ad1566e2ae",
+            "violations": []
+        },
+        {
+            "path": "/02 / MCU/",
+            "uuid_path": "/3cd5675c-c198-5b84-985c-7d81a7968a44/4c16cda9-adac-558b-af6b-71e782d36756",
+            "violations": []
+        },
+        {
+            "path": "/03 / MCU/",
+            "uuid_path": "/3cd5675c-c198-5b84-985c-7d81a7968a44/e5ed719d-1a8a-5718-8166-eb15bf1a2ae9",
+            "violations": []
+        },
+        {
+            "path": "/04 / RADIO/",
+            "uuid_path": "/3cd5675c-c198-5b84-985c-7d81a7968a44/76866c9f-f7aa-5f53-9c51-35e102645ef2",
+            "violations": []
+        },
+        {
+            "path": "/05 / PD_POWER/",
+            "uuid_path": "/3cd5675c-c198-5b84-985c-7d81a7968a44/841530f6-6589-54b8-b2aa-c26c5a17e4c0",
+            "violations": []
+        },
+        {
+            "path": "/06 / PD_ANALOG/",
+            "uuid_path": "/3cd5675c-c198-5b84-985c-7d81a7968a44/7d8ef78c-ca5f-5f7b-9130-187645c9662e",
+            "violations": []
+        },
+        {
+            "path": "/07 / PD_ANALOG/",
+            "uuid_path": "/3cd5675c-c198-5b84-985c-7d81a7968a44/53a2098b-a830-57d9-b2b4-0eef9db23f06",
+            "violations": []
+        },
+        {
+            "path": "/08 / ENV_ULTRASOUND/",
+            "uuid_path": "/3cd5675c-c198-5b84-985c-7d81a7968a44/0cc46aba-db41-5d01-8e96-4f1328acafb3",
+            "violations": []
+        },
+        {
+            "path": "/09 / SUPPLY_REFERENCES/",
+            "uuid_path": "/3cd5675c-c198-5b84-985c-7d81a7968a44/a335e85e-6ff4-5db6-9ec9-fc9e4245159e",
+            "violations": []
+        }
+    ],
+    "source": "PANOGOZ-PD-B1.kicad_sch"
+}

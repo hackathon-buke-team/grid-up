@@ -1,0 +1,228 @@
+﻿reference,MPN,physical_pin,pin_name,electrical_type,net
+J1,CELL + HLC,1,Pin_1,passive,VBAT
+J1,CELL + HLC,2,Pin_2,passive,GND
+U1,TPS63900DSKR,1,EN,input,VBAT
+U1,TPS63900DSKR,2,SEL,input,GND
+U1,TPS63900DSKR,3,CFG1,input,CFG1
+U1,TPS63900DSKR,4,CFG2,input,GND
+U1,TPS63900DSKR,5,CFG3,input,CFG3
+U1,TPS63900DSKR,6,VOUT,power_out,V3V3
+U1,TPS63900DSKR,7,LX2,input,LX2
+U1,TPS63900DSKR,8,GND,power_in,GND
+U1,TPS63900DSKR,9,LX1,input,LX1
+U1,TPS63900DSKR,10,VIN,power_in,VBAT
+U1,TPS63900DSKR,11,GND,passive,GND
+L1,2.2uH Isat>=1A,1,1,passive,LX1
+L1,2.2uH Isat>=1A,2,2,passive,LX2
+R1,1% thick film 36.5k,1,,passive,CFG1
+R1,1% thick film 36.5k,2,,passive,GND
+R2,1% thick film 16.2k,1,,passive,CFG3
+R2,1% thick film 16.2k,2,,passive,GND
+C1,X7R 16V 10uF,1,,passive,VBAT
+C1,X7R 16V 10uF,2,,passive,GND
+C2,X7R 16V 22uF,1,,passive,V3V3
+C2,X7R 16V 22uF,2,,passive,GND
+Q1,AO3401A,1,G,input,DIV_GATE
+Q1,AO3401A,2,S,passive,VBAT
+Q1,AO3401A,3,D,passive,DIV_SUPPLY
+Q2,2N7002,1,G,input,DIV_EN
+Q2,2N7002,2,S,passive,GND
+Q2,2N7002,3,D,passive,DIV_GATE
+R3,1% thick film 1M,1,,passive,DIV_GATE
+R3,1% thick film 1M,2,,passive,VBAT
+R4,1% thick film 1M,1,,passive,DIV_EN
+R4,1% thick film 1M,2,,passive,GND
+R5,1% thick film 100k,1,,passive,DIV_SUPPLY
+R5,1% thick film 100k,2,,passive,BAT_ADC
+R6,1% thick film 100k,1,,passive,BAT_ADC
+R6,1% thick film 100k,2,,passive,GND
+C3,X7R 16V 10nF,1,,passive,BAT_ADC
+C3,X7R 16V 10nF,2,,passive,GND
+R7,1% thick film 68R 0.5W,1,,passive,VBAT
+R7,1% thick film 68R 0.5W,2,,passive,LOAD_D
+Q3,2N7002,1,G,input,LOAD_EN
+Q3,2N7002,2,S,passive,GND
+Q3,2N7002,3,D,passive,LOAD_D
+R8,1% thick film 100k,1,,passive,LOAD_EN
+R8,1% thick film 100k,2,,passive,GND
+U10,STM32WLE5CCU6,1,PB3,bidirectional,MOUNT_N
+U10,STM32WLE5CCU6,2,PB4,bidirectional,DIV_EN
+U10,STM32WLE5CCU6,3,PB5,bidirectional,LOAD_EN
+U10,STM32WLE5CCU6,4,PB6,bidirectional,I2C_SCL
+U10,STM32WLE5CCU6,5,PB7,bidirectional,I2C_SDA
+U10,STM32WLE5CCU6,6,PB8,bidirectional,NC
+U10,STM32WLE5CCU6,7,PA0,bidirectional,NC
+U10,STM32WLE5CCU6,8,PA1,bidirectional,SENS_EN
+U10,STM32WLE5CCU6,9,PA2,bidirectional,BAT_ADC
+U10,STM32WLE5CCU6,10,PA3,bidirectional,NC
+U10,STM32WLE5CCU6,11,VDD,power_in,V3V3
+U10,STM32WLE5CCU6,12,PA4,bidirectional,FRAM_CS
+U10,STM32WLE5CCU6,13,PA5,bidirectional,SPI_SCK
+U10,STM32WLE5CCU6,14,PA6,bidirectional,SPI_MISO
+U10,STM32WLE5CCU6,15,PA7,bidirectional,SPI_MOSI
+U10,STM32WLE5CCU6,16,PA8,bidirectional,PHASE
+U10,STM32WLE5CCU6,17,PA9,bidirectional,NC
+U10,STM32WLE5CCU6,18,NRST,input,NRST
+U10,STM32WLE5CCU6,19,PH3,bidirectional,BOOT0
+U10,STM32WLE5CCU6,20,RFI_P,bidirectional,RFI_P
+U10,STM32WLE5CCU6,21,RFI_N,bidirectional,RFI_N
+U10,STM32WLE5CCU6,22,RFO_LP,bidirectional,RFO_LP
+U10,STM32WLE5CCU6,23,RFO_HP,bidirectional,NC
+U10,STM32WLE5CCU6,24,VR_PA,power_in,VR_PA
+U10,STM32WLE5CCU6,25,VDDPA,power_in,V1V55
+U10,STM32WLE5CCU6,26,OSC_IN,input,HSE_IN
+U10,STM32WLE5CCU6,27,OSC_OUT,input,HSE_OUT
+U10,STM32WLE5CCU6,28,VDDRF,power_in,V3V3
+U10,STM32WLE5CCU6,29,VDDRF1V55,power_in,V1V55
+U10,STM32WLE5CCU6,30,PB0,bidirectional,RF_CTRL
+U10,STM32WLE5CCU6,31,PB2,bidirectional,NC
+U10,STM32WLE5CCU6,32,PB12,bidirectional,RF_CTRL_N
+U10,STM32WLE5CCU6,33,PA10,bidirectional,NC
+U10,STM32WLE5CCU6,34,PA11,bidirectional,NC
+U10,STM32WLE5CCU6,35,PA12,bidirectional,NC
+U10,STM32WLE5CCU6,36,PA13,bidirectional,SWDIO
+U10,STM32WLE5CCU6,37,VBAT,power_in,V3V3
+U10,STM32WLE5CCU6,38,PC13,bidirectional,NC
+U10,STM32WLE5CCU6,39,PC14,bidirectional,LSE_IN
+U10,STM32WLE5CCU6,40,PC15,bidirectional,LSE_OUT
+U10,STM32WLE5CCU6,41,VDDA,power_in,VDDA
+U10,STM32WLE5CCU6,42,PA14,bidirectional,SWCLK
+U10,STM32WLE5CCU6,43,PA15,bidirectional,NC
+U10,STM32WLE5CCU6,44,VDD,power_in,V3V3
+U10,STM32WLE5CCU6,45,VFBSMPS,input,V1V55
+U10,STM32WLE5CCU6,46,VDDSMPS,power_in,V3V3
+U10,STM32WLE5CCU6,47,VLXSMPS,power_in,NC
+U10,STM32WLE5CCU6,48,VSSSMPS,power_in,GND
+U10,STM32WLE5CCU6,49,VSS,power_in,GND
+R9,1% thick film 10k,1,,passive,BOOT0
+R9,1% thick film 10k,2,,passive,GND
+R10,1% thick film 10k,1,,passive,NRST
+R10,1% thick film 10k,2,,passive,V3V3
+C4,X7R 16V 100nF,1,,passive,NRST
+C4,X7R 16V 100nF,2,,passive,GND
+J2,SWD TC2030,1,Pin_1,passive,V3V3
+J2,SWD TC2030,2,Pin_2,passive,SWDIO
+J2,SWD TC2030,3,Pin_3,passive,GND
+J2,SWD TC2030,4,Pin_4,passive,SWCLK
+J2,SWD TC2030,5,Pin_5,passive,NRST
+J2,SWD TC2030,6,Pin_6,passive,NC
+J3,MOUNT switch,1,Pin_1,passive,MOUNT_N
+J3,MOUNT switch,2,Pin_2,passive,GND
+R11,1% thick film 100k,1,,passive,MOUNT_N
+R11,1% thick film 100k,2,,passive,V3V3
+C5,X7R 16V 100nF,1,,passive,V3V3
+C5,X7R 16V 100nF,2,,passive,GND
+C6,X7R 16V 100nF,1,,passive,V3V3
+C6,X7R 16V 100nF,2,,passive,GND
+C7,X7R 16V 100nF,1,,passive,V3V3
+C7,X7R 16V 100nF,2,,passive,GND
+C8,X7R 16V 100nF,1,,passive,V3V3
+C8,X7R 16V 100nF,2,,passive,GND
+C9,X7R 16V 4.7uF,1,,passive,V3V3
+C9,X7R 16V 4.7uF,2,,passive,GND
+C10,X7R 16V 4.7uF,1,,passive,V1V55
+C10,X7R 16V 4.7uF,2,,passive,GND
+C11,X7R 16V 100nF,1,,passive,V1V55
+C11,X7R 16V 100nF,2,,passive,GND
+R12,1% thick film 0R,1,,passive,VDDA
+R12,1% thick film 0R,2,,passive,V3V3
+C12,X7R 16V 100nF,1,,passive,VDDA
+C12,X7R 16V 100nF,2,,passive,GND
+C13,X7R 16V 1uF,1,,passive,VDDA
+C13,X7R 16V 1uF,2,,passive,GND
+Y1,32MHz CL=10pF,1,1,passive,HSE_IN
+Y1,32MHz CL=10pF,2,G,passive,GND
+Y1,32MHz CL=10pF,3,3,passive,HSE_OUT
+Y1,32MHz CL=10pF,4,G,passive,GND
+Y2,32.768kHz CL=6pF,1,1,passive,LSE_IN
+Y2,32.768kHz CL=6pF,2,2,passive,LSE_OUT
+C14,X7R 16V 6pF,1,,passive,LSE_IN
+C14,X7R 16V 6pF,2,,passive,GND
+C15,X7R 16V 6pF,1,,passive,LSE_OUT
+C15,X7R 16V 6pF,2,,passive,GND
+U2,MB85RS64V,1,~{CS},input,FRAM_CS
+U2,MB85RS64V,2,SO,output,SPI_MISO
+U2,MB85RS64V,3,~{WP},input,V3V3
+U2,MB85RS64V,4,GND,power_in,GND
+U2,MB85RS64V,5,SI,input,SPI_MOSI
+U2,MB85RS64V,6,SCK,input,SPI_SCK
+U2,MB85RS64V,7,~{HOLD},input,V3V3
+U2,MB85RS64V,8,VDD,power_in,V3V3
+R13,1% thick film 100k,1,,passive,FRAM_CS
+R13,1% thick film 100k,2,,passive,V3V3
+C16,X7R 16V 100nF,1,,passive,V3V3
+C16,X7R 16V 100nF,2,,passive,GND
+R14,1% thick film 4.7k,1,,passive,I2C_SCL
+R14,1% thick film 4.7k,2,,passive,SENS_3V3
+R15,1% thick film 4.7k,1,,passive,I2C_SDA
+R15,1% thick film 4.7k,2,,passive,SENS_3V3
+L2,47nH,1,1,passive,VR_PA
+L2,47nH,2,2,passive,RFO_LP
+C17,X7R 16V 47nF,1,,passive,VR_PA
+C17,X7R 16V 47nF,2,,passive,GND
+C18,X7R 16V 68pF,1,,passive,VR_PA
+C18,X7R 16V 68pF,2,,passive,GND
+L3,4.4nH,1,1,passive,RFO_LP
+L3,4.4nH,2,2,passive,TX_1
+C19,X7R 16V 5.5pF,1,,passive,RFO_LP
+C19,X7R 16V 5.5pF,2,,passive,GND
+C20,X7R 16V 2.5pF,1,,passive,TX_1
+C20,X7R 16V 2.5pF,2,,passive,GND
+L4,3.4nH,1,1,passive,TX_1
+L4,3.4nH,2,2,passive,TX_2
+C21,X7R 16V 4.3pF,1,,passive,TX_2
+C21,X7R 16V 4.3pF,2,,passive,GND
+C22,X7R 16V 68pF,1,,passive,TX_2
+C22,X7R 16V 68pF,2,,passive,TX_3
+L5,9.2nH,1,1,passive,TX_3
+L5,9.2nH,2,2,passive,TX_RF
+C23,X7R 16V 3.5pF,1,,passive,TX_RF
+C23,X7R 16V 3.5pF,2,,passive,GND
+C24,X7R 16V 4.5pF,1,,passive,RX_RF
+C24,X7R 16V 4.5pF,2,,passive,RFI_P
+L6,12nH,1,1,passive,RFI_P
+L6,12nH,2,2,passive,RFI_N
+C25,X7R 16V 2.7pF,1,,passive,RFI_N
+C25,X7R 16V 2.7pF,2,,passive,GND
+U3,PE4259,1,RF1,passive,TX_RF
+U3,PE4259,2,GND,power_in,GND
+U3,PE4259,3,RF2,passive,RX_RF
+U3,PE4259,4,CTRL,input,RF_CTRL
+U3,PE4259,5,RFC,passive,RF_COMMON
+U3,PE4259,6,CTRL_N,input,RF_CTRL_N
+C26,X7R 16V 68pF,1,,passive,RF_COMMON
+C26,X7R 16V 68pF,2,,passive,ANT
+J4,868 MHz u.FL,1,In,passive,ANT
+J4,868 MHz u.FL,2,Ext,passive,GND
+Q4,AO3401A,1,G,input,SENS_GATE
+Q4,AO3401A,2,S,passive,V3V3
+Q4,AO3401A,3,D,passive,SENS_3V3
+Q5,2N7002,1,G,input,SENS_EN
+Q5,2N7002,2,S,passive,GND
+Q5,2N7002,3,D,passive,SENS_GATE
+R16,1% thick film 100k,1,,passive,SENS_GATE
+R16,1% thick film 100k,2,,passive,V3V3
+R17,1% thick film 100k,1,,passive,SENS_EN
+R17,1% thick film 100k,2,,passive,GND
+U4,MLX90640ESF-BAA-000-TU,1,SDA,bidirectional,I2C_SDA
+U4,MLX90640ESF-BAA-000-TU,2,VDD,power_in,SENS_3V3
+U4,MLX90640ESF-BAA-000-TU,3,VSS,power_in,GND
+U4,MLX90640ESF-BAA-000-TU,4,SCL,input,I2C_SCL
+C27,X7R 16V 100nF,1,,passive,SENS_3V3
+C27,X7R 16V 100nF,2,,passive,GND
+C28,X7R 16V 10uF,1,,passive,SENS_3V3
+C28,X7R 16V 10uF,2,,passive,GND
+U5,SHT41-AD1B-R2,1,SDA,bidirectional,I2C_SDA
+U5,SHT41-AD1B-R2,2,SCL,input,I2C_SCL
+U5,SHT41-AD1B-R2,3,VDD,power_in,SENS_3V3
+U5,SHT41-AD1B-R2,4,VSS,power_in,GND
+C29,X7R 16V 100nF,1,,passive,SENS_3V3
+C29,X7R 16V 100nF,2,,passive,GND
+J5,PHASE optional,1,Pin_1,passive,PHASE
+J5,PHASE optional,2,Pin_2,passive,GND
+#FLG1,,1,pwr,power_out,VBAT
+#FLG2,,1,pwr,power_out,GND
+#FLG3,,1,pwr,power_out,V1V55
+#FLG4,,1,pwr,power_out,VR_PA
+#FLG5,,1,pwr,power_out,VDDA
+#FLG6,,1,pwr,power_out,SENS_3V3

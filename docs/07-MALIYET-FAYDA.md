@@ -1,5 +1,7 @@
 # 07 · Maliyet–Fayda
 
+ > **K1 B1 maliyet revizyonu / 20.09.2026:** Aşağıdaki önceki maliyet-fayda senaryoları B1 tedarik teklifi değildir. Güncel [BOM](../hardware/B1/BOM.md) 214 satırdır; fiyatı doğrulanmış satırların 9 cihazlık kit ara toplamı **162,68 USD**, 206 satır için fiyat/MPN/termin teyidi gereklidir. Tam kit maliyeti = bu ara toplam + eksik teklifler + imalat/montaj + vergi/nakliye. Bunlar tamamlanmadan eski €470,59/€660,91 donanım toplamı veya geri ödeme yılı güncel sonuç olarak kullanılamaz. TC pil varsayımı yaklaşık 2 yıla indiği için 5 yıllık bakım/yenileme maliyeti de yeniden hesaplanmalıdır. K1 1.6 kısmen açıktır; güncel fiyatları eski EUR tahminleriyle kur belirtmeden toplamadık.
+
 ---
 
 ## 0. ÖNCE KÖTÜ HABER

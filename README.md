@@ -7,6 +7,8 @@ Varlık: TEDAŞ-MLZ/2003-06.B, EK-II/14 çizimli, 1600 kVA dahili tip AG dağıt
 
 ---
 
+**K1 B1 (20.09.2026):** [Tasarım teslimi](hardware/README.md) repo içindedir. Dört kartın düzenlenebilir KiCad kaynakları, PDF/PNG, mekanik STEP, STM32WLE5 hedef portu ve derleme kanıtı eklendi. BOM teklifleri kısmi; fiziksel donanım çalıştırılmadı. Eski 13,1 yıl pil varsayımı B1 için geçerli değildir.
+
 ## 1. Tez — bir paragrafta
 
 Her yarışmacı panoya bir termometre koyar ve bir eşiğin üstünde alarm üretir. Bu sahada
@@ -241,14 +243,14 @@ Bir hackathon teslimi için en değerli bölüm budur.
 | Yapmadık | Neden |
 |---|---|
 | **Bara bölmesine sensör** | Panoda AG giriş kesicisi **yoktur** ("direk bara bağlantı", Madde 2.2.10.2.vi). Bara bölmesini enerjisiz yapmak, tüm dağıtım merkezini OG tarafından karartmak demektir. 1. gün kiti yalnız alt kablo bölmesi + ölçü kolonu + mevcut 10 A prizdir. Bara bölmesi profilini yazmadık, **sildik**. |
-| **Enerji hasadı iddiası** | Bara yakınında akım trafosuyla hasat teorik olarak mümkündür; ölçmedik. Ölçmediğimiz bir şeyi teklif etmeyiz. Birincil Li-SOCl2 hücre, 9–16 yıl tasarım ömrü. Hasat, tezgâh ölçümüne bağlı belgelenmiş bir gelecek seçeneği olarak durur. |
+| **Enerji hasadı iddiası** | Bara yakınında akım trafosuyla hasat teorik olarak mümkündür; ölçmedik. Ölçmediğimiz bir şeyi teklif etmeyiz. Birincil Li-SOCl2 hücre; B1 TC hesabı yaklaşık 2 yıl, fiziksel ölçüm yok. Hasat, tezgâh ölçümüne bağlı belgelenmiş bir gelecek seçeneği olarak durur. |
 | **Tek başına PD ile ekip yönlendirme** | 400 V'ta klasik kısmi deşarj oluşmaz (Paschen minimumu 327 V). RF kanalı gevşek bağlantı mikro-arkını ölçer, pC **eşdeğeri** raporlar, IEC 60270 izlenebilir **değildir** ve AG'de tek başına asla ekip yönlendirmez — yalnız ısıl bulguyu destekler. |
 | **Derin öğrenme / pano başına LSTM** | Kayan pencerede eğitilen bir otokodlayıcı yavaş sürüklenmeyi **öğrenir ve yeniden üretir**; yani tam olarak avladığımız 0.2 K/hafta sinyaline yapısal olarak kördür. Ayrıca elimizde olmayan aylarca temiz geçmiş ister ve 100 panoya özel 100 model bir işletme yüküdür. Gerekçeler: [docs/04](docs/04-ANOMALI-TESPIT.md) §10. |
 | **SCADA'ya yazma yolu** | Modbus'ta kimlik doğrulama yoktur. TVOC-2'ye otokontrol komutu verebilen bir sisteme kimliksiz yazma açmak kabul edilemez. FC 05/06/15/16 istisnasız reddedilir. |
 | **Sparkplug B** | Sparkplug 3.0, DDATA için QoS 0 **zorunlu** kılar. Dayanıklılık hikâyemiz ağ geçidinde PUBACK ile ilerleyen bir store-and-forward filigranına dayanır ve bu mekanizma QoS 0'da yoktur. Doğum/vasiyet/monoton sıra numarasını koruduk, markayı bıraktık. |
 | **IEC 60870-5-104 ve OPC UA sunucuları** | Nokta listeleri yazıldı, sunucular kurulmadı. Bu hackathonda **yalnız Modbus TCP slave çalışır durumda** teslim edilmiştir. |
 | **Gerçek SMS gönderimi** | GSM modem AT diyaloğu ve SMPP oturumu gerçekçi biçimde simüle edilir, transkript kaydedilir; hiçbir yere mesaj gitmez. Sesli arama yolu da simülasyondur; gerçek dağıtım TTS ağ geçidi ister. |
-| **KiCad kaynak dosyaları** | Kart tasarımı blok şema, I/O tablosu, konnektör pin dizilimi, katman yığını ve BOM düzeyinde belgelenmiştir. Saklanan bir dosya yoktur; **çizilmemiştir**. |
+| **KiCad kaynak dosyaları** | B1 KiCad kaynakları, dört kartın şematik PDF/yerleşim/3B görselleri ve mekanik STEP dosyaları [hardware/](hardware/README.md) altında. Bakır yönlendirme ve fiziksel üretim yapılmadı. |
 | **OG hücre donanımı** | Hiçbir OG çizimi verilmedi; istedik. [docs/10](docs/10-MV-HUCRE-KONSEPTI.md) jenerik 36 kV kablo bölmesi için konsept, montaj ve maliyet verir, ürün iddia etmez. |
 
 ---
@@ -276,7 +278,7 @@ Bu paketin her belgesinin sonunda aynı başlıkla bir liste vardır. Kısa öze
 | Konu | Durum |
 |---|---|
 | IEC 60870-5-104 / OPC UA sunucuları | Nokta listesi var, sunucu yok |
-| KiCad şematik ve PCB kaynağı | Blok/I-O/BOM düzeyinde belgelendi, çizilmedi |
+| KiCad şematik ve PCB kaynağı | B1 şematik ve yerleşim hazır; üretim routing ve fiziksel test yok |
 | Gerçek GSM/SMPP gönderimi, sesli arama | Simüle edildi, transkript üretiliyor |
 | OTA imzalı firmware dağıtımı | Politika yazıldı, dağıtım altyapısı kurulmadı |
 | TimescaleDB sürücüsü | **Yok.** `Store` yalnız SQLite'tır; `postgresql://` adresi reddedilir |
