@@ -10,7 +10,7 @@
 | --- | --- | --- |
 | Alarm yaşam döngüsü (aç/yükselt/temizle/onayla/7 gün otomatik kapan/sessize al) | **Bitti, testli** | `panogoz/rules/alarms.py`, `tests/test_alarm_lifecycle.py` (21 test) |
 | Eskalasyon (rota, belirteç, tekrar, fırtına sınırı, sessize alma, nöbet devri, teslimat hatası) | **Bitti, testli** | `panogoz/notify/escalation.py`, `tests/test_escalation.py` (19 test) |
-| Telegram kanalı, tek yönlü gönderim | **GERÇEK gönderim yapıldı (2026-09-20):** `send_real_alarm_demo --send` ile fizik senaryosundan açılan ilk ALARM için tek "DEMO-" önekli mesaj gerçek Telegram Bot API'ye gönderildi; `sendMessage` HTTP 2xx döndü (`raise_for_status` geçti, `[SENT]` kaydı düştü). Telefonda alındığı bu betikle ölçülmez. | `panogoz/notify/telegram_channel.py`, `tools/send_real_alarm_demo.py` |
+| Telegram kanalı, tek yönlü gönderim | **GERÇEK gönderim yapıldı (2026-09-20):** `send_real_alarm_demo --send` ile fizik senaryosundan açılan ilk ALARM için tek "DEMO-" önekli mesaj gerçek Telegram Bot API'ye gönderildi; `sendMessage` HTTP 2xx döndü (`raise_for_status` geçti, `[SENT]` kaydı düştü). Mesajın telefona ulaştığı kullanıcı tarafından teyit edildi (betik bunu kendisi ölçmez). | `panogoz/notify/telegram_channel.py`, `tools/send_real_alarm_demo.py` |
 | Telegram `ONAY <alarm> <belirteç>` yanıtını okuma (iki yönlü) | Kod + sahte-HTTP testi hazır. Gerçek koşuda 120 sn beklendi, **yanıt gelmedi** (alarm açık kaldı): iki yönlü yol gerçek Telegram'da **doğrulanmadı** | `TelegramAckPoller`, `tests/test_escalation.py` |
 | On-prem GSM modem SMS kanalı | Kod + AT-protokol testi **sahte seri portla**; **gerçek modemle denenmedi** | `panogoz/notify/gsm_modem.py`, `tests/test_gsm_modem.py` (11 test) |
 | "Gerçek kanaldan tek mesaj" (CLAUDE.md §8 P1) | **Tamam (tek yönlü), 2026-09-20** | Yukarıdaki satır; komut aşağıda |
@@ -41,9 +41,10 @@ Karar: kanal soyutlaması `Dispatcher` arkasında (`RoutedDispatcher`, `route` a
 ve alarm meta verisi (hangi panoda hangi arıza) enerji dağıtımında operasyonel olarak
 hassastır.
 
-Yapılan kanıt: GSM yolu yalnız sahte seri portla, Telegram yolu yalnız sahte HTTP ile
-(+ önceki oturumda gerçek gönderim, bkz. §5) sınandı; ikisinin de **gerçek uçtan uca
-kanıtı sistemde henüz yok**.
+Yapılan kanıt: GSM yolu yalnız sahte seri portla sınandı (gerçek modemle hiç denenmedi).
+Telegram yolu sahte HTTP ile sınandı **ve 2026-09-20'de gerçek Bot API'ye tek yönlü bir
+gerçek mesaj gönderildi** (telefona ulaştığı teyit edildi); iki yönlü `ONAY` yanıtı gerçek
+Telegram'da doğrulanmadı.
 
 ## 2. Veri mahremiyeti notu
 
@@ -109,9 +110,11 @@ beklemek zorunda kalıyordu — devir anında derhal aranmalı.
 
 ## 5. Açık maddeler
 
-- **Gerçek gönderim kanıtı** (yukarıdaki komut). Not: ilk oturumda (2026-09-12) eski
-  bir uygulamayla gerçek Telegram mesajı gönderilmişti ve kullanıcı "geldi" diye
-  teyit etmemişti; yeni hat henüz gerçek kanalda çalıştırılmadı.
+- **İki yönlü onay, gerçek Telegram'da:** 2026-09-20 koşusunda tek yönlü gönderim çalıştı ve
+  telefona ulaştı; `--wait-ack 120` süresince `ONAY` yanıtı gelmedi, yani `TelegramAckPoller`
+  gerçek kanalda hiç doğrulanmadı (yalnız sahte-HTTP testi). Yeniden denemek yeni bir gerçek
+  mesaj gönderir. (Not: 2026-09-12'de silinen eski uygulamayla da bir gönderim denenmişti,
+  teyit kaydı yoktu; bu satır yalnız yeni koddur.)
 - GSM modem gerçek cihazla denenmedi; teslim raporu (`+CDS`) okunmuyor.
 - SMS'te iki yönlü onay yok; onay konsol/API veya Telegram üzerinden.
 - Alarm günlüğü/eskalasyon durumu bellekte; yeniden başlatmada kalıcı değil

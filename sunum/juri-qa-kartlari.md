@@ -63,7 +63,7 @@
 
 **S: Gerçek bir SMS/Telegram mesajı gönderdiniz mi?**
 > **Telegram'a evet, SMS'e hayır.** 2026-09-20'de gerçek Telegram Bot API'ye fizik senaryosundan
-> açılan ilk ALARM için tek bir "DEMO-" mesajı gönderdik (`sendMessage` HTTP 2xx). Dürüst sınırlar:
+> açılan ilk ALARM için tek bir "DEMO-" mesajı gönderdik (`sendMessage` HTTP 2xx, telefona ulaştığı teyit edildi). Dürüst sınırlar:
 > (1) iki yönlü `ONAY` yanıtı gerçek Telegram'da denendi ama 120 sn içinde yanıt gelmedi; bu yol yalnız
 > sahte-HTTP testiyle doğrulanmış. (2) On-prem GSM modem SMS kanalı kodlu ve testli ama yalnız sahte seri
 > portla; gerçek modemle denenmedi. (3) Arayüzdeki telefonlar bellek içi gösterim. Komut:

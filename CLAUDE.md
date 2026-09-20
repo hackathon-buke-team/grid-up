@@ -275,8 +275,8 @@ SCADA protokolü.
       port). **GERÇEK Telegram Bot API'ye tek "DEMO-" önekli alarm mesajı gönderildi**
       (`python -m tools.send_real_alarm_demo --send --wait-ack 120`, kullanıcı onayıyla,
       yalnız `TELEGRAM_CHAT_ID` sohbetine; `sendMessage` HTTP 2xx, `[SENT]` kaydı).
-      **Doğrulanmayan:** telefonda alındığı betikle ölçülmez; iki yönlü `ONAY` yanıtı
-      120 sn içinde gelmedi (alarm açık kaldı) → bu yol yalnız sahte-HTTP testiyle
+      Mesajın telefona ulaştığı kullanıcı tarafından teyit edildi (2026-09-20).
+      **Doğrulanmayan:** iki yönlü `ONAY` yanıtı 120 sn içinde gelmedi (alarm açık kaldı) → bu yol yalnız sahte-HTTP testiyle
       doğrulanmış; gerçek GSM modemle hiç denenmedi.
 - [x] **4.2** Eskalasyon: rota, onay token'ı, tekrar aralığı, fırtına sınırı, sessize
       alma, nöbet devri. *Bitti sayılır:* gerçek senaryodan uçtan uca testli;

@@ -111,7 +111,7 @@ Gerçek (kanıtı olan) entegrasyonlar:
   "0 yanlış alarm" bu yüzden kanıt değil, öz-tutarlılık (`docs/09` §0). Anlamlı olanlar: sabit eşiklerle
   kıyas, kör bölge ölçümü, parametre dayanıklılığı, test sırasında bulunan gerçek hatalar.
 - **Gerçek bildirim:** Telegram Bot API'ye gerçek bir "DEMO-" alarm mesajı gönderildi (2026-09-20,
-  `sendMessage` HTTP 2xx). **Doğrulanmayanlar:** iki yönlü `ONAY` yanıtı gerçek Telegram'da denendi
+  `sendMessage` HTTP 2xx; telefona ulaştığı teyit edildi). **Doğrulanmayanlar:** iki yönlü `ONAY` yanıtı gerçek Telegram'da denendi
   ama 120 sn içinde yanıt gelmedi (yalnız sahte-HTTP testiyle doğrulanmış); on-prem GSM modem kanalı
   yalnız sahte seri portla testli, gerçek modemle denenmedi (`docs/12` §0). Arayüzdeki telefonlar
   bellek içi gösterimdir.
