@@ -19,6 +19,7 @@ from __future__ import annotations
 import argparse
 import os
 import signal
+import socket
 import sys
 import threading
 import time
@@ -47,6 +48,61 @@ HONESTY = [
     "SENSITIVITY_LOW, MOUNT_LOST, AIM_SHIFTED, CELL_LOW, STALE.",
     "Bastirilan alarmlar kendi ekraninda, kendi gerekcesiyle durur.",
 ]
+
+
+def _lan_ip() -> str | None:
+    """This machine's LAN address.  A UDP ``connect`` sends no packet, so this
+    works on an air-gapped network too."""
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        try:
+            s.connect(("10.255.255.255", 1))
+            return s.getsockname()[0]
+        finally:
+            s.close()
+    except OSError:
+        return None
+
+
+def _print_notify(rt, args) -> None:
+    """Which notification channels are real, and where the crew app lives."""
+    n = rt.notifier
+    print("  BILDIRIM KANALLARI")
+    if n is None:
+        print("    bildirim katmani calismiyor (bkz. /api/health degraded)")
+        print()
+        return
+    st = n.status()
+    sms = st["channels"]["sms"]
+    tg = st["channels"]["telegram"]
+    if sms.get("simulated", True):
+        print("    SMS          SIMULE  (hicbir yere mesaj gitmez; gercek modem: docs/12)")
+    else:
+        ok = "hazir" if sms.get("registered") else f"HAZIR DEGIL ({sms.get('error') or 'agda degil'})"
+        print(f"    SMS          GERCEK  {sms.get('port')}  {ok}")
+    if tg.get("configured"):
+        if tg.get("ok"):
+            print(f"    Telegram     AKTIF   {tg.get('bot')}  gizlilik: {tg.get('privacy')}")
+        else:
+            print(f"    Telegram     ANAHTAR VAR AMA CALISMIYOR: {tg.get('error')}")
+    else:
+        print("    Telegram     KAPALI  (notify.local.json ile acilir; docs/12)")
+    host = args.host
+    lan = _lan_ip()
+    shown = n.public_url or (f"http://{lan}:{args.port}" if host in ("0.0.0.0", "::") and lan
+                             else f"http://{host}:{args.port}")
+    print(f"    Saha uygulamasi  {shown}/saha/")
+    if host in ("127.0.0.1", "localhost"):
+        print("                 telefondan acmak icin: --host 0.0.0.0 (ya da baslat.ps1 -Telefon)")
+    cfg = getattr(n, "config", None)
+    if cfg is not None:
+        for w in cfg.warnings:
+            print(f"    UYARI        {w}")
+        if cfg.generated_pins:
+            print("    Saha PIN'leri (rastgele, yalniz bu konsolda; sabitlemek icin notify.local.json):")
+            for name, pin in cfg.generated_pins.items():
+                print(f"      {name:<22} {pin}")
+    print()
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
@@ -121,6 +177,11 @@ def main(argv: list[str] | None = None) -> int:
     from panogoz.bus.bus import make_bus
     from panogoz.contracts import icd
 
+    # Real notification channels (Telegram, a serial GSM modem) are opt-in per
+    # process and this launcher is what opts in.  Tests and helper scripts build
+    # Runtimes too and must never message a real phone; see notify/factory.py.
+    os.environ.setdefault("PANOGOZ_NOTIFY_LIVE", "1")
+
     bus_spec = os.environ.get("PANOGOZ_BUS", "inproc")
     bus = make_bus(bus_spec)
 
@@ -175,6 +236,7 @@ def main(argv: list[str] | None = None) -> int:
           f"   = {icd.PANEL_BASE} + {icd.REGS_PER_PANEL} x {live.panel_index - 1}")
     print(f"                 Modicon 4x    {40001 + base}")
     print()
+    _print_notify(rt, args)
     print("  JURI ICIN, IKINCI BIR TERMINALDE:")
     if rt.scada is not None:
         for cmd in rt.scada.modpoll_commands(live.panel_index, "127.0.0.1",

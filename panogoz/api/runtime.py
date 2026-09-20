@@ -457,9 +457,12 @@ class Runtime:
 
     def _late_imports(self) -> None:
         try:
-            from panogoz.notify.escalation import Notifier
-            from panogoz.notify.sms import GsmModem
-            self.notifier = Notifier(self.store, modem=GsmModem())
+            # Which channels exist (simulated modem, real modem, Telegram, field
+            # app) is configuration, not code: see panogoz/notify/config.py.  Real
+            # channels are opt-in per process (PANOGOZ_NOTIFY_LIVE, set by the
+            # launcher), so a Runtime built by a test never messages a real phone.
+            from panogoz.notify.factory import build_notifier
+            self.notifier = build_notifier(self.store)
         except Exception as exc:  # noqa: BLE001
             self.degraded.append(f"notify: {exc!r}")
         try:
@@ -801,6 +804,12 @@ class Runtime:
             if t.name != me:
                 t.join(timeout=4.0)
         self._threads.clear()
+        if self.notifier is not None and hasattr(self.notifier, "close"):
+            try:                            # stops the Telegram poller and the send lanes
+                self.notifier.flush(timeout=3.0)
+                self.notifier.close()
+            except Exception:  # noqa: BLE001
+                pass
         try:
             self._save_panel_states()
             self.store.commit()

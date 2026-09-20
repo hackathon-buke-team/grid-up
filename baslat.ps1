@@ -3,9 +3,12 @@
 #   .\baslat.ps1                     varsayilan: 112 pano, 75 gun gecmis, port 8080
 #   .\baslat.ps1 -Panels 24 -Port 8099
 #   .\baslat.ps1 -Reset              veritabanini silerek bastan basla
+#   .\baslat.ps1 -Telefon            saha uygulamasi telefondan da acilsin (0.0.0.0'a baglanir)
 #
 # Bu betik AG'A CIKMAZ. Paket kurmaz, indirmez, guncellemez. Demo makinesinde
 # Docker calismiyor ve internet yok; bu yol tam olarak bunun icin var.
+# (Telegram ancak notify.local.json'da bir bot anahtari varsa, o zaman da yalniz
+# api.telegram.org'a cikis yonlu HTTPS ile ulasir; bkz. docs/12-BILDIRIM-KANALLARI.md.)
 
 # CmdletBinding is deliberately NOT used: it injects the common parameters, and
 # -Db then collides with the -Debug alias 'db'. A one-command launcher wants
@@ -19,7 +22,8 @@ param(
     [string] $Db           = "",
     [switch] $Reset,
     [switch] $NoBackfill,
-    [switch] $NoBrowser
+    [switch] $NoBrowser,
+    [switch] $Telefon
 )
 
 $ErrorActionPreference = "Stop"
@@ -123,6 +127,7 @@ if ($Db)              { $argv += @("--db", $Db) }
 if ($Reset)           { $argv += "--reset" }
 if ($NoBackfill)      { $argv += "--no-backfill" }
 if (-not $NoBrowser)  { $argv += "--open" }
+if ($Telefon)         { $argv += @("--host", "0.0.0.0") }
 
 Write-Host "  arayuz       . http://127.0.0.1:$Port"
 Write-Host "  scada        . Modbus TCP 0.0.0.0:$ScadaPort (salt okunur)"
