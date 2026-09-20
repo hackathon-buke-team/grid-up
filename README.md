@@ -74,12 +74,15 @@ Açılan uçlar:
 | WebSocket | ws://127.0.0.1:8080/ws | 1 Hz canlı akış |
 | Sahte veri kanıtı | http://127.0.0.1:8080/api/analysis/supplied-data | §6'daki altı testin JSON hâli |
 | SCADA southbound | Modbus TCP 127.0.0.1:5020 | Salt okunur register haritası |
+| **Saha uygulaması** (ekip telefonu) | http://127.0.0.1:8080/saha/ | PWA: gelen kutusu, tam ekran alarm, ayrıntı, konum, iş emri, onay — [docs/12](docs/12-BILDIRIM-KANALLARI.md) |
+| Bildirim durumu | http://127.0.0.1:8080/api/notify/status | Hangi kanal gerçek, hangisi simüle |
 
 Sık kullanılan seçenekler:
 
 ```
 python -m panogoz.run_local --panels 112 --port 8080 --scada-port 5020 --backfill-days 75 --open
 python -m panogoz.run_local --reset            # veritabanını silerek baştan
+python -m panogoz.run_local --host 0.0.0.0     # saha uygulaması telefondan açılsın (baslat.ps1 -Telefon)
 .\baslat.ps1 -Panels 24 -Port 8099            # daha küçük ve hızlı bir demo
 ```
 
@@ -130,6 +133,7 @@ dekonvolüsyon yapmadığımız orada, ölçülmüş sayılarla yazılıdır.
 | [docs/08-DEMO-SENARYOSU.md](docs/08-DEMO-SENARYOSU.md) | 5 dakikalık demo, replikleriyle ve kesme çizgileriyle |
 | [docs/09-VERI-ANALIZI.md](docs/09-VERI-ANALIZI.md) | Sağlanan `İstenen Veriler.xlsx` dosyasının tam karakterizasyonu — §6'daki kanıtların uzun hâli |
 | [docs/10-MV-HUCRE-KONSEPTI.md](docs/10-MV-HUCRE-KONSEPTI.md) | OG hücre konsepti — çizim verilmedi, dürüstçe konsept |
+| [docs/12-BILDIRIM-KANALLARI.md](docs/12-BILDIRIM-KANALLARI.md) | SMS + Telegram + saha uygulaması: tek merdiven, veri mahremiyeti değerlendirmesi, kurulum, demo provası, **doğrulanmayanlar** |
 | [docs/11-ACIK-SORULAR.md](docs/11-ACIK-SORULAR.md) | Yalnız müşterinin cevaplayabileceği sorular ve her birinin tasarımı nasıl değiştireceği |
 | [docs/PANOGOZ-ICD-v2.0.md](docs/PANOGOZ-ICD-v2.0.md) | SCADA arayüz kontrol dokümanı — koddan üretilir, elle yazılmaz |
 | [docs/panogoz_points.csv](docs/panogoz_points.csv) | Aynı haritanın SCADA import'u için düz nokta listesi |
@@ -153,13 +157,16 @@ panogoz/
   gateway/        Modbus master (poller), ağ geçidi, yerel kritik kurallar, store-and-forward
   detector/       θ (RLS), CUSUM, değişim noktası, çiy noktası, nötr H3, motor
   rules/          Bastırma → füzyon → alarm yaşam döngüsü
-  notify/         GSM modem / SMPP, vardiya merdiveni, onay jetonu
+  notify/         Eskalasyon merdiveni (SMS · Telegram · saha uygulaması), onay kapıları,
+                  GSM modem (simüle + gerçek seri sürücü), Telegram Bot API, saha API'si
   scada/          Modbus TCP slave (salt okunur) ve ICD üreteci
   api/            REST + WebSocket + demo senaryo uçları
   run_local.py    Tek süreçte tüm sistem — ana çalıştırma yolu
 baslat.ps1        Windows tek komut sarmalayıcısı (ağa çıkmaz, paket kurmaz)
 firmware/node/    Uç düğüm firmware'i, C99, STM32WLE5CC, float yok, malloc yok
 frontend/         Arayüz: dijital ikiz, alarm konsolu, bastırma ekranı, SCADA görünümü
+saha/             Ekip telefonu uygulaması (PWA, sıfır bağımlılık): /saha/
+notify.example.json  Bildirim yapılandırması şablonu (notify.local.json git'e girmez)
 analysis/         Sağlanan xlsx dosyasının istatistiksel karakterizasyonu
 tests/            Kabul testleri; her modülün ayrıca kendi self-test'i var
 docs/             Bu belge paketi
@@ -186,6 +193,9 @@ Gerileme takımı, daha önce gerçekten yaşanmış hataları yeniden üretip k
 | `tests/test_cadence_regression.py` | Tazelik pencerelerinin cihazın ilan ettiği periyottan türetilmesi (900/60/10 s) |
 | `tests/test_thd_attribution_regression.py` | Üç faz THD'sinin şebeke olayı **adayı** sayılması; ısıl bulguyu tek başına silmemesi |
 | `tests/test_negative_pipeline.py` | Yedi negatif kontrolün gerçek boru hattında alarm üretmemesi — ve aynı koşumda pozitif kontrolün üretmesi |
+| `tests/test_notify_ladder.py` | Merdivenin her kanala açılması, bir kanaldan onayın hepsini durdurması, `minimal` Telegram'da ölçüm sızmaması; **eşiğe kalan gün satırının gerçek SMS'e girmesi** (`compose` `live` almadan çağrılıyordu) |
+| `tests/test_notify_e2e.py` | Gerçek `Runtime` + üretim fabrikası: demo senaryosu → Telegram → onay; **konsolun ark düğmesinin bir saat beklemeden telefonu çaldırması** (`ark_olayi` varsayılanı `at_s=3600`) |
+| `tests/test_notify_telegram.py`, `test_gsm_serial.py`, `test_saha_api.py`, `test_notify_config.py` | Telegram taşıması ve token gizliliği; GSM PDU baytları ve AT diyaloğu; saha uygulamasının oturum/kilit/onay sözleşmesi; sırların yeri ve gerçek kanalların yalnız başlatıcıdan açılması |
 
 ---
 
@@ -251,7 +261,8 @@ Bir hackathon teslimi için en değerli bölüm budur.
 | **SCADA'ya yazma yolu** | Modbus'ta kimlik doğrulama yoktur. TVOC-2'ye otokontrol komutu verebilen bir sisteme kimliksiz yazma açmak kabul edilemez. FC 05/06/15/16 istisnasız reddedilir. |
 | **Sparkplug B** | Sparkplug 3.0, DDATA için QoS 0 **zorunlu** kılar. Dayanıklılık hikâyemiz ağ geçidinde PUBACK ile ilerleyen bir store-and-forward filigranına dayanır ve bu mekanizma QoS 0'da yoktur. Doğum/vasiyet/monoton sıra numarasını koruduk, markayı bıraktık. |
 | **IEC 60870-5-104 ve OPC UA sunucuları** | Nokta listeleri yazıldı, sunucular kurulmadı. Bu hackathonda **yalnız Modbus TCP slave çalışır durumda** teslim edilmiştir. |
-| **Gerçek SMS gönderimi** | GSM modem AT diyaloğu ve SMPP oturumu gerçekçi biçimde simüle edilir, transkript kaydedilir; hiçbir yere mesaj gitmez. Sesli arama yolu da simülasyondur; gerçek dağıtım TTS ağ geçidi ister. |
+| **Doğrulanmış gerçek SMS gönderimi** | Varsayılan modem **simüledir**; hiçbir yere mesaj gitmez. Gerçek seri GSM modem sürücüsü (`notify/gsm_serial.py`, PDU/UCS2, birleşik SMS) yazıldı ve sahte bir modemle test edildi; **fiziksel bir modemle denenmedi**. SMPP ve sesli arama simülasyondur; gerçek sesli arama TTS ağ geçidi ister. |
+| **Web Push / WhatsApp** | Saha uygulaması push servisi kullanmaz (FCM/APNs kamu bulutudur); kapalı telefonu SMS ve Telegram çaldırır. WhatsApp bilerek yoktur (`escalation.whatsapp_status`). Telegram **veri-asgarileştirilmiş bir ayna** olarak vardır: kamu bulutudur, kararı takım verir ([docs/12](docs/12-BILDIRIM-KANALLARI.md) §2). |
 | **KiCad kaynak dosyaları** | B1 KiCad kaynakları, dört kartın şematik PDF/yerleşim/3B görselleri ve mekanik STEP dosyaları [hardware/](hardware/README.md) altında. Bakır yönlendirme ve fiziksel üretim yapılmadı. |
 | **OG hücre donanımı** | Hiçbir OG çizimi verilmedi; istedik. [docs/10](docs/10-MV-HUCRE-KONSEPTI.md) jenerik 36 kV kablo bölmesi için konsept, montaj ve maliyet verir, ürün iddia etmez. |
 
@@ -281,7 +292,10 @@ Bu paketin her belgesinin sonunda aynı başlıkla bir liste vardır. Kısa öze
 |---|---|
 | IEC 60870-5-104 / OPC UA sunucuları | Nokta listesi var, sunucu yok |
 | KiCad şematik ve PCB kaynağı | B1 şematik ve yerleşim hazır; üretim routing ve fiziksel test yok |
-| Gerçek GSM/SMPP gönderimi, sesli arama | Simüle edildi, transkript üretiliyor |
+| Gerçek GSM modem ile SMS | Sürücü yazıldı, sahte modemle test edildi, **donanımla denenmedi** |
+| Gerçek Telegram botu ile teslim | Kod sahte Bot API'ye karşı test edildi; **gerçek anahtarla denenmedi** |
+| Saha uygulaması gerçek Android/iOS telefonda | Masaüstü Chrome'da doğrulandı; **telefonda denenmedi**; yerel APK yok (PWA) |
+| SMPP gönderimi, sesli arama | Simüle edildi, transkript üretiliyor |
 | OTA imzalı firmware dağıtımı | Politika yazıldı, dağıtım altyapısı kurulmadı |
 | TimescaleDB sürücüsü | **Yok.** `Store` yalnız SQLite'tır; `postgresql://` adresi reddedilir |
 | TimescaleDB hipertablo/sıkıştırma/sürekli toplam cümleleri | **Yazılmadı.** `schema_timescale.sql` diye bir dosya yoktur |
