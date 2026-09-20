@@ -1,0 +1,31 @@
+<!doctype html>
+<!--
+  PANO GÖZ · Saha uygulaması (ekip telefonu)
+
+  SIFIR BAĞIMLILIK, SIFIR DIŞ İSTEK. Çerçeve yok, CDN yok, web fontu yok, harita
+  karosu yok; yalnızca bu sunucuyla konuşur. Kurum ağında kalır: kritik bir
+  olayın ayrıntısı (ölçümler, konum, neden alarm verildiği) Telegram'a ya da bir
+  push servisine ÇIKMAZ, bu uygulamanın arkasında durur.
+
+  Türkçe metinde CSS ile büyük harfe çevirme YOKTUR ("i" → "I" olur, "İ" olmaz).
+-->
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" content="#0c0f10">
+  <meta name="description" content="PANO GÖZ · saha ekibi uygulaması">
+  <title>PANO GÖZ · Saha</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/svg+xml" href="icon.svg">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <div id="uyari-bandi" hidden></div>
+  <main id="app" aria-live="polite"></main>
+  <script src="app.js" defer></script>
+  <noscript>Bu uygulama JavaScript gerektirir.</noscript>
+</body>
+</html>

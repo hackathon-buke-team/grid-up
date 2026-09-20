@@ -950,9 +950,19 @@ def create_app(runtime: Runtime) -> FastAPI:
             })
         return _clean(out)
 
+    #: Canli demoda "simdi" demek istenen senaryolarin gecikmesi (saniye).
+    #: ``ark_olayi`` simulatorde ``at_s=3600`` ile gelir: tiklamadan BIR SAAT sonra
+    #: acar (gecmis-doldurma senaryolari icin dogru).  Konsolun "Ark olayi enjekte
+    #: et" dugmesi yalniz ``{panel_key}`` gonderdigi icin sunucu, gecikme
+    #: verilmemisse arki birkac saniye sonraya alir; aksi halde docs/08 §5'in 4-13 s
+    #: bildirim gecikmesi anlatisi bir saat bos telefonla anlatilirdi.
+    LIVE_DEMO_AT_S = {"ark_olayi": 3.0}
+
     @app.post("/api/scenario/{key}")
     def inject(key: str, body: dict = Body(default={})) -> dict:
         panel_key = str(body.pop("panel_key", "") or DEMO_PANEL)
+        if key in LIVE_DEMO_AT_S and "at_s" not in body:
+            body["at_s"] = LIVE_DEMO_AT_S[key]
         resolved = rt.resolve(panel_key)
         if resolved is None:
             raise HTTPException(status_code=404, detail={
@@ -1074,6 +1084,14 @@ def create_app(runtime: Runtime) -> FastAPI:
             return
         except Exception:  # noqa: BLE001 - a dead socket is not a server error
             return
+
+    # ------------------------------------------- saha uygulamasi + bildirim --
+    # /saha/ (ekip telefonu uygulamasi), /api/saha/*, /api/notify/*.  Kod
+    # panogoz/notify/saha.py'de (K4); burada yalniz baglanir.  Asagidaki "/"
+    # statik baglamasindan ONCE cagrilmali, yoksa konsolun dosya sunucusu /saha/'yi
+    # yutar.
+    from panogoz.notify import saha
+    saha.install(app, rt)
 
     # ------------------------------------------------------------ static --
 
