@@ -78,6 +78,8 @@
     pin: ['M12 21s-7-6.2-7-11a7 7 0 0114 0c0 4.8-7 11-7 11z', 'M12 7.5a2.5 2.5 0 100 5 2.5 2.5 0 000-5z'],
     backspace: ['M20 6H9l-6 6 6 6h11V6z', 'M13 10l4 4M17 10l-4 4'],
     shield: ['M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z', 'M8.5 12.2l2.6 2.6 4.6-5'],
+    bell: ['M6 9a6 6 0 0112 0c0 5 2 6.5 2 6.5H4S6 14 6 9z', 'M10 19a2 2 0 004 0'],
+    lock: ['M6 11h12v9H6z', 'M8.5 11V8a3.5 3.5 0 017 0v3'],
   };
   function icon(name, cls) {
     const el = document.createElementNS(NS, 'svg');
@@ -429,6 +431,7 @@
 
   function render(loginMessage) {
     const root = app();
+    document.body.classList.toggle('giris-modu', !S.token);
     if (!S.token) {
       S.screen = 'giris';
       document.body.classList.remove('eylemli');
@@ -516,34 +519,49 @@
     paintDots();
 
     const keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9'].map((d) => h('button', { type: 'button', class: 'tus', onclick: () => press(d), 'aria-label': d }, d));
+    // Geniş ekranda iki panel (marka + giriş kartı), telefonda tek sütun; özellik listesi yalnız geniş ekranda görünür.
+    const feature = (ic, title, text) => h('li', {}, h('span', { class: 'ic' }, icon(ic)), h('div', {}, h('b', { text: title }), text));
     return h('form', { class: 'giris gecis', onsubmit: (e) => e.preventDefault() },
-      h('div', { class: 'hero' }, logo(56),
-        h('h1', { text: 'PANO GÖZ · Saha' }),
-        h('p', { text: 'Pano içi anomali erken uyarı — ekip uygulaması' })),
-      h('div', {}, h('div', { class: 'etiket-kucuk', text: 'Nöbet listesinden adınızı seçin' }), membersEl),
-      h('div', {}, h('div', { class: 'etiket-kucuk', text: 'PIN' }), dotsEl, err),
-      h('div', { class: 'tuslar' }, keys,
-        h('button', { type: 'button', class: 'tus', onclick: back, 'aria-label': 'Sil' }, icon('backspace')),
-        h('button', { type: 'button', class: 'tus', onclick: () => press('0'), 'aria-label': '0' }, '0'),
-        goBtn));
+      h('div', { class: 'marka-panel' },
+        h('div', { class: 'hero' }, logo(56),
+          h('h1', { text: 'PANO GÖZ · Saha' }),
+          h('p', { text: 'Pano içi anomali erken uyarı — ekip uygulaması' })),
+        h('ul', { class: 'ozellikler' },
+          feature('bell', 'Uyarı gelince telefon çalar', 'Uygulama açıkken tam ekran alarm, siren ve titreşim.'),
+          feature('check', 'Onayınız tekrarları durdurur', 'Onaydan sonra SMS ve Telegram tekrarları kesilir.'),
+          feature('lock', 'Ayrıntı kurum ağında kalır', 'Ölçümler ve gerekçe bu uygulamanın arkasında durur.'))),
+      h('div', { class: 'giris-panel' },
+        h('div', {}, h('div', { class: 'etiket-kucuk', text: 'Nöbet listesinden adınızı seçin' }), membersEl),
+        h('div', {}, h('div', { class: 'etiket-kucuk', text: 'PIN' }), dotsEl, err),
+        h('div', { class: 'tuslar' }, keys,
+          h('button', { type: 'button', class: 'tus', onclick: back, 'aria-label': 'Sil' }, icon('backspace')),
+          h('button', { type: 'button', class: 'tus', onclick: () => press('0'), 'aria-label': '0' }, '0'),
+          goBtn)));
   }
 
   // ---- gelen kutusu
 
   function summaryCard(waiting, mine) {
+    const open = mine.filter((c) => c.state !== 'KAPANDI').length;
+    const closed = mine.length - open;
+    const counters = h('div', { class: 'sayaclar', 'aria-hidden': 'true' },
+      h('div', { class: `sayac${waiting.length ? ' vurgu' : ''}` }, h('b', { text: String(waiting.length) }), h('small', { text: 'Onay bekliyor' })),
+      h('div', { class: 'sayac' }, h('b', { text: String(open) }), h('small', { text: 'Açık' })),
+      h('div', { class: 'sayac' }, h('b', { text: String(closed) }), h('small', { text: 'Kapanan' })));
     if (waiting.length) {
       const top = waiting.slice().sort((a, b) => (SEV[b.severity]?.rank || 0) - (SEV[a.severity]?.rank || 0))[0];
       const sev = SEV[top.severity] || SEV.KRITIK;
       return h('div', { class: `ozet bekliyor ${sev.cls}`, role: 'status' },
         h('div', { class: 'simge', text: sev.shape }),
-        h('div', {}, h('b', { text: `${waiting.length} olay onay bekliyor` }),
-          h('span', { text: `${top.panel_key} · ${top.joint_short}` })));
+        h('div', { class: 'metin' }, h('b', { text: `${waiting.length} olay onay bekliyor` }),
+          h('span', { text: `${top.panel_key} · ${top.joint_short}` })),
+        counters);
     }
-    const open = mine.filter((c) => c.state !== 'KAPANDI').length;
     return h('div', { class: 'ozet rahat', role: 'status' },
       h('div', { class: 'simge' }, icon('shield')),
-      h('div', {}, h('b', { text: 'Bekleyen onay yok' }),
-        h('span', { text: open ? `${open} açık olay takipte` : 'Size gönderilmiş açık olay yok' })));
+      h('div', { class: 'metin' }, h('b', { text: 'Bekleyen onay yok' }),
+        h('span', { text: open ? `${open} açık olay takipte` : 'Size gönderilmiş açık olay yok' })),
+      counters);
   }
 
   function listView() {
@@ -594,7 +612,7 @@
     return h('button', { class: `kart ${sev.cls}${waiting ? ' bekliyor' : ''}`,
       onclick: () => { location.hash = `#/olay/${c.id}`; } },
       h('div', { class: 'ust' }, h('span', { class: `rozet ${sev.cls}`, text: `${sev.shape} ${sev.name}` }),
-        h('span', { class: 'yas', text: ago(nowSrv() - c.opened_at) })),
+        h('span', { class: 'yas', text: `#${c.id} · ${ago(nowSrv() - c.opened_at)}` })),
       h('div', { class: 'konum' }, h('b', { text: c.panel_key }), h('span', { class: 'chip mono', text: c.joint_short })),
       h('div', { class: 'mod', text: c.mode_label }),
       slaBlock(c),
@@ -639,13 +657,17 @@
       h('h1', {}, c.panel_key, h('span', { class: 'chip mono', text: c.joint_short })),
       h('div', { class: 'mod', text: c.mode_label }));
 
+    // Telefonda iki kolon alt alta akar (sıra değişmez); geniş ekranda yan yana durur.
     const view = h('div', {}, back, hero,
-      section('Ne yapmalı', h('div', { class: 'yapilacak', text: c.action || c.title })),
-      workSection(c),
-      locationSection(d.pano),
-      measuresSection(d.olcum),
-      whySection(d.neden),
-      timelineSection(d.zaman_cizgisi),
+      h('div', { class: 'kolonlar' },
+        h('div', { class: 'kolon' },
+          section('Ne yapmalı', h('div', { class: 'yapilacak', text: c.action || c.title })),
+          workSection(c),
+          locationSection(d.pano)),
+        h('div', { class: 'kolon' },
+          measuresSection(d.olcum),
+          whySection(d.neden),
+          timelineSection(d.zaman_cizgisi))),
       h('div', { class: 'alt-bosluk' }));
     return { view, bar: actionBar(c) };
   }

@@ -15,7 +15,7 @@
    Push servisi YOKTUR: FCM/APNs/Web Push aktarıcısı kamu bulutudur ve şirket içi
    kısıtla çelişir. Kapalı uygulamayı SMS ve Telegram yolları uyandırır. */
 
-const SURUM = 'panogoz-saha-v2';
+const SURUM = 'panogoz-saha-v3';
 const KABUK = ['./', 'index.html', 'app.css', 'app.js', 'manifest.webmanifest', 'icon.svg', 'icon-192.png'];
 
 self.addEventListener('install', (e) => {
