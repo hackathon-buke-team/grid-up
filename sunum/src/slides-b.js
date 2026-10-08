@@ -248,7 +248,7 @@ add({
   },
   notes: `Şimdi ürünün bence en önemli parçası: ürettiğimiz alarmların değil, üretmediğimiz alarmların listesi. Gerekçeleriyle.
 
-Solda bir sıcak hava dalgası. Ortam 41,2 derece — şartnamenin dahili maksimumu 40 derece, yani bu zaten hizmet zarfı dışı bir bulgu. Kırk bağlantının hepsi birden 6,1 kelvin ısınıyor. Sabit eşikli bir sistem burada kırk alarm üretirdi. θ'nın değişimi tam sıfır: sıfır virgül sıfır sıfır sıfır sıfır. Çünkü kardeşler aynı havayı soluyor. Bu pano hakkında değil, hava hakkında bir okuma.
+Solda bir sıcak hava dalgası. Ortam 41,2 derece — şartnamenin dahili maksimumu 40 derece, yani bu zaten hizmet zarfı dışı bir bulgu. Kırk bağlantının hepsi birden 6,1 kelvin ısınıyor. Sabit eşikli bir sistem, eşiği geçen on üç bağlantı için on üç alarm üretiyor; dalga biraz daha sürse sayı artmaya devam eder. θ'nın değişimi tam sıfır: sıfır virgül sıfır sıfır sıfır sıfır. Çünkü kardeşler aynı havayı soluyor. Bu pano hakkında değil, hava hakkında bir okuma.
 
 [→] Sağda bastırma kurallarından bazıları. Her biri tek bir soruya cevap veriyor: bu okuma pano hakkında mı, yoksa şebeke, hava, yük ya da kendi cihazımız hakkında mı?
 
@@ -257,7 +257,7 @@ Solda bir sıcak hava dalgası. Ortam 41,2 derece — şartnamenin dahili maksim
 Sensör kayarsa ya da kelepçe düşerse cihaz iş emri açılıyor — tork iş emri değil. Sapan bir sensör yüzünden bir ekibi sağlam bir bağlantıyı sıkmaya göndermek, sistemin güvenilirliğini bir seferde bitirir.
 
 Bölgesel bir olay, yüz dürüst dedektörden yüz eşzamanlı alarm üretir ve sistem üçüncü ayda kapatılır. Bu liste bir hata ayıklama günlüğü değil; kendi ekranı olan bir ürün.`,
-  use: `<b>Kullan:</b> ASLA KESİLMEZ (demo senaryosu §4). Animasyon 9 sn'de döner; sayaç 40'a ulaştığında "kırk alarm" deyin. Sonra → ile kural listesi. <b>Ezberlenecek:</b> ortam 41,2 °C · +6,1 K · Δθ = 0,0000 K (ölçülen) · THD: L1 %6,8 / L2 %7,1 / L3 %6,9, tabanlar %2,4 / 2,5 / 2,3. <b>Kapanış cümlesi:</b> "Bu bir hata ayıklama günlüğü değil — kendi ekranı olan bir üründür."`,
+  use: `<b>Kullan:</b> ASLA KESİLMEZ (demo senaryosu §4). Animasyon 9 sn'de döner; sol sayaç eşiği (60 °C) geçen bağlantıları sayar ve tepe noktada 13'te durur, "on üç alarm" deyin. Sonra → ile kural listesi. <b>Ezberlenecek:</b> ortam 41,2 °C · +6,1 K · Δθ = 0,0000 K (ölçülen) · THD: L1 %6,8 / L2 %7,1 / L3 %6,9, tabanlar %2,4 / 2,5 / 2,3. <b>Kapanış cümlesi:</b> "Bu bir hata ayıklama günlüğü değil — kendi ekranı olan bir üründür."`,
 });
 
 /* ===================================================================== */
