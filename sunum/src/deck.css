@@ -1,0 +1,220 @@
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --bg:#06080c; --bg2:#0a0e14; --panel:#0e131b; --panel2:#121a25;
+  --line:#1c2632; --line2:#2a3746;
+  --ink:#e9eef4; --muted:#93a0b2; --dim:#5f6c7e;
+  --brand:#f78320; --brand2:#ffb066; --brand-soft:rgba(247,131,32,.14);
+  --olcum:#ffea46;
+  --bilgi:#9dabbd; --izle:#4aa3ff; --uyari:#f4b13a; --kritik:#ff6b3d; --acil:#ff2f79; --ok:#35c07a;
+  --l1:#a3abb5; --l2:#3a3f47; --l3:#9a6440; --nn:#7cc4ff;
+  --mono:"Cascadia Mono","Cascadia Code",Consolas,"SF Mono",Menlo,monospace;
+  --sans:"Segoe UI Variable Display","Segoe UI Variable Text","Segoe UI",-apple-system,system-ui,Roboto,sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family:var(--sans);overflow:hidden;-webkit-font-smoothing:antialiased}
+body{font-variant-numeric:tabular-nums}
+#stage{position:fixed;inset:0;display:grid;place-items:center}
+.slide{
+  position:absolute;width:1280px;height:720px;padding:46px 60px 40px;
+  background:
+    radial-gradient(1000px 560px at 100% -8%, rgba(247,131,32,.09), transparent 62%),
+    radial-gradient(800px 480px at -8% 108%, rgba(74,163,255,.07), transparent 62%),
+    linear-gradient(160deg,#0b1018 0%,#06080c 100%);
+  border:1px solid var(--line);border-radius:18px;box-shadow:0 40px 120px rgba(0,0,0,.7);
+  opacity:0;pointer-events:none;transform:scale(.985);
+  transition:opacity .35s ease, transform .35s ease;
+  display:flex;flex-direction:column;overflow:hidden;
+}
+.slide::before{ /* teknik çizim ızgarası */
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,.028) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px);
+  background-size:40px 40px;
+  -webkit-mask-image:radial-gradient(900px 520px at 70% 40%,#000 20%,transparent 80%);
+          mask-image:radial-gradient(900px 520px at 70% 40%,#000 20%,transparent 80%);
+}
+.slide.active{opacity:1;pointer-events:auto;transform:scale(1)}
+.slide>*{position:relative}
+
+/* köşe: dağıtım şirketi logoları + alt bilgi */
+.cnr{position:absolute!important;top:30px;right:40px;display:flex;align-items:center;gap:12px;opacity:.9}
+.cnr img{height:20px;display:block}
+.cnr i{width:1px;height:18px;background:var(--line2)}
+.foot{position:absolute!important;left:60px;bottom:16px;font:500 11px/1 var(--mono);color:var(--dim);letter-spacing:.06em;display:flex;gap:10px;align-items:center}
+.foot svg{width:13px;height:13px}
+.pgno{position:absolute!important;right:60px;bottom:16px;font:500 11px/1 var(--mono);color:var(--dim);letter-spacing:.06em}
+
+/* tipografi */
+.kicker{font:600 12px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--brand);margin:0 0 12px}
+h1{font:700 64px/1.02 var(--sans);margin:0 0 14px;letter-spacing:-.03em}
+h2{font:700 36px/1.1 var(--sans);margin:0 0 6px;letter-spacing:-.022em;max-width:30ch}
+h3{font:600 16px/1.3 var(--sans);margin:0 0 4px}
+.lead{font:400 18px/1.5 var(--sans);color:var(--muted);margin:0;max-width:64ch}
+.sub{font:400 14px/1.5 var(--sans);color:var(--dim);margin:0}
+.mono{font-family:var(--mono)}
+.brand{color:var(--brand)} .ok{color:var(--ok)} .izle{color:var(--izle)} .uyari{color:var(--uyari)}
+.kritik{color:var(--kritik)} .acil{color:var(--acil)} .olcum{color:var(--olcum)} .muted{color:var(--muted)} .dimc{color:var(--dim)}
+b,strong{font-weight:650}
+
+/* yerleşim */
+.hd{margin-bottom:8px;padding-right:260px}
+.body{flex:1;min-height:0;display:flex;flex-direction:column;gap:14px;margin-top:12px}
+.row{display:flex;gap:16px;min-height:0}
+.col{display:flex;flex-direction:column;gap:12px;min-height:0}
+.grow{flex:1;min-height:0}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.center{display:grid;place-items:center}
+
+.card{background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.012));border:1px solid var(--line);border-radius:14px;padding:16px 18px;min-height:0}
+.card.tight{padding:11px 14px}
+.card .cap{font:600 11px/1.2 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin:0 0 8px}
+.kpi .v{font:700 34px/1 var(--sans);letter-spacing:-.02em}
+.kpi .l{font:500 13px/1.35 var(--sans);color:var(--muted);margin-top:6px}
+.kpi .d{font:600 12px/1 var(--mono);margin-top:8px}
+.chip{display:inline-flex;align-items:center;gap:7px;padding:5px 10px;border-radius:999px;border:1px solid var(--line2);background:rgba(255,255,255,.03);font:600 12px/1 var(--mono);color:var(--muted);white-space:nowrap}
+.chip i{width:7px;height:7px;border-radius:50%;background:currentColor;display:block}
+.chip.ok{color:var(--ok);border-color:rgba(53,192,122,.35);background:rgba(53,192,122,.08)}
+.chip.brand{color:var(--brand);border-color:rgba(247,131,32,.4);background:var(--brand-soft)}
+.chip.kritik{color:var(--kritik);border-color:rgba(255,107,61,.4);background:rgba(255,107,61,.1)}
+.chip.uyari{color:var(--uyari);border-color:rgba(244,177,58,.4);background:rgba(244,177,58,.09)}
+.chip.izle{color:var(--izle);border-color:rgba(74,163,255,.4);background:rgba(74,163,255,.09)}
+.chip.acil{color:var(--acil);border-color:rgba(255,47,121,.4);background:rgba(255,47,121,.1)}
+.formula{font:500 30px/1.2 var(--mono);color:var(--ink);letter-spacing:-.01em;white-space:nowrap}
+.formula .frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .2em}
+.formula .frac>span:first-child{border-bottom:2px solid var(--muted);padding:0 .25em .08em}
+.formula .frac>span:last-child{padding-top:.08em}
+svg text{font-family:var(--sans)}
+svg .mono{font-family:var(--mono)}
+
+/* tarayıcı çerçevesi (ekran görüntüleri) */
+.frame{border:1px solid var(--line2);border-radius:12px;overflow:hidden;background:#0c1014;box-shadow:0 24px 60px rgba(0,0,0,.55)}
+.frame .bar{height:28px;display:flex;align-items:center;gap:6px;padding:0 12px;background:#121820;border-bottom:1px solid var(--line)}
+.frame .bar i{width:9px;height:9px;border-radius:50%;background:#2a3542}
+.frame .bar span{margin-left:12px;font:500 11px/1 var(--mono);color:var(--dim)}
+.frame .scr{position:relative;overflow:hidden;aspect-ratio:16/10}
+.frame .scr img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top left;opacity:0;transition:opacity .6s ease}
+.frame .scr img.on{opacity:1;animation:kb 9s ease-out both}
+@keyframes kb{from{transform:scale(1.0)}to{transform:scale(1.045)}}
+
+/* ------------------------------------------------------------------ */
+/* Animasyon sistemi: [data-a] öğeleri .go gelince oynar.              */
+/* Adım öğeleri [data-step] → ile açılır.                              */
+/* ------------------------------------------------------------------ */
+[data-a]{opacity:0}
+[data-a].go{animation-duration:.75s;animation-timing-function:var(--ease);animation-fill-mode:both;animation-delay:var(--d,0s)}
+[data-a="fade"].go{animation-name:a-fade}
+[data-a="up"].go{animation-name:a-up}
+[data-a="down"].go{animation-name:a-down}
+[data-a="left"].go{animation-name:a-left}
+[data-a="right"].go{animation-name:a-right}
+[data-a="pop"].go{animation-name:a-pop;animation-duration:.6s}
+[data-a="grow-x"].go{animation-name:a-growx;transform-origin:left center}
+[data-a="grow-y"].go{animation-name:a-growy;transform-origin:center bottom;transform-box:fill-box}
+[data-a="draw"]{opacity:1;stroke-dasharray:var(--len,2000);stroke-dashoffset:var(--len,2000)}
+[data-a="draw"].go{animation-name:a-draw;animation-duration:var(--dur,1.6s);animation-timing-function:ease-in-out}
+[data-a="blur"].go{animation-name:a-blur;animation-duration:.9s}
+@keyframes a-fade{from{opacity:0}to{opacity:1}}
+@keyframes a-up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes a-down{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:none}}
+@keyframes a-left{from{opacity:0;transform:translateX(26px)}to{opacity:1;transform:none}}
+@keyframes a-right{from{opacity:0;transform:translateX(-26px)}to{opacity:1;transform:none}}
+@keyframes a-pop{0%{opacity:0;transform:scale(.6)}70%{opacity:1;transform:scale(1.06)}100%{opacity:1;transform:scale(1)}}
+@keyframes a-growx{from{opacity:1;transform:scaleX(0)}to{opacity:1;transform:scaleX(1)}}
+@keyframes a-growy{from{opacity:1;transform:scaleY(0)}to{opacity:1;transform:scaleY(1)}}
+@keyframes a-draw{from{stroke-dashoffset:var(--len,2000)}to{stroke-dashoffset:0}}
+@keyframes a-blur{from{opacity:0;filter:blur(10px);transform:scale(1.04)}to{opacity:1;filter:none;transform:none}}
+[data-step]:not([data-a]){opacity:0;transition:opacity .45s ease, transform .45s var(--ease);transform:translateY(8px)}
+[data-step]:not([data-a]).on{opacity:1;transform:none}
+[data-step].dimmed{opacity:.28!important;transition:opacity .4s}
+.hint-next{position:absolute!important;right:24px;bottom:16px;font:600 11px/1 var(--mono);color:var(--dim);opacity:0;transition:opacity .3s}
+.slide.has-more .hint-next{opacity:.7;animation:hn 1.6s ease-in-out infinite}
+@keyframes hn{50%{transform:translateX(4px)}}
+
+.pulse{animation:pulse 1.8s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.35}}
+.blink{animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+
+/* ------------------------------------------------------------------ */
+/* Arayüz kabuğu: ilerleme, sayaç, oklar, notlar, harita, sorular       */
+/* ------------------------------------------------------------------ */
+#bar{position:fixed;left:0;top:0;height:3px;background:linear-gradient(90deg,var(--brand),var(--brand2));width:0;transition:width .35s ease;z-index:20}
+#hud{position:fixed;right:22px;bottom:14px;font:600 13px/1 var(--mono);color:var(--dim);display:flex;gap:6px;z-index:20}
+#hud b{color:var(--brand)}
+.nav{position:fixed;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:1px solid var(--line2);background:rgba(14,19,27,.8);color:var(--muted);display:grid;place-items:center;cursor:pointer;opacity:0;transition:opacity .25s;z-index:20}
+.nav svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+#navp{left:16px} #navn{right:16px}
+.nav:hover{color:var(--ink);border-color:var(--brand)}
+body.navon .nav{opacity:.85}
+.nav:disabled{opacity:0!important;pointer-events:none}
+
+.panel{position:fixed;z-index:30;background:rgba(10,14,20,.97);border:1px solid var(--line2);box-shadow:0 20px 60px rgba(0,0,0,.6);transition:transform .3s var(--ease),opacity .3s;backdrop-filter:blur(8px)}
+#notes{left:0;right:0;bottom:0;max-height:44vh;overflow:auto;padding:16px 26px 20px;transform:translateY(105%);border-radius:16px 16px 0 0}
+#notes.on{transform:none}
+#notes h4,.panel h4{margin:0 0 8px;font:600 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--brand);display:flex;gap:14px;align-items:center}
+#notes h4 span{color:var(--dim);letter-spacing:.06em}
+#ntxt{font:400 17px/1.6 var(--sans);color:var(--ink);white-space:pre-wrap;max-width:110ch}
+#nuse{margin-top:12px;padding-top:10px;border-top:1px solid var(--line);font:400 14px/1.55 var(--sans);color:var(--muted);max-width:120ch}
+#nuse b{color:var(--brand2)}
+#toc{top:0;right:0;bottom:0;width:380px;padding:20px;overflow:auto;transform:translateX(105%)}
+#toc.on{transform:none}
+#toc ol{list-style:none;margin:0;padding:0}
+#toc li{padding:8px 10px;border-radius:8px;cursor:pointer;color:var(--muted);font:500 14px/1.35 var(--sans);display:flex;gap:10px}
+#toc li b{color:var(--dim);font-family:var(--mono);min-width:26px}
+#toc li em{margin-left:auto;font:500 11px/1.6 var(--mono);color:var(--dim);font-style:normal}
+#toc li:hover{background:rgba(255,255,255,.04);color:var(--ink)}
+#toc li.cur{background:var(--brand-soft);color:var(--ink)}
+#toc li.cur b{color:var(--brand)}
+#qa{inset:5vh 8vw;border-radius:16px;padding:22px 26px;display:flex;flex-direction:column;opacity:0;pointer-events:none;transform:scale(.98)}
+#qa.on{opacity:1;pointer-events:auto;transform:none}
+#qa input{width:100%;padding:10px 14px;border-radius:10px;border:1px solid var(--line2);background:#0b1017;color:var(--ink);font:500 15px/1.2 var(--sans);margin:4px 0 14px;outline:none}
+#qa input:focus{border-color:var(--brand)}
+#qal{overflow:auto;display:grid;grid-template-columns:1fr 1fr;gap:10px;align-content:start}
+#qal .q{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:rgba(255,255,255,.02)}
+#qal .q h5{margin:0 0 6px;font:650 15px/1.35 var(--sans);color:var(--ink)}
+#qal .q p{margin:0;font:400 14px/1.55 var(--sans);color:var(--muted)}
+#qal .q p b{color:var(--ink)}
+#qal .q small{display:block;margin-top:6px;font:500 11px/1 var(--mono);color:var(--dim)}
+#help{left:50%;bottom:8px;transform:none;padding:6px 14px;border-radius:999px;font:500 11px/1 var(--mono);color:var(--muted);display:flex;gap:14px;opacity:0;pointer-events:none;transition:opacity .5s}
+#help.on{opacity:1}
+#help b{color:var(--brand)}
+#black{position:fixed;inset:0;background:#000;z-index:40;opacity:0;pointer-events:none;transition:opacity .4s}
+#black.on{opacity:1;pointer-events:auto}
+
+/* ---------------- konuşmacı ekranı ---------------- */
+body.speaker #stage,body.speaker .nav,body.speaker #hud,body.speaker #bar,body.speaker #notes,body.speaker #help{display:none!important}
+#spk{display:none}
+body.speaker #spk{display:grid;position:fixed;inset:0;grid-template-columns:1.55fr 1fr;grid-template-rows:auto 1fr;gap:16px;padding:16px;background:var(--bg)}
+#spk .top{grid-column:1/3;display:flex;align-items:center;gap:18px;font:600 15px/1 var(--mono);color:var(--muted)}
+#spk .top .clock{font-size:28px;color:var(--ink)}
+#spk .top .timer{font-size:28px;color:var(--brand)}
+#spk .top button{background:var(--panel2);border:1px solid var(--line2);color:var(--muted);border-radius:8px;padding:8px 12px;font:600 12px/1 var(--mono);cursor:pointer}
+#spk .top .ttl{margin-left:auto;color:var(--ink);font-family:var(--sans);font-size:18px}
+#spk .cur,#spk .nxt{position:relative;border:1px solid var(--line2);border-radius:12px;overflow:hidden;background:#000}
+#spk .left{display:flex;flex-direction:column;gap:12px;min-height:0}
+#spk .cur{flex:1}
+#spk .right{display:flex;flex-direction:column;gap:12px;min-height:0}
+#spk .nxt{height:34%;flex:0 0 auto}
+#spk .lbl{position:absolute;left:10px;top:8px;z-index:3;font:600 11px/1 var(--mono);letter-spacing:.14em;color:var(--brand);background:rgba(0,0,0,.6);padding:5px 8px;border-radius:6px}
+#spk .mini{position:absolute;left:0;top:0;width:1280px;height:720px;transform-origin:0 0}
+#spk .mini .slide{opacity:1;transform:none;transition:none}
+#spk .txt{flex:1;overflow:auto;border:1px solid var(--line);border-radius:12px;padding:16px 18px;font:400 19px/1.6 var(--sans);white-space:pre-wrap}
+#spk .use{border:1px solid var(--line);border-radius:12px;padding:12px 16px;font:400 14px/1.55 var(--sans);color:var(--muted);max-height:34%;overflow:auto}
+#spk .use b{color:var(--brand2)}
+#spk .steps{font:600 13px/1 var(--mono);color:var(--dim)}
+
+@media (prefers-reduced-motion: reduce){
+  [data-a]{opacity:1!important;animation:none!important}
+  [data-a="draw"]{stroke-dashoffset:0!important}
+  .pulse,.blink,.frame .scr img.on{animation:none!important}
+}
+/* ---------------- PDF baskısı (?print) ---------------- */
+@page{size:1280px 720px;margin:0}
+html.print,html.print body{height:auto;overflow:visible;background:var(--bg);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+html.print #stage{position:static;display:block}
+html.print #deck{width:1280px;height:auto}
+html.print .slide{position:relative;border:0;border-radius:0;box-shadow:none;break-after:page}
+html.print .slide:last-child{break-after:auto}
+html.print *,html.print *::before,html.print *::after{animation:none!important;transition:none!important}
+html.print #bar,html.print #hud,html.print .nav,html.print .panel,html.print #black,html.print #spk,html.print .hint-next{display:none!important}
