@@ -233,7 +233,7 @@ Invoke-RestMethod "$pgBase/api/notifications?limit=10"
 
 Aktif olayda Onayla düğmesini açın. Onaylayan alanı, mevcut sunucu uygulamasında nöbet listesindeki telefon numarası olarak doğrulanır; yalnız bir kişi adı yazmak yeterli değildir. Varsayılan demo listesindeki birincil örnek numara `+905321112233` değeridir. Bu, gerçek gönderim hedefi olarak kullanılacak bir talimat değildir.
 
-Jeton, Bildirimler sekmesindeki ilgili olayın simüle mesaj gövdesinde bulunan dört haneli koddur. Doğru olayın kodunu kullanın. Hatalı kod veya nöbet listesinde olmayan numara reddedilir. Bildirim yoksa olayın henüz yönlendirilmemiş olabileceğini kontrol edin; her olay SMS üretmek zorunda değildir.
+Jeton, Bildirimler sekmesindeki ilgili olayın simüle mesaj gövdesinde bulunan dört haneli koddur. Doğru olayın kodunu kullanın. Hatalı kod veya nöbet listesinde olmayan numara reddedilir. Bildirim yoksa olayın henüz yönlendirilmemiş olabileceğini kontrol edin; her olay SMS üretmek zorunda değildir. Kritik ve Acil bildirimler panoya en yakın nöbetçi ekibe gider: hedef sütununda ekibin adı ve numarası, ardından aynı ekibe giden `KONUM · <pano> · ~N km · maps.google.com/?q=…` mesajı görünür. Söke panoları için örnek numara yine `+905321112233` değeridir.
 
 Onay, olayın alındığını belirtir ve tekrar bildirimlerini durdurur. Arızayı fiziksel olarak gidermez ve olayı zorunlu olarak kapanmış hâle getirmez; kapanma kuralları ayrıdır.
 

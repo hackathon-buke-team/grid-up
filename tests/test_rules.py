@@ -545,6 +545,81 @@ def test_storm_cap_exempts_acil() -> None:
           f"saatte {alarms.STORM_CAP_PER_HOUR['KRITIK']}")
 
 
+def test_nearest_on_call_gets_location() -> None:
+    _rule("Ek · Alarm panoya en yakın nöbetçi ekibe gider; konum ayrı SMS ile bir kez")
+    n0 = len(_RESULTS)
+    st = _store("t9")
+    modem = sms.GsmModem()
+    notifier = Notifier(st, modem=modem)
+    st.upsert_panel(panel_key="SOKE-14", panel_index=14, site="Soke", name="SOKE-14",
+                    dso="ADM", lat=37.7612, lon=27.4031)
+    st.upsert_panel(panel_key="BERGAMA-02", panel_index=40, site="Bergama",
+                    name="BERGAMA-02", dso="GDZ", lat=39.1200, lon=27.1800)
+    st.upsert_panel(panel_key="KOORDSUZ-01", panel_index=41, site="Bilinmiyor",
+                    name="KOORDSUZ-01", dso="ADM", lat=None, lon=None)
+    st.commit()
+    crews = {r["number"]: r["name"] for r in DEFAULT_ROTA if r["level"] == 1}
+
+    def kritik(panel: str) -> dict:
+        inc_id = st.open_incident(
+            panel_key=panel, joint_key="C07-L2-PABUC", mode="loose_connection",
+            severity="KRITIK", opened_at=T0, updated_at=T0,
+            title="Çıkış 7 · L2 · çıkış pabucu — bağlantı direnci artıyor",
+            action="Torkla", evidence={"joint": {"theta_k": 14.2, "temp_c": 99.0}},
+            ruled_out=[])
+        st.commit()
+        inc = dict(st.one("SELECT * FROM incident WHERE id=?", (inc_id,)))
+        notifier.on_incident(inc, None, T0)
+        return dict(st.one("SELECT * FROM incident WHERE id=?", (inc_id,)))
+
+    def sms_rows(inc_id: int) -> list[dict]:
+        return [n for n in st.notifications(inc_id, limit=999) if n["channel"] == "SMS"]
+
+    soke = kritik("SOKE-14")
+    rows = sms_rows(soke["id"])
+    loc = [n for n in rows if n["body"].startswith("KONUM")]
+    for n in rows:
+        print(f"  SOKE-14 -> {n['target']}\n            {n['body']}")
+    check("SOKE-14 alarmı yalnız Söke ekibine gider",
+          rows and all("Söke" in n["target"] for n in rows), str({n["target"] for n in rows}))
+    check("konum SMS'i bir kez gider ve harita bağlantısı taşır",
+          len(loc) == 1 and "maps.google.com/?q=37.7612,27.4031" in loc[0]["body"],
+          loc[0]["body"] if loc else "yok")
+    check("konum SMS'i tek UCS2 parçasına sığar",
+          bool(loc) and len(sms.split_ucs2(loc[0]["body"])) == 1,
+          f"{len(loc[0]['body'])} karakter" if loc else "")
+
+    notifier.tick(T0 + 300)
+    notifier.tick(T0 + 1800)
+    after = st.notifications(soke["id"], limit=999)
+    check("tekrar SMS'i aynı ekibe gider, konum tekrarlanmaz",
+          len(sms_rows(soke["id"])) > len(rows)
+          and sum(n["body"].startswith("KONUM") for n in after) == 1)
+    voice = [n for n in after if n["channel"] == "SESLI"]
+    check("30. dakikadaki sesli arama da en yakın ekibe gider",
+          bool(voice) and all("Söke" in n["target"] for n in voice),
+          str([n["target"] for n in voice]))
+
+    bergama = kritik("BERGAMA-02")
+    who = {n["target"] for n in sms_rows(bergama["id"])}
+    print(f"  BERGAMA-02 -> {who}")
+    check("Bergama'daki pano Söke'ye değil, en yakın ekibe (Manisa) gider",
+          len(who) == 1 and "Manisa" in next(iter(who)), str(who))
+
+    nowhere = kritik("KOORDSUZ-01")
+    rows = sms_rows(nowhere["id"])
+    print(f"  KOORDSUZ-01 -> {len(rows)} SMS")
+    check("koordinatı olmayan pano: kimse atlanmaz, bütün 1. kademe ekipler aranır",
+          len(rows) == len(crews) and not any(n["body"].startswith("KONUM") for n in rows),
+          f"{len(rows)} SMS / {len(crews)} ekip")
+
+    check("en yakın ekibin numarası onay verebilir",
+          notifier.ack(soke["id"], DEFAULT_ROTA[0]["number"], soke["ack_token"]) is True)
+
+    failed = [name for name, ok, _ in _RESULTS[n0:] if not ok]
+    assert not failed, failed
+
+
 # ==========================================================================
 
 def main() -> int:
@@ -561,6 +636,7 @@ def main() -> int:
         test_ucs2_roundtrip,
         test_device_attribution,
         test_storm_cap_exempts_acil,
+        test_nearest_on_call_gets_location,
     )
     for t in tests:
         try:

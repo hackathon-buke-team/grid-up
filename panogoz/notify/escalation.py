@@ -17,6 +17,19 @@ Only KRITIK and ACIL reach a phone.  That is a contract in
 UYARI can ring a phone the system starts being ignored, and a system that is
 ignored detects nothing.
 
+Who is called
+-------------
+
+Level 1 is not one phone but the on-call field crews, each with the
+coordinates of its base.  A dispatch goes to the **one crew nearest the
+panel**, and that crew also receives the panel's map location in a separate,
+single-part SMS.  Waking six technicians for one bolt is how a rota learns to
+ignore the sender; sending the one in Söke to a panel in Bergama is how a
+KRITIK turns into an ACIL on the motorway.  The distance is from the crew's
+base, not from a live position: live GPS would need an app on the
+technician's phone, which this release does not ship.  Levels 2 and 3 are
+people, not crews, and are called as before.
+
 Authenticated acknowledgement
 -----------------------------
 
@@ -48,6 +61,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 import re
 import time
 from dataclasses import dataclass, field
@@ -68,12 +82,45 @@ from panogoz.notify.sms import GsmModem, UCS2_SINGLE_CHARS, split_ucs2, ucs2_oct
 # Rota and ladder
 # --------------------------------------------------------------------------
 
-#: Level 1 is the on-call technician, 2 the shift supervisor, 3 the manager.
+#: Level 1 is the on-call field crews, 2 the shift supervisor, 3 the manager.
+#: Each level-1 entry carries its base coordinates (a depot, deliberately not a
+#: district centroid); see "Who is called" above.  Demo values, not real addresses.
 DEFAULT_ROTA: list[dict] = [
-    {"name": "Nöbetçi tekniker", "number": "+905321112233", "role": "birincil", "level": 1},
+    {"name": "Nöbetçi tekniker · Söke", "number": "+905321112233", "role": "birincil",
+     "level": 1, "lat": 37.7330, "lon": 27.3870},
+    {"name": "Nöbetçi tekniker · Aydın", "number": "+905321112234", "role": "birincil",
+     "level": 1, "lat": 37.8300, "lon": 27.8190},
+    {"name": "Nöbetçi tekniker · Muğla", "number": "+905321112235", "role": "birincil",
+     "level": 1, "lat": 37.2010, "lon": 28.3440},
+    {"name": "Nöbetçi tekniker · Denizli", "number": "+905321112236", "role": "birincil",
+     "level": 1, "lat": 37.7620, "lon": 29.0660},
+    {"name": "Nöbetçi tekniker · İzmir", "number": "+905321112237", "role": "birincil",
+     "level": 1, "lat": 38.4550, "lon": 27.2000},
+    {"name": "Nöbetçi tekniker · Manisa", "number": "+905321112238", "role": "birincil",
+     "level": 1, "lat": 38.6040, "lon": 27.4090},
     {"name": "Vardiya amiri", "number": "+905321112244", "role": "ikincil", "level": 2},
     {"name": "İşletme müdürü", "number": "+905321112255", "role": "yönetici", "level": 3},
 ]
+
+#: What the crew's phone opens.  The server never calls it - it is text in an
+#: SMS - so nothing leaves the premises; a DSO points it at its own GIS viewer
+#: in this one line.  Four decimals is about 10 m, and keeps the location
+#: message inside one 70-character UCS2 part.
+MAP_LINK = "maps.google.com/?q={lat:.4f},{lon:.4f}"
+
+
+def distance_km(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
+    """Great-circle distance.  Road distance is longer; the ranking rarely changes."""
+    p1, p2 = math.radians(lat1), math.radians(lat2)
+    dp, dl = p2 - p1, math.radians(lon2 - lon1)
+    a = math.sin(dp / 2) ** 2 + math.cos(p1) * math.cos(p2) * math.sin(dl / 2) ** 2
+    return 2 * 6371.0 * math.asin(math.sqrt(a))
+
+
+def compose_location(panel_key: str, lat: float, lon: float, km: float | None) -> str:
+    """The second SMS: where the panel is.  One UCS2 part, so it never splits."""
+    far = "" if km is None else (" · <1 km" if km < 1 else f" · ~{km:.0f} km")
+    return f"KONUM · {panel_key}{far} · {MAP_LINK.format(lat=lat, lon=lon)}"
 
 #: (seconds after dispatch, channel, rota level).
 LADDER: dict[str, tuple[tuple[float, str, int], ...]] = {
@@ -295,11 +342,43 @@ class Notifier:
         self._active: dict[int, dict] = {}
         self.sent_count = 0
         self.rejected_acks: list[dict] = []
+        #: incidents whose crew already has the location text; repeats skip it.
+        self._located: set[int] = set()
 
     # ------------------------------------------------------------- rota ---
 
     def rota_for(self, level: int) -> list[dict]:
         return [r for r in self.rota if int(r.get("level", 1)) == level]
+
+    def _panel_pos(self, panel_key: str | None) -> tuple[float, float] | None:
+        row = self.store.panel(panel_key) if panel_key else None
+        if not row or row.get("lat") is None or row.get("lon") is None:
+            return None
+        return float(row["lat"]), float(row["lon"])
+
+    def nearest_on_call(self, panel_key: str | None) -> tuple[dict, float] | None:
+        """The level-1 crew closest to the panel, and how far it is, in km.
+
+        ``None`` when the panel has no coordinates or no crew has a base; the
+        caller then falls back to every level-1 phone rather than to nobody.
+        """
+        pos = self._panel_pos(panel_key)
+        if pos is None:
+            return None
+        crews = [(r, distance_km(pos[0], pos[1], float(r["lat"]), float(r["lon"])))
+                 for r in self.rota_for(1)
+                 if r.get("lat") is not None and r.get("lon") is not None]
+        return min(crews, key=lambda c: c[1]) if crews else None
+
+    def _recipients(self, incident: dict, level: int) -> list[tuple[dict, float | None]]:
+        if level != 1:
+            people = self.rota_for(level)
+            if people:
+                return [(p, None) for p in people]
+        near = self.nearest_on_call(incident.get("panel_key"))
+        if near is not None:
+            return [near]
+        return [(p, None) for p in self.rota_for(1)]
 
     def on_rota(self, who: str) -> dict | None:
         """Resolve a name or a phone number to a rota entry."""
@@ -331,20 +410,32 @@ class Notifier:
                 "# IZLE seviyesi telefona cikmaz; haftalik ozet listesine girer.",
             ))
             return ids
-        people = self.rota_for(level) or self.rota_for(1)
-        for person in people:
+        for person, km in self._recipients(incident, level):
+            target = f"{person['name']} · {person['number']}"
             if channel == "SMS":
                 body = compose(incident)
                 res = self.modem.send(person["number"], body)
                 self.sent_count += 1
                 ids.append(self._record(
-                    inc_id, "SMS", person["number"], body,
+                    inc_id, "SMS", target, body,
                     STATE_SENT if res["ok"] else STATE_ERROR, res["transcript"],
                 ))
+                pos = self._panel_pos(incident.get("panel_key"))
+                if km is not None and pos is not None and inc_id not in self._located:
+                    self._located.add(inc_id)
+                    where = compose_location(incident.get("panel_key", "?"), pos[0], pos[1], km)
+                    res = self.modem.send(person["number"], where)
+                    self.sent_count += 1
+                    ids.append(self._record(
+                        inc_id, "SMS", target, where,
+                        STATE_SENT if res["ok"] else STATE_ERROR,
+                        f"# en yakın nöbetçi ekip: {person['name']} · ~{km:.1f} km "
+                        f"(görev yerine kuş uçuşu)\n" + res["transcript"],
+                    ))
             elif channel == "SESLI":
                 script = voice_script(incident)
                 ids.append(self._record(
-                    inc_id, "SESLI", person["number"], script, STATE_SENT,
+                    inc_id, "SESLI", target, script, STATE_SENT,
                     _voice_transcript(person["number"], script),
                 ))
             elif channel in ("EPOSTA", "MATRIX"):

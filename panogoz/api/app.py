@@ -1192,12 +1192,12 @@ if __name__ == "__main__":  # pragma: no cover
         if rows:
             inc = rows[0]
             r, body = show("POST", f"/api/alarms/{inc['id']}/ack",
-                           json={"by": "Nöbetçi tekniker", "token": "0000"})
+                           json={"by": "Nöbetçi tekniker · Söke", "token": "0000"})
             print(f"   wrong token -> ok={body['ok']}  {body['reason']}")
             from panogoz.notify.escalation import ack_token
             good = ack_token(int(inc["id"]))
             r, body = show("POST", f"/api/alarms/{inc['id']}/ack",
-                           json={"by": "Nöbetçi tekniker", "token": good})
+                           json={"by": "Nöbetçi tekniker · Söke", "token": good})
             print(f"   right token -> ok={body['ok']}  {body['reason']}")
         else:
             print("   no open incident in this short run; ack path exercised by tests")

@@ -266,7 +266,8 @@ flowchart TD
   SEV -->|"KRITIK / ACIL"| GATE{"İki bağımsız<br/>sensör ailesi<br/>hemfikir mi?"}
   GATE -->|"hayır"| WATCH["İZLE'ye indir<br/>gerekçesi kayıtlı"]
   GATE -->|"evet"| DWELL{"24 saat bekleme<br/>(ACIL muaf)"}
-  DWELL --> SMS["SMS · UCS-2<br/>onay jetonu ile"]
+  DWELL --> NEAR["Panoya en yakın<br/>nöbetçi ekip seçilir<br/>(görev yeri, kuş uçuşu)"]
+  NEAR --> SMS["SMS · UCS-2<br/>onay jetonu ile<br/>+ ayrı konum SMS'i"]
   SMS --> ACK{"Süresinde ONAY geldi mi?<br/>ACIL 15 dk · KRITIK 45 dk<br/>UYARI 8 saat"}
   ACK -->|"hayır"| L2["2. kademe:<br/>şef + sesli arama"]
   L2 --> L3["3. kademe:<br/>işletme müdürü"]
@@ -276,6 +277,16 @@ flowchart TD
 Yalnız `KRITIK` ve `ACIL` bir telefonu çaldırır. Bu tek kural, sistemin üçüncü aydan sonra
 da açık kalmasını sağlayan kuraldır ve bu yüzden yapılandırma değeri değil, **sözleşmedir**
 (`channels.DISPATCH_SEVERITIES`).
+
+1. kademe tek bir telefon değil, görev yeri koordinatı bilinen nöbetçi ekiplerdir
+(`notify/escalation.py` · `DEFAULT_ROTA`). Telefon çaldıran bildirim panoya **en yakın tek
+ekibe** gider; aynı ekip panonun harita bağlantısını ayrı, tek parçalık bir SMS ile bir kez
+alır (`KONUM · SOKE-14 · ~3 km · maps.google.com/?q=…`). Tekrar SMS'leri ve 30. dakikadaki
+sesli arama da aynı ekibe gider; 2. ve 3. kademe kişilerdir, değişmez. Mesafe ekibin görev
+yerinden ölçülür, canlı konumdan değil: canlı GPS telefona bir uygulama gerektirir ve bu
+sürümde yoktur. Koordinatı olmayan bir panoda kimse atlanmaz, bütün 1. kademe ekipler aranır.
+Harita bağlantısı yalnız SMS içindeki metindir; sunucu dışarıya istek atmaz ve bağlantı
+kurumun kendi CBS görüntüleyicisine tek satırda (`MAP_LINK`) çevrilebilir.
 
 ---
 
