@@ -129,7 +129,7 @@ dekonvolüsyon yapmadığımız orada, ölçülmüş sayılarla yazılıdır.
 | [docs/11-ACIK-SORULAR.md](docs/11-ACIK-SORULAR.md) | Yalnız müşterinin cevaplayabileceği sorular ve her birinin tasarımı nasıl değiştireceği |
 | [docs/PANOGOZ-ICD-v2.0.md](docs/PANOGOZ-ICD-v2.0.md) | SCADA arayüz kontrol dokümanı — koddan üretilir, elle yazılmaz |
 | [docs/panogoz_points.csv](docs/panogoz_points.csv) | Aynı haritanın SCADA import'u için düz nokta listesi |
-| [sunum/PANO-GOZ-Final-Sunumu.pdf](sunum/PANO-GOZ-Final-Sunumu.pdf) | Final sunumu, PDF: 23 slayt, 16:9, yer imli |
+| [sunum/PANO-GOZ-Final-Sunumu.pdf](sunum/PANO-GOZ-Final-Sunumu.pdf) | Final sunumu, PDF: 18 slayt, 16:9, yer imli |
 | [sunum/index.html](sunum/index.html) | Aynı sunumun canlı hâli: tek dosya, internetsiz; N konuşma metni, S konuşmacı ekranı, Q jüri soruları. `python sunum/build.py --pdf` ikisini birlikte yeniden üretir |
 | [sunum/SUNUM-METNI.md](sunum/SUNUM-METNI.md) | Sunucu için hazırlık kılavuzu: şartname ve bize verilen veriler, çözüm ve teknoloji yığını, slayt slayt konuşma metni, doğrulanmış canlı demo akışı, jüri soruları, ezber kartı |
 

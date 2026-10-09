@@ -1,69 +1,62 @@
 /* ======================================================================
-   SLAYTLAR 9–16 · yöntem, alarm, entegrasyon, canlı demo
+   SLAYTLAR 8–14 · karar, erken uyarı, alarm, entegrasyon, canlı demo
    ====================================================================== */
 
 /* ===================================================================== */
-/* 9 · TESPİT ZİNCİRİ                                                     */
+/* 8 · SİSTEM NASIL KARAR VERİYOR                                         */
 /* ===================================================================== */
 function chainSVG() {
   const N = [
-    ['Ölçüm', 'T · TMP117 / IR', 'I · kelepçe CT'],
-    ['Kardeş farkı', 'T − medyan', 'kendisi hariç'],
-    ['θ kestirimi', 'RLS, ileri model', 'dekonvolüsyon yok'],
-    ['Günlük medyan', '', ''],
-    ['Bastırma', 'şebeke · hava · yük', 'cihaz · öğrenme'],
-    ['Füzyon', '26 kanıt, 6 aile', '7 arıza modu'],
-    ['Alarm', '3/5 gün · %40 hist.', '2 aile = ekip'],
+    ['Ölç', 'dakikada bir', 'sıcaklık ve akım', IC.therm],
+    ['Karşılaştır', 'her bağlantıyı', 'diğer fazlarla', IC.grid],
+    ['Eğilimi izle', 'tek ölçüme değil,', 'günlere bakar', IC.clock],
+    ['Ayıkla', 'hava mı, yük mü,', 'sensör mü?', IC.eye],
+    ['Haber ver', 'gerekçesiyle,', 'doğru kişiye', IC.bell],
   ];
-  const w = 140, g = 23, y = 40, h = 104;
-  const x = i => 4 + i * (w + g);
-  return `<svg viewBox="0 0 1160 190" class="chainsvg">
-   <path id="chp" d="M${x(0) + 10},${y + h / 2} H${x(6) + w - 10}" stroke="var(--line2)" stroke-width="2" fill="none"/>
+  const w = 208, g = 30, y = 14, h = 118;
+  const x = i => i * (w + g);
+  const col = ['var(--line2)', 'var(--line2)', 'var(--olcum)', 'var(--izle)', 'var(--kritik)'];
+  return `<svg viewBox="0 0 1160 140" class="chainsvg">
+   <path id="chp" d="M${x(0) + 10},${y + h / 2} H${x(4) + w - 10}" stroke="var(--line2)" stroke-width="2" fill="none"/>
    ${[0, 1, 2].map(k => `<circle r="5" fill="var(--brand)" filter="drop-shadow(0 0 6px #f78320)"><animateMotion dur="4.5s" begin="-${k * 1.5}s" repeatCount="indefinite"><mpath href="#chp"/></animateMotion></circle>`).join('')}
-   ${N.map(([a, b, c], i) => `<g class="chn" style="--i:${i};--d:${.1 + i * .08}s" data-a="up">
-     <rect x="${x(i)}" y="${y}" width="${w}" height="${h}" rx="12" fill="#0d131b" stroke="${i === 2 ? 'var(--olcum)' : i === 4 ? 'var(--izle)' : i === 6 ? 'var(--kritik)' : 'var(--line2)'}" stroke-width="1.6"/>
-     <text x="${x(i) + 14}" y="${y + 28}" font-size="15" font-weight="700" fill="var(--ink)">${a}</text>
-     ${i === 3 ? ['CUSUM · h = 8', 'Değişim noktası', 'Theil-Sen eğim'].map((t, j) => `<rect x="${x(i) + 10}" y="${y + 40 + j * 20}" width="${w - 20}" height="16" rx="8" fill="rgba(255,234,70,.08)" stroke="rgba(255,234,70,.3)"/><text x="${x(i) + 18}" y="${y + 52 + j * 20}" class="mono" font-size="9.5" fill="var(--olcum)">${t}</text>`).join('')
-      : `<text x="${x(i) + 14}" y="${y + 56}" font-size="12" fill="var(--muted)">${b}</text><text x="${x(i) + 14}" y="${y + 75}" font-size="12" fill="var(--muted)">${c}</text>`}
-     <text x="${x(i) + 14}" y="${y + h + 22}" class="mono" font-size="10.5" fill="var(--dim)">${['dakikada bir', 'fider içinde', 'K, anma akımında', 'gün ölçeği', 'Türkçe gerekçe', 'tavanlı LLR', 'SMS · SCADA'][i]}</text>
+   ${N.map(([a, b, c, ic], i) => `<g data-a="up" style="--d:${.1 + i * .1}s">
+     <rect x="${x(i)}" y="${y}" width="${w}" height="${h}" rx="14" fill="#0d131b" stroke="${col[i]}" stroke-width="1.6"/>
+     <g transform="translate(${x(i) + 18},${y + 18})" color="var(--brand)">${ic.replace('class="ic"', 'width="24" height="24"')}</g>
+     <text x="${x(i) + 52}" y="${y + 37}" font-size="19" font-weight="700" fill="var(--ink)">${a}</text>
+     <text x="${x(i) + 18}" y="${y + 74}" font-size="14" fill="var(--muted)">${b}</text>
+     <text x="${x(i) + 18}" y="${y + 95}" font-size="14" fill="var(--muted)">${c}</text>
    </g>`).join('')}
   </svg>`;
 }
-const MODES = [['Gevşek bağlantı', .30, 'tork anahtarıyla yeniden sık'], ['Aşırı yük', .15, 'yük profili, fider dengeleme'], ['Ark koruma bütünlüğü', .15, 'dedektör ve otokontrol'], ['Isıl kaçış / soğutma', .10, 'menfez ve filtreler'], ['Harmonik nötr', .10, '3. harmoniği ölç'], ['Nem / yoğuşma', .10, 'kanal sızdırmazlığı'], ['Yalıtım zayıflaması', .10, 'PD trendi, planlı ölçüm']];
+const MODES = [['Gevşek bağlantı', 'bağlantı yeniden sıkılır'], ['Aşırı yük', 'yük dengelenir'], ['Ark korumasında arıza', 'dedektörler kontrol edilir'], ['Soğutma sorunu', 'menfez ve filtreler temizlenir'], ['Nötr iletkeni ısınması', 'harmonikler incelenir'], ['Nem ve yoğuşma', 'kanal sızdırmazlığı sağlanır'], ['Yalıtım zayıflaması', 'planlı ölçüm yapılır']];
 add({
-  title: 'Tespit zinciri', section: 'Yöntem', time: '50 sn',
-  html: () => `${HD('05 · Yöntem', 'Her kutunun bir birimi var; hiçbiri eğitim verisi istemez.')}
+  title: 'Sistem nasıl karar veriyor', section: 'Çözüm', time: '45 sn',
+  html: () => `${HD('03 · Çözüm', 'Sistem nasıl karar veriyor?')}
 <div class="body">
   ${chainSVG()}
   <div class="row grow">
-    <div class="card grow" data-step="1"><p class="cap">7 arıza modu · sağlık endeksi tam ayrışır</p>
-      <div class="modes">${MODES.map(([n, w, a], i) => `<div class="md"><span class="mn">${n}</span><span class="mb"><i style="width:${w / .3 * 100}%;--d:${.1 + i * .07}s" data-a="grow-x"></i></span><span class="mono mw">${fmt(w, 2)}</span><span class="ma">${a}</span></div>`).join('')}</div>
-      <p class="mono hi">HI = 100 · Π (1 − r<sub>m</sub>)<sup>w<sub>m</sub></sup> → ln(HI/100) = Σ w<sub>m</sub> · ln(1 − r<sub>m</sub>)</p></div>
-    <div class="card" style="width:420px" data-step="2"><p class="cap">Bilerek kullanmadıklarımız</p>
+    <div class="card grow col" data-step="1"><p class="cap">Yakaladığı yedi sorun ve sahada ne yapılacağı</p>
+      <div class="mlist">${MODES.map(([n, a]) => `<div><b>${n}</b><span>${a}</span></div>`).join('')}</div></div>
+    <div class="card col" style="width:440px" data-step="2"><p class="cap">Neden "kara kutu" yapay zekâ değil?</p>
       <div class="rej">
-        <div>${IC.x}<span><b>Pano başına LSTM / otokodlayıcı</b> Kayan pencerede 0,2 K/hafta sürüklenmeyi normal diye öğrenir: yapısal körlük.</span></div>
-        <div>${IC.x}<span><b>One-class SVM</b> Kalibre skor yok; "−0,37" bir bakım mühendisine bir şey söylemez.</span></div>
-        <div>${IC.x}<span><b>Ham sıcaklıkta kümeleme</b> Denedik: kümeler mevsimi buldu, arızayı değil.</span></div>
-        <div>${IC.x}<span><b>Tek karar olarak sabit eşik</b> Mutlak limitler kalır (90/110/130 °C), tek karar olmaz.</span></div>
+        <div>${IC.x}<span><b>Yavaş bozulmayı "normal" sanabilir</b> Haftalarca süren ısınmayı öğrenip kabullenir; tam aradığımız şeye kör kalır.</span></div>
+        <div>${IC.x}<span><b>Aylarca temiz veri ister</b> Elimizde yok; üstelik her pano için ayrı bir model gerekir.</span></div>
+        <div>${IC.x}<span><b>Kararını açıklayamaz</b> Bizim sistemimiz her uyarının nedenini Türkçe ve sade yazar.</span></div>
       </div></div>
   </div>
 </div>`,
-  notes: `Tespit zinciri soldan sağa. Ölçüm dakikada bir geliyor: sıcaklık ve akım. Kardeş farkını alıyoruz — kritik bir ayrıntı: medyan bağlantının kendisi hariç, yalnız kardeşleri üzerinden alınıyor. Kendini de içeren bir medyan, kusurlu faz bir kardeşini geçtiği anda sessizce ona atlar ve sinyalin yüzde kırkını yer.
+  notes: `Sistem her pano için beş adımlık aynı zinciri işletiyor.
 
-θ'yı bir ileri modelin içinden, özyinelemeli en küçük kareler ile kestiriyoruz; çünkü bir bağlantı bir direnç değil, ısıl bir kütle — yük değiştiğinde sıcaklığı dakikalar sonra yetişir. Dekonvolüsyon gürültüyü büyütür; o yüzden yapmıyoruz.
+Ölç: dakikada bir sıcaklık ve akım. Karşılaştır: her bağlantıyı aynı çıkışın diğer fazlarıyla. Eğilimi izle: tek bir ölçüme değil, günlerin gidişatına bakıyoruz; çünkü gevşeyen bir bağlantı bir günde değil, haftalar içinde ısınır. Ayıkla: bu okuma gerçekten panoyla mı ilgili, yoksa hava, yük ya da kendi sensörümüz mü? Ve haber ver: gerekçesiyle, doğru kişiye.
 
-Sonra zaman ölçeği değişiyor: günlük medyanlar. Avladığımız sinyal haftada 0,2 kelvin; doğru örnekleme adımı gün. Üzerinde üç araç: CUSUM sürüklenmeyi, değişim noktası başlangıç tarihini, Theil-Sen eğimi veriyor.
+[→] Bu zincir yalnız gevşek bağlantıyı değil, şartnamenin saydığı yedi sorunu izliyor: aşırı yük, ark korumasının sağlığı, soğutma, nötr ısınması, nem ve yalıtım zayıflaması. Her biri için ekrana "ne yapılmalı" da yazılıyor.
 
-Sonra bastırma, sonra füzyon, sonra alarm. Sıra sabit: açıklanabilen kanıt hiç olasılığa girmiyor.
-
-[→] Füzyon yedi arıza moduna risk veriyor ve sağlık endeksi bu risklerin ağırlıklı çarpımı. Logaritmasını aldığınızda tam ayrışıyor: "sağlık 67" dediğimizde, eksik 33 puanın hangi moddan geldiğini sezgisel bir atıf olmadan söyleyebiliyoruz.
-
-[→] Ve bilerek kullanmadıklarımız. En çok sorulan: "Yapay zekâ nerede?" Kayan pencerede eğitilen bir otokodlayıcı, haftada 0,2 kelvinlik yavaş sürüklenmeyi normalin parçası olarak öğrenir ve yeniden üretir. Yani tam avladığımız sinyale yapısal olarak kördür. Üstelik aylarca temiz geçmiş ister — elimizde yok — ve yüz panoya yüz model demek. Bizim yöntemimizin her çıktısının birimi var: kelvin, mikroohm, gün.`,
-  use: `<b>Kullan:</b> Adım 1: yedi mod; adım 2: reddedilen yöntemler. Akış çizgisindeki turuncu nokta zinciri dolaşır. <b>Ezberlenecek:</b> CUSUM k = 0,5 · h = 8 (otokorelasyon cezası yüzünden 4–5 değil) · ARL0 ≈ 19 112 gün = bağlantı başına 52,3 yıl · filo: 100 pano × 40 bağlantıda 4,8 günde bir yanlış CUSUM geçişi — ama alarm üç şartı birden ister (CUSUM > 8 VE θ ≥ 5 K VE son 5 günün 3'ü). <b>Dürüst sınır:</b> Naive Bayes ilişkili kanıtı fazla sayar; aile tavanı tek sensörlü bulguyu Uyarı'da tutar, ekip yönlendirmez.`,
+[→] En sık sorulan soru: "Yapay zekâ nerede?" Bilerek kara kutu bir model kullanmadık. Böyle bir model haftalarca süren yavaş ısınmayı normalin parçası olarak öğrenir — yani tam aradığımız şeye kör kalır. Aylarca temiz geçmiş veri ister; elimizde yok. Ve kararını açıklayamaz. Bizim sistemimiz her uyarının nedenini bakım ekibinin anlayacağı dilde yazıyor.`,
+  use: `<b>Kullan:</b> Adım 1: yedi sorun; adım 2: neden kara kutu model değil. Akış çizgisindeki turuncu nokta zinciri dolaşır. <b>Jüri sorarsa — "Hangi yöntemler?":</b> fizik tabanlı kestirici + istatistiksel süreç kontrolü (CUSUM) + değişim noktası tespiti; hepsinin çıktısının bir birimi var (kelvin, gün). <b>Yanlış alarm?</b> Uyarı için üç şart birden gerekir: biriken sapma, yeterince büyük fark ve son beş günün en az üçünde tekrar.`,
 });
 
 /* ===================================================================== */
-/* 10 · HAFTALAR ÖNCE: TARİH VE UFUK                                      */
+/* 9 · HAFTALAR ÖNCE: BAŞLANGIÇ VE KALAN SÜRE                             */
 /* ===================================================================== */
 function trendSVG() {
   const X = H.sc(-45, 20, 70, 1130), Y = H.sc(0, 28, 330, 24);
@@ -76,153 +69,83 @@ function trendSVG() {
   const days = [[-45, '19 Ağu'], [-30, '3 Eyl'], [-22, '11 Eyl'], [-11, '22 Eyl'], [0, 'bugün'], [15, '18 Eki']];
   const fan = `${X(0)},${Y(17.6)} ${X(20)},${Y(Math.min(28, 17.6 + 20 * .563))} ${X(20)},${Y(17.6 + 20 * .397)}`;
   return `<svg viewBox="0 0 1160 380" class="trsvg">
-   ${TH.map(([v, l, c]) => `<line x1="70" x2="1130" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--${c})" stroke-opacity=".55" stroke-dasharray="6 6"/><text x="64" y="${Y(v) + 4}" text-anchor="end" class="mono" font-size="11" fill="var(--${c})">${l} ${v}</text>`).join('')}
+   ${TH.map(([v, l, c]) => `<line x1="70" x2="1130" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--${c})" stroke-opacity=".55" stroke-dasharray="6 6"/><text x="64" y="${Y(v) + 4}" text-anchor="end" font-size="12" font-weight="600" fill="var(--${c})">${l}</text>`).join('')}
    <line x1="70" x2="1130" y1="${Y(0)}" y2="${Y(0)}" stroke="var(--line2)"/>
    ${days.map(([d, t]) => `<text x="${X(d)}" y="352" text-anchor="middle" class="mono" font-size="11" fill="${d === 0 ? 'var(--ink)' : 'var(--dim)'}">${t}</text>`).join('')}
    <line x1="${X(0)}" x2="${X(0)}" y1="20" y2="330" stroke="var(--line2)"/>
    <text x="${X(0) + 6}" y="34" font-size="11" fill="var(--muted)">bugün</text>
-   <text x="70" y="14" class="mono" font-size="11" fill="var(--dim)">θ günlük medyan · K · SOKE-14 / Ç7-L2</text>
+   <text x="70" y="14" font-size="11.5" fill="var(--dim)">Çıkış 7 · L2 · fazlar arası fark, gün gün</text>
    <g data-step="2"><rect x="${X(-29)}" y="20" width="${X(-15) - X(-29)}" height="310" fill="rgba(255,47,121,.07)"/>
      <line x1="${X(-22)}" x2="${X(-22)}" y1="20" y2="330" stroke="var(--acil)" stroke-width="2" stroke-dasharray="5 4"/>
      <rect x="${X(-22) + 8}" y="40" width="226" height="48" rx="9" fill="rgba(6,8,12,.92)" stroke="var(--acil)"/>
-     <text x="${X(-22) + 20}" y="60" font-size="13.5" font-weight="700" fill="var(--acil)">Değişim noktası · 11 Eylül</text>
-     <text x="${X(-22) + 20}" y="78" font-size="11.5" fill="var(--muted)">ikili bölütleme + BIC · tarih bir aralık</text></g>
+     <text x="${X(-22) + 20}" y="60" font-size="13.5" font-weight="700" fill="var(--acil)">Bozulma burada başladı</text>
+     <text x="${X(-22) + 20}" y="78" font-size="11.5" fill="var(--muted)">geriye dönük bulunur · ~11 Eylül</text></g>
    <path d="${H.smooth(pts)}" fill="none" stroke="var(--olcum)" stroke-width="3.2" data-a="draw" style="--d:.3s;--dur:2.2s"/>
    <circle cx="${X(0)}" cy="${Y(17.6)}" r="6" fill="var(--olcum)" data-a="pop" style="--d:2.4s"/>
-   <text x="${X(0) - 10}" y="${Y(17.6) - 12}" text-anchor="end" class="mono" font-size="13" font-weight="700" fill="var(--olcum)" data-a="fade" style="--d:2.5s">17,6 K</text>
    <g data-step="1">
      <circle cx="${X(-27)}" cy="${Y(5.6)}" r="7" fill="none" stroke="var(--uyari)" stroke-width="2.5"/>
      <rect x="${X(-27) - 100}" y="${Y(5.6) + 16}" width="200" height="44" rx="9" fill="rgba(6,8,12,.92)" stroke="var(--uyari)"/>
      <text x="${X(-27)}" y="${Y(5.6) + 35}" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--uyari)">Uyarı · iş emri açıldı</text>
-     <text x="${X(-27)}" y="${Y(5.6) + 52}" text-anchor="middle" class="mono" font-size="10.5" fill="var(--muted)">CUSUM > 8 · θ ≥ 5 K · 3/5 gün</text>
+     <text x="${X(-27)}" y="${Y(5.6) + 52}" text-anchor="middle" font-size="11" fill="var(--muted)">birkaç gün üst üste yüksek</text>
      <circle cx="${X(-11)}" cy="${Y(12.1)}" r="7" fill="none" stroke="var(--kritik)" stroke-width="2.5"/>
      <rect x="${X(-11) - 96}" y="${Y(12.1) + 16}" width="192" height="44" rx="9" fill="rgba(6,8,12,.92)" stroke="var(--kritik)"/>
-     <text x="${X(-11)}" y="${Y(12.1) + 35}" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--kritik)">Kritik · SMS nöbetçiye</text>
-     <text x="${X(-11)}" y="${Y(12.1) + 52}" text-anchor="middle" class="mono" font-size="10.5" fill="var(--muted)">iki sensör ailesi hemfikir</text></g>
+     <text x="${X(-11)}" y="${Y(12.1) + 35}" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--kritik)">Kritik · nöbetçiye SMS</text>
+     <text x="${X(-11)}" y="${Y(12.1) + 52}" text-anchor="middle" font-size="11" fill="var(--muted)">iki ayrı sensör de doğruluyor</text></g>
    <g data-step="3"><polygon points="${fan}" fill="rgba(255,47,121,.16)"/>
      <line x1="${X(0)}" y1="${Y(17.6)}" x2="${X(14.8)}" y2="${Y(25)}" stroke="var(--acil)" stroke-width="2.5" stroke-dasharray="7 5"/>
      <circle cx="${X(14.8)}" cy="${Y(25)}" r="6" fill="var(--acil)"/>
-     <rect x="${X(1.5)}" y="${Y(17.6) + 26}" width="232" height="50" rx="10" fill="rgba(6,8,12,.94)" stroke="var(--acil)"/>
-     <text x="${X(1.5) + 12}" y="${Y(17.6) + 48}" font-size="15" font-weight="700" fill="var(--acil)">ACİL'e ~15 gün (13–19)</text>
-     <text x="${X(1.5) + 12}" y="${Y(17.6) + 67}" class="mono" font-size="10.5" fill="var(--muted)">+3,5 K/hf · %90 GA 2,8–3,9</text></g>
+     <rect x="${X(1.5)}" y="${Y(17.6) + 26}" width="236" height="50" rx="10" fill="rgba(6,8,12,.94)" stroke="var(--acil)"/>
+     <text x="${X(1.5) + 12}" y="${Y(17.6) + 48}" font-size="15" font-weight="700" fill="var(--acil)">Acil seviyesine ~2 hafta</text>
+     <text x="${X(1.5) + 12}" y="${Y(17.6) + 67}" font-size="11.5" fill="var(--muted)">bugünkü gidişe göre, bir aralıkla</text></g>
   </svg>`;
 }
 add({
-  title: 'Haftalar önce: tarih ve ufuk', section: 'Yöntem', time: '60 sn',
-  html: () => `${HD('05 · Yöntem', 'Ne zaman başladı, ne kadar vaktimiz var?')}
+  title: 'Haftalar önce: ne zaman başladı, ne kadar vakit var', section: 'Uyarı', time: '45 sn',
+  html: () => `${HD('04 · Uyarı', 'Ne zaman başladı, ne kadar vaktimiz var?')}
 <div class="body"><div class="card grow" style="padding:10px 14px;--d:.1s" data-a="blur">${trendSVG()}</div>
 <div class="row" style="gap:10px;flex-wrap:wrap">
-  <span class="chip izle" data-step="1">Geriye bakan yol: CUSUM + 3/5 gün debounce</span>
-  <span class="chip acil" data-step="2">Başlangıç tarihi: değişim noktası, aralıkla</span>
-  <span class="chip brand" data-step="3">İleri yol: Theil-Sen + Sen (1968) güven aralığı</span>
-  <span class="chip" data-step="3">21 günde en az 14 geçerli gün yoksa sayı yok: YETERSİZ_GEÇMİŞ</span>
+  <span class="chip uyari" data-step="1">Uyarı: birkaç gün üst üste görülünce</span>
+  <span class="chip acil" data-step="2">Başlangıç: geriye dönük bulunur</span>
+  <span class="chip brand" data-step="3">Kalan süre: bugünkü gidişe göre tahmin</span>
+  <span class="chip" data-step="3">Veri yetersizse tahmin uydurmaz</span>
 </div></div>`,
-  notes: `Ürünün haftalar önce haber veren yolu bu grafikte. Sarı çizgi, Çıkış 7 L2 pabucunun günlük θ medyanı.
+  notes: `Ürünün "haftalar önce" sözü bu grafikte. Sarı çizgi, kapaktaki bağlantının — Çıkış 7, L2 — diğer fazlara göre farkı, gün gün.
 
-[→] Geriye bakan yol: CUSUM birikiyor, θ beş kelvini geçiyor ve son beş günün üçünde geçiyor — üç şart birden olunca Uyarı açılıyor, iş emri yazılıyor. Telefon çalmıyor. On iki kelvini geçip ikinci bağımsız sensör ailesi de hemfikir olunca Kritik oluyor ve nöbetçiye SMS gidiyor.
+[→] Fark birkaç gün üst üste yüksek kalınca Uyarı açılıyor ve bakım için iş emri yazılıyor. Telefon çalmıyor. Fark büyümeye devam edip ikinci, bağımsız bir sensör de doğrulayınca Kritik oluyor ve nöbetçiye SMS gidiyor.
 
-[→] Ama asıl ikna edici cümle şu: bu bozulma 11 Eylül civarında hızlandı. Bunu CUSUM söylemiyor — CUSUM zaten gecikir. Tarihi, tüm seri üzerinde geriye dönük bir değişim noktası kestirimi veriyor. Ve tarihi bir aralık olarak veriyoruz; çünkü bozulma bir basamak değil bir rampa. Kesin tarih vermek sahte kesinlik olurdu: planlayıcı o günün manevra kaydını açar ve olmayan bir şeyi arar.
+[→] Bakım ekibinin ilk sorusu: bu ne zaman başladı? Sistem geçmişe dönüp bozulmanın Eylül ortası civarında hızlandığını buluyor. Bunu tek bir gün olarak değil, bir aralık olarak veriyoruz; çünkü bozulma bir anda değil, yavaş yavaş olur.
 
-[→] Bakım planlayıcısının sorduğu soru ise ileriye dönük: bu pabuç ne zaman benim sorunum olacak? Bu gidişle ACİL seviyesine on beş gün; on üç ile on dokuz arası. Aralık uydurulmadı: eğimin kendi güven aralığı var ve gün sayısı o aralığın iki ucuna bölünerek çıkıyor.
-
-Bu sayı bir iş emrinin bu haftaya mı gelecek aya mı yazılacağına karar vermeye yeter. Bir kesinti tarihini planlamaya yetmez — ve öyle sunmuyoruz. Ve yirmi bir günlük pencerede en az on dört geçerli gün yoksa sistem gün sayısı üretmiyor; "yetersiz geçmiş" yazıyor. Sayı üretmek kolaydı; üretmemek ürünün kendisi.`,
-  use: `<b>Kullan:</b> 3 adım: alarm işaretleri → değişim noktası → projeksiyon yelpazesi. <b>Dikkat:</b> sayılar (17,6 K · 11 Eylül · 15 gün (13–19) · +3,5 K/hf, %90 GA 2,8–3,9 · 22 geçerli gün) 3 Ekim demo koşusundandır; prova koşusuyla tazeleyin. Grafik eğrisi şematiktir, işaretlerdeki sayılar ölçümdür. <b>Jüri sorarsa — "Bozulma hızlanırsa?":</b> Model doğrusal ve ekranda yazıyor. Isıl kaçış süper-doğrusaldır; o modda bu sayı <b>iyimserdir</b>, gerçek tarih daha erken olabilir. Kalibre edecek saha verisi olmadan süper-doğrusal model bir iddia olurdu. <b>Kapsama:</b> nominal %90 GA'nın simülasyonda ölçülen kapsaması %88–93.`,
+[→] İkinci soru: ne kadar vaktimiz var? Bugünkü gidişle Acil seviyesine yaklaşık iki hafta. Bu da bir aralık. Bu bilgi bir iş emrinin bu haftaya mı gelecek aya mı yazılacağına karar vermeye yeter. Ve yeterli veri yoksa sistem sayı uydurmuyor, "yetersiz geçmiş" yazıyor.`,
+  use: `<b>Kullan:</b> 3 adım: alarm işaretleri → başlangıç → kalan süre. <b>Not:</b> eğri şematiktir; tarihler 3 Ekim demo koşusundandır, prova koşusuyla tazeleyin. <b>Jüri sorarsa — "Bozulma hızlanırsa?":</b> Tahmin bugünkü gidişi uzatır; bozulma hızlanırsa gerçek tarih daha erken olabilir. Bunu ekranda da yazıyoruz.`,
 });
 
 /* ===================================================================== */
-/* 11 · GÖRÜLEBİLİRLİK                                                    */
+/* 10 · BASTIRILMIŞ ALARMLAR                                              */
 /* ===================================================================== */
-function visSVG() {
-  const X = H.sc(.1, 1, 70, 600), Y = H.sc(0, 30, 330, 20);
-  const cur = s => { const p = []; for (let f = .1; f <= 1.0001; f += .01) { const v = 3 * s / (f * f); if (v <= 31) p.push([X(f), Y(v)]); } return H.smooth(p); };
-  return `<svg viewBox="0 0 640 370" class="vissvg">
-   <rect x="${X(.1)}" y="20" width="${X(.35) - X(.1)}" height="310" fill="rgba(74,163,255,.08)"/>
-   <line x1="${X(.35)}" x2="${X(.35)}" y1="20" y2="330" stroke="var(--izle)" stroke-dasharray="5 4"/>
-   <text x="${X(.225)}" y="318" text-anchor="middle" font-size="12" font-weight="700" fill="var(--izle)">görünürlük düşük</text>
-   <text x="${X(.36)}" y="${Y(29)}" font-size="11" class="mono" fill="var(--izle)">f = 0,35</text>
-   ${[0, 5, 10, 15, 20, 25, 30].map(v => `<line x1="70" x2="600" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--line)"/><text x="62" y="${Y(v) + 4}" text-anchor="end" class="mono" font-size="11" fill="var(--dim)">${v}</text>`).join('')}
-   ${[.2, .4, .6, .8, 1].map(f => `<text x="${X(f)}" y="352" text-anchor="middle" class="mono" font-size="11" fill="var(--dim)">${fmt(f, 1)}</text>`).join('')}
-   <text x="600" y="366" text-anchor="end" font-size="11" fill="var(--dim)">yük faktörü f = I / I_ref</text>
-   <text x="70" y="12" font-size="11" fill="var(--dim)">θ_min · görülebilen en küçük kusur (K)</text>
-   <path d="${cur(.8)}" fill="none" stroke="var(--muted)" stroke-width="2.4" stroke-dasharray="6 5" data-a="draw" style="--d:.5s"/>
-   <path d="${cur(.2)}" fill="none" stroke="var(--olcum)" stroke-width="3.2" data-a="draw" style="--d:.3s"/>
-   <text x="${X(.62)}" y="${Y(3 * .8 / .3844) - 10}" font-size="12" fill="var(--muted)">IR dizi · σ = 0,8 K</text>
-   <text x="${X(.56)}" y="${Y(3 * .2 / .3136) + 22}" font-size="12" fill="var(--olcum)">kelepçe · σ = 0,2 K</text>
-   <line id="vsl" x1="0" x2="0" y1="20" y2="330" stroke="var(--ink)" stroke-opacity=".35"/>
-   <circle id="vsd" r="8" fill="var(--olcum)" stroke="#000" stroke-width="2"/>
-  </svg>`;
-}
+const SUP = [
+  ['Hava ısındı', 'Bütün bağlantılar birlikte ısınıyorsa sorun pano değil, hava.'],
+  ['Şebekeden gelen bozulma', 'Üç faz birden etkileniyorsa kaynak şebeke. Alarm silinmez, bir kademe düşürülür.'],
+  ['Yük aniden değişti', 'Sıcaklık yeni yüke yetişene kadar beklenir.'],
+  ['Gece, yük çok düşük', 'Küçük kusurlar görünmez; sistem "görünürlük düşük" der.'],
+  ['Sensör düştü ya da kaydı', 'Cihaz için iş emri açılır; sağlam bağlantıya ekip gönderilmez.'],
+  ['İlk hafta', 'Sistem panoyu tanır; bu sırada mutlak sıcaklık sınırları yine açık.'],
+];
 add({
-  title: 'Kör olduğumuz yeri söyleriz', section: 'Yöntem', time: '35 sn',
-  html: () => `${HD('05 · Yöntem', 'Kör olduğumuz yeri ekranda yazıyoruz.')}
-<div class="body"><div class="row grow">
-  <div class="card" style="width:680px;--d:.1s" data-a="blur">${visSVG()}</div>
-  <div class="col grow">
-    <div class="card" data-a="up" style="--d:.2s"><div class="formula" style="font-size:28px">θ<sub>min</sub> = <span class="frac"><span>3 σ</span><span>f²</span></span></div></div>
-    <div class="card vis-read" data-a="up" style="--d:.3s">
-      <div class="g2"><div><p class="cap">Saat</p><div class="mini-v mono" id="vst">03:00</div></div><div><p class="cap">Yük f</p><div class="mini-v" id="vsf">0,18</div></div></div>
-      <p class="cap" style="margin-top:12px">Şu an görülebilen en küçük θ</p><div class="big"><span id="vsm">18,5</span><small> K</small></div>
-      <span id="vss" class="chip izle"><i></i>Görünürlük düşük</span>
-      <p class="vis-say" id="vsy">"Şu anda 18,5 K'nin altındaki bir kusuru göremiyorum."</p>
-    </div>
-    <div class="row" style="gap:8px;flex-wrap:wrap;--d:.5s" data-a="up"><span class="chip kritik">Mutlak limitler her zaman açık</span><span class="chip">90 · 110 · 130 °C</span></div>
-  </div>
-</div></div>`,
-  scene(el, { REDUCED }) {
-    const q = s => el.querySelector(s);
-    const X = H.sc(.1, 1, 70, 600), Y = H.sc(0, 30, 330, 20);
-    const put = hr => {
-      const f = .55 - .37 * Math.cos(2 * Math.PI * (hr - 3) / 24);
-      const m = 3 * .2 / (f * f);
-      q('#vsd').setAttribute('cx', X(f)); q('#vsd').setAttribute('cy', Y(Math.min(30, m)));
-      q('#vsl').setAttribute('x1', X(f)); q('#vsl').setAttribute('x2', X(f));
-      q('#vst').textContent = String(Math.floor(hr) % 24).padStart(2, '0') + ':00';
-      q('#vsf').textContent = fmt(f, 2); q('#vsm').textContent = fmt(m, 1);
-      const low = f < .35, s = q('#vss');
-      s.className = 'chip ' + (low ? 'izle' : 'ok'); s.innerHTML = '<i></i>' + (low ? 'Görünürlük düşük' : 'Tam görüş');
-      q('#vsy').textContent = low ? `"Şu anda ${fmt(m, 1)} K'nin altındaki bir kusuru göremiyorum."` : `"${fmt(m, 1)} K ve üstündeki kusuru görüyorum."`;
-    };
-    if (REDUCED) { put(3); return null; }
-    let raf, t0 = performance.now();
-    const loop = t => { put((3 + ((t - t0) / 1000) * 2) % 24); raf = requestAnimationFrame(loop); };
-    raf = requestAnimationFrame(loop);
-    return { stop() { cancelAnimationFrame(raf); } };
-  },
-  notes: `Bir kusur, yük faktörü f'te gözlenen farkı yalnız θ çarpı f kare kadar büyütür. Yük düştükçe aynı kusuru görmek zorlaşır. Bunu saklamıyoruz, hesaplıyoruz: görülebilen en küçük θ, üç sigma bölü f kare.
-
-Noktayı izleyin: günün saatine göre yük değişiyor. Öğleden sonra, tam yüke yakınken kelepçe yarım kelvinlik bir kusuru bile görüyor. Gece üçte, yüzde on sekiz yükte bu sayı on sekiz buçuk kelvine çıkıyor.
-
-Rakip bir ürün gece yarısı "her şey normal" der. Biz "şu anda on sekiz buçuk kelvinin altındaki bir kusuru göremiyorum" diyoruz. İkincisi kullanılabilir bir bilgi. Bu bir arıza değil, bir görünürlük durumu: ayrı raporlanıyor, SCADA'da da ayrı bir bit.
-
-Ve mutlak sıcaklık limitleri bu sırada da açık: yüz otuz derecedeki bir pabuç, yük ne olursa olsun yüz otuz derecedir. Kör olduğumuz yeri söylemek bir kusur değil, ürünün özelliği.`,
-  use: `<b>Kullan:</b> Nokta 24 saati ≈ 12 sn'de döner. "Gece üç" anını yakalayıp konuşun. <b>Ezberlenecek:</b> f = 0,35 eşik · f = 0,18 → θ_min = 3 × 0,2 / 0,18² = 18,5 K · SCADA STATUS_WORD bit 2 = görünürlük düşük. <b>Dürüst not:</b> 110/130 °C bir standart alıntısı değil, <b>mühendislik çıkarımıdır</b> (TS EN 61439-1 bara cıvatalı bağlantısı için sayısal limit koymaz); gerçek Çizelge 8 değerleri gelince tek satırda değişir.`,
-});
-
-/* ===================================================================== */
-/* 12 · BASTIRILMIŞ ALARMLAR                                              */
-/* ===================================================================== */
-add({
-  title: 'Bastırılmış alarmlar', section: 'Alarm', time: '50 sn',
-  html: () => `${HD('06 · Alarm', 'Ürettiğimiz değil, üretmediğimiz alarmlar.', '"78 °C okudun, neden bana söylemedin?" sorusunun cevabı ekranda, operatörün dilinde, sayılarıyla durur.')}
+  title: 'Bastırılmış alarmlar', section: 'Uyarı', time: '45 sn',
+  html: () => `${HD('04 · Uyarı', 'Ürettiğimiz değil, üretmediğimiz alarmlar.')}
 <div class="body"><div class="row grow">
   <div class="card col" style="width:560px;--d:.15s" data-a="up">
-    <p class="cap">Sıcak hava dalgası · ortam 41,2 °C · 40 bağlantı</p>
+    <p class="cap">Sıcak hava dalgası · 40 bağlantı</p>
     <div class="jgrid" id="sjg">${Array.from({ length: 40 }, (_, i) => `<i style="--k:${i}"></i>`).join('')}</div>
     <div class="g2" style="margin-top:6px">
       <div class="cnt bad"><span class="cl">Sabit eşikli sistem</span><b id="sc1">0</b><span class="cs">alarm</span></div>
-      <div class="cnt good"><span class="cl">PANO GÖZ</span><b id="sc2">0</b><span class="cs">alarm · Δθ = <span class="mono" id="sdt">0,0000</span> K</span></div>
+      <div class="cnt good"><span class="cl">PANO GÖZ</span><b id="sc2">0</b><span class="cs">alarm · fazlar arası fark değişmedi</span></div>
     </div>
     <p class="sub" id="scap" style="margin-top:8px">Tüm bağlantılar birlikte ısınıyor.</p>
   </div>
   <div class="col grow sup" data-step="1">
-    ${[['GRID_THD_3PH', 'Üç fazın gerilim THD\'si birlikte yükseldi: pano bir yüktür, kaynak değil.'],
-       ['GRID_THD_3PH_CANDIDATE', 'Isıl bulgu silinmez, bir kademe geriletilir; ekip vetolanmaz.'],
-       ['LOAD_STEP · INRUSH', 'θ kararlı hâl içindir; 3τ boyunca askıya alınır.'],
-       ['SENSITIVITY_LOW · STALE', 'Görünürlük ve bayat veri: pano arızası değil, durum.'],
-       ['DEVICE_MOUNT_LOST · DRIFT', 'Cihaz iş emri açılır; sağlam bağlantı asla sıktırılmaz.'],
-       ['LEARN_WEEK', 'İlk 7 gün taban toplanır; mutlak limitler yine açık.']].map(([c, t], i) =>
-      `<div class="card tight suprow" data-a="left" style="--d:${.08 * i}s"><span class="mono">${c}</span><span>${t}</span></div>`).join('')}
-    <p class="sub" style="margin-top:2px">100 panoda haftada ~20–60 satır. Bakım planlayıcı haftada bir okur.</p>
+    ${SUP.map(([c, t], i) => `<div class="card tight suprow" data-a="left" style="--d:${.08 * i}s"><b>${c}</b><span>${t}</span></div>`).join('')}
+    <p class="sub" style="margin-top:2px">Açılmayan her alarm, gerekçesiyle ayrı bir ekranda listelenir: "neden bana söylemedin?" sorusunun cevabı orada.</p>
   </div>
 </div></div>`,
   scene(el, { REDUCED }) {
@@ -235,165 +158,183 @@ add({
       q('#sc1').textContent = n; q('#sc2').textContent = '0';
       q('#scap').textContent = tt;
     };
-    if (REDUCED) { draw(6.1, 'Kırk bağlantının tamamı +6,1 K. Kardeşler aynı havada: θ değişimi tam sıfır.'); return null; }
+    const HOT = 'Kırk bağlantının hepsi birlikte ısınıyor. Fazlar aynı havada: aralarındaki fark değişmedi.';
+    if (REDUCED) { draw(6.1, HOT); return null; }
     let raf, t0 = performance.now();
     const loop = t => {
       const T = ((t - t0) / 1000) % 9;
       const rise = T < 1 ? 0 : T < 4 ? 6.1 * H.ease((T - 1) / 3) : T < 7.4 ? 6.1 : 6.1 * (1 - H.ease((T - 7.4) / 1.4));
-      draw(rise, T < 1 ? 'Normal bir öğleden sonra.' : T < 7.4 ? 'Kırk bağlantının tamamı +6,1 K. Kardeşler aynı havada: θ değişimi tam sıfır.' : 'Hava serinliyor.');
+      draw(rise, T < 1 ? 'Normal bir öğleden sonra.' : T < 7.4 ? HOT : 'Hava serinliyor.');
       raf = requestAnimationFrame(loop);
     };
     raf = requestAnimationFrame(loop);
     return { stop() { cancelAnimationFrame(raf); } };
   },
-  notes: `Şimdi ürünün bence en önemli parçası: ürettiğimiz alarmların değil, üretmediğimiz alarmların listesi. Gerekçeleriyle.
+  notes: `Şimdi ürünün bence en önemli parçası: ürettiğimiz değil, üretmediğimiz alarmlar.
 
-Solda bir sıcak hava dalgası. Ortam 41,2 derece — şartnamenin dahili maksimumu 40 derece, yani bu zaten hizmet zarfı dışı bir bulgu. Kırk bağlantının hepsi birden 6,1 kelvin ısınıyor. Sabit eşikli bir sistem, eşiği geçen on üç bağlantı için on üç alarm üretiyor; dalga biraz daha sürse sayı artmaya devam eder. θ'nın değişimi tam sıfır: sıfır virgül sıfır sıfır sıfır sıfır. Çünkü kardeşler aynı havayı soluyor. Bu pano hakkında değil, hava hakkında bir okuma.
+Solda bir sıcak hava dalgası. Kırk bağlantının hepsi birden ısınıyor. Sabit eşikli bir sistem, eşiği geçen her bağlantı için ayrı bir alarm üretiyor — sayacı izleyin. Bizim sistemimiz sıfır alarm üretiyor; çünkü üç faz aynı havayı soluyor ve aralarındaki fark değişmiyor. Bu okuma pano hakkında değil, hava hakkında.
 
-[→] Sağda bastırma kurallarından bazıları. Her biri tek bir soruya cevap veriyor: bu okuma pano hakkında mı, yoksa şebeke, hava, yük ya da kendi cihazımız hakkında mı?
+[→] Sağda bastırma kurallarından bazıları. Her biri tek bir soruya cevap veriyor: bu okuma gerçekten pano hakkında mı, yoksa hava, şebeke, yük ya da kendi cihazımız hakkında mı?
 
-Üç fazın gerilim bozulması birlikte yükselirse: pano bir yüktür, kaynak değil; harmonik kanıtlı modlar kapanır. Ama dürüst olalım — aynı ölçümü tesisteki büyük bir sürücü ya da UPS de üretir. O yüzden ısıl bulguyu silmiyoruz, yalnız bir kademe geriletiyoruz ve ekibi vetolamıyoruz. Sıcak bir cıvata, gerilim bozunumu sürüyor diye bekletilmez.
+En önemlisi şu: bir sensör düşerse ya da kayarsa, sensör için iş emri açılıyor. Bozuk bir sensör yüzünden ekibi sağlam bir bağlantıyı sökmeye göndermek, sistemin güvenilirliğini tek seferde bitirir.
 
-Sensör kayarsa ya da kelepçe düşerse cihaz iş emri açılıyor — tork iş emri değil. Sapan bir sensör yüzünden bir ekibi sağlam bir bağlantıyı sıkmaya göndermek, sistemin güvenilirliğini bir seferde bitirir.
-
-Bölgesel bir olay, yüz dürüst dedektörden yüz eşzamanlı alarm üretir ve sistem üçüncü ayda kapatılır. Bu liste bir hata ayıklama günlüğü değil; kendi ekranı olan bir ürün.`,
-  use: `<b>Kullan:</b> ASLA KESİLMEZ (demo senaryosu §4). Animasyon 9 sn'de döner; sol sayaç eşiği (60 °C) geçen bağlantıları sayar ve tepe noktada 13'te durur, "on üç alarm" deyin. Sonra → ile kural listesi. <b>Ezberlenecek:</b> ortam 41,2 °C · +6,1 K · Δθ = 0,0000 K (ölçülen) · THD: L1 %6,8 / L2 %7,1 / L3 %6,9, tabanlar %2,4 / 2,5 / 2,3. <b>Kapanış cümlesi:</b> "Bu bir hata ayıklama günlüğü değil — kendi ekranı olan bir üründür."`,
+Yüz panoyu izleyen bir operatör, her sıcak günde yüz alarm alırsa sistemi üçüncü ayda kapatır. Bu liste o yüzden var ve her satırın gerekçesi ekranda yazıyor.`,
+  use: `<b>Kullan:</b> ASLA KESİLMEZ. Animasyon 9 sn'de döner; sol sayaç eşiği geçen bağlantıları sayar ve tepe noktada 13'te durur. Sonra → ile kural listesi. <b>Kapanış cümlesi:</b> "Bu bir hata ayıklama günlüğü değil — kendi ekranı olan bir ürün."`,
 });
 
 /* ===================================================================== */
-/* 13 · ARK OLAYI                                                         */
+/* 11 · ARK OLAYI                                                         */
 /* ===================================================================== */
 add({
-  title: 'Ark olayı: koruma bizde değil', section: 'Alarm', time: '45 sn',
-  html: () => `${HD('06 · Alarm', 'Ark oluştu. Biz açmadık; TVOC-2 açtı.')}
+  title: 'Ark olayı: koruma bizde değil', section: 'Uyarı', time: '35 sn',
+  html: () => `${HD('04 · Uyarı', 'Ark oluştu. Panoyu biz değil, ark rölesi açtı.')}
 <div class="body"><div class="row grow">
-  <div class="card col arc" style="width:400px;--d:.1s" data-a="up">
+  <div class="card col arc" style="width:420px;--d:.1s" data-a="up">
     <div class="flash"><i></i><i></i><i></i>${IC.flash}</div>
-    <div class="arc-kv"><span>TVOC-2 reg 1300</span><b class="mono">0x0001 · aktif açma</b></div>
-    <div class="arc-kv"><span>Gören dedektör</span><b class="mono">X2:3</b></div>
-    <div class="arc-kv"><span>Açan röle</span><b class="mono">K5</b></div>
-    <div class="arc-kv"><span>Işık → kontak</span><b class="mono">~1 ms · SIL-2</b></div>
-    <div class="arc-kv"><span>Sağlam dedektör</span><b class="mono">10 / 10 <small class="uyari">X1 kapsam dışı</small></b></div>
-    <p class="sub arc-note">Register 222/223 yalnız X2 ve X3 kartlarını kapsar. X1'deki dedektörleri göremiyoruz ve ekranda öyle yazıyor.</p>
+    <div class="arc-kv"><span>Panoyu kim açtı?</span><b>Ark rölesi · milisaniyede</b></div>
+    <div class="arc-kv"><span>Işığı hangi dedektör gördü?</span><b class="mono">X2:3</b></div>
+    <div class="arc-kv"><span>Hangi röle açtı?</span><b class="mono">K5</b></div>
+    <div class="arc-kv"><span>Dedektörler sağlam mı?</span><b>görebildiklerimiz sağlam</b></div>
+    <p class="sub arc-note">Göremediğimiz dedektörler varsa ekranda "kapsam dışı" diye yazar.</p>
   </div>
   <div class="col grow">
-    <div class="card grow lat" data-a="up" style="--d:.25s"><p class="cap">Bildirim gecikmesi · tek temiz sayı değil, bir aralık</p>
-      ${[['en iyi', [.001, .2, 1, .3, 2.5]], ['en kötü', [.001, 2, 1, 2, 8]]].map(([n, segs], r) => {
-        let acc = 0;
-        return `<div class="latrow"><span class="mono">${n}</span><div class="lbar">${segs.map((s, i) => { const x = acc; acc += s; return `<i class="s${i}" style="left:${x / 14 * 100}%;width:${Math.max(.4, s / 14 * 100)}%;--d:${.5 + r * .9 + i * .16}s" data-a="grow-x"></i>`; }).join('')}</div><b class="mono">${fmt(acc, 0)} sn</b></div>`;
-      }).join('')}
-      <div class="laxis">${[0, 2, 4, 6, 8, 10, 12, 14].map(v => `<span style="left:${v / 14 * 100}%">${v}</span>`).join('')}</div>
-      <div class="lleg">${[['TVOC-2 ışık → kontak', '~1 ms', 'bizi beklemez'], ['Modbus görüntü yenileme', '0,2–2 s', 'ABB yazmıyor · modellendi'], ['Ağ geçidi taraması', '1 s', ''], ['Sunucu işleme', '0,3–2 s', ''], ['SMS yolu', '2,5–8 s', 'operatöre bağlı']].map(([a, b, c], i) => `<div><i class="s${i}"></i><span>${a}</span><b class="mono">${b}</b><em>${c}</em></div>`).join('')}</div>
+    <div class="card grow" data-a="up" style="display:flex;flex-direction:column;--d:.25s"><p class="cap">Olaydan nöbetçiye</p>
+      <div class="tl">${[['Ark oluşur, röle panoyu açar', 'milisaniyeler içinde · bizi beklemez'], ['Ağ geçidi röleyi okur', 'olay kaydı alınır'], ['Sunucu olayı çözer', 'nerede, hangi dedektör, ne zaman'], ['En yakın ekibe SMS + konum', 'birkaç saniye içinde']].map(([t, d], i) =>
+        `<div class="tli s${i}" data-a="left" style="--d:${.4 + i * .18}s"><span class="n">${i + 1}</span><div><h3>${t}</h3><p>${d}</p></div></div>`).join('')}</div>
     </div>
-    <div class="row" style="gap:10px;--d:1.4s" data-a="up"><span class="chip kritik">Toplam 4–13 sn</span><span class="chip">Açmadan sonra pano enerjisiz: AG'de giriş kesicisi yok</span></div>
+    <div class="row" style="gap:10px;--d:1.2s" data-a="up"><span class="chip kritik">Koruma rölenin işi; bizim işimiz haber vermek</span><span class="chip">Pano enerjisiz kaldı: ekip yönlendirilir</span></div>
   </div>
 </div></div>`,
-  notes: `Ark oluştu. Biz açmadık. Panodaki ABB TVOC-2 rölesi açtı: ışıktan kontağa yaklaşık bir milisaniye, SIL-2 donanımda. PANO GÖZ koruma yapmıyor ve yapmaya çalışmıyor; koruma bizi beklemez.
+  notes: `Ark oluştu. Panoyu biz açmadık; panoda zaten bulunan ark rölesi açtı, milisaniyeler içinde. PANO GÖZ koruma yapmıyor ve yapmaya çalışmıyor; koruma bizi beklemez, beklememeli de.
 
-Bizim işimiz ark olduktan sonra başlıyor: hangi dedektör gördü — X2:3. Hangi röle attı — K5. Ne zaman oldu. Ve nöbetçiye haber vermek.
+Bizim işimiz ark olduktan sonra başlıyor: ışığı hangi dedektör gördü, hangi röle açtı, ne zaman oldu. Ve bunu birkaç saniye içinde, panonun konumuyla birlikte en yakın nöbetçi ekibe haber vermek.
 
-Gecikmeyi tek bir temiz sayı olarak vermiyoruz: dört ile on üç saniye arası. Neden? Çünkü TVOC-2'nin Modbus görüntüsünün ne kadar sürede güncellendiğini ABB dokümante etmemiş. Beş saniye deseydik, ölçmediğimiz bir şeyi ölçmüş gibi göstermiş olurduk.
-
-Bir şeye daha bakın: "sağlam dedektör 10/10" yazıyor; ama bu röleye yirmi dedektör bağlı olabilir. Register 222 ve 223 yalnız X2 ve X3 kartlarını kapsıyor. X1'deki dedektörlerin sağlığını göremiyoruz ve ekranda tam olarak öyle yazıyor. Görmediğimiz şeyi gördü gibi göstermek, en tehlikeli hatadır.`,
-  use: `<b>Kullan:</b> ASLA KESİLMEZ (demo senaryosu §5). Canlı demoda "Ark olayı enjekte et" ile aynı kart açılır. <b>Ezberlenecek aritmetik:</b> reg 1300 bit0 = aktif açma · dedektör LOW kelimesi 0x1000 → bit 12 → X2:3 · röle bit alanı 0x0002 → bit1 = K5. En iyi 0,2 + 1 + 0,3 + 2,5 ≈ 4 s; en kötü 2 + 1 + 2 + 8 = 13 s. <b>Jüri sorarsa — "Otokontrolü uzaktan tetikleyebilir misiniz?":</b> Hayır, ne MQTT'den ne SCADA'dan ne API'den. Reg 213 otokontrol ve açma sıfırlama, ağ geçidinde operatör kimlik doğrulaması <b>ve</b> fiziksel anahtar (X4) arkasında.`,
+Bir şeye daha dikkat edin: "görebildiklerimiz sağlam" yazıyor. Röleye bağlı bazı dedektörlerin durumunu okuyamıyoruz ve ekranda tam olarak öyle yazıyor. Görmediğimiz bir şeyi gördü gibi göstermek, en tehlikeli hatadır.`,
+  use: `<b>Kullan:</b> ASLA KESİLMEZ. Canlı demoda "Ark olayı" senaryosu aynı kartı açar. <b>Jüri sorarsa — "Ne kadar sürede haber veriyorsunuz?":</b> 4–13 saniye; rölenin kendi veri yenileme süresi üretici tarafından belgelenmediği için tek sayı vermiyoruz. <b>"Röleyi uzaktan test edebilir misiniz?":</b> Hayır; yalnız sahada, yetkili kişi ve fiziksel anahtarla.`,
 });
 
 /* ===================================================================== */
-/* 14 · SEVİYE MERDİVENİ VE BİLDİRİM                                     */
+/* 12 · ALARM: EN YAKIN EKİBE, KONUMUYLA                                  */
 /* ===================================================================== */
+/* Mesajlar sistemin ürettiğiyle aynıdır: compose() ve compose_location()
+   (panogoz/notify/escalation.py); değerler demo koşusundandır. */
 const SMS = 'PANO GÖZ KRİTİK · SOKE-14 · Ç7·L2·pabuç θ=17.6K · bağlantıyı torkla · ACİL\'e 15 g (13-19) · onay: TAMAM 1 0541';
+const ROUTE = 'M44,88 C70,86 86,68 112,62 S176,50 206,42';
+function alarmMapSVG() {
+  return `<svg viewBox="0 0 260 112" class="mapsvg" aria-label="Pano konumu ve en yakın ekip">
+   <rect width="260" height="112" fill="#111d18"/>
+   <path d="M0,34 L260,62" stroke="#1b2a23" stroke-width="3"/>
+   <path d="M34,0 L64,112" stroke="#1b2a23" stroke-width="4"/>
+   <path d="M128,0 C138,40 172,72 184,112" stroke="#1b2a23" stroke-width="4" fill="none"/>
+   <path d="M0,78 C60,74 92,44 150,46 S228,22 260,18" stroke="#26372f" stroke-width="7" fill="none"/>
+   <path d="${ROUTE}" stroke="var(--brand)" stroke-width="2.6" stroke-dasharray="5 4" fill="none"/>
+   <rect x="98" y="72" width="44" height="17" rx="8.5" fill="rgba(6,8,12,.9)" stroke="var(--brand)"/>
+   <text x="120" y="84" text-anchor="middle" font-size="10" font-weight="700" fill="var(--brand2)">~3 km</text>
+   <circle cx="44" cy="88" r="6" fill="var(--izle)" stroke="#0b0f15" stroke-width="2"/>
+   <text x="54" y="104" font-size="10" fill="var(--muted)">Söke ekibi</text>
+   <circle cx="206" cy="42" r="8" fill="none" stroke="var(--kritik)" stroke-width="2"><animate attributeName="r" values="6;18" dur="1.6s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0" dur="1.6s" repeatCount="indefinite"/></circle>
+   <path d="M206,42 C200,33 198,30 198,26 a8,8 0 1,1 16,0 c0,4 -2,7 -8,16z" fill="var(--kritik)"/>
+   <circle cx="206" cy="26" r="3" fill="#fff"/>
+   <text x="194" y="22" text-anchor="end" font-size="10" font-weight="700" fill="var(--ink)">SOKE-14</text>
+   <circle id="mcrew" r="5" fill="var(--brand)" stroke="#fff" stroke-width="1.5" opacity="0"><animateMotion id="mgo" dur="3.2s" begin="indefinite" fill="freeze" path="${ROUTE}"/></circle>
+  </svg>`;
+}
 add({
-  title: 'Seviye merdiveni ve bildirim', section: 'Alarm', time: '50 sn',
-  html: () => `${HD('06 · Alarm', 'Yalnız Kritik ve Acil bir telefonu çaldırır.')}
+  title: 'Alarm: en yakın ekibe, konumuyla', section: 'Uyarı', time: '45 sn',
+  html: () => `${HD('04 · Uyarı', 'Alarm, konumuyla birlikte en yakın ekibe gider.')}
 <div class="body"><div class="row grow">
-  <div class="card ladder" style="width:400px;--d:.1s" data-a="up">
-    ${[['Acil', 'acil', '≥ 25 K', 'derhal ekip · SMS + sesli', 1], ['Kritik', 'kritik', '≥ 12 K', '7 gün içinde ziyaret · SMS', 1], ['Uyarı', 'uyari', '≥ 5 K', 'iş emri · planlı ziyaret', 0], ['İzle', 'izle', '≥ 2 K', 'haftalık özet', 0], ['Bilgi', '', '< 2 K', 'kayıt', 0]].map(([n, c, t, a, ph], i) =>
-      `<div class="lad ${c}" style="--w:${100 - i * 12}%;--d:${.2 + (4 - i) * .1}s" data-a="right"><span class="ln">${n}</span><span class="mono lt">${t}</span><span class="la">${a}</span>${ph ? `<span class="lp">${IC.phone}</span>` : ''}</div>`).join('')}
-    <p class="sub" style="margin-top:10px">θ eşikleri IR termografi pratiğine dayanır; fark, yüke normalize edilmiş olması. Kapanma eşiği açılmanın %60'ı.</p>
+  <div class="card ladder" style="width:350px;--d:.1s" data-a="up">
+    <p class="cap">Seviye merdiveni</p>
+    ${[['Acil', 'acil', 'derhal ekip · SMS + sesli arama', 1], ['Kritik', 'kritik', 'bir hafta içinde ziyaret · SMS', 1], ['Uyarı', 'uyari', 'iş emri · planlı ziyaret', 0], ['İzle', 'izle', 'haftalık özete girer', 0], ['Bilgi', '', 'yalnız kayıt', 0]].map(([n, c, a, ph], i) =>
+      `<div class="lad ${c}" style="--w:${100 - i * 8}%;--d:${.2 + (4 - i) * .1}s" data-a="right"><span class="ln">${n}</span><span class="la">${a}</span>${ph ? `<span class="lp">${IC.phone}</span>` : ''}</div>`).join('')}
+    <p class="sub" style="margin-top:8px">Yalnız Kritik ve Acil bir telefonu çaldırır. Gerisi iş emri ya da özet olur.</p>
   </div>
-  <div class="phone" data-a="up" style="--d:.3s"><div class="pscr">
-    <div class="ptop"><span>Nöbetçi tekniker</span><span class="mono">GSM · UCS-2</span></div>
-    <div class="bub in" id="smsb"><span id="smst"></span><span class="blink">▍</span></div>
-    <div class="bub out" data-step="1">TAMAM 1 0541</div>
-    <div class="bub sys" data-step="1">Olay ONAYLANDI · Nöbetçi tekniker</div>
+  <div class="phone alarm" data-a="up" style="--d:.25s"><div class="pscr">
+    <div class="ptop"><span class="mono">GSM</span><span class="sig">${IC.antenna}${IC.battery}</span></div>
+    <div class="pclock"><b>02:14</b><span>Perşembe · gece nöbeti</span></div>
+    <div class="alm" data-a="pop" style="--d:.6s"><span class="ab">${IC.bell}</span><div><b>KRİTİK ALARM</b><small>PANO GÖZ · şimdi</small></div></div>
+    <div class="ntf" data-a="up" style="--d:1s"><div class="nh"><span>Mesajlar · PANO GÖZ</span><em>şimdi</em></div><p>${SMS}</p></div>
+    <div class="ntf" data-a="up" style="--d:1.5s"><div class="nh"><span>KONUM · SOKE-14</span><em>~3 km</em></div>${alarmMapSVG()}
+      <div class="mp">${IC.pin}<span>Size en yakın nöbetçi ekip: <b>Söke</b></span></div></div>
+    <div class="pack" data-step="1"><span class="bub out">TAMAM 1 0541</span><span class="okb">${IC.check} Onaylandı · Söke ekibi üstlendi</span></div>
   </div></div>
-  <div class="col grow esc">
-    <div class="card tight escrow" data-a="left" style="--d:.5s"><span class="mono et">0 dk</span><div><h3>1. kademe · nöbetçi</h3><p class="sub">SMS, kişiye ve olaya bağlı 4 haneli onay kodu</p></div></div>
-    <div class="card tight escrow" data-a="left" style="--d:.65s"><span class="mono et">15 / 45 dk</span><div><h3>2. kademe · şef + sesli arama</h3><p class="sub">Onay gelmezse: Acil 15 dk, Kritik 45 dk</p></div></div>
-    <div class="card tight escrow" data-a="left" style="--d:.8s"><span class="mono et">sonra</span><div><h3>3. kademe · işletme müdürü</h3><p class="sub">Merdiven her adımı kayda yazar</p></div></div>
-    <div class="row" style="gap:6px;flex-wrap:wrap;margin-top:2px;--d:1s" data-a="up"><span class="chip">2 bağımsız sensör ailesi</span><span class="chip">24 sa bekleme · Acil muaf</span><span class="chip">saatte 8 Kritik tavanı · Acil muaf</span></div>
+  <div class="col grow esc near">
+    <div class="card tight escrow" data-a="left" style="--d:.5s"><span class="mono et">hemen</span><div><h3>1. kademe · en yakın nöbetçi ekip</h3><p class="sub">SMS + harita konumu · kişiye özel onay kodu</p></div></div>
+    <div class="card tight escrow" data-a="left" style="--d:.65s"><span class="mono et">onay yoksa</span><div><h3>2. kademe · şef + sesli arama</h3><p class="sub">Acil'de daha kısa, Kritik'te daha uzun bekler</p></div></div>
+    <div class="card tight escrow" data-a="left" style="--d:.8s"><span class="mono et">sonra</span><div><h3>3. kademe · işletme müdürü</h3><p class="sub">Her adım kayda geçer</p></div></div>
+    <div class="card tight why" data-a="up" style="--d:.95s"><p class="cap">Neden en yakın ekip?</p><p class="sub">Altı ekibi birden uyandırmak yerine tek doğru ekip. Bergama'daki bir pano Söke'ye değil, Manisa'ya gider.</p><p class="sub" style="margin-top:6px">Tekrar SMS'leri ve sesli arama da aynı ekibe gider; konum bir kez gelir.</p></div>
+    <div class="row" style="gap:6px;flex-wrap:wrap;--d:1.1s" data-a="up"><span class="chip">iki ayrı sensör doğrulamadan telefon çalmaz</span><span class="chip">Acil hiçbir koşulda susturulmaz</span></div>
   </div>
 </div></div>`,
   scene(el, { REDUCED }) {
-    const t = el.querySelector('#smst');
-    if (REDUCED) { t.textContent = SMS; return null; }
-    let i = 0, tm;
-    const tick = () => { t.textContent = SMS.slice(0, i); i += 2; if (i <= SMS.length + 1) tm = setTimeout(tick, 28); };
-    tm = setTimeout(tick, 900);
-    return { stop() { clearTimeout(tm); } };
+    const dot = el.querySelector('#mcrew'), go = el.querySelector('#mgo');
+    return {
+      step(n) {
+        if (n < 1) { dot.setAttribute('opacity', 0); return; }
+        dot.setAttribute('opacity', 1);
+        if (REDUCED) { dot.setAttribute('cx', 206); dot.setAttribute('cy', 42); return; }
+        try { go.beginElement(); } catch (e) { /* SMIL yoksa nokta varışta durur */ dot.setAttribute('cx', 206); dot.setAttribute('cy', 42); }
+      },
+      stop() {},
+    };
   },
-  notes: `Seviye merdiveni beş basamak. Bilgi kayda geçer. İzle haftalık özete girer, ekip çıkmaz. Uyarı iş emri açar ve planlı bir ziyarette doğrulanır. Yalnızca Kritik ve Acil bir telefonu çaldırır. Bu tek kural, sistemin üçüncü aydan sonra da açık kalmasını sağlayan kural; bu yüzden bir ayar değil, kodda bir sözleşme.
+  notes: `Gece ikiyi on dört geçe. Nöbetçi teknikerin telefonu çalıyor.
 
-Telefon çalmadan önce iki şart daha var: iki bağımsız sensör ailesi hemfikir olmalı — örneğin kelepçe ve termal dizi — ve Kritik için yirmi dört saat bekleme var; Acil bundan muaf.
+Önce seviye merdiveni: Bilgi yalnız kayda geçer, İzle haftalık özete girer, Uyarı bir iş emri açar. Yalnızca Kritik ve Acil bir telefonu çaldırır. Bu tek kural, sistemin üçüncü aydan sonra da açık kalmasını sağlıyor.
 
-Mesaja bakın: pano, bağlantı, θ, yapılacak iş, ACİL'e kalan gün ve onay kodu. Türkçe karakterler bozulmasın diye UCS-2 gidiyor; iki parçaya sığacak şekilde tasarlandı. Bütçe daralırsa ilk düşen şey ufuk satırı; "bağlantıyı torkla" demek, "15 gün" demekten değerli.
+Telefon çaldığında ilk mesaj neyin olduğunu söylüyor: hangi pano, hangi bağlantı, ne yapılmalı, ne kadar vakit var ve onay kodu. Hemen ardından ikinci mesaj geliyor: panonun haritadaki yeri. Ve bu mesaj herkese değil, panoya en yakın nöbetçi ekibe gidiyor. Söke'deki pano için Söke ekibi, üç kilometre. Bergama'daki bir pano için Söke değil, Manisa ekibi.
 
-[→] Nöbetçi "TAMAM 1 0541" yazıyor ve olay onaylanıyor. Kod kişiye ve olaya bağlı: rotada olmayan biri ya da yanlış kod onaylayamaz.
+Neden? Altı ekibi birden uyandırırsanız, bir süre sonra hiçbiri telefona bakmaz. Yanlış ilçeden ekip gönderirseniz, Kritik bir olay yolda Acil'e dönüşür.
 
-Onay gelmezse merdiven yükseliyor: Acil'de on beş dakika, Kritik'te kırk beş dakika sonra şef ve sesli arama, ardından işletme müdürü. Bir de fırtına tavanı var: saatte en fazla sekiz Kritik — ama Acil muaf. Tavan bir Acil'i susturabilseydi tavan değil arıza olurdu.`,
-  use: `<b>Kullan:</b> SMS kendini yazar; bitince → ile onay balonu. <b>Dürüst sınır:</b> GSM modem AT diyaloğu ve SMPP oturumu <b>simüle</b> edilir, transkript kaydedilir; gerçek bir kanaldan mesaj gitmedi. Sesli arama da simülasyon. WhatsApp yok. Sorulursa açıkça söyleyin. <b>Not:</b> mesaj biçimi panogoz/notify/escalation.py compose() ile aynıdır; θ ve gün değerleri demo koşusundandır.`,
+[→] Ekip kodu yazıp yanıtlıyor; olay onaylanıyor ve iş o ekibin üzerinde. Kod kişiye ve olaya özel; başkası ya da yanlış kod onaylayamaz.
+
+Onay gelmezse merdiven yükseliyor: önce şef ve sesli arama, ardından işletme müdürü. Ve çok sayıda alarm aynı anda gelse bile Acil asla susturulmuyor.`,
+  use: `<b>Kullan:</b> Bildirimler sırayla düşer; → ile onay gelir ve ekip haritada panoya ilerler. <b>Dürüst sınır:</b> SMS ve sesli arama <b>simüle</b> edilir, gerçek operatör hattından mesaj gitmedi. Mesafe ekibin <b>görev yerinden</b>, kuş uçuşu ölçülür; canlı konum yok (telefonda uygulama gerektirir). Harita bağlantısı yalnız SMS metnidir, sunucu dışarı istek atmaz; kurumun kendi CBS adresine tek satırda çevrilir. <b>Not:</b> iki mesaj da sistemin gerçekte ürettiği biçimdedir (Bildirimler sekmesinde görünür); değerler demo koşusundandır. Bekleme süreleri: Acil 15 dk, Kritik 45 dk.`,
 });
 
 /* ===================================================================== */
-/* 15 · SCADA ENTEGRASYONU                                                */
+/* 13 · SCADA ENTEGRASYONU                                                */
 /* ===================================================================== */
-const REGS = [['+0', 'PANEL_ID', '14', '14'], ['+2', 'HEALTH_INDEX', '67', '67'], ['+6', 'THETA_MAX', '176', '17,6 K'], ['+7', 'THETA_MAX_JOINT', '25', 'Ç7-L2'], ['+8', 'THETA_SLOPE', '3013', '3,01 K/hf'], ['+9', 'SENSITIVITY_PCT', '100', '%100'], ['+45', 'DATA_AGE_S', '2', '2 sn']];
+const REGS = [['Pano', 'SOKE-14'], ['Sağlık puanı', '67 / 100'], ['En çok ısınan bağlantı', 'Çıkış 7 · L2'], ['Isınma eğilimi', 'artıyor'], ['Görünürlük', 'tam'], ['Verinin tazeliği', '2 sn önce']];
 add({
-  title: 'SCADA: Modbus haritalama', section: 'Entegrasyon', time: '40 sn',
-  html: () => `${HD('07 · Entegrasyon', 'SCADA mühendisi tek blok tanımlar, yüz kez kopyalar.')}
+  title: 'SCADA entegrasyonu', section: 'Entegrasyon', time: '30 sn',
+  html: () => `${HD('05 · Entegrasyon', 'Mevcut SCADA\'ya kendi dilinde bağlanır.')}
 <div class="body"><div class="row grow">
-  <div class="col" style="width:520px">
-    <div class="card" data-a="up" style="--d:.1s"><p class="cap">Pano n'in taban adresi</p>
-      <div class="formula" style="font-size:26px">1000 + 48 × (n − 1)</div>
-      <div class="formula" style="font-size:26px;margin-top:6px;color:var(--brand)">1000 + 48 × 13 = <span data-count="1624" data-from="1000" data-dur="1.6" data-plain="1" style="--d:.5s">1000</span></div>
-    </div>
-    <div class="card grow" data-a="up" style="--d:.2s"><p class="cap">SOKE-14 · 48 register · salt okunur</p>
-      <div class="regs" id="rgg">${Array.from({ length: 48 }, (_, i) => `<i class="${[0, 2, 6, 7, 8, 9, 45].includes(i) ? 'k' : ''}" style="--k:${i}">${i}</i>`).join('')}</div>
-      <p class="sub" style="margin-top:8px">Doldurulmamış pano bloğu sıfır okur ve DATA_VALID biti temizdir: tarama hatası ile boş pano ayırt edilir.</p></div>
-  </div>
+  <div class="card col" style="width:500px;--d:.1s" data-a="up"><p class="cap">Her pano = SCADA'da hazır bir veri bloğu</p>
+    <div class="regs">${Array.from({ length: 48 }, (_, i) => `<i class="${[0, 2, 6, 7, 8, 9, 45].includes(i) ? 'k' : ''}" style="--k:${i}"></i>`).join('')}</div>
+    <p class="sub rg-leg"><i></i>Turuncu kareler: sağdaki bilgiler. Blok her panoda aynı düzende.</p>
+    <p class="sub" style="margin-top:auto">SCADA mühendisi bloğu bir kez tanımlar, her pano için kopyalar. Standart Modbus TCP; ek yazılım gerekmez.</p></div>
   <div class="col grow">
-    <div class="card tight" data-a="up" style="--d:.3s"><table class="rt"><tr><th>ofset</th><th>register</th><th>ham</th><th>mühendislik</th></tr>
-      ${REGS.map(([o, n, r, e], i) => `<tr data-a="fade" style="--d:${.5 + i * .1}s"><td class="mono">${o}</td><td class="mono">${n}</td><td class="mono">${r}</td><td class="mono b">${e}</td></tr>`).join('')}</table></div>
-    <div class="term" data-step="1"><div><span class="pr">$</span> modpoll -m tcp -0 -r 1624 -p 5020 127.0.0.1 1</div><div class="err">Illegal Function exception response! (0x01)</div><div class="dimc">FC 05/06/15/16 istisnasız reddedilir</div></div>
-    <div class="row" style="gap:8px;flex-wrap:wrap;--d:1.2s" data-a="up"><span class="chip ok">100 pano: 39 istek · 19 ms</span><span class="chip ok">SCADA 1 Hz: 2 istek · 0,72 ms</span><span class="chip">ICD v2.0 koddan üretilir</span><span class="chip uyari">IEC 104 / OPC UA: nokta listesi var, sunucu yok</span></div>
+    <div class="card tight" data-a="up" style="--d:.25s"><p class="cap">SCADA ne okur?</p><table class="rt">
+      ${REGS.map(([n, e], i) => `<tr data-a="fade" style="--d:${.4 + i * .1}s"><td>${n}</td><td class="b">${e}</td></tr>`).join('')}</table></div>
+    <div class="card tight deny" data-step="1"><span class="dn">${IC.lock}</span><div><h3>Yazma denemesi reddedilir</h3><p class="sub">SCADA veriyi okur ama panoya komut gönderemez. Ark rölesine kimliksiz bir erişim yolu açmıyoruz.</p></div></div>
+    <div class="row" style="gap:8px;flex-wrap:wrap;--d:1.1s" data-a="up"><span class="chip ok">Ekrandaki sayı = SCADA'daki sayı</span><span class="chip uyari">IEC 104 / OPC UA: planlandı</span></div>
   </div>
 </div></div>`,
-  notes: `Şartname SCADA entegrasyonu için Modbus haritalaması istiyor. Çalışan bir Modbus TCP slave teslim ettik.
+  notes: `Şartname SCADA entegrasyonu istiyor. Çalışan bir Modbus bağlantısı teslim ettik; Modbus, SCADA dünyasının ortak dili.
 
-Her pano sabit adımlı, deliksiz bir bloğa sahip: bin artı kırk sekiz çarpı n eksi bir. On dört numaralı panonun adresi kafadan atılmadı: bin artı kırk sekiz çarpı on üç, bin altı yüz yirmi dört. SCADA mühendisi tek bir blok tanımlıyor ve yüz kez kopyalıyor.
+Her panonun SCADA'da hazır bir veri bloğu var. SCADA mühendisi bu bloğu bir kez tanımlıyor ve her pano için kopyalıyor; yüz pano için yüz kez uğraşmıyor.
 
-Sağda bu bloktan birkaç register. THETA_MAX ham 176, ölçek 0,1: 17,6 kelvin. Bu sayı arayüzdeki sayıyla aynı nesneden geliyor; ikisi çelişemez. En değerli iki register ise kaynak cihazların üretemediği ikisi: ark rölesiyle bağın koptuğunu söyleyen durum biti ve bu bloğun ne kadar bayat olduğunu söyleyen veri yaşı. Klasik bir ağ geçidi son iyi değeri sonsuza dek sessizce yayınlar; bizimki kendi sağlığı hakkında doğruyu söyler.
+SCADA'nın okuduğu bilgiler sağda: hangi pano, sağlık puanı, en çok ısınan bağlantı, ısınmanın eğilimi, görünürlük ve verinin ne kadar taze olduğu. Ekranda gördüğünüz sayı ile SCADA'daki sayı aynı kaynaktan geliyor; ikisi çelişemez. Verinin tazeliği özellikle önemli: klasik bir sistem bağlantı koptuğunda son değeri sessizce göstermeye devam eder, bizimki "bu veri bayat" der.
 
-[→] Ve yazmayı deneyin: exception sıfır bir, ILLEGAL FUNCTION. İstisnası yok. Modbus'ta kimlik doğrulama yok; ark rölesine otokontrol komutu verebilen bir sisteme kimliksiz yazma yolu açmak kabul edilemez.
-
-Yüz panonun tamamını taramak dört bin sekiz yüz register ediyor; FC 03'ün 125 register sınırı yüzünden en az otuz dokuz istek gerekiyor — ölçtük, on dokuz milisaniye. "İki istekte olur" demiyoruz, çünkü olmuyor.`,
-  use: `<b>Kullan:</b> → ile yazma denemesi. Canlı modpoll mümkünse terminalden gösterin (modpoll ikili dosyası depoda yok; jüri makinesinde kurulu olmalı, yoksa bu slayt yeterli). <b>Ezberlenecek:</b> pano bloğu 48 register · MAX_PANELS 200 (üst adres 10 599) · 1000+ panoda bölge başına slave ya da MAX_PANELS artırımı. <b>Dürüst sınır:</b> IEC 60870-5-104 ve OPC UA için nokta listesi ve IOA şeması yazıldı, sunucu kurulmadı. "Eşiğe kalan gün" için SCADA register'ı yok: blok dolu, büyütmek ICD v2.0'ı bozar; eklemeli ETA bloğu tarif edildi.`,
+[→] Ve SCADA'dan yazmayı denerseniz reddediliyor. Modbus'ta kimlik doğrulama yok; ark rölesine komut verebilen bir sisteme kimliksiz yazma yolu açmak kabul edilemez.`,
+  use: `<b>Kullan:</b> → ile yazma reddi. Canlı gösterim gerekirse <span class="mono">python sunum/scada_kanit.py</span> pano bloğunu okur ve yazmanın reddedildiğini gösterir. <b>Jüri sorarsa — "Adresleme?":</b> pano n'in bloğu 1000 + 48 × (n − 1); SOKE-14 → 1624. <b>Dürüst sınır:</b> IEC 104 ve OPC UA için nokta listesi yazıldı, sunucu kurulmadı.`,
 });
 
 /* ===================================================================== */
-/* 16 · CANLI DEMO / EKRANLAR                                             */
+/* 14 · CANLI DEMO / EKRANLAR                                             */
 /* ===================================================================== */
-const SCR = [['filo', 'Filo', 'Harita, seviye, Δ7 gün, eşiğe kalan gün'], ['ikiz', 'Dijital ikiz', 'EK-II/14 kesiti, 74 bağlantı, 9 cihaz'], ['kanit', 'Kanıt', 'Ham T, yük, θ, CUSUM; aynı eksen'], ['bastir', 'Bastırılanlar', 'Açılmayan alarmlar, gerekçeleriyle'], ['prpd', 'PRPD', 'Faz çözünürlüklü RF imzası'], ['scada', 'SCADA', 'Canlı register bloğu, salt okunur']];
+const SCR = [['filo', 'Filo', 'Bütün panolar haritada, seviyeleriyle'], ['ikiz', 'Dijital ikiz', 'Panonun kesiti, her bağlantının durumu'], ['kanit', 'Kanıt', 'Bir uyarının arkasındaki veri'], ['bastir', 'Bastırılanlar', 'Açılmayan alarmlar, gerekçeleriyle'], ['prpd', 'Kısmi deşarj', 'Yalıtım bozulmasının elektriksel izi'], ['scada', 'SCADA', 'SCADA\'ya giden canlı veri']];
 add({
   title: 'Canlı demo: izleme ekranları', section: 'Demo', time: '5 dk demo',
-  html: () => `${HD('08 · Demo', 'Operasyon ekibi ne görüyor?')}
+  html: () => `${HD('06 · Demo', 'Operasyon ekibi ne görüyor?')}
 <div class="body"><div class="row grow">
   <div class="frame grow" data-a="blur" style="--d:.1s"><div class="bar"><i></i><i></i><i></i><span id="scru">127.0.0.1:8080/#/filo</span></div>
     <div class="scr">${SCR.map(([k], i) => `<img src="${A['ekran_' + k]}" data-k="${k}" class="${i === 0 ? 'on' : ''}" alt="">`).join('')}</div></div>
   <div class="col scrl" style="width:300px">${SCR.map(([k, t, d], i) => `<button class="sci ${i === 0 ? 'on' : ''}" data-i="${i}" data-a="left" style="--d:${.2 + i * .07}s"><b>${t}</b><span>${d}</span><i></i></button>`).join('')}</div>
 </div></div>`,
   /* PDF'te ekranlar dönemez: altısı tek sayfada, sunumda canlı gösterilir. */
-  printHtml: () => `${HD('08 · Demo', 'Operasyon ekibi ne görüyor?')}
+  printHtml: () => `${HD('06 · Demo', 'Operasyon ekibi ne görüyor?')}
 <div class="body"><div class="shots">${SCR.map(([k, t, d]) => `<figure class="shot"><img src="${A['ekran_' + k]}" alt="${t} ekranı"><figcaption><b>${t}</b>${d}</figcaption></figure>`).join('')}</div>
 <p class="sub shots-note">Ekranlar sunumda canlı sistemden gösterilir · tek komut: <span class="mono">.\\baslat.ps1</span> → 127.0.0.1:8080 · internet gerekmez</p></div>`,
   scene(el) {
@@ -411,16 +352,16 @@ add({
   },
   notes: `Şimdi canlı sisteme geçiyoruz. [Tarayıcıya geç: http://127.0.0.1:8080 — sunumdan 2 dakika önce .\\baslat.ps1 ile başlatılmış olmalı. --no-backfill ile BAŞLATMAYIN.]
 
-Demo akışı (5 dakika, docs/08):
-1 · Tez (35 sn) — Filo haritası: 112 pano, Ege ve Güney Ege. "Her yarışmacı termometre koyar..." cümlesi ve θ formülü.
-2 · Dijital ikiz (45 sn) — Haritada SOKE-14 → panoya gir. Dokuz cihaz, yetmiş dört bağlantı, kırkı ölçülüyor; gri olanlar bara bölmesi ve çatı: "Gri renk bir eksiklik değil, bir beyandır."
-3 · Yavaş bozulma ve tarih (50 sn) — Ç7-L2 kanıt ekranı: θ, CUSUM, değişim noktası, projeksiyon kartı: "ACİL'e X gün (a–b)". Sonra filo tablosunda sayı vermeyen satırlar: "yetersiz geçmiş".
-4 · Bastırılmış alarm (45 sn, ASLA KESİLMEZ) — Alarmlar → Bastırılan. Sıcak hava dalgası ve şebeke olayı satırları.
-5 · Ark olayı (45 sn, ASLA KESİLMEZ) — Demo panelinden "ark olayı" enjekte et; X2:3, K5, 4–13 sn.
-6 · SCADA kanıtı (40 sn) — modpoll ile 1624'ten 48 register; yazma → exception 0x01.
-7 · Kör olduğumuz yer (25 sn) — gece, düşük yüklü bir pano: "görünürlük düşük".
+Demo akışı (5 dakika):
+1 · Filo (35 sn) — Haritada bütün panolar, seviyeleriyle. "Her pano bir nokta; renk, durumu."
+2 · Dijital ikiz (45 sn) — SOKE-14'e gir. Panonun kesiti, her bağlantının durumu. Gri olanlar izlenmeyen bara bölmesi: "Gri bir eksiklik değil, bir beyan."
+3 · Yavaş bozulma (50 sn) — Çıkış 7 L2'nin kanıt ekranı: farkın gün gün yükselişi, başlangıç tarihi ve kalan süre.
+4 · Bastırılan alarmlar (45 sn, ASLA KESİLMEZ) — Alarmlar → Bastırılan. Sıcak hava ve şebeke olayı satırları, gerekçeleriyle.
+5 · Ark olayı (45 sn, ASLA KESİLMEZ) — Demo panelinden "ark olayı" senaryosu: hangi dedektör, hangi röle, nöbetçiye bildirim.
+6 · SCADA (40 sn) — Pano bloğunu oku; yazma denemesi reddedilir.
+7 · Gece görünürlüğü (25 sn) — Düşük yüklü bir pano: "görünürlük düşük".
 8 · Kapanış (15 sn).
 
 Canlı sistem açılmazsa: bu slayttaki ekranlar sırayla döner; sağdaki listeden tıklayarak anlatın.`,
-  use: `<b>Kullan:</b> Ekranlar 6 sn'de bir değişir; sağdan tıklayıp sabitleyebilirsiniz. Bu slayt canlı demonun <b>yedeğidir</b>. <b>Süre daralırsa kesme sırası (docs/08 §9):</b> 1) canlı modpoll → ekran görüntüsü · 2) görünürlük beat'i → tek cümle · 3) sahte veri cümlesi · 4) CUSUM açıklaması · 5) 74/40 bağlantı açıklaması · 6) tezin ikinci paragrafı. Hepsi kesilirse demo 3 dk 28 sn; 4 ve 5 numaralı beat'ler tam kalır. <b>Senaryo uçları:</b> GET /api/scenarios · POST /api/scenario/{key} · POST /api/demo/reset.`,
+  use: `<b>Kullan:</b> Ekranlar 6 sn'de bir değişir; sağdan tıklayıp sabitleyebilirsiniz. Bu slayt canlı demonun <b>yedeğidir</b>. <b>Süre daralırsa kesme sırası:</b> 1) SCADA → tek cümle · 2) gece görünürlüğü → tek cümle · 3) dijital ikiz açıklaması kısalır. 4 ve 5 numaralı adımlar her durumda tam kalır. <b>Senaryo uçları:</b> GET /api/scenarios · POST /api/scenario/{key} · POST /api/demo/reset.`,
 });
