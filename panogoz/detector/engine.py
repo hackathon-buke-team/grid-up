@@ -649,7 +649,7 @@ class DetectorEngine:
 
         if joint.conductor == "N":
             excess = self._neutral_excess(pr, jkey, ts)
-            jr.note = ("nötr: kardeş karşılaştırması geçersiz, "
+            jr.note = ("nötr: faz karşılaştırması geçersiz, "
                        "kural H3 ile değerlendirilir")
         else:
             got = self._sibling_excess(pr, jkey, ts)
@@ -1209,7 +1209,7 @@ class DetectorEngine:
             if jv.temp_c >= T_JOINT_KRITIK_C:
                 return "KRITIK", "Mutlak sıcaklık sınırı aşıldı."
         if not h3 or h3.get("joint_key") != jv.key:
-            return "BILGI", ("nötr: kardeş karşılaştırması geçersiz, "
+            return "BILGI", ("nötr: faz karşılaştırması geçersiz, "
                              "kural H3 ile değerlendirilir")
         verdict = h3.get("verdict")
         if verdict == "kotu_notr_baglanti":
@@ -1217,7 +1217,7 @@ class DetectorEngine:
         if verdict == "harmonik_yuk":
             return "IZLE", h3["reason_tr"]
         return "BILGI", h3.get("reason_tr") or (
-            "nötr: kardeş karşılaştırması geçersiz, kural H3 ile değerlendirilir")
+            "nötr: faz karşılaştırması geçersiz, kural H3 ile değerlendirilir")
 
     # --------------------------------------------------------------- H3 ---
 
@@ -1616,7 +1616,7 @@ if __name__ == "__main__":
     cpt = ("-" if jv.changepoint_ts is None
            else _dt.datetime.utcfromtimestamp(jv.changepoint_ts).strftime("%Y-%m-%d"))
     print(f"    {jv.label}")
-    print(f"      T {jv.temp_c:.2f} °C   kardeş medyanı {jv.sibling_median_c:.2f} °C"
+    print(f"      T {jv.temp_c:.2f} °C   diğer fazların medyanı {jv.sibling_median_c:.2f} °C"
           f"   akım {jv.current_a:.0f} A   f {jv.load_factor:.2f}")
     print(f"      θ {jv.theta_k:.2f} K   görülebilir en küçük θ "
           f"{jv.theta_min_k:.2f} K   görünürlük {jv.sensitivity_pct:.0f} %")

@@ -467,14 +467,14 @@ class AlarmManager:
         if joint is not None and joint.theta_k is not None:
             lf = joint.load_factor or live.load_factor or 0.0
             out.append(
-                f"Yük etkisi ELENDİ — θ = [T − kardeş medyanı] / (I/I_ref)² ile normalize "
+                f"Yük etkisi ELENDİ — θ = [T − diğer fazların medyanı] / (I/I_ref)² ile normalize "
                 f"edildi. Ölçüm anındaki yük faktörü %{100 * lf:.0f}, I_ref = "
                 f"{joint.rated_a:.0f} A. I² bölündüğü için θ yükten bağımsızdır."
             )
             if joint.temp_c is not None and joint.sibling_median_c is not None:
                 out.append(
-                    f"Ortam, mevsim ve güneş etkisi ELENDİ — kardeş fazlar aynı bölmede, "
-                    f"aynı anda ölçüldü. Bu iletken {joint.temp_c:.1f} °C, kardeş medyanı "
+                    f"Ortam, mevsim ve güneş etkisi ELENDİ — karşılaştırılan fazlar aynı bölmede, "
+                    f"aynı anda ölçüldü. Bu iletken {joint.temp_c:.1f} °C, diğer fazların medyanı "
                     f"{joint.sibling_median_c:.1f} °C, fark "
                     f"{joint.temp_c - joint.sibling_median_c:+.1f} K. Fark alındığı için "
                     f"ortak ortam terimi sadeleşir (Tablo 1 dahili: ortam max 40 °C)."
@@ -483,14 +483,14 @@ class AlarmManager:
             group = spec.sibling_group if spec else ""
             if joint.conductor == "N":
                 out.append(
-                    f"Kardeş karşılaştırması YAPILDI — nötr, faz kardeşleriyle KIYASLANMAZ: "
+                    f"Faz karşılaştırması YAPILDI — nötr, fazlarla KIYASLANMAZ: "
                     f"dengesizliği ve üçün katı harmonikleri taşır. '{group}' grubunda on "
                     f"nötr pabucu birbirinin akranıdır ve H3 kuralıyla (K_N = ΔT_N/I_N²) "
                     f"değerlendirilir."
                 )
             elif group:
                 out.append(
-                    f"Kardeş karşılaştırması YAPILDI — '{group}' grubunda üç faz aynı barada, "
+                    f"Faz karşılaştırması YAPILDI — '{group}' grubunda üç faz aynı barada, "
                     f"aynı yaşta, aynı yüzeyde, aynı akımda. Kurulum günü geçerli bir "
                     f"referanstır; geçmiş veri gerekmez."
                 )

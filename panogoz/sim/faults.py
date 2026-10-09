@@ -821,7 +821,7 @@ SCENARIOS: dict[str, dict[str, Any]] = {
     "sensor_takildi": {
         "label_tr": "Sensör takıldı",
         "description_tr": (
-            "Bir kelepçe son değerinde donmuş. Kardeşleri yükle ve odayla "
+            "Bir kelepçe son değerinde donmuş. Aynı çıkışın diğer fazları yükle ve odayla "
             "birlikte nefes almaya devam ediyor. Cihaz arızası olarak "
             "raporlanır; pano alarmı üretilmez ve yeşil kutucuk gösterilmez."
         ),

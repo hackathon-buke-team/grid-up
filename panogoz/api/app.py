@@ -135,7 +135,7 @@ def flag_notes(live) -> list[dict]:
                 "DİKKAT: bu panoda enerji analizörü YOK (TEDAŞ Madde 2.2.11 "
                 "seçenek 2). Akım ölçülmediği için yük faktörü sıfır görünüyor; "
                 "bu 'pano enerjisiz' DEMEK DEĞİLDİR, 'akımı ölçmüyoruz' demektir. "
-                "Isıl göstergeler yine de kardeş farkı olarak geçerlidir."
+                "Isıl göstergeler yine de faz karşılaştırması olarak geçerlidir."
             )
             entry["label_tr"] = "Akım ölçümü yok (analizör takılı değil)"
         out.append(entry)

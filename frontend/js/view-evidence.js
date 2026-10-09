@@ -1,14 +1,14 @@
 // PANO GÖZ · S3 Kanıt.
 //
 // Dört grafik, TEK ve ORTAK x ekseni, senkron nişangâh:
-//   1. ham sıcaklık ve iki kardeş fazı
+//   1. ham sıcaklık ve diğer iki faz
 //   2. akım ve yük faktörü
 //   3. θ · taban çizgisi, tarihli değişim noktası, taralı duyarlılık tabanı
 //   4. CUSUM istatistiği ve h = 8 eşiği
 //
 // Formül ekranda yazar. Bir jüri üyesi "bu sayı nereden geliyor" diye sorduğunda
 // cevap ekranın kendisinde olmalıdır:
-//     θ = [T − kardeş medyanı] / (I / I_ref)²
+//     θ = [T − diğer fazların medyanı] / (I / I_ref)²
 // Fazla temas direnci ARALIK olarak verilir, tek sayı olarak asla: R_th,local
 // bir pabuç için ancak 2-4 K/W doğrulukla bilinir.
 
@@ -227,7 +227,7 @@ export function create(ctx) {
       return;
     }
 
-    const c1 = chartBox('1 · Ham sıcaklık ve kardeş fazlar', [
+    const c1 = chartBox('1 · Ham sıcaklık ve diğer fazlar', [
       { color: C.self, label: fmt.shortJoint(joint.key) },
       ...(d.sibs[0] ? [{ color: C.sib1, label: fmt.shortJoint(d.sibs[0].key) }] : []),
       ...(d.sibs[1] ? [{ color: C.sib2, label: fmt.shortJoint(d.sibs[1].key) }] : []),
@@ -370,7 +370,7 @@ export function create(ctx) {
       h('header', h('h3', { text: 'Ölçülen büyüklük' })),
       h('div.body.col',
         h('div.formula',
-          'θ = [ T − kardeş medyanı ] / ( I / I',
+          'θ = [ T − diğer fazların medyanı ] / ( I / I',
           h('sub', { text: 'ref' }), ' )²',
           h('span.why', {
             text: 'Yükten bağımsız (I² sadeleşir), ortam ve mevsimden bağımsız (aynı yerdeki '
@@ -380,14 +380,14 @@ export function create(ctx) {
         h('div.kv',
           h('span.kv-k', { text: 'I_ref' }),
           h('span.kv-v', { text: fmt.num(joint.rated_a, 0) + ' A · DSYA anma akımı' }),
-          h('span.kv-k', { text: 'Kardeş kümesi' }),
+          h('span.kv-k', { text: 'Karşılaştırılan fazlar' }),
           h('span.kv-v', {
             text: joint.conductor === 'N'
-              ? 'nötrün geçerli faz kardeşi yoktur → kural H3'
+              ? 'nötrün karşılaştırılacak fazı yoktur → kural H3'
               : `aynı fiderin diğer iki fazı (${(data && data.sibs || []).map((s) => s.conductor).join(', ') || '—'})`,
           }),
           h('span.kv-k', { text: 'Medyan' }),
-          h('span.kv-v', { text: 'kardeşlerin medyanı · kendisi hariç' }))));
+          h('span.kv-v', { text: 'diğer fazların medyanı · kendisi hariç' }))));
   }
 
   function resistanceCard(joint) {
@@ -489,7 +489,7 @@ export function create(ctx) {
     const ev = (alarm && alarm.evidence) || {};
     const reasons = [];
     if (joint.theta_k !== null && joint.theta_k !== undefined) {
-      reasons.push(`θ = ${fmt.num(joint.theta_k, 2)} K · kardeşlerine göre yük düzeltilmiş fazla sıcaklık`);
+      reasons.push(`θ = ${fmt.num(joint.theta_k, 2)} K · diğer fazlara göre yük düzeltilmiş fazla sıcaklık`);
     }
     if (joint.theta_min_k) {
       reasons.push(`Şu anki görülebilir en küçük θ = ${fmt.num(joint.theta_min_k, 2)} K `
@@ -559,7 +559,7 @@ export function create(ctx) {
           h('span.kv-k', { text: 'İletken' }), h('span.kv-v', { text: fmt.CONDUCTOR_TR[joint.conductor] || joint.conductor }),
           h('span.kv-k', { text: 'Anma' }), h('span.kv-v', { text: fmt.num(joint.rated_a, 0) + ' A' }),
           h('span.kv-k', { text: 'Sıcaklık' }), h('span.kv-v', { text: fmt.num(joint.temp_c, 2) + ' °C' }),
-          h('span.kv-k', { text: 'Kardeş medyanı' }), h('span.kv-v', { text: fmt.num(joint.sibling_median_c, 2) + ' °C' }),
+          h('span.kv-k', { text: 'Diğer fazların medyanı' }), h('span.kv-v', { text: fmt.num(joint.sibling_median_c, 2) + ' °C' }),
           h('span.kv-k', { text: 'Akım' }), h('span.kv-v', {
             text: joint.current_a === null || joint.current_a === undefined
               ? 'ölçülmüyor · pano yük faktöründen türetildi'

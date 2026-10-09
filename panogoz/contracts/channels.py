@@ -104,7 +104,7 @@ CHANNELS: tuple[Channel, ...] = (
        "TVOC-2 reg 212 · bit0 K4, bit1 K5, bit2 K6"),
     # ---- derived detector outputs ------------------------------------------
     _c("det.theta_k", "K", "θ · anma akımında sıcaklık fazlası", "derived", 2, -50, 300,
-       "[T - kardeş medyanı] / (I/I_ref)²"),
+       "[T - diğer fazların medyanı] / (I/I_ref)²"),
     _c("det.theta_min_k", "K", "Görülebilir en küçük θ", "derived", 2, 0, 1000,
        "3σ / f² · yük düştükçe büyür"),
     _c("det.sensitivity_pct", "%", "Görünürlük", "derived", 0, 0, 100, ""),

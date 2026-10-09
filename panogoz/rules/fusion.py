@@ -211,7 +211,7 @@ EVIDENCE_LIST: tuple[Evidence, ...] = (
     _e("theta_k", "θ · anma akımında sıcaklık fazlası", "K", "TC",
        pivot=1.5, per_unit=0.32,
        modes=(("loose_connection", 1.0), ("thermal_runaway", 0.25)),
-       note="[T - kardeş medyanı] / (I/I_ref)²; yükten ve ortamdan bağımsız"),
+       note="[T - diğer fazların medyanı] / (I/I_ref)²; yükten ve ortamdan bağımsız"),
     _e("theta_cusum", "θ CUSUM istatistiği", "-", "TC",
        pivot=4.0, per_unit=0.35, modes=(("loose_connection", 0.85),),
        note="k=0.5 h=8, günlük medyan üzerinde"),

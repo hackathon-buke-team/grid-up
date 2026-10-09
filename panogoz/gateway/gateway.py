@@ -540,8 +540,8 @@ class Gateway:
             joint = assets.JOINTS_BY_KEY[joint_key]
             f_load = info["load_factor"]
             if info["delta_k"] >= LOCAL_DELTA_K and f_load >= LOCAL_MIN_LOAD_FACTOR:
-                fire("KARDES_FARKI", "KRITIK", "Kardeş fazlara göre aşırı sıcaklık",
-                     f"{joint.label}, kardeş fazların medyanından "
+                fire("KARDES_FARKI", "KRITIK", "Diğer fazlara göre aşırı sıcaklık",
+                     f"{joint.label}, diğer fazların medyanından "
                      f"{info['delta_k']:.1f} K sıcak (yük faktörü {f_load:.0%}). "
                      f"IR termografi pratiği benzer bileşene göre 15 K'yı "
                      f"'derhal onar' sayar.",
@@ -551,7 +551,7 @@ class Gateway:
                 # shipped feature, not a silence.
                 fired.append({
                     "rule": "KARDES_FARKI", "severity": "IZLE", "ts": now,
-                    "title_tr": "Kardeş farkı yüksek ama yük düşük",
+                    "title_tr": "Fazlar arası fark yüksek ama yük düşük",
                     "detail_tr": (f"{joint.label} {info['delta_k']:.1f} K sıcak, ancak "
                                   f"yük faktörü {f_load:.0%} < {LOCAL_MIN_LOAD_FACTOR:.0%}. "
                                   f"Bu seviyede θ güvenilir değil (GÖRÜNÜRLÜK DÜŞÜK)."),
