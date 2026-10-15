@@ -1,4 +1,4 @@
-# PANO GÖZ
+# PANO GÖZ / Son 7 takım arasına kalındı. Nihai sıralama açıklanmadı.
 
 **Pano/hücre içi anomali erken uyarı sistemi — ADM & GDZ Elektrik "Grid Up" Hackathon**
 
